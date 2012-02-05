@@ -98,7 +98,10 @@ LIB_TUNA_FILES = tuna.js \
 				 ui/selection/view/abstract-selection-view.js \
 				 ui/selection/view/class-selection-view.js \
 				 \
+				 ui/modules/form.js \
 				 ui/modules/navigation.js \
+				 ui/modules/popup.js \
+				 ui/modules/selection-group.js \
 				 ui/modules/transform-container.js \
 				 \
 				 
