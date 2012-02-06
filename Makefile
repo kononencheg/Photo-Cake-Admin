@@ -1,10 +1,16 @@
 JS_COMPILER = java -jar utils/compiler.jar
 
-JS_COMPILER_FLAGS = --language_in ECMASCRIPT5_STRICT \
-					--compilation_level ADVANCED_OPTIMIZATIONS \
-					--warning_level VERBOSE \
-					#--formatting PRETTY_PRINT \
-					#--debug \
+JS_COMPILE_FLAGS = --language_in ECMASCRIPT5_STRICT \
+				   --compilation_level ADVANCED_OPTIMIZATIONS \
+				   --warning_level VERBOSE \
+				   --define 'tuna.IS_COMPILED=true'
+				   
+
+JS_COMBINE_FLAGS = --language_in ECMASCRIPT5_STRICT \
+                   --compilation_level WHITESPACE_ONLY \
+                   --warning_level VERBOSE \
+				   --formatting PRETTY_PRINT \
+				   --debug
 
 
 JS_ROOT_DIR = public/js/
@@ -17,7 +23,6 @@ LIB_TUNA_DIR = $(addprefix $(LIB_DIR), tuna/)
 LIB_TUNA_FILES = tuna.js \
 				 \
 				 utils/utils.js \
-				 utils/config.js \
 				 \
 				 dom/dom.js \
 				 \
@@ -25,10 +30,16 @@ LIB_TUNA_FILES = tuna.js \
 				 events/i-event-dispatcher.js \
 				 events/event-dispatcher.js \
 				 \
-				 view/view.js \
-				 view/view-controller.js \
-				 view/navigation-view-controller.js \
- 				 view/page-view-controller.js \
+				 net/i-request.js \
+				 net/request.js \
+				 \
+				 model/record.js \
+				 model/model.js \
+				 \
+				 rest/i-method.js \
+				 rest/method.js \
+				 rest/i-method-factory.js \
+				 rest/rest.js \
 				 \
 				 tmpl/i-transform-handler.js \
 				 tmpl/i-transformer.js \
@@ -66,6 +77,11 @@ LIB_TUNA_FILES = tuna.js \
               	 tmpl/compilers/attribute-compiler.js \
               	 tmpl/compilers/condition-compiler.js \
               	 tmpl/compilers/list-compiler.js \
+				 \
+				 view/view.js \
+				 view/view-controller.js \
+				 view/navigation-view-controller.js \
+ 				 view/page-view-controller.js \
                  \
                  ui/module.js \
 				 ui/module-instance.js \
@@ -101,6 +117,7 @@ LIB_TUNA_FILES = tuna.js \
 				 ui/modules/form.js \
 				 ui/modules/navigation.js \
 				 ui/modules/popup.js \
+				 ui/modules/popup-button.js \
 				 ui/modules/selection-group.js \
 				 ui/modules/transform-container.js \
 				 \
@@ -111,19 +128,32 @@ SRC_FILES = main.js \
 			\
 			view/main-controller.js \
 			\
+			model/records/user.js \
+			\
+			rest/common-method.js \
+			rest/common-factory.js \
+			\
+
 			
 
 JS_ALL = $(addprefix $(LIB_TUNA_DIR), $(LIB_TUNA_FILES)) \
-		 $(addprefix $(SRC_DIR), $(SRC_FILES)) 
+		 $(addprefix $(SRC_DIR), $(SRC_FILES))
 
-app.js: $(JS_ALL)
 
-		$(JS_COMPILER) $(JS_COMPILER_FLAGS) \
+compile: $(JS_ALL)
+		$(JS_COMPILER) $(JS_COMPILE_FLAGS) \
 					   $(addprefix --js , $^) \
 					   $(addprefix --externs $(LIB_DIR), externs.js) \
-					   $(addprefix --js_output_file $(JS_ROOT_DIR), $@)
-					   
-					   
-clean: 
+					   $(addprefix --js_output_file $(JS_ROOT_DIR), app.js)
 
+combine: $(JS_ALL)
+		$(JS_COMPILER) $(JS_COMBINE_FLAGS) \
+					   $(addprefix --js , $^) \
+					   $(addprefix --externs $(LIB_DIR), externs.js) \
+					   $(addprefix --js_output_file $(JS_ROOT_DIR), app.js)
+
+watch: 
+	watchr config/make/js.watchr
+
+clean:
 	rm $(addprefix $(JS_ROOT_DIR), app.js)
