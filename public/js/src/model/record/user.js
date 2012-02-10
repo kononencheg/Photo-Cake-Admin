@@ -6,7 +6,7 @@ var User = function () {
     /**
      * @type string
      */
-    this.name = '';
+    this.email = '';
 
     /**
      * @type number
@@ -30,17 +30,26 @@ User.BAKERY = 1;
 
 /**
  * @override
- * @param {Object} data
  */
 User.prototype.populate = function(data) {
-    this.name = data['name'];
+    this.email = data['email'];
     this.role = data['role'];
+};
+
+/**
+ * @override
+ */
+User.prototype.serialize = function() {
+    return {
+        'email': this.email,
+        'role': model.resource.users.getRoleName(this.role)
+    };
 };
 
 /**
  * @constructor
  * @extends {User}
  */
-model.records.User = User;
+model.record.User = User;
 
-tuna.model.recordFactory.registerRecord('user', new model.records.User());
+tuna.model.recordFactory.registerRecord('user', new model.record.User());

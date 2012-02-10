@@ -12,6 +12,9 @@ tuna.utils.extend(MainController, tuna.view.NavigationViewController);
  * @override
  */
 MainController.prototype._requireModules = function() {
+    tuna.view.NavigationViewController.prototype._requireModules.call(this);
+
+    this._container.requireModule('template-transformer');
     this._container.requireModule('popup');
     this._container.requireModule('form');
 };
@@ -30,17 +33,28 @@ MainController.prototype._initActions = function() {
             self.__applyUser(user);
         }
     }, 'user');
+
+    this.__initSingOutForm();
+};
+
+/**
+ * @private
+ */
+MainController.prototype.__initSingOutForm = function() {
+    var form = this._container.getModuleInstanceByName('form', 'sign-out');
+    form.addEventListener('result', function(event, result) {
+        location.reload();
+    });
 };
 
 /**
  * @private
  */
 MainController.prototype.__showSignUpPopup = function() {
-    var popup = this._container.getModuleInstanceByName('popup', 'login');
+    var popup = this._container.getModuleInstanceByName('popup', 'sign-in');
     popup.open();
 
-    var form = this._container.getModuleInstanceByName('form', 'login');
-    form.setRecordName('user');
+    var form = this._container.getModuleInstanceByName('form', 'sign-in');
 
     var self = this;
     form.addEventListener('result', function(event, user) {
@@ -51,10 +65,15 @@ MainController.prototype.__showSignUpPopup = function() {
 
 /**
  * @private
- * @param {model.records.User} user
+ * @param {model.record.User} user
  */
 MainController.prototype.__applyUser = function(user) {
+    var transformer = this._container.getModuleInstanceByName
+                        ('template-transformer', 'user-info');
 
+    transformer.applyTransform(user.serialize());
+
+    this._navigation.navigate('recipes_page');
 };
 
 

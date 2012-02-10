@@ -41,10 +41,6 @@ LIB_TUNA_FILES = tuna.js \
 				 rest/i-method-factory.js \
 				 rest/rest.js \
 				 \
-				 tmpl/i-transform-handler.js \
-				 tmpl/i-transformer.js \
-				 tmpl/template-transformer.js \
-				 \
 			  	 tmpl/data/data-node.js \
               	 tmpl/data/path-evaluator.js \
               	 \
@@ -77,24 +73,25 @@ LIB_TUNA_FILES = tuna.js \
               	 tmpl/compilers/attribute-compiler.js \
               	 tmpl/compilers/condition-compiler.js \
               	 tmpl/compilers/list-compiler.js \
-				 \
-				 view/view.js \
-				 view/view-controller.js \
-				 view/navigation-view-controller.js \
- 				 view/page-view-controller.js \
+              	 \
+              	 tmpl/tmpl.js \
                  \
                  ui/module.js \
 				 ui/module-instance.js \
 				 ui/modules/modules.js \
 				 \
 				 ui/containers/container.js \
- 				 ui/containers/transform-container.js \
+ 				 ui/containers/control-container.js \
 				 \
  				 ui/popups/popup.js \
 				 ui/popups/popups.js \
 				 \
  				 ui/forms/form.js \
 				 ui/forms/form-input.js \
+				 \
+				 ui/transformers/i-transform-handler.js \
+				 ui/transformers/i-transformer.js \
+				 ui/transformers/template-transformer.js \
  				 \
  				 ui/selection/i-selection-group.js \
               	 ui/selection/abstract-selection-group.js \
@@ -119,16 +116,28 @@ LIB_TUNA_FILES = tuna.js \
 				 ui/modules/popup.js \
 				 ui/modules/popup-button.js \
 				 ui/modules/selection-group.js \
-				 ui/modules/transform-container.js \
+				 ui/modules/template-transformer.js \
+				 ui/modules/control-container.js \
 				 \
+				 view/view.js \
+				 view/view-controller.js \
+				 view/navigation-view-controller.js \
+ 				 view/page-view-controller.js \
+ 				 \
 				 
-
-				 
+	 
 SRC_FILES = main.js \
 			\
 			view/main-controller.js \
+			view/page/recipes-controller.js \
 			\
-			model/records/user.js \
+			model/record/user.js \
+			model/record/bakery.js \
+			model/record/recipe.js \
+			\
+			model/resource/users.js \
+			model/resource/bakeries.js \
+			model/resource/recipes.js \
 			\
 			rest/common-method.js \
 			rest/common-factory.js \
@@ -152,8 +161,11 @@ combine: $(JS_ALL)
 					   $(addprefix --externs $(LIB_DIR), externs.js) \
 					   $(addprefix --js_output_file $(JS_ROOT_DIR), app.js)
 
-watch: 
-	watchr config/make/js.watchr
+watch-combine:
+	watchr config/make/js-combine.watchr
+
+watch-compile:
+	watchr config/make/js-compile.watchr
 
 clean:
 	rm $(addprefix $(JS_ROOT_DIR), app.js)

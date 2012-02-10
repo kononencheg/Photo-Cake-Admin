@@ -12,12 +12,13 @@ JSON.parse = function(string) {};
  */
 JSON.stringify = function(obj) {};
 
-var $ = {};
 
-$.find = function() {};
-$.find.matches = function() {};
+/**
+ * @return {Array.<Node>}
+ */
+var Sizzle = function() {};
 
-$.hide = function() {};
-$.show = function() {};
-
-$.serializeArray = function() {};
+/**
+ * @return {Array.<Node>}
+ */
+Sizzle.matches = function() {};

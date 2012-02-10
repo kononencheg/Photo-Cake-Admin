@@ -1,5 +1,6 @@
 <form action="/api/" method="POST" target="support_frame"
-      class="j-form j-popup form-horizontal hide" data-name="login">
+      class="j-form j-popup form-horizontal hide"
+      data-name="sign-in" data-record-type="user">
 
     <input type="hidden" name="method" value="users.signIn" />
     <input type="hidden" name="format" value="frame-callback" />
@@ -10,7 +11,10 @@
         </div>
 
         <div class="modal-body">
+            <div class="j-form-message alert alert-error hide"></div>
+
             <fieldset>
+
                 <div class="j-email-input control-group">
                     <label class="control-label" for="singup_email">
                         Email:
@@ -34,6 +38,7 @@
                         </p>
                     </div>
                 </div>
+
             </fieldset>
         </div>
 

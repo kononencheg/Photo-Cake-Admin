@@ -1,4 +1,42 @@
-<div class="container"></div>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="#">Фото на торте</a>
 
+            <ul class="nav">
+                <li class="active"><a href="#">Заказы</a></li>
+                <li><a href="#">Рецепты</a></li>
+                <li><a href="#">Декорации</a></li>
+                <li><a href="#">Профиль</a></li>
+            </ul>
 
-<?php $this->render('popups/login-popup') ?>
+            <form action="/api/" method="POST" target="support_frame"
+                  class="j-form navbar-form pull-right"
+                  data-name="sign-out">
+
+                <input type="hidden" name="method" value="users.signOut" />
+                <input type="hidden" name="format" value="frame-callback" />
+
+                <button type="submit" class="btn">Выход</button>
+            </form>
+
+            <ul class="j-template-transformer nav pull-right"
+                data-template-id="user_info_template" data-name="user-info">
+
+                <li>
+                    <a>
+                        <span class="t-user-role"></span> :
+                        <i class="icon-user icon-white"></i>
+                        <span class="t-user-email"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container carousel">
+    <div class="carousel-inner">
+        <?php $this->render('pages') ?>
+    </div>
+</div>

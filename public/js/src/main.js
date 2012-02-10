@@ -6,7 +6,12 @@ var model = {};
 /**
  * @namespace
  */
-model.records = {};
+model.record = {};
+
+/**
+ * @namespace
+ */
+model.resource = {};
 
 /**
  * @namespace
@@ -14,14 +19,10 @@ model.records = {};
 var rest = {};
 
 /**
- * Точка входа.
- *
- * @param {!Object} args
+ * @param {Object} args
  */
 window['main'] = function(args) {
     tuna.utils.config.init(args);
-    tuna.dom.setSelectorEngine($.find);
-
-    var container = new tuna.ui.containers.TransformContainer(document.body);
-    container.init();
+    tuna.dom.setSelectorEngine(Sizzle);
+    tuna.view.init();  
 };

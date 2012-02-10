@@ -1,0 +1,79 @@
+<!-- Header -->
+
+<tuna:template id="user_info_template">
+    <tuna:spot tuna:target="t-user-email" tuna:path="email" />
+    <tuna:spot tuna:target="t-user-role"  tuna:path="role" />
+</tuna:template>
+
+<!-- ./ Header -->
+
+<!-- Bakery selection -->
+
+<tuna:template id="bakery_select_template">
+    <tuna:list tuna:target="t-bakery-list" tuna:path=""
+               tuna:item-renderer-id="bakery_option_renderer"
+               tuna:item-template-id="bakery_option_template"
+               tuna:key-path="id" />
+</tuna:template>
+
+<tuna:template id="bakery_option_template">
+    <tuna:spot tuna:target="t-option" tuna:path="name" />
+    <tuna:attr tuna:target="t-option" tuna:path="id" tuna:name="value"/>
+</tuna:template>
+
+<select>
+    <option id="bakery_option_renderer" class="t-option"></option>
+</select>
+
+<!-- ./ Bakery selection -->
+
+<!-- Recipes table -->
+
+<tuna:template id="recipe_table_template">
+    <tuna:list tuna:target="t-recipe-list" tuna:path=""
+               tuna:item-renderer-id="recipe_row_renderer"
+               tuna:item-template-id="recipe_row_template"
+               tuna:key-path="id" />
+</tuna:template>
+
+<tuna:template id="recipe_row_template">
+    <tuna:attr tuna:target="t-recipe-id" tuna:path="id" tuna:name="data-recipe-id" />
+
+    <tuna:attr tuna:target="t-recipe-image" tuna:path="imageUrl" tuna:name="src" />
+    <tuna:attr tuna:target="t-recipe-image" tuna:path="name" tuna:name="alt" />
+
+    <tuna:spot tuna:target="t-recipe-name" tuna:path="name" />
+    <tuna:spot tuna:target="t-recipe-desc" tuna:path="desc" />
+</tuna:template>
+
+<table>
+
+    <tr id="recipe_row_renderer">
+        <td class="t-recipe-name"></td>
+        <td>
+            <img class="t-recipe-image" width="90" height="90"
+                 src="about: blank" alt="Рецепт" />
+        </td>
+        <td class="t-recipe-desc"></td>
+        <td>
+            <nobr>
+                <a class="t-recipe-id j-button btn btn-info" href="#"
+                   title="Редактировать" data-type="popup-button"
+                   data-recipe-id="">
+
+                    <i class="icon-edit icon-white"></i>
+                </a>
+                <a class="t-recipe-id j-button btn btn-danger" href="#"
+                   title="Удалить" data-type="delete-button"
+                   data-recipe-id="">
+
+                    <i class="icon-trash icon-white"></i>
+                </a>
+            </nobr>
+        </td>
+    </tr>
+
+</table>
+
+<!-- ./ Recipes table -->
+

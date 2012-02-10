@@ -5,7 +5,7 @@
  */
 var CommonMethod = function (name) {
     tuna.rest.Method.call(this, name);
-
+    
     /**
      * @private
      * @type tuna.net.Request
