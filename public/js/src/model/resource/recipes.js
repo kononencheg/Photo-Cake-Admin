@@ -18,10 +18,35 @@ Recipes.prototype.setRecipes = function(recipes) {
 };
 
 /**
+ */
+Recipes.prototype.clearRecipes = function() {
+    this.__recipes.length = 0;
+};
+
+
+/**
  * @param {model.record.Recipe} recipe
  */
 Recipes.prototype.addRecipe = function(recipe) {
     this.__recipes.push(recipe);
+};
+
+/**
+ * @param {?string} id
+ */
+Recipes.prototype.removeRecipeById = function(id) {
+    var i = 0,
+        l = this.__recipes.length;
+
+    while (i < l) {
+        if (this.__recipes[i].id === id) {
+            this.__recipes.splice(i, 1);
+
+            break;
+        }
+
+        i++;
+    }
 };
 
 

@@ -1,4 +1,6 @@
 <div id="recipes_page" class="j-navigation-page j-control-container item">
+    <?php $this->render('popup/edit-recipe') ?>
+
     <div class="page-header">
         <h1>
             Рецепты
@@ -12,17 +14,22 @@
         </div>
         <div class="span5">
 
-            <form action="/api/" method="POST" target="support_frame"
+            <form action="/api/"
+                  method="POST"
+                  target="support_frame"
                   class="j-form j-template-transformer form-inline pull-right"
                   data-template-id="bakery_select_template"
-                  data-name="bakery-select" data-record-type="recipe">
+                  data-name="bakery-select"
+                  data-record-type="recipe">
 
                 <input type="hidden" name="method" value="recipes.get" />
                 <input type="hidden" name="format" value="frame-callback" />
 
-                <select name="bakery_id" class="t-bakery-list"></select>
-
-                <button type="submit" class="btn">Показать</button>
+                <label for="recipe_bakery_select">Кондитерская: </label>
+                <select id="recipe_bakery_select" name="bakery_id"
+                        class="t-bakery-list">
+                    <option value="-1"></option>
+                </select>
             </form>
 
         </div>
@@ -56,13 +63,16 @@
     <hr />
 
     <div class="row">
-        <div class="j-template-transformer span12"
-             data-template-id="recipe_add_template"
-             data-name="recipe-add">
+        <div class="span12">
 
-            <form action="/api/" method="POST" target="support_frame"
-                  class="j-form form-horizontal" data-name="add-recipe"
-                  data-record-type="recipe">
+            <form action="/api/"
+                  method="POST"
+                  target="support_frame"
+                  enctype="multipart/form-data"
+                  class="j-template-transformer j-form form-horizontal"
+                  data-template-id="recipe_add_template"
+                  data-record-type="recipe"
+                  data-name="add-recipe">
 
                 <input type="hidden" name="method" value="recipes.add" />
                 <input type="hidden" name="format" value="frame-callback" />

@@ -47,33 +47,33 @@
 </tuna:template>
 
 <table>
-
     <tr id="recipe_row_renderer">
         <td class="t-recipe-name"></td>
         <td>
-            <img class="t-recipe-image" width="90" height="90"
-                 src="about: blank" alt="Рецепт" />
+            <img class="t-recipe-image" width="90" height="90" alt="Рецепт" />
         </td>
         <td class="t-recipe-desc"></td>
         <td>
             <nobr>
                 <a class="t-recipe-id j-button btn btn-info" href="#"
-                   title="Редактировать" data-type="popup-button"
-                   data-recipe-id="">
-
+                   title="Редактировать" data-type="edit" data-recipe-id="">
                     <i class="icon-edit icon-white"></i>
                 </a>
                 <a class="t-recipe-id j-button btn btn-danger" href="#"
-                   title="Удалить" data-type="delete-button"
-                   data-recipe-id="">
-
+                   title="Удалить" data-type="delete" data-recipe-id="">
                     <i class="icon-trash icon-white"></i>
                 </a>
             </nobr>
         </td>
     </tr>
-
 </table>
 
 <!-- ./ Recipes table -->
 
+<!-- Add recipe form -->
+
+<tuna:template id="recipe_add_template">
+    <tuna:attr tuna:target="t-bakery-id" tuna:path="id" tuna:name="value"/>
+</tuna:template>
+
+<!-- ./ Add recipe form -->

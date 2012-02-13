@@ -4,6 +4,8 @@ JS_COMPILE_FLAGS = --language_in ECMASCRIPT5_STRICT \
 				   --compilation_level ADVANCED_OPTIMIZATIONS \
 				   --warning_level VERBOSE \
 				   --define 'tuna.IS_COMPILED=true'
+				   #--formatting PRETTY_PRINT \
+                   #--debug
 				   
 
 JS_COMBINE_FLAGS = --language_in ECMASCRIPT5_STRICT \
@@ -86,6 +88,10 @@ LIB_TUNA_FILES = tuna.js \
  				 ui/popups/popup.js \
 				 ui/popups/popups.js \
 				 \
+ 				 ui/buttons/button.js \
+ 				 ui/buttons/button-group.js \
+ 				 ui/buttons/buttons.js \
+ 				 \
  				 ui/forms/form.js \
 				 ui/forms/form-input.js \
 				 \
@@ -118,6 +124,7 @@ LIB_TUNA_FILES = tuna.js \
 				 ui/modules/selection-group.js \
 				 ui/modules/template-transformer.js \
 				 ui/modules/control-container.js \
+				 ui/modules/button-group.js \
 				 \
 				 view/view.js \
 				 view/view-controller.js \
