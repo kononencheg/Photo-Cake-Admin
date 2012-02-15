@@ -1,24 +1,3115 @@
-'use strict';var d=void 0,h=!0,i=null,l=!1;function m(){return function(){}}function n(a){return function(b){this[a]=b}}var aa=!!eval("'\v' == 'v'"),ba;function o(a,b){function c(){}c.prototype=b.prototype;a.prototype=new c;a.prototype.constructor=a}function q(a,b){if(b.indexOf!==d)return b.indexOf(a);for(var c=0,e=b.length;c<e;){if(b[c]===a)return c;c++}return-1}function ca(){this.na=i}ca.prototype.d=n("na");var da=new ca;function ea(a,b,c){a.lb==d&&(a.lb=function(b){if(b.Na!==d){var c=b.Na;delete b.Na;var c=a["__"+c],g;for(g in c)c[g].call(a,b)}},a.attachEvent("onhelp",a.lb));a["__"+b]===d&&(a["__"+b]=[]);a["__"+b].push(c)}var r=i;function s(a,b){return r!==i?r(a,b):i}function u(a,b){if(r!==i){var c=r(a,b);if(0<c.length)return c[0]}return i}function v(a,b,c,e){w(a,c,function(c){var g=c.target||c.srcElement,j=r.matches(b,[g])[0];j===d&&(j=fa(g,b,a));j!==i&&e.call(j,c)})}
-function w(a,b,c){if(a.addEventListener!==d)a.addEventListener(b,c,l);else if(a.attachEvent!==d){var e="on"+b;a[e]===d?ea(a,b,c):a.attachEvent(e,c)}}function ga(a){a.preventDefault!==d?a.preventDefault():a.returnValue=l}function fa(a,b,c){for(a=a.parentNode;a!==i&&a!==c&&0===r.matches(b,[a]).length;)a=a.parentNode;return a===c?i:a}function x(a,b){return a.classList!==d?a.classList.contains(b):a.className!==d?a.className.match(RegExp("(\\s|^)"+b+"(\\s|$)"))!==i:l}
-function y(a,b){a.classList!==d?a.classList.add(b):x(a,b)||(a.className+=" "+b)}function z(a,b){a.classList!==d?a.classList.remove(b):x(a,b)&&(a.className=a.className.replace(RegExp("(\\s|^)"+b+"(\\s|$)")," "))}function ha(a){!x(a,"disabled")&&y(a,"disabled")};function ia(a,b){this.a=i;this.Zb=a;this.Wb=!!b;this.Ib=this.Xb=this.Hb=l}ia.prototype.bb=n("a");ia.prototype.preventDefault=function(){this.Hb=h};function A(){}A.prototype.c=m();A.prototype.addEventListener=m();A.prototype.removeEventListener=m();A.prototype.Ob=m();function C(a){this.Jb=a||i;this.l={}}C.prototype.c=function(a,b){a instanceof ia||(a=new ia(a));var c=a.Zb;if(this.l[c]!==d){a.a===i&&a.bb(this);for(var e=0,f=this.l[c].length;e<f;){this.l[c][e].call(this,a,b);if(a.Ib)break;e++}this.Jb!==i&&a.Wb&&!a.Ib&&!a.Xb&&this.Jb.c(a)}return!a.Hb};C.prototype.addEventListener=function(a,b){this.l[a]===d?this.l[a]=[b]:this.Ob(a,b)||this.l[a].push(b)};
-C.prototype.removeEventListener=function(a,b){if(this.l[a]!==d){var c=q(b,this.l[a]);-1!==c&&this.l[a].splice(c,1)}};C.prototype.Ob=function(a,b){return this.l[a]!==d?-1!==q(b,this.l[a]):l};function ja(){}o(ja,A);ja.prototype.send=m();ja.prototype.abort=m();function D(a){C.call(this);this.Fb=a||"/";this.Va=l;this.method="GET";this.headers=[];this.k=this.ra=this.na=i}o(D,C);D.prototype.setData=n("na");
-D.prototype.send=function(){var a=this.Fb;this.k!==i&&this.k.abort();var b=!aa?new XMLHttpRequest:new ActiveXObject("Microsoft.XMLHTTP");if(!this.Va){var c=this;b.onreadystatechange=function(){4===b.readyState&&(c.ra=b.responseText,c.c("complete",c.ra),b.abort())}}var e=ka(this.na).join("&");"GET"===this.method&&""!==e&&(a+=(-1===a.indexOf("?")?"?":"&")+e);b.open(this.method,encodeURI(a),!this.Va);for(a=this.headers.length-1;0<=a;)b.setRequestHeader(this.headers[a].name,this.headers[a].value),a--;
-a=i;"POST"===this.method&&(b.setRequestHeader("Content-Type","application/x-www-form-urlencoded"),a=e);b.send(a);this.Va&&(this.ra=b.responseText,this.c("complete",this.ra));this.k=b};D.prototype.abort=function(){this.k!==i&&this.k.abort()};
-function ka(a,b){var c=[];b===d&&(b=[]);if(a!==i&&!(a instanceof Function))if(a instanceof Object)for(var e in a)c=c.concat(ka(a[e],0===b.length?[e]:(b.join(",")+","+e).split(",")));else c=[b.shift()+(0<b.length?"["+b.join("][")+"]=":"=")+encodeURIComponent(""+a)];return c};function E(){}E.prototype.Ta=function(){var a=new this.constructor,b;for(b in this)this.hasOwnProperty(b)&&(a[b]=this[b]);return a};E.prototype.Aa=m();E.prototype.D=m();var la=new function(){this.qa={}};function F(a){C.call(this);this.Yb=a||i}o(F,C);F.prototype.call=m();F.prototype.Ta=function(){return new this.constructor(this.Yb)};function ma(){this.wb={};this.Ea=i}ma.prototype.Ua=function(a){return this.wb[a]!==d?this.wb[a].Ta():this.Ea!==i?this.Ea.Ua(a):i};var na=new ma;function oa(a,b,c,e){var f=na.Ua(a);if(c!==d){var g=function(a,b){var t=b;e!==d&&(t=pa(b,e));c(t);f.removeEventListener("result",g)};f.addEventListener("result",g)}f.call(b)}function pa(a,b){if(a!==i){if(a.splice!==d){for(var c=[],e=0,f=a.length;e<f;)c.push(qa(a[e],b)),e++;return c}return qa(a,b)}return i}
-function qa(a,b){var c=la.qa[b].Ta();c.Aa(a);return c};function ra(a,b,c){this.Oa=a;this.Ia=b||i;this.Sb=c||i;this.Ga=i;this.X={}}ra.prototype.getParent=function(){return this.Ia};ra.prototype.getKey=function(){this.Ga===i&&(this.Ga=new sa(this.Sb));return this.Ga};function ta(a){return a.Ia!==i?ta(a.Ia):a}ra.prototype.la=function(){return this.Oa};function ua(a,b){var c=i;if(a.X[b]!==d)c=a.X[b];else if(a.Oa!==i){var e=a.Oa[b];e!==d?(a.X[b]=new sa(e,a,b),c=a.X[b]):a.X[b]=new sa(i)}return c}var sa=ra;function va(){this.Bb=i}va.prototype.M=function(a){this.Bb=a.split("/")};va.prototype.evaluate=function(a){a=wa(this,this.Bb,a,0);return a!==i?a:new sa(i)};function wa(a,b,c,e){var f=b[e];return c!==i&&f!==d?wa(a,b,xa(f,c),++e):c}function xa(a,b){switch(a){case "":return ta(b);case ".":return b;case "..":return b.getParent();case "$key":return b.getKey()}return ua(b,a)};function G(){this.Ja=this.Da=""};function ya(){G.call(this);this.N="";this.Z=l}o(ya,G);ya.prototype.Ya=n("Z");ya.prototype.Xa=n("N");function za(){G.call(this);this.zb=this.Ab=this.fb=this.gb=""}o(za,G);za.prototype.$a=function(a,b){this.Ab=a;this.zb=b};za.prototype.Wa=function(a,b){this.gb=a;this.fb=b};function Aa(){G.call(this);this.rb=this.sb="";this.$=i}o(Aa,G);Aa.prototype.Za=n("$");function Ba(){this.Eb=[];this.vb=[];this.ib=[];this.kb=[]};function H(){this.ga="spot";this.A="tuna:"}H.prototype.$b=function(a,b){for(var c=a.getElementsByTagName(aa?this.ga:this.A+this.ga),e=0,f=c.length,g=i;e<f;)g=this.w(),this.K(c.item(e),g),this.va(g,b),e++};H.prototype.w=function(){return new G};H.prototype.K=function(a,b){var c=a.getAttribute(this.A+"target");b.Da=c;c=a.getAttribute(this.A+"path");b.Ja=c};H.prototype.va=function(a,b){b.Eb.push(a)};function Ca(a){H.call(this);this.ga="list";this.Ub=a}o(Ca,H);Ca.prototype.w=function(){return new Aa};Ca.prototype.K=function(a,b){H.prototype.K.call(this,a,b);var c=a.getAttribute(this.A+"item-renderer-id");b.rb=c;c=a.getAttribute(this.A+"key-path");b.sb=c;c=a.getAttribute(this.A+"item-template-id");b.Za(Da(this.Ub,c))};Ca.prototype.va=function(a,b){b.vb.push(a)};function Ea(){H.call(this);this.ga="attr"}o(Ea,H);Ea.prototype.w=function(){return new ya};Ea.prototype.K=function(a,b){H.prototype.K.call(this,a,b);b.Xa(a.getAttribute(this.A+"name"));b.Ya(a.getAttribute(this.A+"event")!==i)};Ea.prototype.va=function(a,b){b.ib.push(a)};function Fa(){H.call(this);this.ga="if";this.yb=["isset","eq","ne"];this.eb=["class"]}o(Fa,H);Fa.prototype.w=function(){return new za};Fa.prototype.K=function(a,b){H.prototype.K.call(this,a,b);for(var c=0,e=this.yb.length,f=i,g=i;c<e;){f=this.yb[c];g=a.getAttribute("tuna:"+f);if(g!==i){b.$a(f,g);break}c++}c=0;e=this.eb.length;for(g=f=i;c<e;){f=this.eb[c];g=a.getAttribute("tuna:"+f);if(g!==i){b.Wa(f,g);break}c++}};Fa.prototype.va=function(a,b){b.kb.push(a)};function Da(a,b){var c=i;if(a.Ma[b]!==d)c=a.Ma[b];else{var e=a.Y.getElementById(b);if(e!==i){a.Ma[b]=c=new Ba;for(var f=0,g=a.P.length;f<g;)a.P[f].$b(e,c),f++}}return c};function Ga(a){this.b=a}Ga.prototype.append=function(a){this.b.appendChild(a)};function Ha(a){this.I=a}Ha.prototype.n=m();Ha.prototype.U=m();function I(a){this.I=a;this.ba=new va;this.f=[]}o(I,Ha);I.prototype.M=function(a){this.ba.M(a)};I.prototype.U=function(a){a=this.ba.evaluate(a);a!==i&&this.Pa(a.la())};I.prototype.Pa=function(a){a===i&&(a="");for(var a=a.toString(),b=this.f.length-1;0<=b;)this.f[b].innerHTML!==a&&(this.f[b].innerHTML=a),b--};function Ia(a){I.call(this,a);this.nb=this.N="";this.Z=l}o(Ia,I);Ia.prototype.Xa=function(a){this.N=a;this.nb=a+"-change"};Ia.prototype.Ya=n("Z");
-Ia.prototype.Pa=function(a){a!==i?Ja(this,a):Ka(this);if(this.Z){var b=this;setTimeout(function(){for(var c=b.f.length-1;0<=c;){var e=b.f[c],f=b.nb,g=""+a,j=e.ownerDocument,k=i;j.createEventObject!==d?(k=j.createEventObject(),g&&(k.data=g),g="on"+f,e[g]===d?(k.Na=f,e.fireEvent("onhelp",k)):e.fireEvent(g,k)):(k=document.createEvent("UIEvents"),k.initUIEvent(f,h,h,window,1),g&&(k.data=g),e.dispatchEvent(k));c--}},0)}};function Ja(a,b){for(var c=a.f.length-1;0<=c;)a.f[c].setAttribute(a.N,b+""),c--}
-function Ka(a){for(var b=a.f.length-1;0<=b;)a.f[b].removeAttribute(a.N),b--};function La(a){I.call(this,a);this.xb=this.cb=i}o(La,I);La.prototype.Wa=n("cb");La.prototype.$a=n("xb");La.prototype.Pa=function(a){for(var b=this.xb.test(a),c=this.f.length-1;0<=c;)this.cb.apply(this.f[c],b,a),c--};function K(a){this.I=a;this.$=this.qb=this.ta=i;this.G={};this.ba=new va;this.tb=new va;this.ub=i}o(K,Ha);K.prototype.M=function(a){this.ba.M(a)};K.prototype.Za=n("$");K.prototype.xa=function(a,b){this.G[b]=a};K.prototype.U=function(a){a=this.ba.evaluate(a);if(a!==i){var b=a.la(),c=this.G;this.G={};for(var e in b){var f=ua(a,e),g=c,j=this.tb.evaluate(f);j!==i&&(j=j.la(),g[j]===d?this.xa(Ma(this),j):(this.G[j]=g[j],delete g[j]),this.G[j].U(f))}Na(c)}else Na(this.G)};K.prototype.n=function(){Na(this.G)};
-function Na(a){for(var b in a)a[b].n(),delete a[b]}function Ma(a){var b=a.qb.cloneNode(h),c=a.I,e=Oa(a.ta,a.$,b,c);a.ub.append(b);c.Fa.push(b);return e};function Pa(a){this.I=a||this;this.e=[];this.Fa=[];this.ca=[];this.sa=i}o(Pa,Ha);Pa.prototype.bb=n("sa");Pa.prototype.U=function(a){for(var b=this.e.length-1;0<=b;)this.e[b].U(a),b--};Pa.prototype.n=function(){for(var a=this.e.length-1;0<=a;)this.e[a].n(),a--;this.sa.parentNode.removeChild(this.sa);this.I.ca.push(this.sa)};function Oa(a,b,c,e){e=new Pa(e);e.bb(c);for(var f=0,g=a.R.length;f<g;)a.R[f].compile(c,b,e),f++;return e};function L(){}L.prototype.compile=function(a,b,c){for(var e=c.I,f=i,b=this.Qa(b),g=b.length-1;0<=g;)f=this.w(e),this.da(a,b[g],f),c.e=c.e.concat(f),g--};L.prototype.Qa=function(a){return a.Eb};L.prototype.w=function(a){return new I(a)};L.prototype.da=function(a,b,c){c.M(b.Ja);b=b.Da;x(a,b)||(a=s("."+b,a));c.f=c.f.concat(a)};function Qa(){}o(Qa,L);Qa.prototype.Qa=function(a){return a.ib};Qa.prototype.w=function(a){return new Ia(a)};Qa.prototype.da=function(a,b,c){L.prototype.da.call(this,a,b,c);c.Xa(b.N);c.Ya(b.Z)};function Ra(){}o(Ra,L);Ra.prototype.Qa=function(a){return a.kb};Ra.prototype.w=function(a){return new La(a)};Ra.prototype.da=function(a,b,c){L.prototype.da.call(this,a,b,c);a:{switch(b.gb){case "class":a=new Sa(b.fb);break a}a=i}c.Wa(a);c.$a(Ua(b.Ab,b.zb))};function Ua(a,b){switch(a){case "isset":return new Va;case "eq":return new Wa(b);case "ne":return new Xa(b)}return i}function Ya(a){this.q=a||""}Ya.prototype.test=m();function Va(){this.q=""}o(Va,Ya);Va.prototype.test=function(a){return a!==d};
-function Wa(a){this.q=a||""}o(Wa,Ya);Wa.prototype.test=function(a){return a===this.q||a+""===this.q};function Xa(a){this.q=a||""}o(Xa,Ya);Xa.prototype.test=function(a){return!(a==this.q||a+""==this.q)};function Za(a){this.q=a||""}Za.prototype.apply=m();function Sa(a){this.q=a||"";this.pa=i}o(Sa,Za);Sa.prototype.apply=function(a,b,c){var e=this.q;""!==e?b?y(a,e):z(a,e):this.pa!==c&&b&&(this.pa!==i&&z(a,this.pa+""),y(a,c+""),this.pa=c)};function $a(a,b){this.Y=a;this.ta=b}$a.prototype.compile=function(a,b,c){for(var b=b.vb,e=b.length-1;0<=e;){var f=a,g=b[e],j=c,k=j.I,t=[],p=g.Da;if(x(f,p))t.push(ab(this,f,g,k));else for(var P=s("."+p,f),B=P.length-1;0<=B;){for(var Ta=p,Bb=f,J=P[B].parentNode;J!==i&&J!==Bb&&!x(J,Ta);)J=J.parentNode;(J===Bb?i:J)===i&&t.push(ab(this,P[B],g,k));B--}j.e=j.e.concat(t);e--}};
-function ab(a,b,c,e){e=new K(e);e.ta=a.ta;a=a.Y.getElementById(c.rb);a=a.cloneNode(h);a.removeAttribute("id");e.qb=a;e.Za(c.$);e.tb.M(c.sb);e.M(c.Ja);b=new Ga(b);e.ub=b;return e};var bb=new function(){this.Y=document;this.Ma={};this.P=[];this.P.push(new H);this.P.push(new Ea);this.P.push(new Fa);this.P.push(new Ca(this))},cb={},db=new function(){this.Y=document;this.R=[];this.R.push(new L);this.R.push(new Qa);this.R.push(new Ra);this.R.push(new $a(this.Y,this))};function M(a){this.i=a}M.prototype.d=function(a,b,c){for(var e=[],f=this.Gb(a),g=0,j=f.length,k=i;g<j;){for(var k=f[g],t=a,p=h,P=eb,B=0,Ta=P.length;B<Ta;){p=p&&fa(k,P[B],t)===i;if(!p)break;B++}p&&(k=this.s(f[g],b,c),k.d&&k.d(),e.push(k));g++}return e};M.prototype.Gb=function(a){var b=s(this.i,a);return b=b.concat(r!==i&&r.filter!==d?r.filter(this.i,[a]):i)};M.prototype.n=function(a){for(var b=0,a=a.length;b<a;)b++};M.prototype.s=m();function N(a){C.call(this);this.a=a;this.o={}}o(N,C);N.prototype.getName=function(){return this.a.getAttribute("data-name")};function O(a,b){var c=a.a.getAttribute("data-"+b);c===i&&a.o[b]!==d&&(c=a.o[b]);return c}N.prototype.d=m();N.prototype.n=m();var fb={},eb=[];function Q(a,b,c){fb[a]=b;c&&eb.push(b.i)};function R(a){N.call(this,a);this.S={};this.h={}}o(R,N);R.prototype.getName=function(){return this.a.id};R.prototype.clear=function(){this.a.innerHTML=""};R.prototype.t=function(a,b){var c=Array.prototype.slice.call(arguments);c.shift();this.S[a]===d&&(this.S[a]=[i]);0<c.length?this.S[a].push(c):this.S[a][0]=[]};
-function gb(a,b){var b=b||a.a,c=i,c=i,e;for(e in a.S)if(c=fb[e]!==d?fb[e]:i,c!==i){a.h[e]===d&&(a.h[e]=[]);for(var f=a.S[e],g=[],j=[b,a],k=f.length-1;0<=k;)f[k]!==i&&(g=g.concat(c.d.apply(c,j.concat(f[k])))),k--;c=g;a.h[e]=a.h[e].concat(c)}else alert('Unknown module "'+e+'"')}function S(a,b,c){if(a.h[b]!==d)for(var a=a.h[b],b=0,e=a.length;b<e;){if(a[b].getName()===c)return a[b];b++}return i};function hb(a){R.call(this,a);this.F=i;this.o["init-event"]=i}o(hb,R);hb.prototype.clear=function(){R.prototype.clear.call(this);this.F!==i&&this.F.n()};hb.prototype.d=function(){O(this,"is-auto-init")&&ib(this)};function ib(a){a.F=a.a===document.body?jb:a.a!==i&&kb[a.a.id]!==d?kb[a.a.id]:i;a.F!==i?(a.F.b=a,a.F.d()):alert("Can't find controller for "+a.a.tagName+"#"+a.a.id)};function T(a){N.call(this,a);this.oa=l}o(T,N);T.prototype.d=function(){if(!this.oa){var a=this;v(this.a,".j-popup-close","click",function(b){ga(b);a.close()});v(this.a,".j-popup-apply","click",function(b){ga(b);a.apply()})}};T.prototype.open=function(){this.c("popup-open")&&y(this.a,"show")};T.prototype.close=function(){this.c("popup-close")&&z(this.a,"show")};T.prototype.apply=function(){this.c("popup-apply",lb(this))&&z(this.a,"show")};
-function lb(a){a=u("form.j-popup-form",a.a);return a!==i?mb.D(a):i};var nb={},ob=0;function pb(a){""===a.id&&(a.id="popup_"+ob++);if(nb[a.id]===d){var b=new T(a);b.d();nb[a.id]=b}return nb[a.id]};function qb(a){N.call(this,a);this.oa=l}o(qb,N);qb.prototype.d=function(){this.oa||(this.oa=h)};function rb(a){N.call(this,a);this.o["button-selector"]=".j-button"}o(rb,N);rb.prototype.d=function(){var a=this,b=O(this,"button-selector");b!==i&&v(this.a,b,"click",function(){var b;""===this.id&&(this.id="button_"+sb++);tb[this.id]===d&&(b=new qb(this),b.d(),tb[this.id]=b);b=tb[this.id];O(b,"type")!==i&&a.c(O(b,"type"),b)})};var tb={},sb=0;function U(a){N.call(this,a);this.u=i;this.Q={};this.Ca="form_callback"+(Math.random()+"").substr(2);this.La=i}o(U,N);U.prototype.d=function(){this.La=O(this,"record-type");this.u=u(".j-form-message",this.a);var a=this;w(this.a,"submit",function(b){ub(a,b)});w(this.a,"change",function(){a.c("change")});w(this.a,"reset",function(b){vb(a,b)});var b=document.createElement("input");b.type="hidden";b.name="__callback";b.value=this.Ca;this.a.appendChild(b)};
-U.prototype.la=function(a){for(var b={},c=this.a.elements,e=0,f=c.length,g=i;e<f;)g=c[e].name,b[g]!==d?(b[g]instanceof Array||(b[g]=[b[g]]),b[g].push(c[e].value)):b[g]=c[e].value,e++;return b[a]!==d?b[a]:i};U.prototype.submit=function(){ub(this);this.a.submit()};U.prototype.reset=function(){vb(this);this.a.reset()};function ub(a,b){a.c("submit")?(wb(a),xb(a),yb(a)):b!==d&&ga(b)}function vb(a,b){a.c("reset")?(wb(a),xb(a)):b!==d&&ga(b)}
-function yb(a){window[a.Ca]=function(b){var c=b.response,b=b.errors;if(c!==d)a.La!==i&&(c=pa(c,a.La)),a.c("result",c);else if(b!==d){for(var c=0,e=b.length,f=i;c<e;){f=b[c];if(f.param!==d){var g=a,j=f.message,k;k=g;var f=f.param,t=i;if(k.Q[f]===d){var p=u(".j-"+f+"-input",k.a);p!==i&&(p=new zb(p),p.d(),k.Q[f]=p)}k.Q[f]!==d&&(t=k.Q[f]);k=t;k!==i?(g=k,y(g.a,"error"),g.H!==i&&(g.H.innerHTML=j)):Ab(g,j)}else Ab(a,f.message);c++}a.c("error",b)}delete window[a.Ca]}}
-function wb(a){a.u!==i&&(a.u.innerHTML="",y(a.u,"hide"))}function Ab(a,b){a.u!==i&&(a.u.innerHTML+=b+"<br />",z(a.u,"hide"))}function xb(a){for(var b in a.Q){var c=a.Q[b];z(c.a,"error");c.H!==i&&(c.H.innerHTML=c.mb)}}var mb=U;function Cb(a){N.call(this,a);this.H=i;this.mb=""}o(Cb,N);Cb.prototype.d=function(){this.H=u(".j-message",this.a);this.H!==i&&(this.mb=this.H.innerHTML)};var zb=Cb;function Db(a){N.call(this,a);this.ua=this.p=i}o(Db,N);Db.prototype.d=function(){var a=O(this,"template-id"),b;a!==i?(cb[a]===d&&(cb[a]=Da(bb,a)),b=cb[a]):b=i;b!==i?this.p=Oa(db,b,this.a,i):alert("Unknown template "+a)};Db.prototype.ya=function(a){this.p.U(new sa(a));this.ua!==i&&this.ua.ac(this.p.Fa.splice(0,this.p.Fa.length),this.p.ca.splice(0,this.p.ca.length))};Db.prototype.n=function(){this.p.n();this.ua!==i&&this.p.ca.splice(0,this.p.ca.length);this.ua=this.p=this.a=i};function V(a){N.call(this,a);this.B=this.g=this.r=i;this.Vb=[]}o(V,N);V.prototype.Qb=function(a){return-1===q(a,this.Vb)};V.prototype.za=function(a){return this.r.za(a)};V.prototype.V=function(a){return this.r.V(a)};V.prototype.ka=function(){return this.B.ka()};function Eb(a){a=a.B.ka();return 0<a.length?a.pop():i}V.prototype.C=function(a){this.B.C(a)};V.prototype.ha=function(){this.B.ha()};function W(a,b){V.call(this,a);this.o["item-selector"]=".j-selection-item";this.o["index-attribute"]=b;this.o["is-multiple"]=i;this.o["selection-class"]="active";this.o["selection-event"]="click"}o(W,V);
-W.prototype.d=function(){var a=O(this,"index-attribute");this.r=a===i?new Fb:new Gb(a);this.g=new ba(this.a);this.B=O(this,"is-multiple")?new Hb:new Ib;this.g.cc(O(this,"selection-class"));this.g.bc(O(this,"item-selector"));this.g.ab(this);this.g.r=this.r;this.B.ab(this);this.B.J=this;this.B.g=this.g;this.g.update()};function Jb(a){W.call(this,a,"id");this.Ha=i;this.ob=[];this.a.removeAttribute("data-is-multiple");this.o["item-selector"]=".j-navigation-page"}o(Jb,W);Jb.prototype.d=function(){var a=this;this.addEventListener("deselected",function(){a.c("close")});this.addEventListener("selected",function(){a.c("open",a.Ha)});W.prototype.d.call(this)};Jb.prototype.navigate=function(a,b){var c=Eb(this);c!==i&&this.ob.push(c);this.Ha=b||i;this.C(a);this.Ha=i};Jb.prototype.back=function(){this.C(this.ob.pop())};function Kb(){this.e=[]}Kb.prototype.xa=function(a){return this.e.push(a)-1};Kb.prototype.za=function(a){return q(a,this.e)};Kb.prototype.V=function(a){return this.e[a]||i};Kb.prototype.clear=function(){this.e.length=0};var Fb=Kb;function Lb(a){this.pb=a;this.e={}}Lb.prototype.xa=function(a){var b=a.getAttribute(this.pb);b!==i&&(this.e[b]=a);return b};Lb.prototype.za=function(a){a=a.getAttribute(this.pb);return a!==i&&this.e[a]!==d?a:i};Lb.prototype.V=function(a){return this.e[a]||i};Lb.prototype.clear=function(){this.e={}};var Gb=Lb;function X(){this.J=this.g=this.L=i}X.prototype.ab=n("L");X.prototype.ka=m();X.prototype.C=m();X.prototype.ha=m();function Mb(){X.call(this);this.j=i}o(Mb,X);Mb.prototype.ka=function(){return this.j!==i?[this.j]:[]};Mb.prototype.C=function(a){var b;if(b=this.L.Qb(a))if(b=this.j!==a)b=this.j,b=(b===i||this.J.c("deselect",b))&&this.J.c("select",a);b&&(b=this.j,this.j!==i&&this.g.ia(this.j),this.g.Sa(a),this.j=a,b!==i&&this.J.c("deselected",b),this.J.c("selected",a))};Mb.prototype.ha=function(){this.j!==i&&(this.g.ia(this.j),this.j=i)};var Ib=Mb;function Nb(){X.call(this);this.T=[]}o(Nb,X);Nb.prototype.ka=function(){return this.T.slice(0)};Nb.prototype.C=function(a){if(this.L.Qb(a)){var b=q(a,this.T);-1===b?this.J.c("select",a)&&(this.g.Sa(a),this.T.push(a)):this.J.c("deselect",a)&&(this.g.ia(a),this.T.splice(b,1))}};Nb.prototype.ha=function(){for(;0<this.T.length;)this.g.ia(this.T.shift())};var Hb=Nb;function Y(){this.L=this.r=i}Y.prototype.ab=n("L");Y.prototype.Sa=m();Y.prototype.ia=m();Y.prototype.update=m();(function(){function a(a){Y.call(this);this.a=a;this.wa=this.Ra=i}o(a,Y);a.prototype.bc=n("Ra");a.prototype.cc=n("wa");a.prototype.Sa=function(a){y(this.r.V(a),this.wa)};a.prototype.ia=function(a){a=this.r.V(a);a!==i&&z(a,this.wa)};a.prototype.update=function(){this.L.ha();this.r.clear();for(var a=s(this.Ra,this.a),c=0,e=a.length,f=i,g=i;c<e;)g=a[c],fa(g,this.Ra,this.a)===i&&(f=this.r.xa(g),f!==i&&x(g,this.wa)&&this.L.C(f)),c++};ba=a})();function Ob(){this.i="form.j-form"}o(Ob,M);Ob.prototype.s=function(a){return new mb(a)};Q("form",new Ob);function Pb(){this.i="body"}o(Pb,M);Pb.prototype.s=function(a){var b=new Jb(a);v(a,".j-navigation-link","click",function(){var a=this.getAttribute("data-href");if(a!==i){var e;e===d&&(e="data-");for(var f={},g=this.attributes,j=0,k=g.length;j<k;)0===g[j].name.indexOf(e)&&(f[g[j].name.substr(e.length)]=g[j].value),j++;b.navigate(a,f)}});v(a,".j-navigation-back","click",function(){b.back()});return b};Q("navigation",new Pb);function Qb(){this.i=".j-popup"}o(Qb,M);Qb.prototype.s=function(a){return pb(a)};Q("popup",new Qb);function Rb(){this.i=".j-popup-button"}o(Rb,M);Rb.prototype.s=function(a){var b=u(a.getAttribute("data-popup-selector")),c=i;b!==i&&(c=pb(b),w(a,"click",function(){c.open()}));return c};Q("popup-button",new Rb);function Sb(){this.i=".j-selection-group"}o(Sb,M);Sb.prototype.s=function(a){var b=new W(a,i),c=O(b,"selection-event"),e=O(b,"item-selector");c!==i&&e!==i&&v(a,e,c,function(){var a=b.za(this);a!==i&&b.C(a)});return b};Q("selection-group",new Sb);function Tb(){this.i=".j-template-transformer"}o(Tb,M);Tb.prototype.s=function(a){return new Db(a)};Q("template-transformer",new Tb);function Ub(){this.i=".j-control-container"}o(Ub,M);Ub.prototype.Gb=function(a){return s(this.i,a)};Ub.prototype.s=function(a){return new hb(a)};Q("control-container",new Ub,h);function Vb(){this.i=".j-button-group"}o(Vb,M);Vb.prototype.s=function(a){return new rb(a)};Q("button-group",new Vb);var kb={},jb=i;function Z(){this.b=i}Z.prototype.d=function(){this.fa();gb(this.b);this.ea()};Z.prototype.fa=m();Z.prototype.ea=m();Z.prototype.n=function(){var a=this.b,b;for(b in a.h)(fb[b]!==d?fb[b]:i).n(a.h[b]),a.h[b].length=0};Z.prototype.ac=function(a){for(var b=0,c=a.length;b<c;)gb(this.b,a[b]),b++};function $(){this.z=this.m=this.b=i;this.aa={}}o($,Z);$.prototype.fa=function(){this.b.t("control-container");this.b.t("navigation")};$.prototype.ea=function(){this.m=this.b.h.navigation!==d&&this.b.h.navigation[0]!==d?this.b.h.navigation[0]:i;if(this.m!==i){var a=this;this.m.addEventListener("select",function(){if(a.z!==i){var b=a.aa[a.z.id];b!==i&&b.close()}});this.m.addEventListener("open",function(b,e){Wb(a,Eb(a.m),e)});var b=Eb(this.m);b!==i&&Wb(this,b)}};
-function Wb(a,b,c){b=a.m.V(b);if(a.z!==i){var e=a.aa[a.z.id];e!==i&&e.close()}a.z=b;if(a.aa[a.z.id]===d){var b=a.z,e=i,f=S(a.b,"control-container",b.id);f!==i&&(ib(f),e=f.F);e!==i&&(e.m=a.m);a.aa[b.id]=e}a=a.aa[a.z.id];a!==i&&a.open(c)};function Xb(){this.m=this.b=i}o(Xb,Z);Xb.prototype.close=m();Xb.prototype.open=m();window.main=function(a){da.d(a);r=Sizzle;ib(new hb(document.body))};function Yb(){$.call(this)}o(Yb,$);Yb.prototype.fa=function(){$.prototype.fa.call(this);this.b.t("template-transformer");this.b.t("popup");this.b.t("form")};Yb.prototype.ea=function(){$.prototype.ea.call(this);var a=this;oa("users.getCurrent",i,function(b){b===i?Zb(a):$b(a,b)},"user");ac(this)};function ac(a){S(a.b,"form","sign-out").addEventListener("result",function(){location.reload()})}
-function Zb(a){var b=S(a.b,"popup","sign-in");b.open();S(a.b,"form","sign-in").addEventListener("result",function(c,e){$b(a,e);b.close()})}function $b(a,b){S(a.b,"template-transformer","user-info").ya(b.D());a.m.navigate("recipes_page")}jb=new Yb;function bc(){Xb.call(this);this.Cb=this.Ka=this.Ba=this.W=this.hb=this.Db=this.jb=i}o(bc,Xb);bc.prototype.fa=function(){this.b.t("template-transformer");this.b.t("button-group");this.b.t("popup");this.b.t("form")};
-bc.prototype.ea=function(){var a=this;this.Db=S(this.b,"template-transformer","recipe-table");this.jb=S(this.b,"template-transformer","bakery-select");this.hb=S(this.b,"template-transformer","add-recipe");this.W=S(this.b,"form","bakery-select");this.Ba=S(this.b,"form","add-recipe");this.Ka=S(this.b,"button-group","recipe-controls");this.Cb=S(this.b,"popup","edit-recipe");this.Ka.addEventListener("delete",function(b,c){cc(a,c)});this.Ka.addEventListener("edit",function(){a.Cb.open()});this.W.addEventListener("result",
-function(b,c){dc.v=c;ec(a)});this.W.addEventListener("change",function(){var b=a.W.la("bakery_id");-1!==b?a.W.submit():dc.v.length=0;var c=fc;c.ma=i;for(var e=0,f=c.O.length;e<f;){if(c.O[e].id===b){c.ma=c.O[e];break}e++}ec(a)});this.Ba.addEventListener("result",function(b,c){dc.v.push(c);a.Ba.reset();ec(a)});oa("users.getBakeries",i,function(b){fc.O=b;ec(a)},"bakery")};function ec(a){a.jb.ya(gc());a.Db.ya(hc());var b=fc;a.hb.ya(b.ma!==i?b.ma.D():i)}
-function cc(a,b){if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0440\u0435\u0446\u0435\u043f\u0442?")){var c=O(b,"recipe-id");oa("recipes.remove",{recipe_id:c},function(){for(var b=dc,f=0,g=b.v.length;f<g;){if(b.v[f].id===c){b.v.splice(f,1);break}f++}ec(a)});ha(b.a)}}var ic=new bc;kb.recipes_page=ic;function jc(){this.ja="";this.Rb=-1}o(jc,E);jc.prototype.Aa=function(a){this.ja=a.email;this.Rb=a.role};jc.prototype.D=function(){return{email:this.ja,role:kc.Tb[this.Rb]}};var lc=new jc;la.qa.user=lc;function mc(){this.name=this.city=this.ja=this.id="";this.Lb=0}o(mc,E);mc.prototype.Aa=function(a){this.id=a.id;this.name=a.name;this.ja=a.email;this.city=a.city.name;this.Lb=a.delivery_price};mc.prototype.D=function(){return{id:this.id,name:this.name+" ("+this.city+")",email:this.ja,deliveryPrice:this.Lb}};var nc=new mc;la.qa.bakery=nc;function oc(){this.Pb=this.Mb=this.name=this.Kb=this.id="";this.Nb=[]}o(oc,E);oc.prototype.Aa=function(a){this.id=a.id;this.Kb=a.bakery_id;this.name=a.name;this.Mb=a.desc;this.Pb=a.image_url;this.Nb=[]};oc.prototype.D=function(){return{id:this.id,bakeryId:this.Kb,name:this.name,desc:this.Mb,imageUrl:this.Pb,dimentionPrices:this.Nb}};var pc=new oc;la.qa.recipe=pc;var kc=new function(){this.Tb=["\u0410\u0434\u043c\u0438\u043d","\u041a\u043e\u043d\u0434\u0438\u0442\u0435\u0440\u0441\u043a\u0430\u044f"]};function gc(){for(var a=fc,b=[],c=0,e=a.O.length;c<e;)b.push(a.O[c].D()),c++;return b}var fc=new function(){this.O=[];this.ma=i};function hc(){for(var a=dc,b=[],c=0,e=a.v.length;c<e;)b.push(a.v[c].D()),c++;return b}var dc=new function(){this.v=[]};function qc(a){F.call(this,a);this.k=new D;this.k.method="POST";this.k.Fb="/api/?method="+a;var b=this;this.k.addEventListener("complete",function(a,e){var f=i;try{f=JSON.parse(e)}catch(g){b.c("error",e)}if(f!==i){var j=f.response;j!==d?b.c("result",j):b.c("error",f.errors)}})}o(qc,F);qc.prototype.call=function(a){this.k.setData(a);this.k.send()};function rc(){}rc.prototype.Ua=function(a){return new qc(a)};na.Ea=new rc;
+'use strict';var tuna = {};
+tuna.VERSION = "3.2.70";
+tuna.IS_IE = !!eval("'\v' == 'v'");
+tuna.IS_COMPILED = false;
+tuna.dom = {};
+tuna.events = {};
+tuna.model = {};
+tuna.net = {};
+tuna.rest = {};
+tuna.tmpl = {};
+tuna.tmpl.compilers = {};
+tuna.tmpl.data = {};
+tuna.tmpl.markup = {};
+tuna.tmpl.settings = {};
+tuna.tmpl.units = {};
+tuna.ui = {};
+tuna.ui.buttons = {};
+tuna.ui.containers = {};
+tuna.ui.forms = {};
+tuna.ui.popups = {};
+tuna.ui.modules = {};
+tuna.ui.selection = {};
+tuna.ui.transformers = {};
+tuna.ui.selection.items = {};
+tuna.ui.selection.rule = {};
+tuna.ui.selection.view = {};
+tuna.utils = {};
+tuna.view = {};
+tuna.utils.toArray = function(list) {
+  return Array.prototype.slice.call(list)
+};
+tuna.utils.implement = function(Class, Interface) {
+  if(!tuna.IS_COMPILED) {
+    for(var method in Interface.prototype) {
+      if(typeof Interface.prototype[method] === "function") {
+        Class.prototype[method] = Interface.prototype[method]
+      }
+    }
+  }
+};
+tuna.utils.extend = function(Class, Parent) {
+  var Link = function() {
+  };
+  Link.prototype = Parent.prototype;
+  Class.prototype = new Link;
+  Class.prototype.constructor = Class
+};
+tuna.utils.eval = function(code) {
+  return window.execScript !== undefined ? window.execScript(code) : window.eval(code)
+};
+tuna.utils.bind = function(func, context) {
+  if(func.bind !== undefined) {
+    return func.bind(context)
+  }else {
+    var args = Array.prototype.slice.call(arguments, 2);
+    return function() {
+      return func.apply(context, args.concat(tuna.utils.toArray(arguments)))
+    }
+  }
+};
+tuna.utils.nextTick = function(callback) {
+  setTimeout(callback, 0)
+};
+tuna.utils.clone = function(object, clones) {
+  if(object instanceof Array) {
+    return tuna.utils.cloneArray(object)
+  }else {
+    if(object instanceof Date) {
+      return tuna.utils.cloneDate(object)
+    }else {
+      if(object instanceof Object) {
+        if(clones === undefined) {
+          clones = [object]
+        }else {
+          clones.push(object)
+        }
+        var result = {};
+        for(var key in object) {
+          if(object.hasOwnProperty(key)) {
+            if(tuna.utils.indexOf(object[key], clones) === -1) {
+              result[key] = tuna.utils.clone(object[key])
+            }else {
+              throw new TypeError("Cloning circular structure");
+            }
+          }
+        }
+        return result
+      }
+    }
+  }
+  return object
+};
+tuna.utils.cloneDate = function(date) {
+  return new Date(date.getTime())
+};
+tuna.utils.cloneArray = function(array) {
+  return array.slice(0)
+};
+tuna.utils.indexOf = function(element, array) {
+  if(array.indexOf !== undefined) {
+    return array.indexOf(element)
+  }else {
+    var i = 0, l = array.length;
+    while(i < l) {
+      if(array[i] === element) {
+        return i
+      }
+      i++
+    }
+  }
+  return-1
+};
+var Config = function() {
+  this.__data = null
+};
+Config.prototype.init = function(data) {
+  this.__data = data
+};
+Config.prototype.get = function(key) {
+  if(this.__data[key] !== undefined) {
+    return this.__data[key]
+  }
+  return null
+};
+tuna.utils.config = new Config;
+tuna.dom.__addCustomIEListener = function(element, type, handler) {
+  if(element.__customListener == undefined) {
+    element.__customListener = function(event) {
+      if(event.__type !== undefined) {
+        var type = event.__type;
+        delete event.__type;
+        var handlers = element["__" + type];
+        for(var i in handlers) {
+          handlers[i].call(element, event)
+        }
+      }
+    };
+    element.attachEvent("onhelp", element.__customListener)
+  }
+  if(element["__" + type] === undefined) {
+    element["__" + type] = []
+  }
+  element["__" + type].push(handler)
+};
+tuna.dom.__removeCustomIEListener = function(element, type, handler) {
+  var handlers = element["__" + type];
+  if(handlers !== undefined) {
+    var i = handlers.length - 1;
+    while(i >= 0) {
+      if(handlers[i] === handler) {
+        handlers.splice(i, 1)
+      }
+      i--
+    }
+  }
+};
+tuna.dom.__dispatchCustomIEEvent = function(element, event, type) {
+  event.__type = type;
+  return element.fireEvent("onhelp", event)
+};
+tuna.dom.__selectorEngine = null;
+tuna.dom.setSelectorEngine = function(engine) {
+  tuna.dom.__selectorEngine = engine
+};
+tuna.dom.select = function(selector, context) {
+  if(tuna.dom.__selectorEngine !== null) {
+    return tuna.dom.__selectorEngine(selector, context)
+  }
+  return null
+};
+tuna.dom.filter = function(selector, elements) {
+  if(tuna.dom.__selectorEngine !== null && tuna.dom.__selectorEngine.filter !== undefined) {
+    return tuna.dom.__selectorEngine.filter(selector, elements)
+  }
+  return null
+};
+tuna.dom.selectOne = function(selector, context) {
+  if(tuna.dom.__selectorEngine !== null) {
+    var result = tuna.dom.__selectorEngine(selector, context);
+    if(result.length > 0) {
+      return result[0]
+    }
+  }
+  return null
+};
+tuna.dom.createFragment = function(html, doc) {
+  var fragment = doc.createDocumentFragment();
+  var tempContainer = doc.createElement("div");
+  tempContainer.innerHTML = html;
+  var children = tempContainer.childNodes;
+  var i = 0, l = children.length;
+  while(i < l) {
+    fragment.appendChild(children.item(0));
+    i++
+  }
+  return fragment
+};
+tuna.dom.addChildEventListener = function(element, childSelector, type, handler) {
+  tuna.dom.addEventListener(element, type, function(event) {
+    var eventTarget = event.target || event.srcElement;
+    var target = tuna.dom.__selectorEngine.matches(childSelector, [eventTarget])[0];
+    if(target === undefined) {
+      target = tuna.dom.getParentMatches(eventTarget, childSelector, element)
+    }
+    if(target !== null) {
+      handler.call(target, event)
+    }
+  })
+};
+tuna.dom.addEventListener = function(element, type, handler) {
+  if(element.addEventListener !== undefined) {
+    element.addEventListener(type, handler, false)
+  }else {
+    if(element.attachEvent !== undefined) {
+      var eventName = "on" + type;
+      if(element[eventName] === undefined) {
+        tuna.dom.__addCustomIEListener(element, type, handler)
+      }else {
+        element.attachEvent(eventName, handler)
+      }
+    }
+  }
+};
+tuna.dom.addOneEventListener = function(element, type, handler) {
+  var listener = function(event) {
+    handler.call(element, event);
+    tuna.dom.removeEventListener(element, type, listener)
+  };
+  tuna.dom.addEventListener(element, type, listener)
+};
+tuna.dom.removeEventListener = function(element, type, handler) {
+  if(element.removeEventListener !== undefined) {
+    element.removeEventListener(type, handler, false)
+  }else {
+    if(element.detachEvent !== undefined) {
+      var eventName = "on" + type;
+      if(element[eventName] === undefined) {
+        tuna.dom.__removeCustomIEListener(element, type, handler)
+      }else {
+        element.detachEvent("on" + type, handler)
+      }
+    }
+  }
+};
+tuna.dom.dispatchEvent = function(element, type, data) {
+  var result = false;
+  var doc = element.ownerDocument;
+  var event = null;
+  if(doc.createEventObject !== undefined) {
+    event = doc.createEventObject();
+    data && (event.data = data);
+    var eventName = "on" + type;
+    if(element[eventName] === undefined) {
+      tuna.dom.__dispatchCustomIEEvent(element, event, type)
+    }else {
+      result = element.fireEvent(eventName, event)
+    }
+  }else {
+    event = document.createEvent("UIEvents");
+    event.initUIEvent(type, true, true, window, 1);
+    data && (event.data = data);
+    result = !element.dispatchEvent(event)
+  }
+  return result
+};
+tuna.dom.preventDefault = function(event) {
+  if(event.preventDefault !== undefined) {
+    event.preventDefault()
+  }else {
+    event.returnValue = false
+  }
+};
+tuna.dom.stopPropagation = function(event) {
+  if(event.stopPropagation !== undefined) {
+    event.stopPropagation()
+  }else {
+    event.cancelBubble = true
+  }
+};
+tuna.dom.getChildIndex = function(element, parent) {
+  var result = -1;
+  var child;
+  if(element.parentNode === parent) {
+    result = 0;
+    child = parent.firstChild;
+    while(child !== undefined && child !== element) {
+      result++;
+      child = child.nextSibling
+    }
+  }
+  return result
+};
+tuna.dom.getChildAt = function(parent, index) {
+  return parent.childNodes[index] || null
+};
+tuna.dom.getParentMatches = function(element, selector, context) {
+  var parent = element.parentNode;
+  while(parent !== null && parent !== context && tuna.dom.__selectorEngine.matches(selector, [parent]).length === 0) {
+    parent = parent.parentNode
+  }
+  return parent === context ? null : parent
+};
+tuna.dom.getParentWithClass = function(element, className, context) {
+  var parent = element.parentNode;
+  while(parent !== null && parent !== context && !tuna.dom.hasClass(parent, className)) {
+    parent = parent.parentNode
+  }
+  return parent === context ? null : parent
+};
+tuna.dom.hasClass = function(element, className) {
+  if(element.classList !== undefined) {
+    return element.classList.contains(className)
+  }else {
+    if(element.className !== undefined) {
+      return element.className.match(new RegExp("(\\s|^)" + className + "(\\s|$)")) !== null
+    }
+  }
+  return false
+};
+tuna.dom.addClass = function(element, className) {
+  if(element.classList !== undefined) {
+    element.classList.add(className)
+  }else {
+    if(!tuna.dom.hasClass(element, className)) {
+      element.className += " " + className
+    }
+  }
+};
+tuna.dom.removeClass = function(element, className) {
+  if(element.classList !== undefined) {
+    element.classList.remove(className)
+  }else {
+    if(tuna.dom.hasClass(element, className)) {
+      var reg = new RegExp("(\\s|^)" + className + "(\\s|$)");
+      element.className = element.className.replace(reg, " ")
+    }
+  }
+};
+tuna.dom.setClassExist = function(element, className, isExist) {
+  if(!isExist && tuna.dom.hasClass(element, className)) {
+    tuna.dom.removeClass(element, className)
+  }else {
+    if(isExist && !tuna.dom.hasClass(element, className)) {
+      tuna.dom.addClass(element, className)
+    }
+  }
+};
+tuna.dom.getAttributesData = function(element, prefix) {
+  if(prefix === undefined) {
+    prefix = "data-"
+  }
+  var result = {};
+  var attrs = element.attributes;
+  var i = 0, l = attrs.length;
+  while(i < l) {
+    if(attrs[i].name.indexOf(prefix) === 0) {
+      result[attrs[i].name.substr(prefix.length)] = attrs[i].value
+    }
+    i++
+  }
+  return result
+};
+var BasicEvent = function(type, isBubbling) {
+  this._target = null;
+  this._type = type;
+  this._isBubbling = !!isBubbling;
+  this._isCanceled = false;
+  this._isStopped = false;
+  this._isImmediateStopped = false
+};
+BasicEvent.prototype.setTarget = function(target) {
+  this._target = target
+};
+BasicEvent.prototype.getTarget = function() {
+  return this._target
+};
+BasicEvent.prototype.getType = function() {
+  return this._type
+};
+BasicEvent.prototype.isBubbling = function() {
+  return this._isBubbling
+};
+BasicEvent.prototype.preventDefault = function() {
+  this._isCanceled = true
+};
+BasicEvent.prototype.isDefaultPrevented = function() {
+  return this._isCanceled
+};
+BasicEvent.prototype.stopImmediatePropagation = function() {
+  this._isImmediateStopped = true
+};
+BasicEvent.prototype.isImmediatePropagationStopped = function() {
+  return this._isImmediateStopped
+};
+BasicEvent.prototype.stopPropagation = function() {
+  this._isStopped = true
+};
+BasicEvent.prototype.isPropagationStopped = function() {
+  return this._isImmediateStopped || this._isStopped
+};
+tuna.events.BasicEvent = BasicEvent;
+var IEventDispatcher = function() {
+};
+IEventDispatcher.prototype.dispatch = function(event, data) {
+};
+IEventDispatcher.prototype.addEventListener = function(type, listener) {
+};
+IEventDispatcher.prototype.removeEventListener = function(type, listener) {
+};
+IEventDispatcher.prototype.hasEventListener = function(type, listener) {
+};
+tuna.events.IEventDispatcher = IEventDispatcher;
+var EventDispatcher = function(parent) {
+  this._propagationParent = parent || null;
+  this._listeners = {}
+};
+tuna.utils.implement(EventDispatcher, tuna.events.IEventDispatcher);
+EventDispatcher.prototype.dispatch = function(event, data) {
+  if(!(event instanceof tuna.events.BasicEvent)) {
+    event = new tuna.events.BasicEvent(event)
+  }
+  var type = event.getType();
+  if(this._listeners[type] !== undefined) {
+    if(event.getTarget() === null) {
+      event.setTarget(this)
+    }
+    var i = 0, l = this._listeners[type].length;
+    while(i < l) {
+      this._listeners[type][i].call(this, event, data);
+      if(event.isImmediatePropagationStopped()) {
+        break
+      }
+      i++
+    }
+    if(this._propagationParent !== null && event.isBubbling() && !event.isPropagationStopped()) {
+      this._propagationParent.dispatch(event)
+    }
+  }
+  return!event.isDefaultPrevented()
+};
+EventDispatcher.prototype.addEventListener = function(type, listener) {
+  if(this._listeners[type] === undefined) {
+    this._listeners[type] = [listener]
+  }else {
+    if(!this.hasEventListener(type, listener)) {
+      this._listeners[type].push(listener)
+    }
+  }
+};
+EventDispatcher.prototype.removeEventListener = function(type, listener) {
+  if(this._listeners[type] !== undefined) {
+    var listenerIndex = tuna.utils.indexOf(listener, this._listeners[type]);
+    if(listenerIndex !== -1) {
+      this._listeners[type].splice(listenerIndex, 1)
+    }
+  }
+};
+EventDispatcher.prototype.hasEventListener = function(type, listener) {
+  if(this._listeners[type] !== undefined) {
+    return tuna.utils.indexOf(listener, this._listeners[type]) !== -1
+  }
+  return false
+};
+tuna.events.EventDispatcher = EventDispatcher;
+var IRequest = function() {
+};
+tuna.utils.extend(IRequest, tuna.events.IEventDispatcher);
+IRequest.prototype.send = function(url) {
+};
+IRequest.prototype.abort = function() {
+};
+tuna.net.IRequest = IRequest;
+var Request = function(url) {
+  tuna.events.EventDispatcher.call(this);
+  this.__url = url || "/";
+  this.isSync = false;
+  this.method = "GET";
+  this.headers = [];
+  this.__data = null;
+  this.__response = null;
+  this.__request = null
+};
+tuna.utils.implement(Request, tuna.net.IRequest);
+tuna.utils.extend(Request, tuna.events.EventDispatcher);
+Request.prototype.setData = function(data) {
+  this.__data = data
+};
+Request.prototype.setURL = function(url) {
+  this.__url = url
+};
+Request.prototype.__requestStateHandler = function(request) {
+  if(request.readyState === 4) {
+    this.__response = request.responseText;
+    this.dispatch("complete", this.__response);
+    request.abort()
+  }
+};
+Request.prototype.send = function() {
+  var requestURL = this.__url;
+  if(this.__request !== null) {
+    this.__request.abort()
+  }
+  var request = !tuna.IS_IE ? new XMLHttpRequest : new ActiveXObject("Microsoft.XMLHTTP");
+  if(!this.isSync) {
+    var self = this;
+    request.onreadystatechange = function() {
+      self.__requestStateHandler(request)
+    }
+  }
+  var dataString = Request.encode(this.__data);
+  if(this.method === "GET" && dataString !== "") {
+    requestURL += (requestURL.indexOf("?") === -1 ? "?" : "&") + dataString
+  }
+  request.open(this.method, encodeURI(requestURL), !this.isSync);
+  var i = this.headers.length - 1;
+  while(i >= 0) {
+    request.setRequestHeader(this.headers[i].name, this.headers[i].value);
+    i--
+  }
+  var sendData = null;
+  if(this.method === "POST") {
+    request.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    sendData = dataString
+  }
+  request.send(sendData);
+  if(this.isSync) {
+    this.__response = request.responseText;
+    this.dispatch("complete", this.__response)
+  }
+  this.__request = request
+};
+Request.prototype.abort = function() {
+  if(this.__request !== null) {
+    this.__request.abort()
+  }
+};
+Request.prototype.getResponse = function() {
+  return this.__response
+};
+Request.encode = function(object) {
+  return Request.__splitData(object).join("&")
+};
+Request.__splitData = function(object, path) {
+  var result = [];
+  if(path === undefined) {
+    path = []
+  }
+  if(object !== null && !(object instanceof Function)) {
+    if(object instanceof Object) {
+      for(var key in object) {
+        var newPath = path.length === 0 ? [key] : (path.join(",") + "," + key).split(",");
+        result = result.concat(Request.__splitData(object[key], newPath))
+      }
+    }else {
+      result = [path.shift() + (path.length > 0 ? "[" + path.join("][") + "]=" : "=") + encodeURIComponent("" + object)]
+    }
+  }
+  return result
+};
+tuna.net.Request = Request;
+var Record = function() {
+};
+Record.prototype.clone = function() {
+  var clone = new this.constructor;
+  for(var param in this) {
+    if(this.hasOwnProperty(param)) {
+      clone[param] = this[param]
+    }
+  }
+  return clone
+};
+Record.prototype.populate = function(data) {
+};
+Record.prototype.serialize = function() {
+};
+tuna.model.Record = Record;
+var RecordFactory = function() {
+  this.__records = {}
+};
+RecordFactory.prototype.registerRecord = function(name, record) {
+  this.__records[name] = record
+};
+RecordFactory.prototype.createRecord = function(name) {
+  return this.__records[name].clone()
+};
+tuna.model.recordFactory = new RecordFactory;
+var IMethod = function() {
+};
+IMethod.prototype.call = function(args) {
+};
+IMethod.prototype.clone = function() {
+};
+tuna.rest.IMethod = IMethod;
+var Method = function(name) {
+  tuna.events.EventDispatcher.call(this);
+  this._name = name || null
+};
+tuna.utils.implement(Method, tuna.rest.IMethod);
+tuna.utils.extend(Method, tuna.events.EventDispatcher);
+Method.prototype.call = function(args) {
+};
+Method.prototype.clone = function() {
+  return new this.constructor(this._name)
+};
+tuna.rest.Method = Method;
+var IMethodFactory = function() {
+};
+IMethodFactory.prototype.createMethod = function(name) {
+};
+tuna.rest.IMethodFactory = IMethodFactory;
+var MethodFactory = function() {
+  this.__methods = {};
+  this.__commonFactory = null
+};
+tuna.utils.implement(MethodFactory, tuna.rest.IMethodFactory);
+MethodFactory.prototype.setDefaultFactory = function(factory) {
+  this.__commonFactory = factory
+};
+MethodFactory.prototype.createMethod = function(name) {
+  if(this.__methods[name] !== undefined) {
+    return this.__methods[name].clone()
+  }else {
+    if(this.__commonFactory !== null) {
+      return this.__commonFactory.createMethod(name)
+    }
+  }
+  return null
+};
+MethodFactory.prototype.registerMethod = function(name, method) {
+  this.__methods[name] = method
+};
+tuna.rest.methodFactory = new MethodFactory;
+tuna.rest.call = function(name, args, callback, recordName) {
+  var method = tuna.rest.methodFactory.createMethod(name);
+  if(callback !== undefined) {
+    var listener = function(event, data) {
+      var result = data;
+      if(recordName !== undefined) {
+        result = tuna.rest.populateRecords(data, recordName)
+      }
+      callback(result);
+      method.removeEventListener("result", listener)
+    };
+    method.addEventListener("result", listener)
+  }
+  method.call(args)
+};
+tuna.rest.populateRecords = function(data, name) {
+  if(data !== null) {
+    if(data.splice !== undefined) {
+      var result = [];
+      var i = 0, l = data.length;
+      while(i < l) {
+        result.push(tuna.rest.__populateRecord(data[i], name));
+        i++
+      }
+      return result
+    }else {
+      return tuna.rest.__populateRecord(data, name)
+    }
+  }
+  return null
+};
+tuna.rest.__populateRecord = function(data, name) {
+  var record = tuna.model.recordFactory.createRecord(name);
+  record.populate(data);
+  return record
+};
+var DataNode = function(value, parent, key) {
+  this.__value = value;
+  this.__parent = parent || null;
+  this.__key = key || null;
+  this.__keyNode = null;
+  this.__children = {}
+};
+DataNode.prototype.getParent = function() {
+  return this.__parent
+};
+DataNode.prototype.getKey = function() {
+  if(this.__keyNode === null) {
+    this.__keyNode = new tuna.tmpl.data.DataNode(this.__key)
+  }
+  return this.__keyNode
+};
+DataNode.prototype.getRoot = function() {
+  return this.__parent !== null ? this.__parent.getRoot() : this
+};
+DataNode.prototype.getValue = function() {
+  return this.__value
+};
+DataNode.prototype.growChild = function(key) {
+  var result = null;
+  if(this.__children[key] !== undefined) {
+    result = this.__children[key]
+  }else {
+    if(this.__value !== null) {
+      var keyValue = this.__value[key];
+      if(keyValue !== undefined) {
+        this.__children[key] = new tuna.tmpl.data.DataNode(keyValue, this, key);
+        result = this.__children[key]
+      }else {
+        this.__children[key] = new tuna.tmpl.data.DataNode(null)
+      }
+    }
+  }
+  return result
+};
+tuna.tmpl.data.DataNode = DataNode;
+var PathEvaluator = function() {
+  this.__parsedPath = null
+};
+PathEvaluator.prototype.setPath = function(path) {
+  this.__parsedPath = path.split("/")
+};
+PathEvaluator.prototype.evaluate = function(dataNode) {
+  var node = this.__applyNextToken(this.__parsedPath, dataNode, 0);
+  if(node !== null) {
+    return node
+  }
+  return new tuna.tmpl.data.DataNode(null)
+};
+PathEvaluator.prototype.__applyNextToken = function(path, dataNode, index) {
+  var token = path[index];
+  if(dataNode !== null && token !== undefined) {
+    return this.__applyNextToken(path, this.__applyToken(token, dataNode), ++index)
+  }
+  return dataNode
+};
+PathEvaluator.prototype.__applyToken = function(token, dataNode) {
+  switch(token) {
+    case "":
+      return dataNode.getRoot();
+    case ".":
+      return dataNode;
+    case "..":
+      return dataNode.getParent();
+    case "$key":
+      return dataNode.getKey()
+  }
+  return dataNode.growChild(token)
+};
+tuna.tmpl.data.PathEvaluator = PathEvaluator;
+tuna.tmpl.settings.IItemSettings = function() {
+};
+var SpotSettings = function() {
+  this.__class = "";
+  this.__path = ""
+};
+SpotSettings.prototype.setTargetClass = function(className) {
+  this.__class = className
+};
+SpotSettings.prototype.getTargetClass = function() {
+  return this.__class
+};
+SpotSettings.prototype.setDataPath = function(path) {
+  this.__path = path
+};
+SpotSettings.prototype.getDataPath = function() {
+  return this.__path
+};
+tuna.tmpl.settings.SpotSettings = SpotSettings;
+var AttributeSettings = function() {
+  tuna.tmpl.settings.SpotSettings.call(this);
+  this.__attributeName = "";
+  this.__hasEvent = false
+};
+tuna.utils.extend(AttributeSettings, tuna.tmpl.settings.SpotSettings);
+AttributeSettings.prototype.setEvent = function(hasEvent) {
+  this.__hasEvent = hasEvent
+};
+AttributeSettings.prototype.hasEvent = function() {
+  return this.__hasEvent
+};
+AttributeSettings.prototype.setAttributeName = function(attributeName) {
+  this.__attributeName = attributeName
+};
+AttributeSettings.prototype.getAttributeName = function() {
+  return this.__attributeName
+};
+tuna.tmpl.settings.AttributeSettings = AttributeSettings;
+var ConditionSettings = function() {
+  tuna.tmpl.settings.SpotSettings.call(this);
+  this.__actionType = "";
+  this.__actionData = "";
+  this.__operatorType = "";
+  this.__operatorData = ""
+};
+tuna.utils.extend(ConditionSettings, tuna.tmpl.settings.SpotSettings);
+ConditionSettings.prototype.setOperator = function(type, data) {
+  this.__operatorType = type;
+  this.__operatorData = data
+};
+ConditionSettings.prototype.getOperatorType = function() {
+  return this.__operatorType
+};
+ConditionSettings.prototype.getOperatorData = function() {
+  return this.__operatorData
+};
+ConditionSettings.prototype.setAction = function(type, data) {
+  this.__actionType = type;
+  this.__actionData = data
+};
+ConditionSettings.prototype.getActionType = function() {
+  return this.__actionType
+};
+ConditionSettings.prototype.getActionData = function() {
+  return this.__actionData
+};
+tuna.tmpl.settings.ConditionSettings = ConditionSettings;
+var ListSettings = function() {
+  tuna.tmpl.settings.SpotSettings.call(this);
+  this.__keyPath = "";
+  this.__itemRendererID = "";
+  this.__itemSettings = null
+};
+tuna.utils.extend(ListSettings, tuna.tmpl.settings.SpotSettings);
+ListSettings.prototype.setItemKeyDataPath = function(path) {
+  this.__keyPath = path
+};
+ListSettings.prototype.getItemKeyDataPath = function() {
+  return this.__keyPath
+};
+ListSettings.prototype.setItemRendererID = function(id) {
+  this.__itemRendererID = id
+};
+ListSettings.prototype.getItemRendererID = function() {
+  return this.__itemRendererID
+};
+ListSettings.prototype.setItemSettings = function(settings) {
+  this.__itemSettings = settings
+};
+ListSettings.prototype.getItemSettings = function() {
+  return this.__itemSettings
+};
+tuna.tmpl.settings.ListSettings = ListSettings;
+var TemplateSettings = function() {
+  this.__spots = [];
+  this.__lists = [];
+  this.__attributes = [];
+  this.__conditions = []
+};
+TemplateSettings.prototype.addCondition = function(condition) {
+  this.__conditions.push(condition)
+};
+TemplateSettings.prototype.getConditions = function() {
+  return this.__conditions
+};
+TemplateSettings.prototype.addAttribute = function(attr) {
+  this.__attributes.push(attr)
+};
+TemplateSettings.prototype.getAttributes = function() {
+  return this.__attributes
+};
+TemplateSettings.prototype.addList = function(list) {
+  this.__lists.push(list)
+};
+TemplateSettings.prototype.getLists = function() {
+  return this.__lists
+};
+TemplateSettings.prototype.addSpot = function(spot) {
+  this.__spots.push(spot)
+};
+TemplateSettings.prototype.getSpots = function() {
+  return this.__spots
+};
+tuna.tmpl.settings.TemplateSettings = TemplateSettings;
+var IMarkupExtractor = function() {
+};
+IMarkupExtractor.prototype.extract = function(element, settings) {
+};
+tuna.tmpl.markup.IMarkupExtractor = IMarkupExtractor;
+var SpotExtractor = function() {
+  this._tagName = "spot";
+  this._ns = "tuna:"
+};
+tuna.utils.implement(SpotExtractor, tuna.tmpl.markup.IMarkupExtractor);
+SpotExtractor.prototype.extract = function(element, settings) {
+  var tagName = tuna.IS_IE ? this._tagName : this._ns + this._tagName;
+  var elements = element.getElementsByTagName(tagName);
+  var i = 0, l = elements.length;
+  var item = null;
+  while(i < l) {
+    item = this._createItem();
+    this._parseElement(elements.item(i), item);
+    this._saveItem(item, settings);
+    i++
+  }
+};
+SpotExtractor.prototype._createItem = function() {
+  return new tuna.tmpl.settings.SpotSettings
+};
+SpotExtractor.prototype._parseElement = function(element, item) {
+  item.setTargetClass(element.getAttribute(this._ns + "target"));
+  item.setDataPath(element.getAttribute(this._ns + "path"))
+};
+SpotExtractor.prototype._saveItem = function(item, settings) {
+  settings.addSpot(item)
+};
+tuna.tmpl.markup.SpotExtractor = SpotExtractor;
+var ListExtractor = function(templateBuilder) {
+  tuna.tmpl.markup.SpotExtractor.call(this);
+  this._tagName = "list";
+  this.__templateBuilder = templateBuilder
+};
+tuna.utils.extend(ListExtractor, tuna.tmpl.markup.SpotExtractor);
+ListExtractor.prototype._createItem = function() {
+  return new tuna.tmpl.settings.ListSettings
+};
+ListExtractor.prototype._parseElement = function(element, item) {
+  tuna.tmpl.markup.SpotExtractor.prototype._parseElement.call(this, element, item);
+  item.setItemRendererID(element.getAttribute(this._ns + "item-renderer-id"));
+  item.setItemKeyDataPath(element.getAttribute(this._ns + "key-path"));
+  var templateID = element.getAttribute(this._ns + "item-template-id");
+  item.setItemSettings(this.__templateBuilder.buildSettings(templateID))
+};
+ListExtractor.prototype._saveItem = function(item, settings) {
+  settings.addList(item)
+};
+tuna.tmpl.markup.ListExtractor = ListExtractor;
+var AttributeExtractor = function() {
+  tuna.tmpl.markup.SpotExtractor.call(this);
+  this._tagName = "attr"
+};
+tuna.utils.extend(AttributeExtractor, tuna.tmpl.markup.SpotExtractor);
+AttributeExtractor.prototype._createItem = function() {
+  return new tuna.tmpl.settings.AttributeSettings
+};
+AttributeExtractor.prototype._parseElement = function(element, item) {
+  tuna.tmpl.markup.SpotExtractor.prototype._parseElement.call(this, element, item);
+  item.setAttributeName(element.getAttribute(this._ns + "name"));
+  item.setEvent(element.getAttribute(this._ns + "event") !== null)
+};
+AttributeExtractor.prototype._saveItem = function(item, settings) {
+  settings.addAttribute(item)
+};
+tuna.tmpl.markup.AttributeExtractor = AttributeExtractor;
+var ConditionExtractor = function() {
+  tuna.tmpl.markup.SpotExtractor.call(this);
+  this._tagName = "if";
+  this.__operatorAttrs = ["isset", "eq", "ne"];
+  this.__actionAttrs = ["class"]
+};
+tuna.utils.extend(ConditionExtractor, tuna.tmpl.markup.SpotExtractor);
+ConditionExtractor.prototype._createItem = function() {
+  return new tuna.tmpl.settings.ConditionSettings
+};
+ConditionExtractor.prototype._parseElement = function(element, item) {
+  tuna.tmpl.markup.SpotExtractor.prototype._parseElement.call(this, element, item);
+  this.__extractOperator(element, item);
+  this.__extractAction(element, item)
+};
+ConditionExtractor.prototype.__extractAction = function(element, item) {
+  var i = 0, l = this.__actionAttrs.length;
+  var attr = null, value = null;
+  while(i < l) {
+    attr = this.__actionAttrs[i];
+    value = element.getAttribute("tuna:" + attr);
+    if(value !== null) {
+      item.setAction(attr, value);
+      break
+    }
+    i++
+  }
+};
+ConditionExtractor.prototype.__extractOperator = function(element, item) {
+  var i = 0, l = this.__operatorAttrs.length;
+  var attr = null, value = null;
+  while(i < l) {
+    attr = this.__operatorAttrs[i];
+    value = element.getAttribute("tuna:" + attr);
+    if(value !== null) {
+      item.setOperator(attr, value);
+      break
+    }
+    i++
+  }
+};
+ConditionExtractor.prototype._saveItem = function(item, settings) {
+  settings.addCondition(item)
+};
+tuna.tmpl.markup.ConditionExtractor = ConditionExtractor;
+var MarkupTemplateBuilder = function(doc) {
+  this.__doc = doc;
+  this.__templatesTable = {};
+  this.__extractors = [];
+  this.__registerExtractors()
+};
+MarkupTemplateBuilder.prototype.__registerExtractors = function() {
+  this.__extractors.push(new tuna.tmpl.markup.SpotExtractor);
+  this.__extractors.push(new tuna.tmpl.markup.AttributeExtractor);
+  this.__extractors.push(new tuna.tmpl.markup.ConditionExtractor);
+  this.__extractors.push(new tuna.tmpl.markup.ListExtractor(this))
+};
+MarkupTemplateBuilder.prototype.buildSettings = function(templateID) {
+  var template = null;
+  if(this.__templatesTable[templateID] !== undefined) {
+    template = this.__templatesTable[templateID]
+  }else {
+    var templateElement = this.__doc.getElementById(templateID);
+    if(templateElement !== null) {
+      this.__templatesTable[templateID] = template = new tuna.tmpl.settings.TemplateSettings;
+      var i = 0, l = this.__extractors.length;
+      while(i < l) {
+        this.__extractors[i].extract(templateElement, template);
+        i++
+      }
+    }
+  }
+  return template
+};
+tuna.tmpl.markup.MarkupTemplateBuilder = MarkupTemplateBuilder;
+var IListItemRouter = function() {
+};
+IListItemRouter.prototype.append = function(element) {
+};
+tuna.tmpl.units.IListItemRouter = IListItemRouter;
+var ListContainerRouter = function(container) {
+  this._container = container
+};
+tuna.utils.implement(ListContainerRouter, tuna.tmpl.units.IListItemRouter);
+ListContainerRouter.prototype.append = function(node) {
+  this._container.appendChild(node)
+};
+tuna.tmpl.units.ListContainerRouter = ListContainerRouter;
+var CompiledUnit = function(root) {
+  this.__rootTemplate = root
+};
+CompiledUnit.prototype.getRootTemplate = function() {
+  return this.__rootTemplate
+};
+CompiledUnit.prototype.destroy = function() {
+};
+CompiledUnit.prototype.applyData = function(dataNode) {
+};
+tuna.tmpl.units.CompiledUnit = CompiledUnit;
+var Spot = function(root) {
+  tuna.tmpl.units.CompiledUnit.call(this, root);
+  this.__pathEvaluator = new tuna.tmpl.data.PathEvaluator;
+  this._nodes = []
+};
+tuna.utils.extend(Spot, tuna.tmpl.units.CompiledUnit);
+Spot.prototype.setPath = function(path) {
+  this.__pathEvaluator.setPath(path)
+};
+Spot.prototype.addTargets = function(elements) {
+  this._nodes = this._nodes.concat(elements)
+};
+Spot.prototype.applyData = function(dataNode) {
+  var valueNode = this.__pathEvaluator.evaluate(dataNode);
+  if(valueNode !== null) {
+    this._applyValue(valueNode.getValue())
+  }
+};
+Spot.prototype._applyValue = function(value) {
+  if(value === null) {
+    value = ""
+  }
+  var html = value.toString();
+  var i = this._nodes.length - 1;
+  while(i >= 0) {
+    if(this._nodes[i].innerHTML !== html) {
+      this._nodes[i].innerHTML = html
+    }
+    i--
+  }
+};
+tuna.tmpl.units.Spot = Spot;
+var Attribute = function(root) {
+  tuna.tmpl.units.Spot.call(this, root);
+  this.__attributeName = "";
+  this.__eventName = "";
+  this.__hasEvent = false
+};
+tuna.utils.extend(Attribute, tuna.tmpl.units.Spot);
+Attribute.prototype.setAttributeName = function(attributeName) {
+  this.__attributeName = attributeName;
+  this.__eventName = attributeName + "-change"
+};
+Attribute.prototype.setEvent = function(hasEvent) {
+  this.__hasEvent = hasEvent
+};
+Attribute.prototype._applyValue = function(value) {
+  if(value !== null) {
+    this.__setAttribute(value)
+  }else {
+    this.__removeAttribute()
+  }
+  if(this.__hasEvent) {
+    var self = this;
+    setTimeout(function() {
+      self.__dispatchAttribute(value)
+    }, 0)
+  }
+};
+Attribute.prototype.__setAttribute = function(value) {
+  var i = this._nodes.length - 1;
+  while(i >= 0) {
+    this._nodes[i].setAttribute(this.__attributeName, value + "");
+    i--
+  }
+};
+Attribute.prototype.__removeAttribute = function() {
+  var i = this._nodes.length - 1;
+  while(i >= 0) {
+    this._nodes[i].removeAttribute(this.__attributeName);
+    i--
+  }
+};
+Attribute.prototype.__dispatchAttribute = function(value) {
+  var i = this._nodes.length - 1;
+  while(i >= 0) {
+    tuna.dom.dispatchEvent(this._nodes[i], this.__eventName, "" + value);
+    i--
+  }
+};
+tuna.tmpl.units.Attribute = Attribute;
+var Condition = function(root) {
+  tuna.tmpl.units.Spot.call(this, root);
+  this.__action = null;
+  this.__operator = null
+};
+tuna.utils.extend(Condition, tuna.tmpl.units.Spot);
+Condition.prototype.setAction = function(action) {
+  this.__action = action
+};
+Condition.prototype.setOperator = function(operator) {
+  this.__operator = operator
+};
+Condition.prototype._applyValue = function(value) {
+  var testResult = this.__operator.test(value);
+  var i = this._nodes.length - 1;
+  while(i >= 0) {
+    this.__action.apply(this._nodes[i], testResult, value);
+    i--
+  }
+};
+tuna.tmpl.units.Condition = Condition;
+var List = function(root) {
+  tuna.tmpl.units.CompiledUnit.call(this, root);
+  this.__templateCompiler = null;
+  this.__itemRenderer = null;
+  this.__itemSettings = null;
+  this.__itemsTable = {};
+  this.__pathEvaluator = new tuna.tmpl.data.PathEvaluator;
+  this.__keyPathEvaluator = new tuna.tmpl.data.PathEvaluator;
+  this.__listNodeRouter = null
+};
+tuna.utils.extend(List, tuna.tmpl.units.CompiledUnit);
+List.prototype.setListNodeRouter = function(router) {
+  this.__listNodeRouter = router
+};
+List.prototype.setPath = function(path) {
+  this.__pathEvaluator.setPath(path)
+};
+List.prototype.setKeyPath = function(path) {
+  this.__keyPathEvaluator.setPath(path)
+};
+List.prototype.setCompiler = function(compiler) {
+  this.__templateCompiler = compiler
+};
+List.prototype.setItemRenderer = function(element) {
+  this.__itemRenderer = element
+};
+List.prototype.setItemSettings = function(settings) {
+  this.__itemSettings = settings
+};
+List.prototype.addItem = function(compiledItem, key) {
+  this.__itemsTable[key] = compiledItem
+};
+List.prototype.applyData = function(dataNode) {
+  var sampleNode = this.__pathEvaluator.evaluate(dataNode);
+  if(sampleNode !== null) {
+    var sample = sampleNode.getValue();
+    var oldItemsTable = this.__itemsTable;
+    this.__itemsTable = {};
+    for(var index in sample) {
+      this.__updateItem(sampleNode.growChild(index), oldItemsTable)
+    }
+    this.__destroyItems(oldItemsTable)
+  }else {
+    this.__destroyItems(this.__itemsTable)
+  }
+};
+List.prototype.destroy = function() {
+  this.__destroyItems(this.__itemsTable)
+};
+List.prototype.__updateItem = function(itemNode, oldItemsTable) {
+  var keyNode = this.__keyPathEvaluator.evaluate(itemNode);
+  if(keyNode !== null) {
+    var key = keyNode.getValue();
+    if(oldItemsTable[key] === undefined) {
+      this.addItem(this.__makeNewItem(), key)
+    }else {
+      this.__itemsTable[key] = oldItemsTable[key];
+      delete oldItemsTable[key]
+    }
+    this.__itemsTable[key].applyData(itemNode)
+  }
+};
+List.prototype.__destroyItems = function(itemsTable) {
+  for(var key in itemsTable) {
+    itemsTable[key].destroy();
+    delete itemsTable[key]
+  }
+};
+List.prototype.__makeNewItem = function() {
+  var itemElement = this.__itemRenderer.cloneNode(true);
+  var rootTemplate = this.getRootTemplate();
+  var template = this.__templateCompiler.compileTemplate(this.__itemSettings, itemElement, rootTemplate);
+  this.__listNodeRouter.append(itemElement);
+  rootTemplate.registerChildCreation(itemElement);
+  return template
+};
+tuna.tmpl.units.List = List;
+var Template = function(root) {
+  tuna.tmpl.units.CompiledUnit.call(this, root || this);
+  this.__items = [];
+  this.__createdChildren = [];
+  this.__removedChildren = [];
+  this.__target = null
+};
+tuna.utils.extend(Template, tuna.tmpl.units.CompiledUnit);
+Template.prototype.setTarget = function(element) {
+  this.__target = element
+};
+Template.prototype.addItems = function(items) {
+  this.__items = this.__items.concat(items)
+};
+Template.prototype.registerChildCreation = function(child) {
+  this.__createdChildren.push(child)
+};
+Template.prototype.fetchCreatedChildren = function() {
+  return this.__createdChildren.splice(0, this.__createdChildren.length)
+};
+Template.prototype.registerChildRemoval = function(child) {
+  this.__removedChildren.push(child)
+};
+Template.prototype.fetchRemovedChildren = function() {
+  return this.__removedChildren.splice(0, this.__removedChildren.length)
+};
+Template.prototype.applyData = function(dataNode) {
+  var i = this.__items.length - 1;
+  while(i >= 0) {
+    this.__items[i].applyData(dataNode);
+    i--
+  }
+};
+Template.prototype.destroy = function() {
+  var i = this.__items.length - 1;
+  while(i >= 0) {
+    this.__items[i].destroy();
+    i--
+  }
+  this.__target.parentNode.removeChild(this.__target);
+  this.getRootTemplate().registerChildRemoval(this.__target)
+};
+tuna.tmpl.units.Template = Template;
+var IItemCompiler = function() {
+};
+IItemCompiler.prototype.compile = function(element, settings, template) {
+};
+tuna.tmpl.compilers.IItemCompiler = IItemCompiler;
+var TemplateCompiler = function(doc) {
+  this.__doc = doc;
+  this.__itemCompilers = [];
+  this.__registerItemCompilers()
+};
+TemplateCompiler.prototype.__registerItemCompilers = function() {
+  this.__itemCompilers.push(new tuna.tmpl.compilers.SpotCompiler);
+  this.__itemCompilers.push(new tuna.tmpl.compilers.AttributeCompiler);
+  this.__itemCompilers.push(new tuna.tmpl.compilers.ConditionCompiler);
+  this.__itemCompilers.push(new tuna.tmpl.compilers.ListCompiler(this.__doc, this))
+};
+TemplateCompiler.prototype.compileTemplate = function(settings, element, root) {
+  var template = new tuna.tmpl.units.Template(root);
+  template.setTarget(element);
+  var i = 0, l = this.__itemCompilers.length;
+  while(i < l) {
+    this.__itemCompilers[i].compile(element, settings, template);
+    i++
+  }
+  return template
+};
+tuna.tmpl.compilers.TemplateCompiler = TemplateCompiler;
+var SpotCompiler = function() {
+};
+tuna.utils.implement(SpotCompiler, tuna.tmpl.compilers.IItemCompiler);
+SpotCompiler.prototype.compile = function(element, settings, template) {
+  var root = template.getRootTemplate();
+  var item = null;
+  var itemsSettings = this._getItemsSettings(settings);
+  var i = itemsSettings.length - 1;
+  while(i >= 0) {
+    item = this._createItem(root);
+    this._compileItem(element, itemsSettings[i], item);
+    template.addItems(item);
+    i--
+  }
+};
+SpotCompiler.prototype._getItemsSettings = function(settings) {
+  return settings.getSpots()
+};
+SpotCompiler.prototype._createItem = function(rootTemplate) {
+  return new tuna.tmpl.units.Spot(rootTemplate)
+};
+SpotCompiler.prototype._compileItem = function(element, settings, item) {
+  item.setPath(settings.getDataPath());
+  var className = settings.getTargetClass();
+  if(tuna.dom.hasClass(element, className)) {
+    item.addTargets(element)
+  }else {
+    item.addTargets(tuna.dom.select("." + className, element))
+  }
+};
+tuna.tmpl.compilers.SpotCompiler = SpotCompiler;
+var AttributeCompiler = function() {
+  tuna.tmpl.compilers.SpotCompiler.call(this)
+};
+tuna.utils.extend(AttributeCompiler, tuna.tmpl.compilers.SpotCompiler);
+AttributeCompiler.prototype._getItemsSettings = function(settings) {
+  return settings.getAttributes()
+};
+AttributeCompiler.prototype._createItem = function(rootTemplate) {
+  return new tuna.tmpl.units.Attribute(rootTemplate)
+};
+AttributeCompiler.prototype._compileItem = function(element, settings, item) {
+  tuna.tmpl.compilers.SpotCompiler.prototype._compileItem.call(this, element, settings, item);
+  item.setAttributeName(settings.getAttributeName());
+  item.setEvent(settings.hasEvent())
+};
+tuna.tmpl.compilers.AttributeCompiler = AttributeCompiler;
+var ConditionCompiler = function() {
+  tuna.tmpl.compilers.SpotCompiler.call(this)
+};
+tuna.utils.extend(ConditionCompiler, tuna.tmpl.compilers.SpotCompiler);
+ConditionCompiler.prototype._getItemsSettings = function(settings) {
+  return settings.getConditions()
+};
+ConditionCompiler.prototype._createItem = function(rootTemplate) {
+  return new tuna.tmpl.units.Condition(rootTemplate)
+};
+ConditionCompiler.prototype._compileItem = function(element, settings, item) {
+  tuna.tmpl.compilers.SpotCompiler.prototype._compileItem.call(this, element, settings, item);
+  var action = this.__createAction(settings.getActionType(), settings.getActionData());
+  item.setAction(action);
+  var operator = this.__createOperator(settings.getOperatorType(), settings.getOperatorData());
+  item.setOperator(operator)
+};
+ConditionCompiler.prototype.__createAction = function(type, data) {
+  switch(type) {
+    case "class":
+      return new __ClassAction(data)
+  }
+  return null
+};
+ConditionCompiler.prototype.__createOperator = function(type, data) {
+  switch(type) {
+    case "isset":
+      return new __IsSetOperator;
+    case "eq":
+      return new __EqualsOperator(data);
+    case "ne":
+      return new __NotEqualsOperator(data)
+  }
+  return null
+};
+tuna.tmpl.compilers.ConditionCompiler = ConditionCompiler;
+var __ConditionOperator = function(data) {
+  this._data = data || ""
+};
+__ConditionOperator.prototype.test = function(value) {
+};
+var __IsSetOperator = function() {
+  __ConditionOperator.call(this)
+};
+tuna.utils.extend(__IsSetOperator, __ConditionOperator);
+__IsSetOperator.prototype.test = function(value) {
+  return value !== undefined
+};
+var __EqualsOperator = function(data) {
+  __ConditionOperator.call(this, data)
+};
+tuna.utils.extend(__EqualsOperator, __ConditionOperator);
+__EqualsOperator.prototype.test = function(value) {
+  return value === this._data || value + "" === this._data
+};
+var __NotEqualsOperator = function(data) {
+  __ConditionOperator.call(this, data)
+};
+tuna.utils.extend(__NotEqualsOperator, __ConditionOperator);
+__NotEqualsOperator.prototype.test = function(value) {
+  return!(value == this._data || value + "" == this._data)
+};
+var __ConditionAction = function(data) {
+  this._data = data || ""
+};
+__ConditionAction.prototype.apply = function(element, testResult, value) {
+};
+var __ClassAction = function(data) {
+  __ConditionAction.call(this, data);
+  this.__lastName = null
+};
+tuna.utils.extend(__ClassAction, __ConditionAction);
+__ClassAction.prototype.apply = function(element, testResult, value) {
+  var className = this._data;
+  if(className !== "") {
+    if(testResult) {
+      tuna.dom.addClass(element, className)
+    }else {
+      tuna.dom.removeClass(element, className)
+    }
+  }else {
+    if(this.__lastName !== value && testResult) {
+      if(this.__lastName !== null) {
+        tuna.dom.removeClass(element, this.__lastName + "")
+      }
+      tuna.dom.addClass(element, value + "");
+      this.__lastName = value
+    }
+  }
+};
+var ListCompiler = function(doc, compiler) {
+  this.__doc = doc;
+  this.__templateCompiler = compiler
+};
+tuna.utils.implement(ListCompiler, tuna.tmpl.compilers.IItemCompiler);
+ListCompiler.prototype.compile = function(element, settings, template) {
+  var itemsSettings = settings.getLists();
+  var i = itemsSettings.length - 1;
+  while(i >= 0) {
+    this.__compileLists(element, itemsSettings[i], template);
+    i--
+  }
+};
+ListCompiler.prototype.__compileLists = function(element, settings, template) {
+  var root = template.getRootTemplate();
+  var lists = [];
+  var className = settings.getTargetClass();
+  if(tuna.dom.hasClass(element, className)) {
+    lists.push(this.__createList(element, settings, root))
+  }else {
+    var elements = tuna.dom.select("." + className, element);
+    var i = elements.length - 1;
+    while(i >= 0) {
+      if(tuna.dom.getParentWithClass(elements[i], className, element) === null) {
+        lists.push(this.__createList(elements[i], settings, root))
+      }
+      i--
+    }
+  }
+  template.addItems(lists)
+};
+ListCompiler.prototype.__createList = function(element, settings, root) {
+  var list = new tuna.tmpl.units.List(root);
+  list.setCompiler(this.__templateCompiler);
+  var renderer = this.__doc.getElementById(settings.getItemRendererID());
+  renderer = renderer.cloneNode(true);
+  renderer.removeAttribute("id");
+  list.setItemRenderer(renderer);
+  list.setItemSettings(settings.getItemSettings());
+  list.setKeyPath(settings.getItemKeyDataPath());
+  list.setPath(settings.getDataPath());
+  list.setListNodeRouter(new tuna.tmpl.units.ListContainerRouter(element));
+  return list
+};
+tuna.tmpl.compilers.ListCompiler = ListCompiler;
+tuna.tmpl.__markupBuilder = new tuna.tmpl.markup.MarkupTemplateBuilder(document);
+tuna.tmpl.__settingsTable = {};
+tuna.tmpl.getTemplateSettingsById = function(id) {
+  if(id !== null) {
+    if(tuna.tmpl.__settingsTable[id] === undefined) {
+      tuna.tmpl.__settingsTable[id] = tuna.tmpl.__markupBuilder.buildSettings(id)
+    }
+    return tuna.tmpl.__settingsTable[id]
+  }
+  return null
+};
+tuna.tmpl.__compiler = new tuna.tmpl.compilers.TemplateCompiler(document);
+tuna.tmpl.compile = function(element, settings) {
+  return tuna.tmpl.__compiler.compileTemplate(settings, element, null)
+};
+var Module = function(selector) {
+  this._selector = selector
+};
+Module.prototype.getSelector = function() {
+  return this._selector
+};
+Module.prototype.init = function(context, container, options) {
+  var instances = [];
+  var targets = this._findTargets(context);
+  var i = 0, l = targets.length;
+  var instance = null;
+  while(i < l) {
+    if(this.__isInContext(targets[i], context)) {
+      instance = this.initInstance(targets[i], container, options);
+      instance.init && instance.init();
+      instances.push(instance)
+    }
+    i++
+  }
+  return instances
+};
+Module.prototype._findTargets = function(context) {
+  var targets = tuna.dom.select(this._selector, context);
+  targets = targets.concat(tuna.dom.filter(this._selector, [context]));
+  return targets
+};
+Module.prototype.__isInContext = function(target, context) {
+  var result = true;
+  var isolators = tuna.ui.modules.getIsolators();
+  var i = 0, l = isolators.length;
+  while(i < l) {
+    result = result && tuna.dom.getParentMatches(target, isolators[i], context) === null;
+    if(!result) {
+      break
+    }
+    i++
+  }
+  return result
+};
+Module.prototype.destroy = function(instances) {
+  var i = 0, l = instances.length;
+  while(i < l) {
+    this.destroyInstance(instances[i]);
+    i++
+  }
+};
+Module.prototype.initInstance = function(target, container, options) {
+};
+Module.prototype.destroyInstance = function(instance) {
+};
+tuna.ui.Module = Module;
+var ModuleInstance = function(target) {
+  tuna.events.EventDispatcher.call(this);
+  this._target = target;
+  this.__defaultOptions = {}
+};
+tuna.utils.extend(ModuleInstance, tuna.events.EventDispatcher);
+ModuleInstance.prototype.getTarget = function() {
+  return this._target
+};
+ModuleInstance.prototype.getName = function() {
+  return this._target.getAttribute("data-name")
+};
+ModuleInstance.prototype._setDefaultOption = function(name, option) {
+  this.__defaultOptions[name] = option
+};
+ModuleInstance.prototype.setOption = function(name, option) {
+  if(option) {
+    this._target.setAttribute("data-" + name, option)
+  }else {
+    this._target.removeAttribute("data-" + name)
+  }
+};
+ModuleInstance.prototype.getOption = function(name) {
+  var option = this._target.getAttribute("data-" + name);
+  if(option === null && this.__defaultOptions[name] !== undefined) {
+    option = this.__defaultOptions[name]
+  }
+  return option
+};
+ModuleInstance.prototype.getOptions = function() {
+  return tuna.dom.getAttributesData(this._target)
+};
+ModuleInstance.prototype.init = function() {
+};
+ModuleInstance.prototype.destroy = function() {
+};
+tuna.ui.ModuleInstance = ModuleInstance;
+tuna.ui.modules.__typeTable = {};
+tuna.ui.modules.__isolators = [];
+tuna.ui.modules.register = function(type, module, isIsolator) {
+  tuna.ui.modules.__typeTable[type] = module;
+  if(isIsolator) {
+    tuna.ui.modules.__isolators.push(module.getSelector())
+  }
+};
+tuna.ui.modules.getModule = function(type) {
+  if(tuna.ui.modules.__typeTable[type] !== undefined) {
+    return tuna.ui.modules.__typeTable[type]
+  }
+  return null
+};
+tuna.ui.modules.getIsolators = function() {
+  return tuna.ui.modules.__isolators
+};
+var Container = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__moduleArgs = {};
+  this.__moduleInstances = {}
+};
+tuna.utils.extend(Container, tuna.ui.ModuleInstance);
+Container.prototype.getName = function() {
+  return this._target.id
+};
+Container.prototype.render = function(element) {
+  if(element !== undefined) {
+    this.clear();
+    this._target.appendChild(element)
+  }
+};
+Container.prototype.clear = function() {
+  this._target.innerHTML = ""
+};
+Container.prototype.requireModule = function(type, var_args) {
+  var args = tuna.utils.toArray(arguments);
+  args.shift();
+  if(this.__moduleArgs[type] === undefined) {
+    this.__moduleArgs[type] = [null]
+  }
+  if(args.length > 0) {
+    this.__moduleArgs[type].push(args)
+  }else {
+    this.__moduleArgs[type][0] = []
+  }
+};
+Container.prototype.initModules = function(target) {
+  target = target || this._target;
+  var module = null;
+  var instances = null;
+  for(var type in this.__moduleArgs) {
+    module = tuna.ui.modules.getModule(type);
+    if(module !== null) {
+      if(this.__moduleInstances[type] === undefined) {
+        this.__moduleInstances[type] = []
+      }
+      instances = this.__initModule(module, target, this.__moduleArgs[type]);
+      this.__moduleInstances[type] = this.__moduleInstances[type].concat(instances)
+    }else {
+      alert('Unknown module "' + type + '"')
+    }
+  }
+};
+Container.prototype.getModuleInstances = function(type) {
+  if(this.__moduleInstances[type] !== undefined) {
+    return this.__moduleInstances[type]
+  }
+  return null
+};
+Container.prototype.getOneModuleInstance = function(type) {
+  if(this.__moduleInstances[type] !== undefined && this.__moduleInstances[type][0] !== undefined) {
+    return this.__moduleInstances[type][0]
+  }
+  return null
+};
+Container.prototype.getModuleInstanceByName = function(type, name) {
+  if(this.__moduleInstances[type] !== undefined) {
+    var instances = this.__moduleInstances[type];
+    var i = 0, l = instances.length;
+    while(i < l) {
+      if(instances[i].getName() === name) {
+        return instances[i]
+      }
+      i++
+    }
+  }
+  return null
+};
+Container.prototype.destroyModules = function() {
+  for(var name in this.__moduleInstances) {
+    tuna.ui.modules.getModule(name).destroy(this.__moduleInstances[name]);
+    this.__moduleInstances[name].length = 0
+  }
+};
+Container.prototype.__initModule = function(module, target, moduleArgs) {
+  var result = [];
+  var commonArgs = [target, this];
+  var i = moduleArgs.length - 1;
+  while(i >= 0) {
+    if(moduleArgs[i] !== null) {
+      result = result.concat(module.init.apply(module, commonArgs.concat(moduleArgs[i])))
+    }
+    i--
+  }
+  return result
+};
+tuna.ui.containers.Container = Container;
+var ControlContainer = function(target) {
+  tuna.ui.containers.Container.call(this, target);
+  this.__controller = null;
+  this._setDefaultOption("init-event", null)
+};
+tuna.utils.extend(ControlContainer, tuna.ui.containers.Container);
+ControlContainer.prototype.render = function(element) {
+  tuna.ui.containers.Container.prototype.render.call(this, element);
+  if(this.__controller !== null) {
+    this.__controller.init()
+  }
+};
+ControlContainer.prototype.clear = function() {
+  tuna.ui.containers.Container.prototype.clear.call(this);
+  if(this.__controller !== null) {
+    this.__controller.destroy()
+  }
+};
+ControlContainer.prototype.init = function() {
+  if(this.getOption("is-auto-init")) {
+    this.initController()
+  }
+};
+ControlContainer.prototype.initController = function() {
+  this.__controller = tuna.view.getController(this._target);
+  if(this.__controller !== null) {
+    this.__controller.setContainer(this);
+    this.__controller.bootstrap()
+  }else {
+    alert("Can't find controller for " + this._target.tagName + "#" + this._target.id)
+  }
+};
+ControlContainer.prototype.getController = function() {
+  return this.__controller
+};
+tuna.ui.containers.ControlContainer = ControlContainer;
+var Popup = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__isInit = false
+};
+tuna.utils.extend(Popup, tuna.ui.ModuleInstance);
+Popup.prototype.init = function() {
+  if(!this.__isInit) {
+    var self = this;
+    tuna.dom.addChildEventListener(this._target, ".j-popup-close", "click", function(event) {
+      tuna.dom.preventDefault(event);
+      self.close()
+    });
+    tuna.dom.addChildEventListener(this._target, ".j-popup-apply", "click", function(event) {
+      tuna.dom.preventDefault(event);
+      self.apply()
+    })
+  }
+};
+Popup.prototype.isOpen = function() {
+  return tuna.dom.hasClass(this._target, "show")
+};
+Popup.prototype.open = function() {
+  if(this.dispatch("popup-open")) {
+    this.__show()
+  }
+};
+Popup.prototype.close = function() {
+  if(this.dispatch("popup-close")) {
+    this.__hide()
+  }
+};
+Popup.prototype.apply = function() {
+  if(this.dispatch("popup-apply", this.__collectData())) {
+    this.__hide()
+  }
+};
+Popup.prototype.__hide = function() {
+  tuna.dom.removeClass(this._target, "show")
+};
+Popup.prototype.__show = function() {
+  tuna.dom.addClass(this._target, "show")
+};
+Popup.prototype.__collectData = function() {
+  var form = tuna.dom.selectOne("form.j-popup-form", this._target);
+  if(form !== null) {
+    return tuna.ui.forms.Form.serialize(form)
+  }
+  return null
+};
+tuna.ui.popups.Popup = Popup;
+tuna.ui.popups.__idTable = {};
+tuna.ui.popups.__lastId = 0;
+tuna.ui.popups.create = function(target) {
+  if(target.id === "") {
+    target.id = "popup_" + tuna.ui.popups.__lastId++
+  }
+  if(tuna.ui.popups.__idTable[target.id] === undefined) {
+    var popup = new tuna.ui.popups.Popup(target);
+    popup.init();
+    tuna.ui.popups.__idTable[target.id] = popup
+  }
+  return tuna.ui.popups.__idTable[target.id]
+};
+tuna.ui.popups.__alert = null;
+tuna.ui.popups.__alertMessage = null;
+tuna.ui.popups.registerAlert = function(target) {
+  tuna.ui.popups.__alert = tuna.ui.popups.create(target);
+  tuna.ui.popups.__alert.init();
+  tuna.ui.popups.__alertMessage = tuna.dom.selectOne(".j-message", target)
+};
+tuna.ui.popups.alert = function(message) {
+  tuna.ui.popups.__alertMessage.innerHTML = message;
+  tuna.ui.popups.__alert.open()
+};
+tuna.ui.popups.__confirm = null;
+tuna.ui.popups.__confirmMessage = null;
+tuna.ui.popups.registerConfirm = function(target) {
+  tuna.ui.popups.__confirm = tuna.ui.popups.create(target);
+  tuna.ui.popups.__confirm.init();
+  tuna.ui.popups.__confirmMessage = tuna.dom.selectOne(".j-message", target)
+};
+tuna.ui.popups.confirm = function(message, callback) {
+  tuna.ui.popups.__confirmMessage.innerHTML = message;
+  var okHandler = function(event) {
+    callback && callback(true);
+    tuna.ui.popups.__confirm.removeEventListener("popup-apply", okHandler);
+    tuna.ui.popups.__confirm.removeEventListener("popup-close", cancelHandler)
+  };
+  var cancelHandler = function(event) {
+    callback && callback(false);
+    tuna.ui.popups.__confirm.removeEventListener("popup-apply", okHandler);
+    tuna.ui.popups.__confirm.removeEventListener("popup-close", cancelHandler)
+  };
+  tuna.ui.popups.__confirm.addEventListener("popup-apply", okHandler);
+  tuna.ui.popups.__confirm.addEventListener("popup-close", cancelHandler);
+  tuna.ui.popups.__confirm.open()
+};
+var Button = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__isInit = false
+};
+tuna.utils.extend(Button, tuna.ui.ModuleInstance);
+Button.prototype.init = function() {
+  if(!this.__isInit) {
+    this.__isInit = true
+  }
+};
+Button.prototype.setEnabled = function(isEnabled) {
+  tuna.dom.setClassExist(this._target, "disabled", !isEnabled)
+};
+Button.prototype.setActive = function(isActive) {
+  tuna.dom.setClassExist(this._target, "active", isActive)
+};
+tuna.ui.buttons.Button = Button;
+var ButtonGroup = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__defaultAction = null;
+  this._setDefaultOption("button-selector", ".j-button")
+};
+tuna.utils.extend(ButtonGroup, tuna.ui.ModuleInstance);
+ButtonGroup.prototype.setDefaultAction = function(action) {
+  this.__defaultAction = action
+};
+ButtonGroup.prototype.init = function() {
+  var self = this;
+  var buttonSelector = this.getOption("button-selector");
+  if(buttonSelector !== null) {
+    tuna.dom.addChildEventListener(this._target, buttonSelector, "click", function(event) {
+      tuna.dom.preventDefault(event);
+      var button = tuna.ui.buttons.create(this);
+      var action = button.getOption("action");
+      if(action === null) {
+        action = self.__defaultAction
+      }
+      if(action !== null) {
+        self.dispatch(action, button)
+      }
+    })
+  }
+};
+tuna.ui.buttons.ButtonGroup = ButtonGroup;
+tuna.ui.buttons.__idTable = {};
+tuna.ui.buttons.__lastId = 0;
+tuna.ui.buttons.create = function(target) {
+  if(target.id === "") {
+    target.id = "button_" + tuna.ui.buttons.__lastId++
+  }
+  if(tuna.ui.buttons.__idTable[target.id] === undefined) {
+    var button = new tuna.ui.buttons.Button(target);
+    button.init();
+    tuna.ui.buttons.__idTable[target.id] = button
+  }
+  return tuna.ui.buttons.__idTable[target.id]
+};
+var Form = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__formMessage = null;
+  this.__inputTable = {};
+  this.__callbackName = Form.CALLBACK_PREFIX + (Math.random() + "").substr(2);
+  this.__recordName = null
+};
+tuna.utils.extend(Form, tuna.ui.ModuleInstance);
+Form.CALLBACK_PREFIX = "form_callback";
+Form.prototype.init = function() {
+  this.__recordName = this.getOption("record-type");
+  this.__formMessage = tuna.dom.selectOne(".j-form-message", this._target);
+  var self = this;
+  tuna.dom.addEventListener(this._target, "submit", function(event) {
+    self.__prepareToSubmit(event)
+  });
+  tuna.dom.addEventListener(this._target, "change", function() {
+    self.dispatch("change")
+  });
+  tuna.dom.addEventListener(this._target, "reset", function(event) {
+    self.__prepareToReset(event)
+  });
+  var callbackInput = document.createElement("input");
+  callbackInput.type = "hidden";
+  callbackInput.name = "__callback";
+  callbackInput.value = this.__callbackName;
+  this._target.appendChild(callbackInput)
+};
+Form.prototype.getValue = function(name) {
+  var data = Form.serialize(this._target);
+  if(data[name] !== undefined) {
+    return data[name]
+  }
+  return null
+};
+Form.prototype.submit = function() {
+  this.__prepareToSubmit();
+  this._target.submit()
+};
+Form.prototype.reset = function() {
+  this.__prepareToReset();
+  this._target.reset()
+};
+Form.prototype.__prepareToSubmit = function(event) {
+  if(this.dispatch("submit")) {
+    this.__clearMessage();
+    this.__clearInputs();
+    this.__registerCallback()
+  }else {
+    if(event !== undefined) {
+      tuna.dom.preventDefault(event)
+    }
+  }
+};
+Form.prototype.__prepareToReset = function(event) {
+  if(this.dispatch("reset")) {
+    this.__clearMessage();
+    this.__clearInputs()
+  }else {
+    if(event !== undefined) {
+      tuna.dom.preventDefault(event)
+    }
+  }
+};
+Form.prototype.__registerCallback = function() {
+  var self = this;
+  window[this.__callbackName] = function(response) {
+    self.__handleResponse(response);
+    delete window[self.__callbackName]
+  }
+};
+Form.prototype.__handleResponse = function(data) {
+  var response = data["response"];
+  var errors = data["errors"];
+  if(response !== undefined) {
+    if(this.__recordName !== null) {
+      response = tuna.rest.populateRecords(response, this.__recordName)
+    }
+    this.dispatch("result", response)
+  }else {
+    if(errors !== undefined) {
+      this.__showErrors(errors);
+      this.dispatch("error", errors)
+    }
+  }
+};
+Form.prototype.__showErrors = function(errors) {
+  var i = 0, l = errors.length;
+  var error = null;
+  while(i < l) {
+    error = errors[i];
+    if(error["param"] !== undefined) {
+      this.__showInputError(error["param"], error["message"])
+    }else {
+      this.__showErrorMessage(error["message"])
+    }
+    i++
+  }
+};
+Form.prototype.__getFormInput = function(name) {
+  var result = null;
+  if(this.__inputTable[name] === undefined) {
+    var inputWrapper = tuna.dom.selectOne(".j-" + name + "-input", this._target);
+    if(inputWrapper !== null) {
+      var input = new tuna.ui.forms.FormInput(inputWrapper);
+      input.init();
+      this.__inputTable[name] = input
+    }
+  }
+  if(this.__inputTable[name] !== undefined) {
+    result = this.__inputTable[name]
+  }
+  return result
+};
+Form.prototype.__clearMessage = function() {
+  if(this.__formMessage !== null) {
+    this.__formMessage.innerHTML = "";
+    tuna.dom.addClass(this.__formMessage, "hide")
+  }
+};
+Form.prototype.__showErrorMessage = function(message) {
+  if(this.__formMessage !== null) {
+    this.__formMessage.innerHTML += message + "<br />";
+    tuna.dom.removeClass(this.__formMessage, "hide")
+  }
+};
+Form.prototype.__showInputError = function(name, message) {
+  var formInput = this.__getFormInput(name);
+  if(formInput !== null) {
+    formInput.showErrorMessage(message)
+  }else {
+    this.__showErrorMessage(message)
+  }
+};
+Form.prototype.__clearInputs = function() {
+  for(var name in this.__inputTable) {
+    this.__inputTable[name].cleanup()
+  }
+};
+Form.serialize = function(formElement) {
+  var result = {};
+  var elements = formElement.elements;
+  var i = 0, l = elements.length;
+  var name = null;
+  while(i < l) {
+    name = elements[i].name;
+    if(result[name] !== undefined) {
+      if(!(result[name] instanceof Array)) {
+        result[name] = [result[name]]
+      }
+      result[name].push(elements[i].value)
+    }else {
+      result[name] = elements[i].value
+    }
+    i++
+  }
+  return result
+};
+tuna.ui.forms.Form = Form;
+var FormInput = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__message = null;
+  this.__defaultMessage = ""
+};
+tuna.utils.extend(FormInput, tuna.ui.ModuleInstance);
+FormInput.prototype.init = function() {
+  this.__message = tuna.dom.selectOne(".j-message", this._target);
+  if(this.__message !== null) {
+    this.__defaultMessage = this.__message.innerHTML
+  }
+};
+FormInput.prototype.showErrorMessage = function(message) {
+  tuna.dom.addClass(this._target, "error");
+  if(this.__message !== null) {
+    this.__message.innerHTML = message
+  }
+};
+FormInput.prototype.cleanup = function() {
+  tuna.dom.removeClass(this._target, "error");
+  if(this.__message !== null) {
+    this.__message.innerHTML = this.__defaultMessage
+  }
+};
+tuna.ui.forms.FormInput = FormInput;
+var ITransformHandler = function() {
+};
+ITransformHandler.prototype.handleTransformStart = function(target) {
+};
+ITransformHandler.prototype.handleTransformComplete = function(target, createdElements, removedElements) {
+};
+ITransformHandler.prototype.handleDestroy = function(target, removedElements) {
+};
+tuna.ui.transformers.ITransformHandler = ITransformHandler;
+var ITransformer = function() {
+};
+ITransformer.prototype.applyTransform = function(data) {
+};
+ITransformer.prototype.setTransformHandler = function(handler) {
+};
+tuna.ui.transformers.ITransformer = ITransformer;
+var TemplateTransformer = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this.__template = null;
+  this.__transformHandler = null
+};
+tuna.utils.extend(TemplateTransformer, tuna.ui.ModuleInstance);
+tuna.utils.implement(TemplateTransformer, tuna.ui.transformers.ITransformer);
+TemplateTransformer.prototype.init = function() {
+  var templateId = this.getOption("template-id");
+  var settings = tuna.tmpl.getTemplateSettingsById(templateId);
+  if(settings !== null) {
+    this.__template = tuna.tmpl.compile(this._target, settings)
+  }else {
+    alert("Unknown template " + templateId)
+  }
+};
+TemplateTransformer.prototype.setTransformHandler = function(handler) {
+  this.__transformHandler = handler
+};
+TemplateTransformer.prototype.applyTransform = function(data) {
+  if(this.__transformHandler !== null) {
+    this.__transformHandler.handleTransformStart(this._target)
+  }
+  this.__template.applyData(new tuna.tmpl.data.DataNode(data));
+  if(this.__transformHandler !== null) {
+    this.__transformHandler.handleTransformComplete(this._target, this.__template.fetchCreatedChildren(), this.__template.fetchRemovedChildren())
+  }
+};
+TemplateTransformer.prototype.destroy = function() {
+  this.__template.destroy();
+  if(this.__transformHandler !== null) {
+    this.__transformHandler.handleDestroy(this._target, this.__template.fetchRemovedChildren())
+  }
+  this.__template = null;
+  this.__transformHandler = null
+};
+tuna.ui.transformers.TemplateTransformer = TemplateTransformer;
+var ISelectionGroup = function() {
+};
+ISelectionGroup.prototype.getSelectedIndexes = function() {
+};
+ISelectionGroup.prototype.selectIndex = function(index) {
+};
+ISelectionGroup.prototype.isSelected = function(index) {
+};
+ISelectionGroup.prototype.clearSelection = function() {
+};
+ISelectionGroup.prototype.setIndexEnabled = function(index, isEnabled) {
+};
+ISelectionGroup.prototype.isIndexEnabled = function(index) {
+};
+ISelectionGroup.prototype.getItemIndex = function(item) {
+};
+ISelectionGroup.prototype.getItemAt = function(index) {
+};
+ISelectionGroup.prototype.mapItems = function(callback) {
+};
+ISelectionGroup.prototype.updateView = function() {
+};
+tuna.ui.selection.ISelectionGroup = ISelectionGroup;
+var AbstractSelectionGroup = function(target) {
+  tuna.ui.ModuleInstance.call(this, target);
+  this._itemsCollection = null;
+  this._selectionView = null;
+  this._selectionRule = null;
+  this._disabledIndexes = []
+};
+tuna.utils.implement(AbstractSelectionGroup, tuna.ui.selection.ISelectionGroup);
+tuna.utils.extend(AbstractSelectionGroup, tuna.ui.ModuleInstance);
+AbstractSelectionGroup.prototype.setIndexEnabled = function(index, isEnabled) {
+  var indexPosition = tuna.utils.indexOf(index, this._disabledIndexes);
+  if(isEnabled) {
+    if(indexPosition !== -1) {
+      this._selectionView.enableItemAt(index);
+      this._disabledIndexes.splice(indexPosition, 1)
+    }
+  }else {
+    if(indexPosition === -1) {
+      this._selectionView.disableItemAt([index]);
+      this._disabledIndexes.push(index)
+    }
+  }
+};
+AbstractSelectionGroup.prototype.isIndexEnabled = function(index) {
+  return this._itemsCollection.getItemAt(index) !== null && tuna.utils.indexOf(index, this._disabledIndexes) === -1
+};
+AbstractSelectionGroup.prototype.updateView = function() {
+  this._selectionView.update()
+};
+AbstractSelectionGroup.prototype.getItemIndex = function(item) {
+  return this._itemsCollection.getItemIndex(item)
+};
+AbstractSelectionGroup.prototype.getItemAt = function(index) {
+  return this._itemsCollection.getItemAt(index)
+};
+AbstractSelectionGroup.prototype.mapItems = function(callback) {
+  this._itemsCollection.mapItems(callback)
+};
+AbstractSelectionGroup.prototype.getSelectedIndexes = function() {
+  return this._selectionRule.getSelectedIndexes()
+};
+AbstractSelectionGroup.prototype.getLastSelectedIndex = function() {
+  var indexes = this._selectionRule.getSelectedIndexes();
+  if(indexes.length > 0) {
+    return indexes.pop()
+  }
+  return null
+};
+AbstractSelectionGroup.prototype.selectIndex = function(index) {
+  this._selectionRule.selectIndex(index)
+};
+AbstractSelectionGroup.prototype.isSelected = function(index) {
+  return this._selectionRule.isSelected(index)
+};
+AbstractSelectionGroup.prototype.clearSelection = function() {
+  this._selectionRule.clearSelection()
+};
+tuna.ui.selection.AbstractSelectionGroup = AbstractSelectionGroup;
+var SelectionGroup = function(target, indexAttribute) {
+  tuna.ui.selection.AbstractSelectionGroup.call(this, target);
+  this._setDefaultOption("item-selector", ".j-selection-item");
+  this._setDefaultOption("index-attribute", indexAttribute);
+  this._setDefaultOption("is-multiple", null);
+  this._setDefaultOption("selection-class", "active");
+  this._setDefaultOption("selection-event", "click")
+};
+tuna.utils.extend(SelectionGroup, tuna.ui.selection.AbstractSelectionGroup);
+SelectionGroup.prototype.init = function() {
+  var indexAttribute = this.getOption("index-attribute");
+  this._itemsCollection = indexAttribute === null ? new tuna.ui.selection.items.ElementsCollection : new tuna.ui.selection.items.NamedElementsCollection(indexAttribute);
+  this._selectionView = new tuna.ui.selection.view.ClassSelectionView(this._target);
+  this._selectionRule = this.getOption("is-multiple") ? new tuna.ui.selection.rule.MultipleSelectionRule : new tuna.ui.selection.rule.SingleSelectionRule;
+  this._selectionView.setSelectionClass(this.getOption("selection-class"));
+  this._selectionView.setItemSelector(this.getOption("item-selector"));
+  this._selectionView.setSelectionGroup(this);
+  this._selectionView.setItemsCollection(this._itemsCollection);
+  this._selectionRule.setSelectionGroup(this);
+  this._selectionRule.setEventDispatcher(this);
+  this._selectionRule.setSelectionView(this._selectionView);
+  this._selectionView.update()
+};
+tuna.ui.selection.SelectionGroup = SelectionGroup;
+var Navigation = function(target) {
+  tuna.ui.selection.SelectionGroup.call(this, target, "id");
+  this.__openData = null;
+  this.__history = [];
+  this.__controls = null;
+  this.__menuLinks = {};
+  this.setOption("is-multiple", null);
+  this._setDefaultOption("item-selector", ".j-navigation-page");
+  this._setDefaultOption("menu-selector", ".j-navigation-menu")
+};
+tuna.utils.extend(Navigation, tuna.ui.selection.SelectionGroup);
+Navigation.prototype.init = function() {
+  tuna.ui.selection.SelectionGroup.prototype.init.call(this);
+  var self = this;
+  this.addEventListener("deselected", function(event, index) {
+    self.__updateMenu(index, false);
+    self.dispatch("close")
+  });
+  this.addEventListener("selected", function(event, index) {
+    self.__updateMenu(index, true);
+    self.dispatch("open", self.__openData)
+  });
+  this.__controls = new tuna.ui.buttons.ButtonGroup(this._target);
+  this.__controls.setOption("button-selector", ".j-navigation-link");
+  this.__controls.setDefaultAction("navigate");
+  this.__controls.addEventListener("navigate", function(event, button) {
+    var index = button.getOption("href");
+    if(index !== null) {
+      self.navigate(index, button.getOptions())
+    }
+  });
+  this.__controls.addEventListener("back", function(event, button) {
+    self.back()
+  });
+  this.__controls.init();
+  this.__initMenu()
+};
+Navigation.prototype.__initMenu = function() {
+  var menuSelector = this.getOption("menu-selector");
+  var buttonSelector = this.getOption("button-selector");
+  if(menuSelector !== null && buttonSelector !== null) {
+    var menu = tuna.dom.selectOne(menuSelector, this._target);
+    var buttons = tuna.dom.select(buttonSelector, menu);
+    var i = 0, l = buttons.length;
+    var href = null;
+    var button = null;
+    while(i < l) {
+      button = tuna.ui.buttons.create(buttons[i]);
+      href = button.getOption("href");
+      if(href !== null) {
+        if(this.__menuLinks[href] === undefined) {
+          this.__menuLinks[href] = []
+        }
+        this.__menuLinks[href].push(button)
+      }
+      i++
+    }
+  }
+};
+Navigation.prototype.__updateMenu = function(index, isSelected) {
+  var buttons = this.__menuLinks[index];
+  if(buttons !== undefined) {
+    var i = 0, l = buttons.length;
+    while(i < l) {
+      buttons[i].setActive(isSelected);
+      i++
+    }
+  }
+};
+Navigation.prototype.navigate = function(index, data) {
+  var currentIndex = this.getLastSelectedIndex();
+  if(currentIndex !== null) {
+    this.__history.push(currentIndex)
+  }
+  this.__openData = data || null;
+  this.selectIndex(index);
+  this.__openData = null
+};
+Navigation.prototype.back = function() {
+  this.selectIndex(this.__history.pop())
+};
+tuna.ui.selection.Navigation = Navigation;
+var IItemsCollection = function() {
+};
+IItemsCollection.prototype.addItem = function(item) {
+};
+IItemsCollection.prototype.getItemIndex = function(item) {
+};
+IItemsCollection.prototype.getItemAt = function(index) {
+};
+IItemsCollection.prototype.mapItems = function(callback) {
+};
+IItemsCollection.prototype.clear = function() {
+};
+tuna.ui.selection.items.IItemsCollection = IItemsCollection;
+var ElementsCollection = function() {
+  this.__items = []
+};
+tuna.utils.implement(ElementsCollection, tuna.ui.selection.items.IItemsCollection);
+ElementsCollection.prototype.addItem = function(item) {
+  return this.__items.push(item) - 1
+};
+ElementsCollection.prototype.getItemIndex = function(item) {
+  return tuna.utils.indexOf(item, this.__items)
+};
+ElementsCollection.prototype.getItemAt = function(index) {
+  return this.__items[index] || null
+};
+ElementsCollection.prototype.clear = function() {
+  this.__items.length = 0
+};
+ElementsCollection.prototype.mapItems = function(callback) {
+  var i = 0, l = this.__items.length;
+  while(i < l) {
+    callback(i, this.__items[i]);
+    i++
+  }
+};
+tuna.ui.selection.items.ElementsCollection = ElementsCollection;
+var NamedElementsCollection = function(indexAttribute) {
+  this.__indexAttribute = indexAttribute;
+  this.__items = {}
+};
+tuna.utils.implement(NamedElementsCollection, tuna.ui.selection.items.IItemsCollection);
+NamedElementsCollection.prototype.addItem = function(item) {
+  var index = item.getAttribute(this.__indexAttribute);
+  if(index !== null) {
+    this.__items[index] = item
+  }
+  return index
+};
+NamedElementsCollection.prototype.getItemIndex = function(item) {
+  var index = item.getAttribute(this.__indexAttribute);
+  if(index !== null && this.__items[index] !== undefined) {
+    return index
+  }
+  return null
+};
+NamedElementsCollection.prototype.getItemAt = function(index) {
+  return this.__items[index] || null
+};
+NamedElementsCollection.prototype.clear = function() {
+  this.__items = {}
+};
+NamedElementsCollection.prototype.mapItems = function(callback) {
+  for(var index in this.__items) {
+    if(this.__items.hasOwnProperty(index)) {
+      callback(index, this.__items[index])
+    }
+  }
+};
+tuna.ui.selection.items.NamedElementsCollection = NamedElementsCollection;
+var ISelectionRule = function() {
+};
+ISelectionRule.prototype.getSelectedIndexes = function() {
+};
+ISelectionRule.prototype.selectIndex = function(index) {
+};
+ISelectionRule.prototype.isSelected = function(index) {
+};
+ISelectionRule.prototype.clearSelection = function() {
+};
+tuna.ui.selection.rule.ISelectionRule = ISelectionRule;
+var AbstractSelectionRule = function() {
+  this._selectionGroup = null;
+  this._selectionView = null;
+  this._eventDispatcher = null
+};
+tuna.utils.implement(AbstractSelectionRule, tuna.ui.selection.rule.ISelectionRule);
+AbstractSelectionRule.prototype.setSelectionGroup = function(group) {
+  this._selectionGroup = group
+};
+AbstractSelectionRule.prototype.setSelectionView = function(view) {
+  this._selectionView = view
+};
+AbstractSelectionRule.prototype.setEventDispatcher = function(dispatcher) {
+  this._eventDispatcher = dispatcher
+};
+AbstractSelectionRule.prototype.getSelectedIndexes = function() {
+};
+AbstractSelectionRule.prototype.selectIndex = function(index) {
+};
+AbstractSelectionRule.prototype.isSelected = function(index) {
+};
+AbstractSelectionRule.prototype.clearSelection = function() {
+};
+tuna.ui.selection.rule.AbstractSelectionRule = AbstractSelectionRule;
+var SingleSelectionRule = function() {
+  tuna.ui.selection.rule.AbstractSelectionRule.call(this);
+  this.__currentIndex = null
+};
+tuna.utils.extend(SingleSelectionRule, tuna.ui.selection.rule.AbstractSelectionRule);
+SingleSelectionRule.prototype.getSelectedIndexes = function() {
+  if(this.__currentIndex !== null) {
+    return[this.__currentIndex]
+  }
+  return[]
+};
+SingleSelectionRule.prototype.selectIndex = function(index) {
+  if(this._selectionGroup.isIndexEnabled(index) && this.__currentIndex !== index && this.__dispatchSelect(index)) {
+    var oldIndex = this.__currentIndex;
+    if(this.__currentIndex !== null) {
+      this._selectionView.destroySelectionAt(this.__currentIndex)
+    }
+    this._selectionView.applySelectionAt(index);
+    this.__currentIndex = index;
+    if(oldIndex !== null) {
+      this._eventDispatcher.dispatch("deselected", oldIndex)
+    }
+    this._eventDispatcher.dispatch("selected", index)
+  }
+};
+SingleSelectionRule.prototype.__dispatchSelect = function(newIndex) {
+  var oldIndex = this.__currentIndex;
+  return(oldIndex === null || this._eventDispatcher.dispatch("deselect", oldIndex)) && this._eventDispatcher.dispatch("select", newIndex)
+};
+SingleSelectionRule.prototype.isSelected = function(index) {
+  return index === this.__currentIndex
+};
+SingleSelectionRule.prototype.clearSelection = function() {
+  if(this.__currentIndex !== null) {
+    this._selectionView.destroySelectionAt(this.__currentIndex);
+    this.__currentIndex = null
+  }
+};
+tuna.ui.selection.rule.SingleSelectionRule = SingleSelectionRule;
+var MultipleSelectionRule = function() {
+  tuna.ui.selection.rule.AbstractSelectionRule.call(this);
+  this.__selectedIndexes = []
+};
+tuna.utils.extend(MultipleSelectionRule, tuna.ui.selection.rule.AbstractSelectionRule);
+MultipleSelectionRule.prototype.getSelectedIndexes = function() {
+  return tuna.utils.cloneArray(this.__selectedIndexes)
+};
+MultipleSelectionRule.prototype.selectIndex = function(index) {
+  if(this._selectionGroup.isIndexEnabled(index)) {
+    var indexPosition = tuna.utils.indexOf(index, this.__selectedIndexes);
+    if(indexPosition === -1) {
+      if(this._eventDispatcher.dispatch("select", index)) {
+        this._selectionView.applySelectionAt(index);
+        this.__selectedIndexes.push(index)
+      }
+    }else {
+      if(this._eventDispatcher.dispatch("deselect", index)) {
+        this._selectionView.destroySelectionAt(index);
+        this.__selectedIndexes.splice(indexPosition, 1)
+      }
+    }
+  }
+};
+MultipleSelectionRule.prototype.isSelected = function(index) {
+  return tuna.utils.indexOf(index, this.__selectedIndexes) !== -1
+};
+MultipleSelectionRule.prototype.clearSelection = function() {
+  while(this.__selectedIndexes.length > 0) {
+    this._selectionView.destroySelectionAt(this.__selectedIndexes.shift())
+  }
+};
+tuna.ui.selection.rule.MultipleSelectionRule = MultipleSelectionRule;
+var ISelectionView = function() {
+};
+ISelectionView.prototype.applySelectionAt = function(index) {
+};
+ISelectionView.prototype.destroySelectionAt = function(index) {
+};
+ISelectionView.prototype.disableItemAt = function(index) {
+};
+ISelectionView.prototype.enableItemAt = function(index) {
+};
+ISelectionView.prototype.update = function() {
+};
+tuna.ui.selection.view.ISelectionView = ISelectionView;
+var AbstractSelectionView = function() {
+  this._itemsCollection = null;
+  this._selectionGroup = null
+};
+tuna.utils.implement(AbstractSelectionView, tuna.ui.selection.view.ISelectionView);
+AbstractSelectionView.prototype.setSelectionGroup = function(group) {
+  this._selectionGroup = group
+};
+AbstractSelectionView.prototype.setItemsCollection = function(collection) {
+  this._itemsCollection = collection
+};
+AbstractSelectionView.prototype.applySelectionAt = function(index) {
+};
+AbstractSelectionView.prototype.destroySelectionAt = function(index) {
+};
+AbstractSelectionView.prototype.disableItemAt = function(index) {
+};
+AbstractSelectionView.prototype.enableItemAt = function(index) {
+};
+AbstractSelectionView.prototype.update = function() {
+};
+tuna.ui.selection.view.AbstractSelectionView = AbstractSelectionView;
+var ClassSelectionView = function(target) {
+  tuna.ui.selection.view.AbstractSelectionView.call(this);
+  this._target = target;
+  this._itemSelector = "";
+  this._selectionClass = "";
+  this._disabledClass = "disabled"
+};
+tuna.utils.extend(ClassSelectionView, tuna.ui.selection.view.AbstractSelectionView);
+ClassSelectionView.prototype.setItemSelector = function(selector) {
+  this._itemSelector = selector
+};
+ClassSelectionView.prototype.setSelectionClass = function(className) {
+  this._selectionClass = className
+};
+ClassSelectionView.prototype.setDisabledClass = function(className) {
+  this._disabledClass = className
+};
+ClassSelectionView.prototype.applySelectionAt = function(index) {
+  var item = this._itemsCollection.getItemAt(index);
+  if(item !== null) {
+    tuna.dom.addClass(item, this._selectionClass)
+  }
+};
+ClassSelectionView.prototype.destroySelectionAt = function(index) {
+  var item = this._itemsCollection.getItemAt(index);
+  if(item !== null) {
+    tuna.dom.removeClass(item, this._selectionClass)
+  }
+};
+ClassSelectionView.prototype.disableItemAt = function(index) {
+  var item = this._itemsCollection.getItemAt(index);
+  if(item !== null) {
+    tuna.dom.addClass(item, this._disabledClass)
+  }
+};
+ClassSelectionView.prototype.enableItemAt = function(index) {
+  var item = this._itemsCollection.getItemAt(index);
+  if(item !== null) {
+    tuna.dom.removeClass(item, this._disabledClass)
+  }
+};
+ClassSelectionView.prototype.update = function() {
+  if(this._itemSelector !== null) {
+    this._selectionGroup.clearSelection();
+    this._itemsCollection.clear();
+    var possibleItems = tuna.dom.select(this._itemSelector, this._target);
+    var i = 0, l = possibleItems.length;
+    var index = null;
+    var item = null;
+    while(i < l) {
+      item = possibleItems[i];
+      if(tuna.dom.getParentMatches(item, this._itemSelector, this._target) === null) {
+        index = this._itemsCollection.addItem(item);
+        if(index !== null && tuna.dom.hasClass(item, this._selectionClass)) {
+          this._selectionGroup.selectIndex(index)
+        }
+      }
+      i++
+    }
+  }
+};
+tuna.ui.selection.view.ClassSelectionView = ClassSelectionView;
+var FormModule = function() {
+  tuna.ui.Module.call(this, "form.j-form")
+};
+tuna.utils.extend(FormModule, tuna.ui.Module);
+FormModule.prototype.initInstance = function(target) {
+  return new tuna.ui.forms.Form(target)
+};
+tuna.ui.modules.register("form", new FormModule);
+var NavigationModule = function() {
+  tuna.ui.Module.call(this, "body")
+};
+tuna.utils.extend(NavigationModule, tuna.ui.Module);
+NavigationModule.prototype.initInstance = function(target) {
+  return new tuna.ui.selection.Navigation(target)
+};
+tuna.ui.modules.register("navigation", new NavigationModule);
+var PopupModule = function() {
+  tuna.ui.Module.call(this, ".j-popup")
+};
+tuna.utils.extend(PopupModule, tuna.ui.Module);
+PopupModule.prototype.initInstance = function(target) {
+  return tuna.ui.popups.create(target)
+};
+tuna.ui.modules.register("popup", new PopupModule);
+var PopupButtonModule = function() {
+  tuna.ui.Module.call(this, ".j-popup-button")
+};
+tuna.utils.extend(PopupButtonModule, tuna.ui.Module);
+PopupButtonModule.prototype.initInstance = function(target) {
+  var popupElement = tuna.dom.selectOne(target.getAttribute("data-popup-selector"));
+  var popup = null;
+  if(popupElement !== null) {
+    popup = tuna.ui.popups.create(popupElement);
+    tuna.dom.addEventListener(target, "click", function(event) {
+      popup.open()
+    })
+  }
+  return popup
+};
+tuna.ui.modules.register("popup-button", new PopupButtonModule);
+var SelectionGroupModule = function() {
+  tuna.ui.Module.call(this, ".j-selection-group")
+};
+tuna.utils.extend(SelectionGroupModule, tuna.ui.Module);
+SelectionGroupModule.prototype.initInstance = function(target) {
+  var selectionGroup = new tuna.ui.selection.SelectionGroup(target, null);
+  var selectionEvent = selectionGroup.getOption("selection-event");
+  var itemSelector = selectionGroup.getOption("item-selector");
+  if(selectionEvent !== null && itemSelector !== null) {
+    tuna.dom.addChildEventListener(target, itemSelector, selectionEvent, function() {
+      var index = selectionGroup.getItemIndex(this);
+      if(index !== null) {
+        selectionGroup.selectIndex(index)
+      }
+    })
+  }
+  return selectionGroup
+};
+tuna.ui.modules.register("selection-group", new SelectionGroupModule);
+var TemplateTransformerModule = function() {
+  tuna.ui.Module.call(this, ".j-template-transformer")
+};
+tuna.utils.extend(TemplateTransformerModule, tuna.ui.Module);
+TemplateTransformerModule.prototype.initInstance = function(target) {
+  return new tuna.ui.transformers.TemplateTransformer(target)
+};
+tuna.ui.modules.register("template-transformer", new TemplateTransformerModule);
+var ControlContainerModule = function() {
+  tuna.ui.Module.call(this, ".j-control-container")
+};
+tuna.utils.extend(ControlContainerModule, tuna.ui.Module);
+ControlContainerModule.prototype._findTargets = function(context) {
+  return tuna.dom.select(this._selector, context)
+};
+ControlContainerModule.prototype.initInstance = function(target) {
+  return new tuna.ui.containers.ControlContainer(target)
+};
+tuna.ui.modules.register("control-container", new ControlContainerModule, true);
+var ButtonGroupModule = function() {
+  tuna.ui.Module.call(this, ".j-button-group")
+};
+tuna.utils.extend(ButtonGroupModule, tuna.ui.Module);
+ButtonGroupModule.prototype.initInstance = function(target) {
+  return new tuna.ui.buttons.ButtonGroup(target)
+};
+tuna.ui.modules.register("button-group", new ButtonGroupModule);
+tuna.view.__idTable = {};
+tuna.view.__mainController = null;
+tuna.view.setMainController = function(controller) {
+  tuna.view.__mainController = controller
+};
+tuna.view.registerController = function(targetId, controller) {
+  tuna.view.__idTable[targetId] = controller
+};
+tuna.view.getController = function(target) {
+  if(target === document.body) {
+    return tuna.view.__mainController
+  }else {
+    if(target !== null && tuna.view.__idTable[target.id] !== undefined) {
+      return tuna.view.__idTable[target.id]
+    }
+  }
+  return null
+};
+tuna.view.init = function() {
+  (new tuna.ui.containers.ControlContainer(document.body)).initController()
+};
+var ViewController = function() {
+  this._container = null
+};
+tuna.utils.implement(ViewController, tuna.ui.transformers.ITransformHandler);
+ViewController.prototype.setContainer = function(container) {
+  this._container = container
+};
+ViewController.prototype.bootstrap = function() {
+  this.init()
+};
+ViewController.prototype.terminate = function() {
+  this.destroy()
+};
+ViewController.prototype.init = function() {
+  this._requireModules();
+  this._container.initModules();
+  this._initActions()
+};
+ViewController.prototype._requireModules = function() {
+};
+ViewController.prototype._initActions = function() {
+};
+ViewController.prototype.destroy = function() {
+  this._destroyActions();
+  this._container.destroyModules()
+};
+ViewController.prototype._destroyActions = function() {
+};
+ViewController.prototype.handleTransformComplete = function(target, createdElements, removedElements) {
+  var i = 0, l = createdElements.length;
+  while(i < l) {
+    this._container.initModules(createdElements[i]);
+    i++
+  }
+};
+ViewController.prototype.handleTransformStart = function(target) {
+};
+ViewController.prototype.handleDestroy = function(target, removedElements) {
+};
+tuna.view.ViewController = ViewController;
+var NavigationViewController = function() {
+  tuna.view.ViewController.call(this);
+  this._navigation = null;
+  this._currentPage = null;
+  this.__pageControllers = {}
+};
+tuna.utils.extend(NavigationViewController, tuna.view.ViewController);
+NavigationViewController.prototype._requireModules = function() {
+  this._container.requireModule("control-container");
+  this._container.requireModule("navigation")
+};
+NavigationViewController.prototype._initActions = function() {
+  this._navigation = this._container.getOneModuleInstance("navigation");
+  if(this._navigation !== null) {
+    var self = this;
+    this._navigation.addEventListener("select", function(event, index) {
+      if(!self._canClose(index)) {
+        event.preventDefault()
+      }
+    });
+    this._navigation.addEventListener("open", function(event, data) {
+      self._setCurrentPage(self._navigation.getLastSelectedIndex(), data)
+    });
+    var currentIndex = this._navigation.getLastSelectedIndex();
+    if(currentIndex !== null) {
+      this._setCurrentPage(currentIndex)
+    }
+  }
+};
+NavigationViewController.prototype._canClose = function(index) {
+  if(this._currentPage !== null) {
+    var controller = this.__getPageController(this._currentPage);
+    if(controller !== null) {
+      controller.close()
+    }
+  }
+  return true
+};
+NavigationViewController.prototype._setCurrentPage = function(index, args) {
+  var newPage = this._navigation.getItemAt(index);
+  var oldPage = this._currentPage;
+  if(oldPage !== null) {
+    this._handlePageClose(oldPage, newPage);
+    this._closePage()
+  }
+  this._currentPage = newPage;
+  this._openPage(args);
+  this._handlePageOpen(newPage, oldPage)
+};
+NavigationViewController.prototype._openPage = function(args) {
+  if(!this.__isPageInit(this._currentPage)) {
+    this.__initPage(this._currentPage)
+  }
+  var controller = this.__getPageController(this._currentPage);
+  if(controller !== null) {
+    controller.open(args)
+  }
+};
+NavigationViewController.prototype._closePage = function() {
+  var controller = this.__getPageController(this._currentPage);
+  if(controller !== null) {
+    controller.close()
+  }
+};
+NavigationViewController.prototype.__getPageController = function(page) {
+  return this.__pageControllers[page.id]
+};
+NavigationViewController.prototype.__initPage = function(page) {
+  var controller = null;
+  var container = this._container.getModuleInstanceByName("control-container", page.id);
+  if(container !== null) {
+    container.initController();
+    controller = container.getController()
+  }
+  if(controller !== null) {
+    controller.setNavigation(this._navigation)
+  }
+  this.__pageControllers[page.id] = controller
+};
+NavigationViewController.prototype.__isPageInit = function(page) {
+  return this.__pageControllers[page.id] !== undefined
+};
+NavigationViewController.prototype._handlePageClose = function(currentPage, newPage) {
+};
+NavigationViewController.prototype._handlePageOpen = function(currentPage, oldPage) {
+};
+tuna.view.NavigationViewController = NavigationViewController;
+var PageViewController = function() {
+  tuna.view.ViewController.call(this);
+  this._navigation = null
+};
+tuna.utils.extend(PageViewController, tuna.view.ViewController);
+PageViewController.prototype.setNavigation = function(navigation) {
+  this._navigation = navigation
+};
+PageViewController.prototype.getNavigation = function() {
+  return this._navigation
+};
+PageViewController.prototype.canClose = function(index) {
+  return true
+};
+PageViewController.prototype.close = function() {
+};
+PageViewController.prototype.open = function(args) {
+};
+tuna.view.PageViewController = PageViewController;
+var model = {};
+model.record = {};
+model.resource = {};
+var rest = {};
+window["main"] = function(args) {
+  tuna.utils.config.init(args);
+  tuna.dom.setSelectorEngine(Sizzle);
+  tuna.view.init()
+};
+var MainController = function() {
+  tuna.view.NavigationViewController.call(this)
+};
+tuna.utils.extend(MainController, tuna.view.NavigationViewController);
+MainController.prototype._requireModules = function() {
+  tuna.view.NavigationViewController.prototype._requireModules.call(this);
+  this._container.requireModule("template-transformer");
+  this._container.requireModule("popup");
+  this._container.requireModule("form")
+};
+MainController.prototype._initActions = function() {
+  tuna.view.NavigationViewController.prototype._initActions.call(this);
+  var self = this;
+  tuna.rest.call("users.getCurrent", null, function(user) {
+    if(user === null) {
+      self.__showSignUpPopup()
+    }else {
+      self.__applyUser(user)
+    }
+  }, "user");
+  this.__initSingOutForm()
+};
+MainController.prototype.__initSingOutForm = function() {
+  var form = this._container.getModuleInstanceByName("form", "sign-out");
+  form.addEventListener("result", function(event, result) {
+    location.reload()
+  })
+};
+MainController.prototype.__showSignUpPopup = function() {
+  var popup = this._container.getModuleInstanceByName("popup", "sign-in");
+  popup.open();
+  var form = this._container.getModuleInstanceByName("form", "sign-in");
+  var self = this;
+  form.addEventListener("result", function(event, user) {
+    self.__applyUser(user);
+    popup.close()
+  })
+};
+MainController.prototype.__applyUser = function(user) {
+  var transformer = this._container.getModuleInstanceByName("template-transformer", "user-info");
+  transformer.applyTransform(user.serialize());
+  this._navigation.navigate("recipes_page")
+};
+tuna.view.setMainController(new MainController);
+var RecipesController = function() {
+  tuna.view.PageViewController.call(this);
+  this.__bakerySelectTransformer = null;
+  this.__recipeTableTransformer = null;
+  this.__addRecipeTransformer = null;
+  this.__bakerySelectForm = null;
+  this.__addRecipeForm = null;
+  this.__recipeControls = null;
+  this.__recipePopup = null
+};
+tuna.utils.extend(RecipesController, tuna.view.PageViewController);
+RecipesController.prototype._requireModules = function() {
+  this._container.requireModule("template-transformer");
+  this._container.requireModule("button-group");
+  this._container.requireModule("popup");
+  this._container.requireModule("form")
+};
+RecipesController.prototype._initActions = function() {
+  var self = this;
+  this.__recipeTableTransformer = this._container.getModuleInstanceByName("template-transformer", "recipe-table");
+  this.__bakerySelectTransformer = this._container.getModuleInstanceByName("template-transformer", "bakery-select");
+  this.__addRecipeTransformer = this._container.getModuleInstanceByName("template-transformer", "add-recipe");
+  this.__bakerySelectForm = this._container.getModuleInstanceByName("form", "bakery-select");
+  this.__addRecipeForm = this._container.getModuleInstanceByName("form", "add-recipe");
+  this.__recipeControls = this._container.getModuleInstanceByName("button-group", "recipe-controls");
+  this.__recipePopup = this._container.getModuleInstanceByName("popup", "edit-recipe");
+  this.__recipeControls.addEventListener("delete", function(event, button) {
+    self.__deleteRecipe(button)
+  });
+  this.__recipeControls.addEventListener("edit", function(event, button) {
+    self.__recipePopup.open()
+  });
+  this.__bakerySelectForm.addEventListener("result", function(event, recipes) {
+    model.resource.recipes.setRecipes(recipes);
+    self.__updateView()
+  });
+  this.__bakerySelectForm.addEventListener("change", function() {
+    var bakeryId = self.__bakerySelectForm.getValue("bakery_id");
+    if(bakeryId !== -1) {
+      self.__bakerySelectForm.submit()
+    }else {
+      model.resource.recipes.clearRecipes()
+    }
+    model.resource.bakeries.setCurrentBakeryId(bakeryId);
+    self.__updateView()
+  });
+  this.__addRecipeForm.addEventListener("result", function(event, recipe) {
+    model.resource.recipes.addRecipe(recipe);
+    self.__addRecipeForm.reset();
+    self.__updateView()
+  });
+  tuna.rest.call("users.getBakeries", null, function(bakeries) {
+    model.resource.bakeries.setBakeries(bakeries);
+    self.__updateView()
+  }, "bakery")
+};
+RecipesController.prototype.__updateView = function() {
+  this.__bakerySelectTransformer.applyTransform(model.resource.bakeries.getBakeriesList());
+  this.__recipeTableTransformer.applyTransform(model.resource.recipes.getRecipesList());
+  this.__addRecipeTransformer.applyTransform(model.resource.bakeries.getCurrentBakery())
+};
+RecipesController.prototype.__deleteRecipe = function(button) {
+  if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0440\u0435\u0446\u0435\u043f\u0442?")) {
+    var self = this;
+    var recipeId = button.getOption("recipe-id");
+    tuna.rest.call("recipes.remove", {"recipe_id":recipeId}, function() {
+      model.resource.recipes.removeRecipeById(recipeId);
+      self.__updateView()
+    });
+    button.setEnabled(false)
+  }
+};
+tuna.view.registerController("recipes_page", new RecipesController);
+var User = function() {
+  this.email = "";
+  this.role = -1
+};
+tuna.utils.extend(User, tuna.model.Record);
+User.ADMIN = 0;
+User.BAKERY = 1;
+User.prototype.populate = function(data) {
+  this.email = data["email"];
+  this.role = data["role"]
+};
+User.prototype.serialize = function() {
+  return{"email":this.email, "role":model.resource.users.getRoleName(this.role)}
+};
+model.record.User = User;
+tuna.model.recordFactory.registerRecord("user", new model.record.User);
+var Bakery = function() {
+  this.id = "";
+  this.email = "";
+  this.city = "";
+  this.name = "";
+  this.deliveryPrice = 0
+};
+tuna.utils.extend(Bakery, tuna.model.Record);
+Bakery.prototype.populate = function(data) {
+  this.id = data["id"];
+  this.name = data["name"];
+  this.email = data["email"];
+  this.city = data["city"]["name"];
+  this.deliveryPrice = data["delivery_price"]
+};
+Bakery.prototype.serialize = function() {
+  return{"id":this.id, "name":this.name + " (" + this.city + ")", "email":this.email, "deliveryPrice":this.deliveryPrice}
+};
+model.record.Bakery = Bakery;
+tuna.model.recordFactory.registerRecord("bakery", new model.record.Bakery);
+var Recipe = function() {
+  this.id = "";
+  this.bakeryId = "";
+  this.name = "";
+  this.desc = "";
+  this.imageUrl = "";
+  this.dimentionPrices = []
+};
+tuna.utils.extend(Recipe, tuna.model.Record);
+Recipe.prototype.populate = function(data) {
+  this.id = data["id"];
+  this.bakeryId = data["bakery_id"];
+  this.name = data["name"];
+  this.desc = data["desc"];
+  this.imageUrl = data["image_url"];
+  this.dimentionPrices = []
+};
+Recipe.prototype.serialize = function() {
+  return{"id":this.id, "bakeryId":this.bakeryId, "name":this.name, "desc":this.desc, "imageUrl":this.imageUrl, "dimentionPrices":this.dimentionPrices}
+};
+model.record.Recipe = Recipe;
+tuna.model.recordFactory.registerRecord("recipe", new model.record.Recipe);
+var Users = function() {
+  this.__roles = ["\u0410\u0434\u043c\u0438\u043d", "\u041a\u043e\u043d\u0434\u0438\u0442\u0435\u0440\u0441\u043a\u0430\u044f"]
+};
+Users.prototype.getRoleName = function(role) {
+  return this.__roles[role]
+};
+model.resource.users = new Users;
+var Bakeries = function() {
+  this.__bakeries = [];
+  this.__currentBakery = null
+};
+Bakeries.prototype.setBakeries = function(bakeries) {
+  this.__bakeries = bakeries
+};
+Bakeries.prototype.setCurrentBakeryId = function(id) {
+  this.__currentBakery = null;
+  var i = 0, l = this.__bakeries.length;
+  while(i < l) {
+    if(this.__bakeries[i].id === id) {
+      this.__currentBakery = this.__bakeries[i];
+      break
+    }
+    i++
+  }
+};
+Bakeries.prototype.getCurrentBakery = function() {
+  if(this.__currentBakery !== null) {
+    return this.__currentBakery.serialize()
+  }
+  return null
+};
+Bakeries.prototype.getBakeriesList = function() {
+  var result = [];
+  var i = 0, l = this.__bakeries.length;
+  while(i < l) {
+    result.push(this.__bakeries[i].serialize());
+    i++
+  }
+  return result
+};
+model.resource.bakeries = new Bakeries;
+var Recipes = function() {
+  this.__recipes = []
+};
+Recipes.prototype.setRecipes = function(recipes) {
+  this.__recipes = recipes
+};
+Recipes.prototype.clearRecipes = function() {
+  this.__recipes.length = 0
+};
+Recipes.prototype.addRecipe = function(recipe) {
+  this.__recipes.push(recipe)
+};
+Recipes.prototype.removeRecipeById = function(id) {
+  var i = 0, l = this.__recipes.length;
+  while(i < l) {
+    if(this.__recipes[i].id === id) {
+      this.__recipes.splice(i, 1);
+      break
+    }
+    i++
+  }
+};
+Recipes.prototype.getRecipesList = function() {
+  var result = [];
+  var i = 0, l = this.__recipes.length;
+  while(i < l) {
+    result.push(this.__recipes[i].serialize());
+    i++
+  }
+  return result
+};
+model.resource.recipes = new Recipes;
+var CommonMethod = function(name) {
+  tuna.rest.Method.call(this, name);
+  this.__request = new tuna.net.Request;
+  this.__request.method = "POST";
+  this.__request.setURL("/api/?method=" + name);
+  var self = this;
+  this.__request.addEventListener("complete", function(event, data) {
+    self._handleResponse(data)
+  })
+};
+tuna.utils.extend(CommonMethod, tuna.rest.Method);
+CommonMethod.prototype.call = function(args) {
+  this.__request.setData(args);
+  this.__request.send()
+};
+CommonMethod.prototype._handleResponse = function(data) {
+  var result = null;
+  try {
+    result = JSON.parse(data)
+  }catch(error) {
+    this.dispatch("error", data)
+  }
+  if(result !== null) {
+    var response = result["response"];
+    if(response !== undefined) {
+      this.dispatch("result", response)
+    }else {
+      this.dispatch("error", result["errors"])
+    }
+  }
+};
+rest.CommonMethod = CommonMethod;
+var CommonFactory = function() {
+};
+tuna.utils.implement(CommonFactory, tuna.rest.IMethodFactory);
+CommonFactory.prototype.createMethod = function(name) {
+  return new rest.CommonMethod(name)
+};
+tuna.rest.methodFactory.setDefaultFactory(new CommonFactory);
+
