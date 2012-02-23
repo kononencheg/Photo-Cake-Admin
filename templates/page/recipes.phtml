@@ -11,10 +11,10 @@
     </div>
 
     <div class="row">
-        <div class="span7">
+        <div class="span6">
             <h2>Таблица рецептов</h2>
         </div>
-        <div class="span5">
+        <div class="span6">
 
             <form action="/api/"
                   method="POST"
@@ -28,10 +28,13 @@
                 <input type="hidden" name="format" value="frame-callback" />
 
                 <label for="recipe_bakery_select">Кондитерская: </label>
+
                 <select id="recipe_bakery_select" name="bakery_id"
                         class="t-bakery-list">
                     <option value="-1"></option>
                 </select>
+
+                <input type="submit" class="btn" value="Выбрать" />
             </form>
 
         </div>

@@ -104,16 +104,13 @@ RecipesController.prototype._initActions = function() {
         self.__updateView();
     });
 
-    this.__bakerySelectForm.addEventListener('change', function() {
+    this.__bakerySelectForm.addEventListener('submit', function() {
         var bakeryId = self.__bakerySelectForm.getValue('bakery_id');
-        if (bakeryId !== -1) {
-            self.__bakerySelectForm.submit();
-        } else {
+        if (bakeryId === -1) {
             model.resource.recipes.clearRecipes();
         }
 
         model.resource.bakeries.setCurrentBakeryId(bakeryId);
-        self.__updateView();
     });
 
     this.__addRecipeForm.addEventListener('result', function(event, recipe) {
