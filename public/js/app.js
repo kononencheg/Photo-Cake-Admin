@@ -2890,7 +2890,8 @@ MainController.prototype.__showSignUpPopup = function() {
 };
 MainController.prototype.__applyUser = function(user) {
   var transformer = this._container.getModuleInstanceByName("template-transformer", "user-info");
-  transformer.applyTransform(user.serialize())
+  transformer.applyTransform(user.serialize());
+  this._navigation.navigate("orders_page")
 };
 tuna.view.setMainController(new MainController);
 var RecipesController = function() {
