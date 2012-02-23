@@ -16,6 +16,7 @@ tuna.tmpl.units = {};
 tuna.ui = {};
 tuna.ui.buttons = {};
 tuna.ui.containers = {};
+tuna.ui.flash = {};
 tuna.ui.forms = {};
 tuna.ui.popups = {};
 tuna.ui.modules = {};
@@ -1846,7 +1847,9 @@ ButtonGroup.prototype.init = function() {
         action = self.__defaultAction
       }
       if(action !== null) {
-        self.dispatch(action, button)
+        if(!self.dispatch(action, button)) {
+          tuna.dom.stopPropagation(event)
+        }
       }
     })
   }
@@ -2174,7 +2177,7 @@ AbstractSelectionGroup.prototype.getLastSelectedIndex = function() {
   return null
 };
 AbstractSelectionGroup.prototype.selectIndex = function(index) {
-  this._selectionRule.selectIndex(index)
+  return this._selectionRule.selectIndex(index)
 };
 AbstractSelectionGroup.prototype.isSelected = function(index) {
   return this._selectionRule.isSelected(index)
@@ -2235,7 +2238,9 @@ Navigation.prototype.init = function() {
   this.__controls.addEventListener("navigate", function(event, button) {
     var index = button.getOption("href");
     if(index !== null) {
-      self.navigate(index, button.getOptions())
+      if(self.navigate(index, button.getOptions())) {
+        event.preventDefault()
+      }
     }
   });
   this.__controls.addEventListener("back", function(event, button) {
@@ -2265,6 +2270,10 @@ Navigation.prototype.__initMenu = function() {
       i++
     }
   }
+  var index = this.getLastSelectedIndex();
+  if(index !== null) {
+    this.__updateMenu(index, true)
+  }
 };
 Navigation.prototype.__updateMenu = function(index, isSelected) {
   var buttons = this.__menuLinks[index];
@@ -2282,8 +2291,9 @@ Navigation.prototype.navigate = function(index, data) {
     this.__history.push(currentIndex)
   }
   this.__openData = data || null;
-  this.selectIndex(index);
-  this.__openData = null
+  var result = this.selectIndex(index);
+  this.__openData = null;
+  return result
 };
 Navigation.prototype.back = function() {
   this.selectIndex(this.__history.pop())
@@ -2300,6 +2310,8 @@ IItemsCollection.prototype.getItemAt = function(index) {
 IItemsCollection.prototype.mapItems = function(callback) {
 };
 IItemsCollection.prototype.clear = function() {
+};
+IItemsCollection.prototype.getItemsCount = function() {
 };
 tuna.ui.selection.items.IItemsCollection = IItemsCollection;
 var ElementsCollection = function() {
@@ -2324,6 +2336,9 @@ ElementsCollection.prototype.mapItems = function(callback) {
     callback(i, this.__items[i]);
     i++
   }
+};
+ElementsCollection.prototype.getItemsCount = function() {
+  return this.__items.length
 };
 tuna.ui.selection.items.ElementsCollection = ElementsCollection;
 var NamedElementsCollection = function(indexAttribute) {
@@ -2353,10 +2368,15 @@ NamedElementsCollection.prototype.clear = function() {
 };
 NamedElementsCollection.prototype.mapItems = function(callback) {
   for(var index in this.__items) {
-    if(this.__items.hasOwnProperty(index)) {
-      callback(index, this.__items[index])
-    }
+    callback(index, this.__items[index])
   }
+};
+NamedElementsCollection.prototype.getItemsCount = function() {
+  var i = 0;
+  for(var index in this.__items) {
+    i++
+  }
+  return i
 };
 tuna.ui.selection.items.NamedElementsCollection = NamedElementsCollection;
 var ISelectionRule = function() {
@@ -2416,8 +2436,10 @@ SingleSelectionRule.prototype.selectIndex = function(index) {
     if(oldIndex !== null) {
       this._eventDispatcher.dispatch("deselected", oldIndex)
     }
-    this._eventDispatcher.dispatch("selected", index)
+    this._eventDispatcher.dispatch("selected", index);
+    return true
   }
+  return false
 };
 SingleSelectionRule.prototype.__dispatchSelect = function(newIndex) {
   var oldIndex = this.__currentIndex;
@@ -2447,15 +2469,18 @@ MultipleSelectionRule.prototype.selectIndex = function(index) {
     if(indexPosition === -1) {
       if(this._eventDispatcher.dispatch("select", index)) {
         this._selectionView.applySelectionAt(index);
-        this.__selectedIndexes.push(index)
+        this.__selectedIndexes.push(index);
+        return true
       }
     }else {
       if(this._eventDispatcher.dispatch("deselect", index)) {
         this._selectionView.destroySelectionAt(index);
-        this.__selectedIndexes.splice(indexPosition, 1)
+        this.__selectedIndexes.splice(indexPosition, 1);
+        return true
       }
     }
   }
+  return false
 };
 MultipleSelectionRule.prototype.isSelected = function(index) {
   return tuna.utils.indexOf(index, this.__selectedIndexes) !== -1
@@ -2572,7 +2597,7 @@ FormModule.prototype.initInstance = function(target) {
 };
 tuna.ui.modules.register("form", new FormModule);
 var NavigationModule = function() {
-  tuna.ui.Module.call(this, "body")
+  tuna.ui.Module.call(this, ".j-navigation")
 };
 tuna.utils.extend(NavigationModule, tuna.ui.Module);
 NavigationModule.prototype.initInstance = function(target) {
@@ -2865,8 +2890,7 @@ MainController.prototype.__showSignUpPopup = function() {
 };
 MainController.prototype.__applyUser = function(user) {
   var transformer = this._container.getModuleInstanceByName("template-transformer", "user-info");
-  transformer.applyTransform(user.serialize());
-  this._navigation.navigate("recipes_page")
+  transformer.applyTransform(user.serialize())
 };
 tuna.view.setMainController(new MainController);
 var RecipesController = function() {
@@ -2942,6 +2966,30 @@ RecipesController.prototype.__deleteRecipe = function(button) {
   }
 };
 tuna.view.registerController("recipes_page", new RecipesController);
+var OrdersController = function() {
+  tuna.view.PageViewController.call(this);
+  this.__orderControls = null;
+  this.__orderPopup = null
+};
+tuna.utils.extend(OrdersController, tuna.view.PageViewController);
+OrdersController.prototype._requireModules = function() {
+  this._container.requireModule("template-transformer");
+  this._container.requireModule("button-group");
+  this._container.requireModule("navigation");
+  this._container.requireModule("popup");
+  this._container.requireModule("form")
+};
+OrdersController.prototype._initActions = function() {
+  var self = this;
+  this.__orderControls = this._container.getModuleInstanceByName("button-group", "order-controls");
+  this.__orderPopup = this._container.getModuleInstanceByName("popup", "edit-order");
+  this.__orderControls.addEventListener("edit", function(event, button) {
+    self.__orderPopup.open()
+  })
+};
+OrdersController.prototype.__updateView = function() {
+};
+tuna.view.registerController("orders_page", new OrdersController);
 var User = function() {
   this.email = "";
   this.role = -1

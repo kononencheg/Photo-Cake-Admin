@@ -54,16 +54,22 @@
         </td>
         <td class="t-recipe-desc"></td>
         <td>
-            <nobr>
-                <a class="t-recipe-id j-button btn btn-info" href="#"
-                   title="Редактировать" data-type="edit" data-recipe-id="">
-                    <i class="icon-edit icon-white"></i>
-                </a>
-                <a class="t-recipe-id j-button btn btn-danger" href="#"
-                   title="Удалить" data-type="delete" data-recipe-id="">
-                    <i class="icon-trash icon-white"></i>
-                </a>
-            </nobr>
+            <ul class="nav nav-list">
+                <li>
+                    <a class="t-recipe-id j-button" href="#"
+                       data-action="edit" data-recipe-id="">
+                        <i class="icon-edit"></i>
+                        Редактировать
+                    </a>
+                </li>
+                <li>
+                    <a class="t-recipe-id j-button" href="#"
+                       data-action="delete" data-recipe-id="">
+                        <i class="icon-trash"></i>
+                        Удалить
+                    </a>
+                </li>
+            </ul>
         </td>
     </tr>
 </table>

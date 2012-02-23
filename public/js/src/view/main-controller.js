@@ -72,8 +72,6 @@ MainController.prototype.__applyUser = function(user) {
                         ('template-transformer', 'user-info');
 
     transformer.applyTransform(user.serialize());
-
-    this._navigation.navigate('recipes_page');
 };
 
 
