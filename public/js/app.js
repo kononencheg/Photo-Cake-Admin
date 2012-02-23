@@ -1887,9 +1887,9 @@ Form.prototype.init = function() {
   tuna.dom.addEventListener(this._target, "submit", prepareListener);
   tuna.dom.addEventListener(this._target, "reset", prepareListener);
   var callbackInput = document.createElement("input");
-  callbackInput.type = "hidden";
-  callbackInput.name = "__callback";
-  callbackInput.value = this.__callbackName;
+  callbackInput.setAttribute("type", "hidden");
+  callbackInput.setAttribute("name", "__callback");
+  callbackInput.setAttribute("value", this.__callbackName);
   this._target.appendChild(callbackInput);
   window[this.__callbackName] = function(response) {
     self.__handleResponse(response)
