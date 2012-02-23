@@ -1880,17 +1880,17 @@ Form.CALLBACK_PREFIX = "form_callback";
 Form.prototype.init = function() {
   this.__recordName = this.getOption("record-type");
   this.__formMessage = tuna.dom.selectOne(".j-form-message", this._target);
+  var callbackInput = document.createElement("input");
+  callbackInput.setAttribute("type", "hidden");
+  callbackInput.setAttribute("name", "__callback");
+  this._target.appendChild(callbackInput);
   var self = this;
   var prepareListener = function(event) {
+    callbackInput.setAttribute("value", self.__callbackName);
     self.__prepareTo(event.type, event)
   };
   tuna.dom.addEventListener(this._target, "submit", prepareListener);
   tuna.dom.addEventListener(this._target, "reset", prepareListener);
-  var callbackInput = document.createElement("input");
-  callbackInput.setAttribute("type", "hidden");
-  callbackInput.setAttribute("name", "__callback");
-  callbackInput.setAttribute("value", this.__callbackName);
-  this._target.appendChild(callbackInput);
   window[this.__callbackName] = function(response) {
     self.__handleResponse(response)
   }
