@@ -1,18 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.model.Record}
+ * @extends {model.record.User}
  */
 var Bakery = function () {
-
-    /**
-     * @type string
-     */
-    this.id = '';
-
-    /**
-     * @type string
-     */
-    this.email = '';
+    model.record.User.call(this);
 
     /**
      * @type string
@@ -20,26 +11,20 @@ var Bakery = function () {
     this.city = '';
 
     /**
-     * @type string
-     */
-    this.name = '';
-
-    /**
      * @type number
      */
     this.deliveryPrice = 0;
 };
 
-tuna.utils.extend(Bakery, tuna.model.Record);
+tuna.utils.extend(Bakery, model.record.User);
 
 /**
  * @override
  */
 Bakery.prototype.populate = function(data) {
-    this.id = data['id'];
-    this.name = data['name'];
-    this.email = data['email'];
-    this.city = data['city']['name'];
+    model.record.User.prototype.populate.call(this, data);
+
+    this.city = data['city'] && data['city']['name'];
     this.deliveryPrice = data['delivery_price'];
 };
 

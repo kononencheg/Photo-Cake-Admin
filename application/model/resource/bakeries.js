@@ -11,7 +11,7 @@ var Bakeries = function () {
 
     /**
      * @private
-     * @type model.record.Bakery
+     * @type model.record.User
      */
     this.__currentBakery = null;
 };
@@ -23,51 +23,45 @@ Bakeries.prototype.setBakeries = function(bakeries) {
     this.__bakeries = bakeries;
 };
 
-
-Bakeries.prototype.setCurrentBakeryId = function(id) {
-    this.__currentBakery = null;
-
+/**
+ * @param {string} id
+ * @return {model.record.Bakery}
+ */
+Bakeries.prototype.getBakeryById = function(id) {
     var i = 0,
         l = this.__bakeries.length;
 
     while (i < l) {
         if (this.__bakeries[i].id === id) {
-            this.__currentBakery = this.__bakeries[i];
-            break;
+            return this.__bakeries[i];
         }
 
         i++;
-    }
-};
-
-/**
- * @return {Object}
- */
-Bakeries.prototype.getCurrentBakery = function() {
-    if (this.__currentBakery !== null) {
-        return this.__currentBakery.serialize();
     }
 
     return null;
 };
 
 /**
- * @return {Object}
+ * @return {model.record.User}
  */
-Bakeries.prototype.getBakeriesList = function() {
-    var result = [];
-
-    var i = 0,
-        l = this.__bakeries.length;
-    while (i < l) {
-        result.push(this.__bakeries[i].serialize());
-
-        i++;
-    }
-
-    return result;
+Bakeries.prototype.getCurrentBakery = function() {
+    return this.__currentBakery;
 };
 
+/**
+ * @param {model.record.User} bakery
+ */
+Bakeries.prototype.setCurrentBakery = function(bakery) {
+    this.__currentBakery = bakery;
+};
+
+/**
+ * @return {Array.<model.record.Bakery>}
+ */
+Bakeries.prototype.getBakeriesList = function() {
+    return this.__bakeries;
+};
 
 /**
  * @type Bakeries

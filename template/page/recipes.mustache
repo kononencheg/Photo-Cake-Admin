@@ -14,27 +14,6 @@
         </div>
         <div class="span6">
 
-            <form action="/api/"
-                  method="POST"
-                  target="api_frame"
-                  class="j-form j-template-transformer form-inline pull-right"
-                  data-template-id="bakery_select_template"
-                  data-name="bakery-select"
-                  data-record-type="recipe">
-
-                <input type="hidden" name="method" value="recipes.get" />
-                <input type="hidden" name="format" value="frame-callback" />
-
-                <label for="recipe_bakery_select">Кондитерская: </label>
-
-                <select id="recipe_bakery_select" name="bakery_id"
-                        class="t-bakery-list">
-                    <option value="-1"></option>
-                </select>
-
-                <input type="submit" class="btn" value="Выбрать" />
-            </form>
-
         </div>
     </div>
 

@@ -1,24 +1,30 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {view.BakeryPageController}
  */
 var OrdersController = function () {
-    tuna.view.PageViewController.call(this);
+    view.BakeryPageController.call(this);
 
     /**
      * @private
      * @type {tuna.ui.ModuleInstance|tuna.ui.buttons.ButtonGroup}
      */
-    this.__orderControls = null;
+    //this.__orderControls = null;
 
     /**
      * @private
      * @type {tuna.ui.ModuleInstance|tuna.ui.popups.Popup}
      */
-    this.__orderPopup = null;
+    //this.__orderPopup = null;
+
+    /**
+     * @private
+     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
+     */
+    this.__ordersListTransformer = null;
 };
 
-tuna.utils.extend(OrdersController, tuna.view.PageViewController);
+tuna.utils.extend(OrdersController, view.BakeryPageController);
 
 /**
  * @override
@@ -35,7 +41,7 @@ OrdersController.prototype._requireModules = function() {
  * @override
  */
 OrdersController.prototype._initActions = function() {
-    var self = this;
+    /*var self = this;
 
     this.__orderControls = this._container.getModuleInstanceByName
                                     ('button-group', 'order-controls');
@@ -45,8 +51,21 @@ OrdersController.prototype._initActions = function() {
 
     this.__orderControls.addEventListener('edit', function(event, button) {
         self.__orderPopup.open()
-    });
+    });*/
 
+    this.__ordersListTransformer = this._container.getModuleInstanceByName
+        ('template-transformer', 'orders-list');
+};
+
+/**
+ * @override
+ */
+OrdersController.prototype._updateBakery = function(bakery) {
+    var self = this;
+    tuna.rest.call('orders.get', {'bakery_id': bakery.id }, function(result) {
+        self.__ordersListTransformer.applyTransform
+            (tuna.model.serializeArray(result));
+    }, 'order');
 };
 
 /**

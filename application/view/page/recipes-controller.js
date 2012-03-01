@@ -110,7 +110,7 @@ RecipesController.prototype._initActions = function() {
             model.resource.recipes.clearRecipes();
         }
 
-        model.resource.bakeries.setCurrentBakeryId(bakeryId);
+        //model.resource.bakeries.setCurrentBakeryId(bakeryId);
     });
 
     this.__addRecipeForm.addEventListener('result', function(event, recipe) {
@@ -119,12 +119,6 @@ RecipesController.prototype._initActions = function() {
         self.__addRecipeForm.reset();
         self.__updateView();
     });
-
-    tuna.rest.call('users.getBakeries', null, function(bakeries) {
-        model.resource.bakeries.setBakeries(bakeries);
-
-        self.__updateView();
-    }, 'bakery');
 };
 
 /**

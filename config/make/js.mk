@@ -129,12 +129,14 @@ TUNA_FILES = tuna.js \
 APPLICATION_FILES = main.js \
 					\
 					view/main-controller.js \
+					view/bakery-page-controller.js \
 					view/page/recipes-controller.js \
 					view/page/orders-controller.js \
 					\
 					model/record/user.js \
 					model/record/bakery.js \
 					model/record/recipe.js \
+					model/record/order.js \
 					\
 					model/resource/users.js \
 					model/resource/bakeries.js \

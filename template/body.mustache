@@ -1,7 +1,34 @@
+
 <div class="container carousel">
     <div class="carousel-inner">
+
         {{> template/page/orders }}
         {{> template/page/recipes }}
+
+        <hr />
+        <div class="j-template-transformer t-bakery-hidden row"
+             data-name="admin-controls"
+             data-template-id="user_access_template">
+
+            <div class="span12">
+                <form class="j-form j-template-transformer
+                             t-bakery-disabled form-inline pull-right"
+
+                      data-name="bakery-selection"
+                      data-template-id="bakery_selection_template">
+
+                    <label>
+                        Кондитерская:
+
+                        <select name="bakery_id" class="t-bakery-select">
+                            <option value="-1"></option>
+                        </select>
+                    </label>
+
+                    <input type="submit" class="btn" value="Выбрать" />
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 

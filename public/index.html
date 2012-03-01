@@ -104,11 +104,12 @@
                     </form>
         
                     <ul class="j-template-transformer nav pull-right"
-                        data-template-id="user_info_template" data-name="user-info">
+                        data-name="user-info"
+                        data-template-id="user_template">
         
                         <li>
                             <a>
-                                <span class="t-user-role"></span> :
+                                <span class="t-user-role-name"></span> :
                                 <i class="icon-user icon-white"></i>
                                 <span class="t-user-email"></span>
                             </a>
@@ -116,8 +117,10 @@
                     </ul>
                 </div>
             </div>
-        </div>        <div class="container carousel">
+        </div>        
+        <div class="container carousel">
             <div class="carousel-inner">
+        
                 <div id="orders_page" class="j-navigation-page j-control-container item">
                 
                     <form action="/api/" method="POST" target="api_frame"
@@ -337,45 +340,16 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>№</th>
-                                        <th>Дата</th>
-                                        <th>Клиент</th>
-                                        <th>Цена</th>
-                                        <th>Статус</th>
-                                        <th>Доставка</th>
-                                        <th>Оплата</th>
-                                        <th>Действия</th>
+                                        <th>№</th><th>Дата</th>
+                                        <th>Клиент</th><th>Цена</th>
+                                        <th>Статус</th><th>Доставка</th>
+                                        <th>Оплата</th><th>Действия</th>
                                     </tr>
                                 </thead>
-                                <tbody class="t-orders-list j-button-group"
-                                       data-name="order-controls">
-                                    <tr>
-                                        <td>14</td>
-                                        <td>24.02.2012 20:00</td>
-                                        <td>Сергей Кононенко</td>
-                                        <td>1300</td>
-                                        <td>
-                                            <span class="label label-important">Новый</span>
-                                        </td>
-                                        <td>
-                                            <span class="label label-warning">Подготовка</span>
-                                        </td>
-                                        <td>
-                                            <span class="label label-important">Не оплачен</span>
-                                        </td>
-                                        <td>
-                                            <ul class="nav nav-list">
-                                                <li>
-                                                    <a class="j-button" href="#"
-                                                       data-action="edit">
-                                                        <i class="icon-edit"></i>
-                                                        Редактировать
-                                                    </a>
-                                                </li>
-                                            </ul>
-                                        </td>
-                                    </tr>
-                                </tbody>
+                                <tbody class="j-template-transformer j-button-group
+                                              t-orders-list"
+                                       data-name="orders-list"
+                                       data-template-id="orders_list_template"></tbody>
                             </table>
                 
                         </div>
@@ -438,27 +412,6 @@
                             <h2>Таблица рецептов</h2>
                         </div>
                         <div class="span6">
-                
-                            <form action="/api/"
-                                  method="POST"
-                                  target="api_frame"
-                                  class="j-form j-template-transformer form-inline pull-right"
-                                  data-template-id="bakery_select_template"
-                                  data-name="bakery-select"
-                                  data-record-type="recipe">
-                
-                                <input type="hidden" name="method" value="recipes.get" />
-                                <input type="hidden" name="format" value="frame-callback" />
-                
-                                <label for="recipe_bakery_select">Кондитерская: </label>
-                
-                                <select id="recipe_bakery_select" name="bakery_id"
-                                        class="t-bakery-list">
-                                    <option value="-1"></option>
-                                </select>
-                
-                                <input type="submit" class="btn" value="Выбрать" />
-                            </form>
                 
                         </div>
                     </div>
@@ -571,41 +524,131 @@
                             </form>
                         </div>
                     </div>
-                </div>            </div>
+                </div>        
+                <hr />
+                <div class="j-template-transformer t-bakery-hidden row"
+                     data-name="admin-controls"
+                     data-template-id="user_access_template">
+        
+                    <div class="span12">
+                        <form class="j-form j-template-transformer
+                                     t-bakery-disabled form-inline pull-right"
+        
+                              data-name="bakery-selection"
+                              data-template-id="bakery_selection_template">
+        
+                            <label>
+                                Кондитерская:
+        
+                                <select name="bakery_id" class="t-bakery-select">
+                                    <option value="-1"></option>
+                                </select>
+                            </label>
+        
+                            <input type="submit" class="btn" value="Выбрать" />
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
         
         
 
         <div class="hide">
 
-            <!-- Header -->
+            <!-- Common  -->
             
-            <tuna:template id="user_info_template">
-                <tuna:spot tuna:target="t-user-email" tuna:path="email" />
-                <tuna:spot tuna:target="t-user-role"  tuna:path="role" />
+            <select>
+                <option id="option_renderer" class="t-option"></option>
+            </select>
+            
+            <!-- User templates -->
+            
+            <tuna:template id="user_template">
+                <tuna:spot tuna:path="email"
+                           tuna:target="t-user-email" />
+            
+                <tuna:spot tuna:path="role"
+                           tuna:target="t-user-role" />
+            
+                <tuna:spot tuna:path="roleName"
+                           tuna:target="t-user-role-name" />
             </tuna:template>
             
-            <!-- ./ Header -->
+            <tuna:template id="user_access_template">
+                <tuna:if tuna:path="role" tuna:eq="1" tuna:class="disabled"
+                         tuna:target="t-bakery-disabled"/>
             
-            <!-- Bakery selection -->
+                <tuna:if tuna:path="role" tuna:eq="1" tuna:class="hide"
+                         tuna:target="t-bakery-hidden"/>
+            </tuna:template>
             
-            <tuna:template id="bakery_select_template">
-                <tuna:list tuna:target="t-bakery-list" tuna:path=""
-                           tuna:item-renderer-id="bakery_option_renderer"
+            <!-- Bakery templates -->
+            
+            <tuna:template id="bakery_selection_template">
+                <tuna:list tuna:path=""
+                           tuna:target="t-bakery-select"
+                           tuna:item-renderer-id="option_renderer"
                            tuna:item-template-id="bakery_option_template"
                            tuna:key-path="id" />
             </tuna:template>
             
             <tuna:template id="bakery_option_template">
-                <tuna:spot tuna:target="t-option" tuna:path="name" />
-                <tuna:attr tuna:target="t-option" tuna:path="id" tuna:name="value"/>
+                <tuna:attr tuna:name="value"
+                           tuna:path="id"
+                           tuna:target="t-option" />
+            
+                <tuna:spot tuna:target="t-option"
+                           tuna:path="name" />
             </tuna:template>
             
-            <select>
-                <option id="bakery_option_renderer" class="t-option"></option>
-            </select>
             
-            <!-- ./ Bakery selection -->
+            <!-- Order templates -->
+            
+            <tuna:template id="order_template">
+                <tuna:spot tuna:path="index"
+                           tuna:target="t-order-index" />
+                <tuna:spot tuna:path="creationDate"
+                           tuna:target="t-order-date" />
+            </tuna:template>
+            
+            <tuna:template id="orders_list_template">
+                <tuna:list tuna:target="t-orders-list" tuna:path=""
+                           tuna:item-renderer-id="orders_list_item_renderer"
+                           tuna:item-template-id="order_template"
+                           tuna:key-path="id" />
+            </tuna:template>
+            
+            <table>
+                <tbody>
+                    <tr id="orders_list_item_renderer">
+                        <td class="t-order-index"></td>
+                        <td class="t-order-date"></td>
+                        <td>Сергей Кононенко</td>
+                        <td>1300</td>
+                        <td>
+                            <span class="label label-important">Новый</span>
+                        </td>
+                        <td>
+                            <span class="label label-warning">Подготовка</span>
+                        </td>
+                        <td>
+                            <span class="label label-important">Не оплачен</span>
+                        </td>
+                        <td>
+                            <ul class="nav nav-list">
+                                <li>
+                                    <a class="j-button" href="#"
+                                       data-action="edit">
+                                        <i class="icon-edit"></i>
+                                        Редактировать
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
             
             <!-- Recipes table -->
             

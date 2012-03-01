@@ -19,6 +19,11 @@ model.resource = {};
 var rest = {};
 
 /**
+ * @namespace
+ */
+var view = {};
+
+/**
  * @param {Object} args
  */
 window['main'] = function(args) {

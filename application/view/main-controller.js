@@ -42,8 +42,8 @@ MainController.prototype._initActions = function() {
  */
 MainController.prototype.__initSingOutForm = function() {
     var form = this._container.getModuleInstanceByName('form', 'sign-out');
-    form.addEventListener('result', function(event, result) {
-        location.reload();
+    form.addEventListener('result', function() {
+        location.reload()
     });
 };
 
@@ -68,13 +68,68 @@ MainController.prototype.__showSignUpPopup = function() {
  * @param {model.record.User} user
  */
 MainController.prototype.__applyUser = function(user) {
-    var transformer = this._container.getModuleInstanceByName
-                        ('template-transformer', 'user-info');
+    var userInfoTransformer =
+        this._container.getModuleInstanceByName
+            ('template-transformer', 'user-info');
 
-    transformer.applyTransform(user.serialize());
+    userInfoTransformer.applyTransform(user.serialize());
 
-    this._navigation.navigate('orders_page');
+    var adminControlsTransformer =
+        this._container.getModuleInstanceByName
+            ('template-transformer', 'admin-controls');
+
+    adminControlsTransformer.applyTransform(user.serialize());
+
+    if (!model.resource.users.isBakery(user)) {
+        var self = this;
+
+        var bakerySelectionTransformer =
+            this._container.getModuleInstanceByName
+                ('template-transformer', 'bakery-selection');
+
+        var bakerySelectionForm =
+            this._container.getModuleInstanceByName
+                ('form', 'bakery-selection');
+
+        tuna.rest.call('users.getBakeries', null, function(bakeries) {
+            model.resource.bakeries.setBakeries(bakeries);
+
+            bakerySelectionTransformer.applyTransform
+                (tuna.model.serializeArray(bakeries));
+
+            self._navigation.navigate('orders_page');
+
+
+            bakerySelectionForm.addEventListener('submit', function(event) {
+                event.preventDefault();
+
+                var data = bakerySelectionForm.serialize();
+                if (data['bakery_id'] !== undefined) {
+                    var bakery = model.resource.bakeries.getBakeryById
+                                    (data['bakery_id']);
+
+                    self.__updateBakery(bakery);
+                }
+            });
+
+        }, 'bakery');
+    } else {
+        this._navigation.navigate('orders_page');
+        this.__updateBakery(user);
+    }
 };
 
+/**
+ * @param {model.record.User} bakery
+ * @private
+ */
+MainController.prototype.__updateBakery = function(bakery) {
+    model.resource.bakeries.setCurrentBakery(bakery);
+
+    var controller = this.getCurrentController();
+    if (controller instanceof view.BakeryPageController) {
+        controller.handleBakeryChange();
+    }
+};
 
 tuna.view.setMainController(new MainController());
