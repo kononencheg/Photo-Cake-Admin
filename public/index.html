@@ -76,19 +76,19 @@
                     </a>
         
                     <ul class="j-navigation-menu nav">
-                        <li class="j-navigation-link" data-href="orders_page">
+                        <li class="j-navigation-link" data-href="orders-page">
                             <a href="#">Заказы</a>
                         </li>
-                        <li class="j-navigation-link" data-href="recipes_page">
+                        <li class="j-navigation-link" data-href="recipes-page">
                             <a href="#">Рецепты</a>
                         </li>
-                        <li class="j-navigation-link" data-href="decorations_page">
+                        <li class="j-navigation-link" data-href="decorations-page">
                             <a href="#">Декорации</a>
                         </li>
-                        <li class="j-navigation-link" data-href="dimentions_page">
+                        <li class="j-navigation-link" data-href="dimentions-page">
                             <a href="#">Формы и размеры</a>
                         </li>
-                        <li class="j-navigation-link" data-href="profile_page">
+                        <li class="j-navigation-link" data-href="profile-page">
                             <a href="#">Профиль</a>
                         </li>
                     </ul>
@@ -121,7 +121,8 @@
         <div class="container carousel">
             <div class="carousel-inner">
         
-                <div id="orders_page" class="j-navigation-page j-control-container item">
+                <div id="orders_page" class="j-navigation-page j-control-container item"
+                     data-name="orders-page">
                 
                     <form action="/api/" method="POST" target="api_frame"
                           class="j-form j-popup form-horizontal hide"
@@ -340,10 +341,15 @@
                             <table class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
-                                        <th>№</th><th>Дата</th>
-                                        <th>Клиент</th><th>Цена</th>
-                                        <th>Статус</th><th>Доставка</th>
-                                        <th>Оплата</th><th>Действия</th>
+                                        <th>№</th>
+                                        <th>Время заказа</th>
+                                        <th>Время доставки</th>
+                                        <th>Клиент</th>
+                                        <th>Стоимость</th>
+                                        <th>Статус</th>
+                                        <th>Доставка</th>
+                                        <th>Оплата</th>
+                                        <th>Действия</th>
                                     </tr>
                                 </thead>
                                 <tbody class="j-template-transformer j-button-group
@@ -354,7 +360,8 @@
                 
                         </div>
                     </div>
-                </div>                <div id="recipes_page" class="j-navigation-page j-control-container item">
+                </div>                <div id="recipes_page" class="j-navigation-page j-control-container item"
+                     data-name="recipes-page">
                 
                     <form action="/api/" method="POST" target="api_frame"
                           class="j-form j-popup form-horizontal hide"
@@ -624,6 +631,7 @@
                     <tr id="orders_list_item_renderer">
                         <td class="t-order-index"></td>
                         <td class="t-order-date"></td>
+                        <td class="t-delivery-date"></td>
                         <td>Сергей Кононенко</td>
                         <td>1300</td>
                         <td>

@@ -1,4 +1,5 @@
-<div id="orders_page" class="j-navigation-page j-control-container item">
+<div id="orders_page" class="j-navigation-page j-control-container item"
+     data-name="orders-page">
 
     {{> template/popup/edit-order }}
 
@@ -14,10 +15,15 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>№</th><th>Дата</th>
-                        <th>Клиент</th><th>Цена</th>
-                        <th>Статус</th><th>Доставка</th>
-                        <th>Оплата</th><th>Действия</th>
+                        <th>№</th>
+                        <th>Время заказа</th>
+                        <th>Время доставки</th>
+                        <th>Клиент</th>
+                        <th>Стоимость</th>
+                        <th>Статус</th>
+                        <th>Доставка</th>
+                        <th>Оплата</th>
+                        <th>Действия</th>
                     </tr>
                 </thead>
                 <tbody class="j-template-transformer j-button-group

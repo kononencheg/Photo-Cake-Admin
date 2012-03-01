@@ -97,9 +97,6 @@ MainController.prototype.__applyUser = function(user) {
             bakerySelectionTransformer.applyTransform
                 (tuna.model.serializeArray(bakeries));
 
-            self._navigation.navigate('orders_page');
-
-
             bakerySelectionForm.addEventListener('submit', function(event) {
                 event.preventDefault();
 
@@ -112,9 +109,11 @@ MainController.prototype.__applyUser = function(user) {
                 }
             });
 
+            self.__navigateLocation();
+
         }, 'bakery');
     } else {
-        this._navigation.navigate('orders_page');
+        this.__navigateLocation();
         this.__updateBakery(user);
     }
 };
@@ -129,6 +128,20 @@ MainController.prototype.__updateBakery = function(bakery) {
     var controller = this.getCurrentController();
     if (controller instanceof view.BakeryPageController) {
         controller.handleBakeryChange();
+    }
+};
+
+/**
+ * @private
+ */
+MainController.prototype.__navigateLocation = function() {
+    var path = location.pathname.split('/');
+    path.shift();
+    
+    if (path.length > 0) {
+        this._navigation.navigate(path)
+    } else {
+        this._navigation.navigate('orders-page')
     }
 };
 

@@ -1326,11 +1326,12 @@ $SelectionGroup$$.prototype.$init$ = function $$SelectionGroup$$$$$init$$() {
 };
 var $tuna$ui$selection$SelectionGroup$$ = $SelectionGroup$$;
 function $Navigation$$($target$$63$$) {
-  $tuna$ui$selection$SelectionGroup$$.call(this, $target$$63$$, "id");
+  $tuna$ui$selection$SelectionGroup$$.call(this, $target$$63$$, "data-name");
   this.$__openData$ = $JSCompiler_alias_NULL$$;
   this.$__history$ = [];
   this.$__controls$ = $JSCompiler_alias_NULL$$;
   this.$__menuLinks$ = {};
+  this.$__children$ = {};
   $JSCompiler_StaticMethods_setOption$$(this, "is-multiple", $JSCompiler_alias_NULL$$);
   $JSCompiler_StaticMethods__setDefaultOption$$(this, "item-selector", ".j-navigation-page");
   $JSCompiler_StaticMethods__setDefaultOption$$(this, "menu-selector", ".j-navigation-menu")
@@ -1385,14 +1386,22 @@ function $JSCompiler_StaticMethods___updateMenu$$($JSCompiler_StaticMethods___up
     }
   }
 }
-$Navigation$$.prototype.navigate = function $$Navigation$$$$navigate$($index$$71$$, $data$$43$$) {
-  var $currentIndex_result$$16$$ = $JSCompiler_StaticMethods_getLastSelectedIndex$$(this);
-  $currentIndex_result$$16$$ !== $JSCompiler_alias_NULL$$ && this.$__history$.push($currentIndex_result$$16$$);
-  this.$__openData$ = $data$$43$$ || $JSCompiler_alias_NULL$$;
-  $currentIndex_result$$16$$ = this.$selectIndex$($index$$71$$);
-  this.$__openData$ = $JSCompiler_alias_NULL$$;
-  return $currentIndex_result$$16$$
+$Navigation$$.prototype.navigate = function $$Navigation$$$$navigate$($indexes$$1$$, $data$$43$$) {
+  if($indexes$$1$$ instanceof Array) {
+    var $index$$71$$ = $indexes$$1$$.shift();
+    $JSCompiler_StaticMethods___doNavigate$$(this, $index$$71$$);
+    this.$__children$[$index$$71$$] !== $JSCompiler_alias_VOID$$ && this.$__children$[$index$$71$$].navigate($indexes$$1$$, $data$$43$$)
+  }else {
+    $JSCompiler_StaticMethods___doNavigate$$(this, $indexes$$1$$, $data$$43$$)
+  }
 };
+function $JSCompiler_StaticMethods___doNavigate$$($JSCompiler_StaticMethods___doNavigate$self$$, $index$$72$$, $data$$44$$) {
+  var $currentIndex$$ = $JSCompiler_StaticMethods_getLastSelectedIndex$$($JSCompiler_StaticMethods___doNavigate$self$$);
+  $currentIndex$$ !== $JSCompiler_alias_NULL$$ && $JSCompiler_StaticMethods___doNavigate$self$$.$__history$.push($currentIndex$$);
+  $JSCompiler_StaticMethods___doNavigate$self$$.$__openData$ = $data$$44$$ || $JSCompiler_alias_NULL$$;
+  $JSCompiler_StaticMethods___doNavigate$self$$.$selectIndex$($index$$72$$);
+  $JSCompiler_StaticMethods___doNavigate$self$$.$__openData$ = $JSCompiler_alias_NULL$$
+}
 $Navigation$$.prototype.back = function $$Navigation$$$$back$() {
   this.$selectIndex$(this.$__history$.pop())
 };
@@ -1448,8 +1457,8 @@ $JSCompiler_prototypeAlias$$.$addItem$ = function $$JSCompiler_prototypeAlias$$$
 $JSCompiler_prototypeAlias$$.$getItemIndex$ = function $$JSCompiler_prototypeAlias$$$$getItemIndex$$($item$$21$$) {
   return $tuna$utils$indexOf$$($item$$21$$, this.$__items$)
 };
-$JSCompiler_prototypeAlias$$.$getItemAt$ = function $$JSCompiler_prototypeAlias$$$$getItemAt$$($index$$73$$) {
-  return this.$__items$[$index$$73$$] || $JSCompiler_alias_NULL$$
+$JSCompiler_prototypeAlias$$.$getItemAt$ = function $$JSCompiler_prototypeAlias$$$$getItemAt$$($index$$74$$) {
+  return this.$__items$[$index$$74$$] || $JSCompiler_alias_NULL$$
 };
 $JSCompiler_prototypeAlias$$.clear = function $$JSCompiler_prototypeAlias$$$clear$() {
   this.$__items$.length = 0
@@ -1465,23 +1474,23 @@ function $NamedElementsCollection$$($indexAttribute$$2$$) {
 $tuna$utils$implement$$($NamedElementsCollection$$, $IItemsCollection$$);
 $JSCompiler_prototypeAlias$$ = $NamedElementsCollection$$.prototype;
 $JSCompiler_prototypeAlias$$.$addItem$ = function $$JSCompiler_prototypeAlias$$$$addItem$$($item$$22$$) {
-  var $index$$74$$ = $item$$22$$.getAttribute(this.$__indexAttribute$);
-  $index$$74$$ !== $JSCompiler_alias_NULL$$ && (this.$__items$[$index$$74$$] = $item$$22$$);
-  return $index$$74$$
+  var $index$$75$$ = $item$$22$$.getAttribute(this.$__indexAttribute$);
+  $index$$75$$ !== $JSCompiler_alias_NULL$$ && (this.$__items$[$index$$75$$] = $item$$22$$);
+  return $index$$75$$
 };
-$JSCompiler_prototypeAlias$$.$getItemIndex$ = function $$JSCompiler_prototypeAlias$$$$getItemIndex$$($index$$75_item$$23$$) {
-  $index$$75_item$$23$$ = $index$$75_item$$23$$.getAttribute(this.$__indexAttribute$);
-  return $index$$75_item$$23$$ !== $JSCompiler_alias_NULL$$ && this.$__items$[$index$$75_item$$23$$] !== $JSCompiler_alias_VOID$$ ? $index$$75_item$$23$$ : $JSCompiler_alias_NULL$$
+$JSCompiler_prototypeAlias$$.$getItemIndex$ = function $$JSCompiler_prototypeAlias$$$$getItemIndex$$($index$$76_item$$23$$) {
+  $index$$76_item$$23$$ = $index$$76_item$$23$$.getAttribute(this.$__indexAttribute$);
+  return $index$$76_item$$23$$ !== $JSCompiler_alias_NULL$$ && this.$__items$[$index$$76_item$$23$$] !== $JSCompiler_alias_VOID$$ ? $index$$76_item$$23$$ : $JSCompiler_alias_NULL$$
 };
-$JSCompiler_prototypeAlias$$.$getItemAt$ = function $$JSCompiler_prototypeAlias$$$$getItemAt$$($index$$76$$) {
-  return this.$__items$[$index$$76$$] || $JSCompiler_alias_NULL$$
+$JSCompiler_prototypeAlias$$.$getItemAt$ = function $$JSCompiler_prototypeAlias$$$$getItemAt$$($index$$77$$) {
+  return this.$__items$[$index$$77$$] || $JSCompiler_alias_NULL$$
 };
 $JSCompiler_prototypeAlias$$.clear = function $$JSCompiler_prototypeAlias$$$clear$() {
   this.$__items$ = {}
 };
 $JSCompiler_prototypeAlias$$.$getItemsCount$ = function $$JSCompiler_prototypeAlias$$$$getItemsCount$$() {
-  var $i$$37$$ = 0, $index$$78$$;
-  for($index$$78$$ in this.$__items$) {
+  var $i$$37$$ = 0, $index$$79$$;
+  for($index$$79$$ in this.$__items$) {
     $i$$37$$++
   }
   return $i$$37$$
@@ -1508,15 +1517,15 @@ $tuna$utils$extend$$($SingleSelectionRule$$, $AbstractSelectionRule$$);
 $SingleSelectionRule$$.prototype.$getSelectedIndexes$ = function $$SingleSelectionRule$$$$$getSelectedIndexes$$() {
   return this.$__currentIndex$ !== $JSCompiler_alias_NULL$$ ? [this.$__currentIndex$] : []
 };
-$SingleSelectionRule$$.prototype.$selectIndex$ = function $$SingleSelectionRule$$$$$selectIndex$$($index$$83$$) {
+$SingleSelectionRule$$.prototype.$selectIndex$ = function $$SingleSelectionRule$$$$$selectIndex$$($index$$84$$) {
   var $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$;
-  if($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$_selectionGroup$.$isIndexEnabled$($index$$83$$)) {
-    if($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$__currentIndex$ !== $index$$83$$) {
-      $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$__currentIndex$, $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = ($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ === $JSCompiler_alias_NULL$$ || this.$_eventDispatcher$.$dispatch$("deselect", $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$)) && this.$_eventDispatcher$.$dispatch$("select", $index$$83$$)
+  if($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$_selectionGroup$.$isIndexEnabled$($index$$84$$)) {
+    if($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$__currentIndex$ !== $index$$84$$) {
+      $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$__currentIndex$, $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = ($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ === $JSCompiler_alias_NULL$$ || this.$_eventDispatcher$.$dispatch$("deselect", $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$)) && this.$_eventDispatcher$.$dispatch$("select", $index$$84$$)
     }
   }
-  return $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ ? ($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$__currentIndex$, this.$__currentIndex$ !== $JSCompiler_alias_NULL$$ && this.$_selectionView$.$destroySelectionAt$(this.$__currentIndex$), this.$_selectionView$.$applySelectionAt$($index$$83$$), this.$__currentIndex$ = $index$$83$$, $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ !== $JSCompiler_alias_NULL$$ && 
-  this.$_eventDispatcher$.$dispatch$("deselected", $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$), this.$_eventDispatcher$.$dispatch$("selected", $index$$83$$), $JSCompiler_alias_TRUE$$) : $JSCompiler_alias_FALSE$$
+  return $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ ? ($JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ = this.$__currentIndex$, this.$__currentIndex$ !== $JSCompiler_alias_NULL$$ && this.$_selectionView$.$destroySelectionAt$(this.$__currentIndex$), this.$_selectionView$.$applySelectionAt$($index$$84$$), this.$__currentIndex$ = $index$$84$$, $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$ !== $JSCompiler_alias_NULL$$ && 
+  this.$_eventDispatcher$.$dispatch$("deselected", $JSCompiler_temp$$10_JSCompiler_temp$$11_oldIndex_oldIndex$$inline_202$$), this.$_eventDispatcher$.$dispatch$("selected", $index$$84$$), $JSCompiler_alias_TRUE$$) : $JSCompiler_alias_FALSE$$
 };
 $SingleSelectionRule$$.prototype.$clearSelection$ = function $$SingleSelectionRule$$$$$clearSelection$$() {
   this.$__currentIndex$ !== $JSCompiler_alias_NULL$$ && (this.$_selectionView$.$destroySelectionAt$(this.$__currentIndex$), this.$__currentIndex$ = $JSCompiler_alias_NULL$$)
@@ -1530,16 +1539,16 @@ $tuna$utils$extend$$($MultipleSelectionRule$$, $AbstractSelectionRule$$);
 $MultipleSelectionRule$$.prototype.$getSelectedIndexes$ = function $$MultipleSelectionRule$$$$$getSelectedIndexes$$() {
   return this.$__selectedIndexes$.slice(0)
 };
-$MultipleSelectionRule$$.prototype.$selectIndex$ = function $$MultipleSelectionRule$$$$$selectIndex$$($index$$85$$) {
-  if(this.$_selectionGroup$.$isIndexEnabled$($index$$85$$)) {
-    var $indexPosition$$1$$ = $tuna$utils$indexOf$$($index$$85$$, this.$__selectedIndexes$);
+$MultipleSelectionRule$$.prototype.$selectIndex$ = function $$MultipleSelectionRule$$$$$selectIndex$$($index$$86$$) {
+  if(this.$_selectionGroup$.$isIndexEnabled$($index$$86$$)) {
+    var $indexPosition$$1$$ = $tuna$utils$indexOf$$($index$$86$$, this.$__selectedIndexes$);
     if(-1 === $indexPosition$$1$$) {
-      if(this.$_eventDispatcher$.$dispatch$("select", $index$$85$$)) {
-        return this.$_selectionView$.$applySelectionAt$($index$$85$$), this.$__selectedIndexes$.push($index$$85$$), $JSCompiler_alias_TRUE$$
+      if(this.$_eventDispatcher$.$dispatch$("select", $index$$86$$)) {
+        return this.$_selectionView$.$applySelectionAt$($index$$86$$), this.$__selectedIndexes$.push($index$$86$$), $JSCompiler_alias_TRUE$$
       }
     }else {
-      if(this.$_eventDispatcher$.$dispatch$("deselect", $index$$85$$)) {
-        return this.$_selectionView$.$destroySelectionAt$($index$$85$$), this.$__selectedIndexes$.splice($indexPosition$$1$$, 1), $JSCompiler_alias_TRUE$$
+      if(this.$_eventDispatcher$.$dispatch$("deselect", $index$$86$$)) {
+        return this.$_selectionView$.$destroySelectionAt$($index$$86$$), this.$__selectedIndexes$.splice($indexPosition$$1$$, 1), $JSCompiler_alias_TRUE$$
       }
     }
   }
@@ -1570,20 +1579,20 @@ function $ClassSelectionView$$($target$$65$$) {
   this.$_selectionClass$ = this.$_itemSelector$ = ""
 }
 $tuna$utils$extend$$($ClassSelectionView$$, $AbstractSelectionView$$);
-$ClassSelectionView$$.prototype.$applySelectionAt$ = function $$ClassSelectionView$$$$$applySelectionAt$$($index$$95_item$$24$$) {
-  $index$$95_item$$24$$ = this.$_itemsCollection$.$getItemAt$($index$$95_item$$24$$);
-  $index$$95_item$$24$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$addClass$$($index$$95_item$$24$$, this.$_selectionClass$)
+$ClassSelectionView$$.prototype.$applySelectionAt$ = function $$ClassSelectionView$$$$$applySelectionAt$$($index$$96_item$$24$$) {
+  $index$$96_item$$24$$ = this.$_itemsCollection$.$getItemAt$($index$$96_item$$24$$);
+  $index$$96_item$$24$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$addClass$$($index$$96_item$$24$$, this.$_selectionClass$)
 };
-$ClassSelectionView$$.prototype.$destroySelectionAt$ = function $$ClassSelectionView$$$$$destroySelectionAt$$($index$$96_item$$25$$) {
-  $index$$96_item$$25$$ = this.$_itemsCollection$.$getItemAt$($index$$96_item$$25$$);
-  $index$$96_item$$25$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$removeClass$$($index$$96_item$$25$$, this.$_selectionClass$)
+$ClassSelectionView$$.prototype.$destroySelectionAt$ = function $$ClassSelectionView$$$$$destroySelectionAt$$($index$$97_item$$25$$) {
+  $index$$97_item$$25$$ = this.$_itemsCollection$.$getItemAt$($index$$97_item$$25$$);
+  $index$$97_item$$25$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$removeClass$$($index$$97_item$$25$$, this.$_selectionClass$)
 };
 $ClassSelectionView$$.prototype.update = function $$ClassSelectionView$$$$update$() {
   if(this.$_itemSelector$ !== $JSCompiler_alias_NULL$$) {
     this.$_selectionGroup$.$clearSelection$();
     this.$_itemsCollection$.clear();
-    for(var $possibleItems$$ = $tuna$dom$select$$(this.$_itemSelector$, this.$_target$), $i$$38$$ = 0, $l$$22$$ = $possibleItems$$.length, $index$$99$$ = $JSCompiler_alias_NULL$$, $item$$28$$ = $JSCompiler_alias_NULL$$;$i$$38$$ < $l$$22$$;) {
-      $item$$28$$ = $possibleItems$$[$i$$38$$], $tuna$dom$getParentMatches$$($item$$28$$, this.$_itemSelector$, this.$_target$) === $JSCompiler_alias_NULL$$ && ($index$$99$$ = this.$_itemsCollection$.$addItem$($item$$28$$), $index$$99$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$hasClass$$($item$$28$$, this.$_selectionClass$) && this.$_selectionGroup$.$selectIndex$($index$$99$$)), $i$$38$$++
+    for(var $possibleItems$$ = $tuna$dom$select$$(this.$_itemSelector$, this.$_target$), $i$$38$$ = 0, $l$$22$$ = $possibleItems$$.length, $index$$100$$ = $JSCompiler_alias_NULL$$, $item$$28$$ = $JSCompiler_alias_NULL$$;$i$$38$$ < $l$$22$$;) {
+      $item$$28$$ = $possibleItems$$[$i$$38$$], $tuna$dom$getParentMatches$$($item$$28$$, this.$_itemSelector$, this.$_target$) === $JSCompiler_alias_NULL$$ && ($index$$100$$ = this.$_itemsCollection$.$addItem$($item$$28$$), $index$$100$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$hasClass$$($item$$28$$, this.$_selectionClass$) && this.$_selectionGroup$.$selectIndex$($index$$100$$)), $i$$38$$++
     }
   }
 };
@@ -1631,8 +1640,8 @@ $tuna$utils$extend$$($SelectionGroupModule$$, $Module$$);
 $SelectionGroupModule$$.prototype.$initInstance$ = function $$SelectionGroupModule$$$$$initInstance$$($target$$70$$) {
   var $selectionGroup$$ = new $tuna$ui$selection$SelectionGroup$$($target$$70$$, $JSCompiler_alias_NULL$$), $selectionEvent$$ = $JSCompiler_StaticMethods_getStringOption$$($selectionGroup$$, "selection-event"), $itemSelector$$ = $JSCompiler_StaticMethods_getStringOption$$($selectionGroup$$, "item-selector");
   $selectionEvent$$ !== $JSCompiler_alias_NULL$$ && $itemSelector$$ !== $JSCompiler_alias_NULL$$ && $tuna$dom$addChildEventListener$$($target$$70$$, $itemSelector$$, $selectionEvent$$, function() {
-    var $index$$100$$ = $selectionGroup$$.$getItemIndex$(this);
-    $index$$100$$ !== $JSCompiler_alias_NULL$$ && $selectionGroup$$.$selectIndex$($index$$100$$)
+    var $index$$101$$ = $selectionGroup$$.$getItemIndex$(this);
+    $index$$101$$ !== $JSCompiler_alias_NULL$$ && $selectionGroup$$.$selectIndex$($index$$101$$)
   });
   return $selectionGroup$$
 };
@@ -1735,25 +1744,25 @@ $NavigationViewController$$.prototype.$_initActions$ = function $$NavigationView
     var $self$$10$$ = this;
     this.$_navigation$.addEventListener("select", function() {
     });
-    this.$_navigation$.addEventListener("open", function($event$$32$$, $data$$44$$) {
-      $JSCompiler_StaticMethods__setCurrentPage$$($self$$10$$, $JSCompiler_StaticMethods_getLastSelectedIndex$$($self$$10$$.$_navigation$), $data$$44$$)
+    this.$_navigation$.addEventListener("open", function($event$$32$$, $data$$45$$) {
+      $JSCompiler_StaticMethods__setCurrentPage$$($self$$10$$, $JSCompiler_StaticMethods_getLastSelectedIndex$$($self$$10$$.$_navigation$), $data$$45$$)
     });
     var $currentIndex$$1$$ = $JSCompiler_StaticMethods_getLastSelectedIndex$$(this.$_navigation$);
     $currentIndex$$1$$ !== $JSCompiler_alias_NULL$$ && $JSCompiler_StaticMethods__setCurrentPage$$(this, $currentIndex$$1$$)
   }
 };
-function $JSCompiler_StaticMethods__setCurrentPage$$($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$, $index$$101_newPage_page$$inline_358$$, $args$$5$$) {
-  $index$$101_newPage_page$$inline_358$$ = $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_navigation$.$getItemAt$($index$$101_newPage_page$$inline_358$$);
+function $JSCompiler_StaticMethods__setCurrentPage$$($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$, $index$$102_newPage_page$$inline_358$$, $args$$5$$) {
+  $index$$102_newPage_page$$inline_358$$ = $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_navigation$.$getItemAt$($index$$102_newPage_page$$inline_358$$);
   if($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$ !== $JSCompiler_alias_NULL$$) {
     var $controller$$inline_236_controller$$inline_359$$ = $JSCompiler_StaticMethods__getPageController$$($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$, $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$);
     $controller$$inline_236_controller$$inline_359$$ !== $JSCompiler_alias_NULL$$ && $controller$$inline_236_controller$$inline_359$$.close()
   }
-  $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$ = $index$$101_newPage_page$$inline_358$$;
+  $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$ = $index$$102_newPage_page$$inline_358$$;
   if($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$__pageControllers$[$JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$.id] === $JSCompiler_alias_VOID$$) {
-    var $index$$101_newPage_page$$inline_358$$ = $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$, $controller$$inline_236_controller$$inline_359$$ = $JSCompiler_alias_NULL$$, $container$$inline_360$$ = $JSCompiler_StaticMethods_getModuleInstanceByName$$($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_container$, "control-container", $index$$101_newPage_page$$inline_358$$.id);
+    var $index$$102_newPage_page$$inline_358$$ = $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$, $controller$$inline_236_controller$$inline_359$$ = $JSCompiler_alias_NULL$$, $container$$inline_360$$ = $JSCompiler_StaticMethods_getModuleInstanceByName$$($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_container$, "control-container", $index$$102_newPage_page$$inline_358$$.id);
     $container$$inline_360$$ !== $JSCompiler_alias_NULL$$ && ($JSCompiler_StaticMethods_initController$$($container$$inline_360$$), $controller$$inline_236_controller$$inline_359$$ = $container$$inline_360$$.$__controller$);
     $controller$$inline_236_controller$$inline_359$$ !== $JSCompiler_alias_NULL$$ && ($controller$$inline_236_controller$$inline_359$$.$_navigation$ = $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_navigation$);
-    $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$__pageControllers$[$index$$101_newPage_page$$inline_358$$.id] = $controller$$inline_236_controller$$inline_359$$
+    $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$__pageControllers$[$index$$102_newPage_page$$inline_358$$.id] = $controller$$inline_236_controller$$inline_359$$
   }
   $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$ = $JSCompiler_StaticMethods__getPageController$$($JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$, $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.$_currentPage$);
   $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$ !== $JSCompiler_alias_NULL$$ && $JSCompiler_StaticMethods__setCurrentPage$self_controller$$inline_240$$.open($args$$5$$)
@@ -1807,30 +1816,30 @@ function $JSCompiler_StaticMethods___applyUser$$($JSCompiler_StaticMethods___app
   $JSCompiler_StaticMethods_getModuleInstanceByName$$($JSCompiler_StaticMethods___applyUser$self$$.$_container$, "template-transformer", "user-info").$applyTransform$($user$$2$$.$serialize$());
   $JSCompiler_StaticMethods_getModuleInstanceByName$$($JSCompiler_StaticMethods___applyUser$self$$.$_container$, "template-transformer", "admin-controls").$applyTransform$($user$$2$$.$serialize$());
   if($user$$2$$.$role$ === $User$$.$BAKERY$) {
-    $JSCompiler_StaticMethods___applyUser$self$$.$_navigation$.navigate("orders_page"), $JSCompiler_StaticMethods___updateBakery$$($JSCompiler_StaticMethods___applyUser$self$$, $user$$2$$)
+    $JSCompiler_StaticMethods___navigateLocation$$($JSCompiler_StaticMethods___applyUser$self$$), $JSCompiler_StaticMethods___updateBakery$$($JSCompiler_StaticMethods___applyUser$self$$, $user$$2$$)
   }else {
     var $bakerySelectionTransformer$$ = $JSCompiler_StaticMethods_getModuleInstanceByName$$($JSCompiler_StaticMethods___applyUser$self$$.$_container$, "template-transformer", "bakery-selection"), $bakerySelectionForm$$ = $JSCompiler_StaticMethods_getModuleInstanceByName$$($JSCompiler_StaticMethods___applyUser$self$$.$_container$, "form", "bakery-selection");
     $tuna$rest$call$$("users.getBakeries", $JSCompiler_alias_NULL$$, function($bakeries$$) {
       $model$resource$bakeries$$.$__bakeries$ = $bakeries$$;
       $bakerySelectionTransformer$$.$applyTransform$($tuna$model$serializeArray$$($bakeries$$));
-      $JSCompiler_StaticMethods___applyUser$self$$.$_navigation$.navigate("orders_page");
-      $bakerySelectionForm$$.addEventListener("submit", function($JSCompiler_inline_result$$250_data$$45_event$$34$$) {
-        $JSCompiler_inline_result$$250_data$$45_event$$34$$.preventDefault();
-        $JSCompiler_inline_result$$250_data$$45_event$$34$$ = $bakerySelectionForm$$.$serialize$();
-        if($JSCompiler_inline_result$$250_data$$45_event$$34$$.bakery_id !== $JSCompiler_alias_VOID$$) {
+      $bakerySelectionForm$$.addEventListener("submit", function($JSCompiler_inline_result$$250_data$$46_event$$34$$) {
+        $JSCompiler_inline_result$$250_data$$46_event$$34$$.preventDefault();
+        $JSCompiler_inline_result$$250_data$$46_event$$34$$ = $bakerySelectionForm$$.$serialize$();
+        if($JSCompiler_inline_result$$250_data$$46_event$$34$$.bakery_id !== $JSCompiler_alias_VOID$$) {
           a: {
             for(var $JSCompiler_StaticMethods_getBakeryById$self$$inline_252$$ = $model$resource$bakeries$$, $i$$inline_253$$ = 0, $l$$inline_254$$ = $JSCompiler_StaticMethods_getBakeryById$self$$inline_252$$.$__bakeries$.length;$i$$inline_253$$ < $l$$inline_254$$;) {
-              if($JSCompiler_StaticMethods_getBakeryById$self$$inline_252$$.$__bakeries$[$i$$inline_253$$].id === $JSCompiler_inline_result$$250_data$$45_event$$34$$.bakery_id) {
-                $JSCompiler_inline_result$$250_data$$45_event$$34$$ = $JSCompiler_StaticMethods_getBakeryById$self$$inline_252$$.$__bakeries$[$i$$inline_253$$];
+              if($JSCompiler_StaticMethods_getBakeryById$self$$inline_252$$.$__bakeries$[$i$$inline_253$$].id === $JSCompiler_inline_result$$250_data$$46_event$$34$$.bakery_id) {
+                $JSCompiler_inline_result$$250_data$$46_event$$34$$ = $JSCompiler_StaticMethods_getBakeryById$self$$inline_252$$.$__bakeries$[$i$$inline_253$$];
                 break a
               }
               $i$$inline_253$$++
             }
-            $JSCompiler_inline_result$$250_data$$45_event$$34$$ = $JSCompiler_alias_NULL$$
+            $JSCompiler_inline_result$$250_data$$46_event$$34$$ = $JSCompiler_alias_NULL$$
           }
-          $JSCompiler_StaticMethods___updateBakery$$($JSCompiler_StaticMethods___applyUser$self$$, $JSCompiler_inline_result$$250_data$$45_event$$34$$)
+          $JSCompiler_StaticMethods___updateBakery$$($JSCompiler_StaticMethods___applyUser$self$$, $JSCompiler_inline_result$$250_data$$46_event$$34$$)
         }
-      })
+      });
+      $JSCompiler_StaticMethods___navigateLocation$$($JSCompiler_StaticMethods___applyUser$self$$)
     }, "bakery")
   }
 }
@@ -1841,6 +1850,11 @@ function $JSCompiler_StaticMethods___updateBakery$$($JSCompiler_StaticMethods___
     var $bakery$$inline_259$$ = $model$resource$bakeries$$.$__currentBakery$;
     $bakery$$inline_259$$ !== $JSCompiler_alias_NULL$$ && $controller$$6$$.$_updateBakery$($bakery$$inline_259$$)
   }
+}
+function $JSCompiler_StaticMethods___navigateLocation$$($JSCompiler_StaticMethods___navigateLocation$self$$) {
+  var $path$$11$$ = location.pathname.split("/");
+  $path$$11$$.shift();
+  0 < $path$$11$$.length ? $JSCompiler_StaticMethods___navigateLocation$self$$.$_navigation$.navigate($path$$11$$) : $JSCompiler_StaticMethods___navigateLocation$self$$.$_navigation$.navigate("orders-page")
 }
 $tuna$view$__mainController$$ = new $MainController$$;
 function $BakeryPageController$$() {
@@ -1940,11 +1954,11 @@ function $User$$() {
   this.$role$ = -1
 }
 $tuna$utils$extend$$($User$$, $Record$$);
-$User$$.prototype.$populate$ = function $$User$$$$$populate$$($data$$46$$) {
-  this.id = $data$$46$$.id;
-  this.name = $data$$46$$.name;
-  this.$email$ = $data$$46$$.email;
-  this.$role$ = $data$$46$$.role
+$User$$.prototype.$populate$ = function $$User$$$$$populate$$($data$$47$$) {
+  this.id = $data$$47$$.id;
+  this.name = $data$$47$$.name;
+  this.$email$ = $data$$47$$.email;
+  this.$role$ = $data$$47$$.role
 };
 $User$$.prototype.$serialize$ = function $$User$$$$$serialize$$() {
   return{id:this.id, email:this.$email$, role:this.$role$, roleName:$model$resource$users$$.$__roles$[this.$role$]}
@@ -1959,10 +1973,10 @@ function $Bakery$$() {
   this.$deliveryPrice$ = 0
 }
 $tuna$utils$extend$$($Bakery$$, $User$$);
-$Bakery$$.prototype.$populate$ = function $$Bakery$$$$$populate$$($data$$47$$) {
-  $User$$.prototype.$populate$.call(this, $data$$47$$);
-  this.city = $data$$47$$.city && $data$$47$$.city.name;
-  this.$deliveryPrice$ = $data$$47$$.delivery_price
+$Bakery$$.prototype.$populate$ = function $$Bakery$$$$$populate$$($data$$48$$) {
+  $User$$.prototype.$populate$.call(this, $data$$48$$);
+  this.city = $data$$48$$.city && $data$$48$$.city.name;
+  this.$deliveryPrice$ = $data$$48$$.delivery_price
 };
 $Bakery$$.prototype.$serialize$ = function $$Bakery$$$$$serialize$$() {
   return{id:this.id, name:this.name + " (" + this.city + ")", email:this.$email$, deliveryPrice:this.$deliveryPrice$}
@@ -1974,12 +1988,12 @@ function $Recipe$$() {
   this.$dimentionPrices$ = []
 }
 $tuna$utils$extend$$($Recipe$$, $Record$$);
-$Recipe$$.prototype.$populate$ = function $$Recipe$$$$$populate$$($data$$48$$) {
-  this.id = $data$$48$$.id;
-  this.$bakeryId$ = $data$$48$$.bakery_id;
-  this.name = $data$$48$$.name;
-  this.$desc$ = $data$$48$$.desc;
-  this.$imageUrl$ = $data$$48$$.image_url;
+$Recipe$$.prototype.$populate$ = function $$Recipe$$$$$populate$$($data$$49$$) {
+  this.id = $data$$49$$.id;
+  this.$bakeryId$ = $data$$49$$.bakery_id;
+  this.name = $data$$49$$.name;
+  this.$desc$ = $data$$49$$.desc;
+  this.$imageUrl$ = $data$$49$$.image_url;
   this.$dimentionPrices$ = []
 };
 $Recipe$$.prototype.$serialize$ = function $$Recipe$$$$$serialize$$() {
@@ -1996,15 +2010,15 @@ function $Order$$() {
   this.$deliveryStatus$ = this.$paymentStatus$ = this.status = 0
 }
 $tuna$utils$extend$$($Order$$, $Record$$);
-$Order$$.prototype.$populate$ = function $$Order$$$$$populate$$($data$$49$$) {
-  this.id = $data$$49$$.id;
+$Order$$.prototype.$populate$ = function $$Order$$$$$populate$$($data$$50$$) {
+  this.id = $data$$50$$.id;
   this.index = parseInt(this.id.substr(this.id.length - 8).split("0").join(""), 16);
   this.$creationDate$ = new Date(1E3 * parseInt(this.id.substr(0, 8), 16));
-  this.$bakery$.$populate$($data$$49$$.bakery);
-  this.$recipe$.$populate$($data$$49$$.recipe);
-  this.status = $data$$49$$.status;
-  this.$paymentStatus$ = $data$$49$$.payment_status;
-  this.$deliveryStatus$ = $data$$49$$.delivery_status
+  this.$bakery$.$populate$($data$$50$$.bakery);
+  this.$recipe$.$populate$($data$$50$$.recipe);
+  this.status = $data$$50$$.status;
+  this.$paymentStatus$ = $data$$50$$.payment_status;
+  this.$deliveryStatus$ = $data$$50$$.delivery_status
 };
 $Order$$.prototype.$serialize$ = function $$Order$$$$$serialize$$() {
   return{id:this.id, index:this.index, creationDate:this.$creationDate$.toJSON().substring(0, 16).replace("T", " "), bakery:this.$bakery$.$serialize$(), recipe:this.$recipe$.$serialize$(), status:this.status, paymentStatus:this.$paymentStatus$, deliveryStatus:this.$deliveryStatus$}
@@ -2027,18 +2041,18 @@ function $JSCompiler_StaticMethods_getRecipesList$$() {
 var $model$resource$recipes$$ = new function() {
   this.$__recipes$ = []
 };
-function $CommonMethod$$($name$$75$$) {
-  $Method$$.call(this, $name$$75$$);
+function $CommonMethod$$($name$$76$$) {
+  $Method$$.call(this, $name$$76$$);
   this.$__request$ = new $Request$$;
   this.$__request$.method = "POST";
-  this.$__request$.$__url$ = "/api/?method=" + $name$$75$$;
+  this.$__request$.$__url$ = "/api/?method=" + $name$$76$$;
   var $self$$17$$ = this;
-  this.$__request$.addEventListener("complete", function($event$$39$$, $data$$50$$) {
+  this.$__request$.addEventListener("complete", function($event$$39$$, $data$$51$$) {
     var $result$$inline_302$$ = $JSCompiler_alias_NULL$$;
     try {
-      $result$$inline_302$$ = JSON.parse($data$$50$$)
+      $result$$inline_302$$ = JSON.parse($data$$51$$)
     }catch($error$$inline_304$$) {
-      $self$$17$$.$dispatch$("error", $data$$50$$)
+      $self$$17$$.$dispatch$("error", $data$$51$$)
     }
     if($result$$inline_302$$ !== $JSCompiler_alias_NULL$$) {
       var $response$$inline_303$$ = $result$$inline_302$$.response;
@@ -2054,8 +2068,8 @@ $CommonMethod$$.prototype.call = function $$CommonMethod$$$$call$($args$$9$$) {
 function $CommonFactory$$() {
 }
 $tuna$utils$implement$$($CommonFactory$$, $IMethodFactory$$);
-$CommonFactory$$.prototype.$createMethod$ = function $$CommonFactory$$$$$createMethod$$($name$$76$$) {
-  return new $CommonMethod$$($name$$76$$)
+$CommonFactory$$.prototype.$createMethod$ = function $$CommonFactory$$$$$createMethod$$($name$$77$$) {
+  return new $CommonMethod$$($name$$77$$)
 };
 $tuna$rest$methodFactory$$.$__commonFactory$ = new $CommonFactory$$;
 
