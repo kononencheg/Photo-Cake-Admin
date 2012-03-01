@@ -1,0 +1,50 @@
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="j-navigation-link brand" href="#"
+               data-href="orders_page">
+                Фото на торте
+            </a>
+
+            <ul class="j-navigation-menu nav">
+                <li class="j-navigation-link" data-href="orders_page">
+                    <a href="#">Заказы</a>
+                </li>
+                <li class="j-navigation-link" data-href="recipes_page">
+                    <a href="#">Рецепты</a>
+                </li>
+                <li class="j-navigation-link" data-href="decorations_page">
+                    <a href="#">Декорации</a>
+                </li>
+                <li class="j-navigation-link" data-href="dimentions_page">
+                    <a href="#">Формы и размеры</a>
+                </li>
+                <li class="j-navigation-link" data-href="profile_page">
+                    <a href="#">Профиль</a>
+                </li>
+            </ul>
+
+            <form action="/api/" method="POST" target="api_frame"
+                  class="j-form navbar-form pull-right"
+                  data-name="sign-out">
+
+                <input type="hidden" name="method" value="users.signOut" />
+                <input type="hidden" name="format" value="frame-callback" />
+
+                <button type="submit" class="btn">Выход</button>
+            </form>
+
+            <ul class="j-template-transformer nav pull-right"
+                data-template-id="user_info_template" data-name="user-info">
+
+                <li>
+                    <a>
+                        <span class="t-user-role"></span> :
+                        <i class="icon-user icon-white"></i>
+                        <span class="t-user-email"></span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:tuna>
+    <head>
+        <meta charset="utf-8" />
+
+        <title>Панель управления</title>
+
+        <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
+
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
+        </style>
+    </head>
+
+    <body class="j-navigation">
+
+        {{> template/popup/login }}
+
+        {{> template/navigation }}
+        {{> template/body }}
+
+        <div class="hide">
+
+            {{> template/templates }}
+
+            <iframe id="api_frame" name="api_frame"
+                    width="0" height="0"></iframe>
+        </div>
+
+
+        <!--[if IE]>-->
+            <script type="text/javascript" src="/js/json.js"></script>
+        <!--<![endif]-->
+
+        <script type="text/javascript" src="/js/sizzle.js"></script>
+        <script type="text/javascript" src="/js/app.js"></script>
+
+        <script type="text/javascript">main();</script>
+    </body>
+</html>

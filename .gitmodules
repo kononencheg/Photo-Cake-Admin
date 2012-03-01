@@ -1,6 +1,3 @@
-[submodule "library/PhotoCake"]
-	path = library/PhotoCake
-	url = git@github.com:kononencheg/Photo-Cake-Library.git
-[submodule "public/js/lib/tuna"]
-	path = public/js/lib/tuna
+[submodule "public/tuna"]
+	path = public/tuna
 	url = git@github.com:kononencheg/Tuna-Framework
