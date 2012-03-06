@@ -1,9 +1,10 @@
 JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
-			  --compilation_level ADVANCED_OPTIMIZATIONS \
+			  --compilation_level WHITESPACE_ONLY \
 			  --externs library/externs.js \
 			  --debug \
 			  --formatting PRETTY_PRINT \
+			   #ADVANCED_OPTIMIZATIONS \
 
 TUNA_FILES = tuna.js \
 			 \
@@ -17,6 +18,7 @@ TUNA_FILES = tuna.js \
 			 \
 			 net/i-request.js \
 			 net/request.js \
+			 net/net.js \
 			 \
 			 model/record.js \
 			 model/model.js \
@@ -63,10 +65,8 @@ TUNA_FILES = tuna.js \
 			 \
 			 ui/module.js \
 			 ui/module-instance.js \
+			 ui/module-container.js \
 			 ui/modules/modules.js \
-			 \
-			 ui/containers/container.js \
-			 ui/containers/control-container.js \
 			 \
 			 ui/popups/popup.js \
 			 ui/popups/popups.js \
@@ -102,6 +102,7 @@ TUNA_FILES = tuna.js \
 			 ui/selection/rule/abstract-selection-rule.js \
 			 ui/selection/rule/single-selection-rule.js \
 			 ui/selection/rule/multiple-selection-rule.js \
+			 ui/selection/rule/navigation-selection-rule.js \
 			 \
 			 ui/selection/view/i-selection-view.js \
 			 ui/selection/view/abstract-selection-view.js \
@@ -113,7 +114,6 @@ TUNA_FILES = tuna.js \
 			 ui/modules/popup-button.js \
 			 ui/modules/selection-group.js \
 			 ui/modules/template-transformer.js \
-			 ui/modules/control-container.js \
 			 ui/modules/button-group.js \
 			 ui/modules/swf.js \
 			 ui/modules/input-filter.js \
@@ -122,25 +122,30 @@ TUNA_FILES = tuna.js \
 			 \
 			 view/view.js \
 			 view/view-controller.js \
-			 view/navigation-view-controller.js \
 			 view/page-view-controller.js \
 			 
 
 APPLICATION_FILES = main.js \
 					\
 					view/main-controller.js \
-					view/bakery-page-controller.js \
 					view/page/recipes-controller.js \
 					view/page/orders-controller.js \
+					view/page/orders/edit-order-controller.js \
 					\
 					model/record/user.js \
 					model/record/bakery.js \
 					model/record/recipe.js \
+					model/record/delivery.js \
+					model/record/client.js \
+					model/record/payment.js \
+					model/record/dimension.js \
+					model/record/cake.js \
 					model/record/order.js \
 					\
 					model/resource/users.js \
 					model/resource/bakeries.js \
 					model/resource/recipes.js \
+					model/resource/orders.js \
 					\
 					rest/common-method.js \
 					rest/common-factory.js \

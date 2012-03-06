@@ -1,9 +1,9 @@
 /**
  * @constructor
+ * @param {Object=} data
  * @extends {tuna.model.Record}
  */
-var Recipe = function () {
-
+var Recipe = function (data) {
     /**
      * @type string
      */
@@ -33,6 +33,8 @@ var Recipe = function () {
      * @type Array.<Object>
      */
     this.dimentionPrices = [];
+
+    tuna.model.Record.call(this, data);
 };
 
 tuna.utils.extend(Recipe, tuna.model.Record);

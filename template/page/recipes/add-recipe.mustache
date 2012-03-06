@@ -1,0 +1,83 @@
+<div class="page-header">
+    <h1>Добавление нового рецепта</h1>
+</div>
+
+<div class="row">
+    <div class="span12">
+
+        <form action="/api/"
+              method="POST"
+              target="api_frame"
+              enctype="multipart/form-data"
+              class="j-template-transformer j-form form-horizontal"
+              data-template-id="recipe_add_template"
+              data-record-type="recipe"
+              data-name="add-recipe">
+
+            <input type="hidden" name="method" value="recipes.add" />
+            <input type="hidden" name="format" value="frame-callback" />
+
+            <input type="hidden" name="bakery_id" class="t-bakery-id" />
+
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                <div class="j-recipe_name-input control-group">
+                    <label class="control-label" for="add_recipe_name">
+                        Название:
+                    </label>
+                    <div class="controls">
+                        <div class="input">
+                            <input name="recipe_name" id="add_recipe_name"
+                                   type="text" />
+                        </div>
+                        <p class="j-message help-block">
+                            Общеизвестное название рецепта.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="j-recipe_desc-input control-group">
+                    <label class="control-label" for="add_recipe_desc">
+                        Описание рецепта:
+                    </label>
+                    <div class="controls">
+                        <div class="input">
+                            <textarea name="recipe_desc" rows="7"
+                                      id="add_recipe_desc"></textarea>
+                        </div>
+                        <p class="j-message help-block">
+                            Подробное описание рецепта.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="j-recipe_image-input control-group">
+                    <label class="control-label" for="add_recipe_image">
+                        Картинка:
+                    </label>
+                    <div class="controls">
+                        <div class="input">
+                            <input name="recipe_image" type="file"
+                                   id="add_recipe_image" />
+                        </div>
+                        <p class="j-message help-block">
+                            Картинка в списке и в окне описания рецептов.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Добавить
+                    </button>
+                    <button type="reset" class="btn">
+                        Очистить
+                    </button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

@@ -1,8 +1,9 @@
 /**
  * @constructor
+ * @param {Object=} data
  * @extends {tuna.model.Record}
  */
-var User = function () {
+var User = function (data) {
     /**
      * @type {string}
      */
@@ -22,6 +23,8 @@ var User = function () {
      * @type number
      */
     this.role = -1;
+
+    tuna.model.Record.call(this, data);
 };
 
 tuna.utils.extend(User, tuna.model.Record);
@@ -43,7 +46,7 @@ User.prototype.serialize = function() {
     return {
         'id': this.id,
         'email': this.email,
-        'role':this.role,
+        'role': this.role,
         'roleName': model.resource.users.getRoleName(this.role)
     };
 };
@@ -54,18 +57,17 @@ User.prototype.serialize = function() {
  */
 model.record.User = User;
 
+/**
+ * @const
+ * @type number
+ */
+model.record.User.ROLE_ADMIN = 0;
 
 /**
  * @const
  * @type number
  */
-model.record.User.ADMIN = 0;
-
-/**
- * @const
- * @type number
- */
-model.record.User.BAKERY = 1;
+model.record.User.ROLE_BAKERY = 1;
 
 
 tuna.model.recordFactory.registerRecord('user', new model.record.User());

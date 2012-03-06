@@ -27,13 +27,6 @@ var RecipesController = function () {
      * @private
      * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
      */
-    this.__bakerySelectForm = null;
-
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
-     */
     this.__addRecipeForm = null;
 
     /**
@@ -57,8 +50,6 @@ tuna.utils.extend(RecipesController, tuna.view.PageViewController);
  */
 RecipesController.prototype._requireModules = function() {
     this._container.requireModule('template-transformer');
-    this._container.requireModule('button-group');
-    this._container.requireModule('popup');
     this._container.requireModule('form');
 };
 
@@ -71,24 +62,11 @@ RecipesController.prototype._initActions = function() {
     this.__recipeTableTransformer = this._container.getModuleInstanceByName
                                     ('template-transformer', 'recipe-table');
 
-    this.__bakerySelectTransformer = this._container.getModuleInstanceByName
-                                ('template-transformer', 'bakery-select');
-
     this.__addRecipeTransformer = this._container.getModuleInstanceByName
                                     ('template-transformer', 'add-recipe');
 
-
-    this.__bakerySelectForm = this._container.getModuleInstanceByName
-                                                ('form', 'bakery-select');
-
     this.__addRecipeForm = this._container.getModuleInstanceByName
                                             ('form', 'add-recipe');
-
-    this.__recipeControls = this._container.getModuleInstanceByName
-                                    ('button-group', 'recipe-controls');
-
-    this.__recipePopup = this._container.getModuleInstanceByName
-                                        ('popup', 'edit-recipe');
 
 
     this.__recipeControls.addEventListener('delete', function(event, button) {
@@ -97,20 +75,6 @@ RecipesController.prototype._initActions = function() {
 
     this.__recipeControls.addEventListener('edit', function(event, button) {
         self.__recipePopup.open()
-    });
-
-    this.__bakerySelectForm.addEventListener('result', function(event, recipes) {
-        model.resource.recipes.setRecipes(recipes);
-        self.__updateView();
-    });
-
-    this.__bakerySelectForm.addEventListener('submit', function() {
-        var bakeryId = self.__bakerySelectForm.getValue('bakery_id');
-        if (bakeryId === -1) {
-            model.resource.recipes.clearRecipes();
-        }
-
-        //model.resource.bakeries.setCurrentBakeryId(bakeryId);
     });
 
     this.__addRecipeForm.addEventListener('result', function(event, recipe) {
@@ -125,9 +89,6 @@ RecipesController.prototype._initActions = function() {
  * @private
  */
 RecipesController.prototype.__updateView = function() {
-    this.__bakerySelectTransformer.applyTransform
-                (model.resource.bakeries.getBakeriesList());
-
     this.__recipeTableTransformer.applyTransform
                 (model.resource.recipes.getRecipesList());
 
@@ -144,6 +105,7 @@ RecipesController.prototype.__deleteRecipe = function(button) {
         var self = this;
 
         var recipeId = button.getStringOption('recipe-id');
+
         tuna.rest.call('recipes.remove', {
             'recipe_id': recipeId
         }, function() {

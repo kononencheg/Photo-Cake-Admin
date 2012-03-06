@@ -8,10 +8,11 @@
         <link rel="stylesheet" type="text/css" href="/css/bootstrap.css" />
 
         <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
+            body { padding-top: 60px; }
+            a { cursor: pointer; }
+
+            .page { display: none; }
+            .page.active { display: inherit; }
         </style>
     </head>
 
@@ -71,24 +72,24 @@
             <div class="navbar-inner">
                 <div class="container">
                     <a class="j-navigation-link brand" href="#"
-                       data-href="orders_page">
+                       data-href="orders/table">
                         Фото на торте
                     </a>
         
                     <ul class="j-navigation-menu nav">
-                        <li class="j-navigation-link" data-href="orders-page">
+                        <li class="j-navigation-link" data-href="orders/table">
                             <a href="#">Заказы</a>
                         </li>
-                        <li class="j-navigation-link" data-href="recipes-page">
+                        <li class="j-navigation-link" data-href="recipes">
                             <a href="#">Рецепты</a>
                         </li>
-                        <li class="j-navigation-link" data-href="decorations-page">
+                        <li class="j-navigation-link" data-href="decorations">
                             <a href="#">Декорации</a>
                         </li>
-                        <li class="j-navigation-link" data-href="dimentions-page">
+                        <li class="j-navigation-link" data-href="dimentions">
                             <a href="#">Формы и размеры</a>
                         </li>
-                        <li class="j-navigation-link" data-href="profile-page">
+                        <li class="j-navigation-link" data-href="profile">
                             <a href="#">Профиль</a>
                         </li>
                     </ul>
@@ -117,229 +118,27 @@
                     </ul>
                 </div>
             </div>
-        </div>        
-        <div class="container carousel">
-            <div class="carousel-inner">
+        </div>        <div class="container">
         
-                <div id="orders_page" class="j-navigation-page j-control-container item"
-                     data-name="orders-page">
+            <div id="orders_page"
+                 class="j-navigation-page j-control-container page active"
+                 data-page-name="orders">
+        
+                <div class="j-navigation"
+                     data-name="order-navigation">
                 
-                    <form action="/api/" method="POST" target="api_frame"
-                          class="j-form j-popup form-horizontal hide"
-                          data-name="edit-order" data-record-type="order">
-                    
-                        <input type="hidden" name="method" value="recipe.edit" />
-                        <input type="hidden" name="format" value="frame-callback" />
-                    
-                        <div class="j-navigation modal">
-                            <div class="modal-header">
-                                <ul class="j-navigation-menu nav nav-pills">
-                                    <li class="j-navigation-link" data-href="edit_order_common">
-                                        <a href="#">Общее</a>
-                                    </li>
-                                    <li class="j-navigation-link" data-href="edit_order_client">
-                                        <a href="#">Клиент</a>
-                                    </li>
-                                    <li class="j-navigation-link" data-href="edit_order_cake">
-                                        <a href="#">Торт</a>
-                                    </li>
-                                    <li class="j-navigation-link" data-href="edit_order_delivery">
-                                        <a href="#">Доставка</a>
-                                    </li>
-                                    <li class="j-navigation-link" data-href="edit_order_payment">
-                                        <a href="#">Оплата</a>
-                                    </li>
-                                </ul>
-                            </div>
-                    
-                            <div class="modal-body">
-                                <div class="j-form-message alert alert-error hide"></div>
-                    
-                                <div class="carousel">
-                                    <div class="carousel-inner">
-                                        <fieldset id="edit_order_common" class="j-navigation-page active item">
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Статус: </label>
-                                                <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="status" checked />
-                                                        <span class="label label-important">Новый</span>
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="status" />
-                                                        <span class="label label-success">Подтвержден</span>
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="status" />
-                                                        <span class="label">Отклонен</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                    
-                                        </fieldset>
-                    
-                                        <fieldset id="edit_order_client" class="j-navigation-page item">
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Имя: </label>
-                                                <div class="controls">
-                                                    <input disabled type="text" value="Сергей Кононенко" />
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Телефон: </label>
-                                                <div class="controls">
-                                                    <input disabled type="text" value="+7 (952) 232-90-25" />
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Email: </label>
-                                                <div class="controls">
-                                                    <input disabled type="text" value="kononencheg@gmail.com" />
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Откуда: </label>
-                                                <div class="controls">
-                                                    <select disabled>
-                                                        <option>Вконтакте</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                    
-                                        </fieldset>
-                                        
-                                        <fieldset id="edit_order_cake" class="j-navigation-page item">
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Рецепт: </label>
-                                                <div class="controls">
-                                                    <select disabled>
-                                                        <option>Марципан</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Форма: </label>
-                                                <div class="controls">
-                                                    <select disabled>
-                                                        <option>Круглый</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Вес: </label>
-                                                <div class="controls">
-                                                    <input disabled type="text" value="1.5" />
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Изображение: </label>
-                                                <div class="controls">
-                                                    <input class="btn " type="button" value="Скачать" />
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Фото: </label>
-                                                <div class="controls">
-                                                    <input class="btn" type="button" value="Скачать" />
-                                                </div>
-                                            </div>
-                    
-                                        </fieldset>
-                                        
-                                        <fieldset id="edit_order_delivery" class="j-navigation-page item">
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Адрес: </label>
-                                                <div class="controls">
-                                                    <textarea disabled>ул. Наличная, д. 37, корп. 2</textarea>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Дата: </label>
-                                                <div class="controls">
-                                                    <input disabled type="text" value="24.02.2012 20:00" />
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Статус: </label>
-                                                <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="delivery_status" checked />
-                                                        <span class="label label-warning">Подготовка</span>
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="delivery_status" />
-                                                        <span class="label label-info">В доставке</span>
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="delivery_status" />
-                                                        <span class="label label-success">Доставлено</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                    
-                                        </fieldset>
-                    
-                                        <fieldset id="edit_order_payment" class="j-navigation-page item">
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Тип: </label>
-                                                <div class="controls">
-                                                    <select disabled>
-                                                        <option>Наличными</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                    
-                                            <div class="control-group">
-                                                <label class="control-label">Статус: </label>
-                                                <div class="controls">
-                                                    <label class="radio">
-                                                        <input type="radio" name="payment_status" checked />
-                                                        <span class="label label-important">Не оплачен</span>
-                                                    </label>
-                                                    <label class="radio">
-                                                        <input type="radio" name="payment_status" />
-                                                        <span class="label label-success">Оплачен</span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                    
-                                        </fieldset>
-                                    </div>
-                                </div>
-                    
-                            </div>
-                    
-                            <div class="modal-footer">
-                                <a class="j-popup-close btn">Закрыть</a>
-                            </div>
+                    <div class="j-navigation-page page active"
+                         data-page-name="table">
+                
+                        <div class="page-header">
+                            <h1>Таблица заказов</h1>
                         </div>
-                        <div class="modal-backdrop"></div>
-                    </form>                
-                    <div class="page-header">
-                        <h1>
-                            Заказы <small>Здесь вы можете управлять своими заказами</small>
-                        </h1>
-                    </div>
                 
-                    <div class="row">
-                        <div class="span12">
+                        <div class="row">
+                            <div class="span12">
                 
-                            <table class="table table-bordered table-striped">
-                                <thead>
+                                <table class="table table-bordered table-striped">
+                                    <thead>
                                     <tr>
                                         <th>№</th>
                                         <th>Время заказа</th>
@@ -351,17 +150,259 @@
                                         <th>Оплата</th>
                                         <th>Действия</th>
                                     </tr>
-                                </thead>
-                                <tbody class="j-template-transformer j-button-group
-                                              t-orders-list"
-                                       data-name="orders-list"
-                                       data-template-id="orders_list_template"></tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="j-template-transformer j-button-group t-orders-list"
+                                           data-name="orders-list"
+                                           data-template-id="orders_list_template"></tbody>
+                                </table>
                 
+                            </div>
                         </div>
+                
                     </div>
-                </div>                <div id="recipes_page" class="j-navigation-page j-control-container item"
-                     data-name="recipes-page">
+                
+                    <div id="edit_order_page"
+                         class="j-navigation-page page"
+                         data-page-name="edit">
+                
+                        <form action="/api/" method="POST" target="api_frame"
+                              class="j-form j-template-transformer form-horizontal"
+                              data-template-id="order_info_template"
+                              data-name="edit-order-form"
+                              data-record-type="order">
+                        
+                            <input type="hidden" name="method" value="orders.edit" />
+                            <input type="hidden" name="format" value="frame-callback" />
+                        
+                            <input type="hidden" name="id" class="t-id" />
+                        
+                            <div class="page-header">
+                                <div class="row">
+                                    <div class="span7">
+                                        <h1>Заказ № <span class="t-index">2145</span></h1>
+                                    </div>
+                                    <div class="span5">
+                                        <div class="btn-group pull-right">
+                                            <a class="j-navigation-link btn btn-large"
+                                               data-action="back">
+                                                Назад
+                                            </a>
+                                            <button type="submit"
+                                                    class="btn btn-large btn-primary">
+                                                Сохранить изменения
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row">
+                        
+                                <div class="span6">
+                        
+                                    <fieldset>
+                                        <legend>Данные торта</legend>
+                        
+                                        <div class="control-group pagination-centered">
+                                            <img class="t-cake-image-url" alt="Торт"
+                                                 src="http://files.fotonatorte.local/cake_image_4f54a5012f58c.jpg"  />
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Рецепт: </label>
+                                            <div class="controls">
+                                                <input class="t-recipe-name" disabled type="text"
+                                                       value="Марципан" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Вес (кг.): </label>
+                                            <div class="controls">
+                                                <input class="t-cake-weight" disabled type="text"
+                                                       value="1.5" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="t-cake-photo control-group hide">
+                                            <label class="control-label">Фото: </label>
+                                            <div class="controls">
+                                                <a class="t-cake-photo-url btn">Скачать</a>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                        
+                                    <fieldset>
+                                        <legend>Статус</legend>
+                        
+                                        <div class="j-status-input control-group">
+                                            <label class="control-label">Статус заказа: </label>
+                                            <div class="controls">
+                                                <label class="radio inline">
+                                                    <input value="1" type="radio" name="status" />
+                                                    <span class="label label-important">Новый</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input value="2" type="radio" name="status" />
+                                                    <span class="label label-success">Подтвержден</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input value="3" type="radio" name="status" />
+                                                    <span class="label">Отклонен</span>
+                                                </label>
+                                                <p class="j-message help-block"></p>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="j-delivery_status-input control-group">
+                                            <label class="control-label">Статус доставки: </label>
+                                            <div class="controls">
+                                                <label class="radio inline">
+                                                    <input value="0" type="radio" name="delivery_status" />
+                                                    <span class="label label-important">Подготовка</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input value="1" type="radio" name="delivery_status" />
+                                                    <span class="label label-info">В доставке</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input value="2" type="radio" name="delivery_status" />
+                                                    <span class="label label-success">Доставлено</span>
+                                                </label>
+                                                <p class="j-message help-block"></p>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="j-payment_status-input control-group">
+                                            <label class="control-label">Статус оплаты: </label>
+                                            <div class="controls">
+                                                <label class="radio inline">
+                                                    <input value="0" type="radio" name="payment_status" />
+                                                    <span class="label label-important">Не оплачен</span>
+                                                </label>
+                                                <label class="radio inline">
+                                                    <input value="1" type="radio" name="payment_status" />
+                                                    <span class="label label-success">Оплачен</span>
+                                                </label>
+                                                <p class="j-message help-block"></p>
+                                            </div>
+                                        </div>
+                        
+                                    </fieldset>
+                        
+                                </div>
+                        
+                                <div class="span6">
+                        
+                                    <fieldset>
+                                        <legend>Данные клиента</legend>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Имя: </label>
+                                            <div class="controls">
+                                                <input class="t-client-name" disabled type="text"
+                                                       value="Сергей Кононенко" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Телефон: </label>
+                                            <div class="controls">
+                                                <input class="t-client-phone" disabled type="text"
+                                                       value="+7 (952) 232-90-25" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Email: </label>
+                                            <div class="controls">
+                                                <input class="t-client-email" disabled type="text"
+                                                       value="kononencheg@gmail.com" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Источник: </label>
+                                            <div class="controls">
+                                                <input class="t-client-network-name" disabled type="text"
+                                                       value="Вконтакте" />
+                                            </div>
+                                        </div>
+                        
+                                    </fieldset>
+                        
+                                    <fieldset>
+                                        <legend>Данные доставки</legend>
+                        
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Адрес: </label>
+                                            <div class="controls">
+                                                <textarea class="t-delivery-address" disabled></textarea>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Время: </label>
+                                            <div class="controls">
+                                                <input class="t-delivery-date" disabled type="text"
+                                                       value="24-02-2012 20:00" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Комментарий: </label>
+                                            <div class="controls">
+                                                <textarea class="t-delivery-comment" disabled></textarea>
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Записка: </label>
+                                            <div class="controls">
+                                                <textarea class="t-delivery-message" disabled></textarea>
+                                            </div>
+                                        </div>
+                        
+                        
+                                    </fieldset>
+                        
+                                    <fieldset>
+                                        <legend>Данные оплаты</legend>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Сумма: </label>
+                                            <div class="controls">
+                                                <input class="t-payment-price" disabled type="text" />
+                                            </div>
+                                        </div>
+                        
+                                        <div class="control-group">
+                                            <label class="control-label">Метод оплаты: </label>
+                                            <div class="controls">
+                                                <select disabled>
+                                                    <option>Наличными</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                        
+                                    </fieldset>
+                        
+                                </div>
+                        
+                            </div>
+                        
+                        </form>                
+                    </div>
+                </div>
+                
+                
+            </div>
+        
+            <div id="recipes_page"
+                 class="j-navigation-page j-control-container page"
+                 data-page-name="recipes">
+        
                 
                     <form action="/api/" method="POST" target="api_frame"
                           class="j-form j-popup form-horizontal hide"
@@ -437,8 +478,7 @@
                                         <th>Действия</th>
                                     </tr>
                                 </thead>
-                                <tbody class="t-recipe-list j-button-group"
-                                       data-name="recipe-controls"></tbody>
+                                <tbody class="t-recipe-list"></tbody>
                             </table>
                 
                         </div>
@@ -530,33 +570,33 @@
                                 </fieldset>
                             </form>
                         </div>
-                    </div>
-                </div>        
-                <hr />
-                <div class="j-template-transformer t-bakery-hidden row"
-                     data-name="admin-controls"
-                     data-template-id="user_access_template">
+                    </div>            </div>
         
-                    <div class="span12">
-                        <form class="j-form j-template-transformer
-                                     t-bakery-disabled form-inline pull-right"
+            <hr />
+            <div class="j-template-transformer t-bakery-hidden row"
+                 data-name="admin-controls"
+                 data-template-id="user_access_template">
         
-                              data-name="bakery-selection"
-                              data-template-id="bakery_selection_template">
+                <div class="span12">
+                    <form class="j-form j-template-transformer
+                                 t-bakery-disabled form-inline pull-right"
         
-                            <label>
-                                Кондитерская:
+                          data-name="bakery-selection"
+                          data-template-id="bakery_selection_template">
         
-                                <select name="bakery_id" class="t-bakery-select">
-                                    <option value="-1"></option>
-                                </select>
-                            </label>
+                        <label>
+                            Кондитерская:
         
-                            <input type="submit" class="btn" value="Выбрать" />
-                        </form>
-                    </div>
+                            <select name="bakery_id" class="t-bakery-select">
+                                <option value="-1"></option>
+                            </select>
+                        </label>
+        
+                        <input type="submit" class="btn" value="Выбрать" />
+                    </form>
                 </div>
             </div>
+        
         </div>
         
         
@@ -612,44 +652,149 @@
             
             <!-- Order templates -->
             
-            <tuna:template id="order_template">
+            <tuna:template id="order_info_template">
+            
+                <tuna:spot tuna:path="index" tuna:target="t-index" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="id"
+                           tuna:target="t-id" />
+            
+                <tuna:attr tuna:name="src"
+                           tuna:path="cake/imageUrl"
+                           tuna:target="t-cake-image-url" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="recipe/name"
+                           tuna:target="t-recipe-name" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="cake/dimension/shape"
+                           tuna:target="t-cake-shape" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="cake/dimension/weight"
+                           tuna:target="t-cake-weight" />
+            
+                <tuna:if tuna:path="cake/photoUrl" tuna:isset tuna:class="show"
+                         tuna:target="t-cake-photo" />
+            
+                <tuna:attr tuna:name="href"
+                           tuna:path="cake/photoUrl"
+                           tuna:target="t-cake-photo-url" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="client/name"
+                           tuna:target="t-client-name" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="client/phone"
+                           tuna:target="t-client-phone" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="client/email"
+                           tuna:target="t-client-email" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="client/networkName"
+                           tuna:target="t-client-network-name" />
+            
+                <tuna:attr tuna:name="value"
+                           tuna:path="delivery/date"
+                           tuna:target="t-delivery-date" />
+            
+                <tuna:spot tuna:path="delivery/address"
+                           tuna:target="t-delivery-address" />
+            
+                <tuna:spot tuna:path="delivery/comment"
+                           tuna:target="t-delivery-comment" />
+            
+                <tuna:spot tuna:path="delivery/message"
+                           tuna:target="t-delivery-message" />
+            
+            </tuna:template>
+            
+            
+            
+            
+            <tuna:template id="order_row_template">
+                <tuna:attr tuna:name="data-order-id"
+                           tuna:path="id"
+                           tuna:target="t-id" />
+            
                 <tuna:spot tuna:path="index"
-                           tuna:target="t-order-index" />
-                <tuna:spot tuna:path="creationDate"
-                           tuna:target="t-order-date" />
+                           tuna:target="t-index" />
+            
+                <tuna:spot tuna:path="date"
+                           tuna:target="t-date" />
+            
+                <tuna:spot tuna:path="delivery/date"
+                           tuna:target="t-delivery-date" />
+            
+                <tuna:spot tuna:path="client/name"
+                           tuna:target="t-client-name" />
+            
+                <tuna:spot tuna:path="payment/totalPrice"
+                           tuna:target="t-payment-price" />
+            
+                <tuna:spot tuna:path="statusName"
+                           tuna:target="t-status-label" />
+            
+                <tuna:spot tuna:path="deliveryStatusName"
+                           tuna:target="t-delivery-status-label" />
+            
+                <tuna:spot tuna:path="paymentStatusName"
+                           tuna:target="t-payment-status-label" />
+            
+                <tuna:if tuna:path="status" tuna:eq="1" tuna:class="label-important"
+                         tuna:target="t-status-label" />
+                <tuna:if tuna:path="status" tuna:eq="2" tuna:class="label-success"
+                         tuna:target="t-status-label" />
+            
+                <tuna:if tuna:path="deliveryStatus" tuna:eq="0" tuna:class="label-important"
+                         tuna:target="t-delivery-status-label"/>
+                <tuna:if tuna:path="deliveryStatus" tuna:eq="1" tuna:class="label-info"
+                         tuna:target="t-delivery-status-label"/>
+                <tuna:if tuna:path="deliveryStatus" tuna:eq="2" tuna:class="label-success"
+                         tuna:target="t-delivery-status-label"/>
+            
+                <tuna:if tuna:path="paymentStatus" tuna:eq="0" tuna:class="label-important"
+                         tuna:target="t-payment-status-label"/>
+                <tuna:if tuna:path="paymentStatus" tuna:eq="1" tuna:class="label-success"
+                         tuna:target="t-payment-status-label"/>
+            
             </tuna:template>
             
             <tuna:template id="orders_list_template">
                 <tuna:list tuna:target="t-orders-list" tuna:path=""
                            tuna:item-renderer-id="orders_list_item_renderer"
-                           tuna:item-template-id="order_template"
+                           tuna:item-template-id="order_row_template"
                            tuna:key-path="id" />
             </tuna:template>
             
             <table>
                 <tbody>
                     <tr id="orders_list_item_renderer">
-                        <td class="t-order-index"></td>
-                        <td class="t-order-date"></td>
+                        <td class="t-index"></td>
+                        <td class="t-date"></td>
                         <td class="t-delivery-date"></td>
-                        <td>Сергей Кононенко</td>
-                        <td>1300</td>
+                        <td class="t-client-name"></td>
+                        <td class="t-payment-price"></td>
                         <td>
-                            <span class="label label-important">Новый</span>
+                            <span class="t-status-label label">Новый</span>
                         </td>
                         <td>
-                            <span class="label label-warning">Подготовка</span>
+                            <span class="t-delivery-status-label label">Подготовка</span>
                         </td>
                         <td>
-                            <span class="label label-important">Не оплачен</span>
+                            <span class="t-payment-status-label label">Не оплачен</span>
                         </td>
                         <td>
                             <ul class="nav nav-list">
                                 <li>
-                                    <a class="j-button" href="#"
-                                       data-action="edit">
-                                        <i class="icon-edit"></i>
-                                        Редактировать
+                                    <a class="j-navigation-link t-id"
+                                       data-href="edit">
+                                        <i class="icon-edit"></i> Редактировать
                                     </a>
                                 </li>
                             </ul>

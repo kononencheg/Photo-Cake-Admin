@@ -1,7 +1,9 @@
 /**
  * @constructor
+ * @extends {tuna.events.EventDispatcher}
  */
 var Bakeries = function () {
+    tuna.events.EventDispatcher.call(this);
 
     /**
      * @private
@@ -16,11 +18,15 @@ var Bakeries = function () {
     this.__currentBakery = null;
 };
 
+tuna.utils.extend(Bakeries, tuna.events.EventDispatcher);
+
 /**
  * @param {Array.<model.record.Bakery>} bakeries
  */
 Bakeries.prototype.setBakeries = function(bakeries) {
     this.__bakeries = bakeries;
+
+    this.dispatch('update-bakeries', bakeries);
 };
 
 /**
@@ -54,6 +60,12 @@ Bakeries.prototype.getCurrentBakery = function() {
  */
 Bakeries.prototype.setCurrentBakery = function(bakery) {
     this.__currentBakery = bakery;
+
+    if (bakery !== null) {
+        this.dispatch('update-current-bakery', bakery);
+    } else {
+        this.dispatch('remove-current-bakery');
+    }
 };
 
 /**

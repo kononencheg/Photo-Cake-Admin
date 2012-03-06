@@ -28,6 +28,7 @@ var view = {};
  */
 window['main'] = function(args) {
     tuna.utils.config.init(args);
+    tuna.ui.modules.addIsolator('j-control-container');
     tuna.dom.setSelectorEngine(Sizzle);
-    tuna.view.init();  
+    tuna.view.init();
 };

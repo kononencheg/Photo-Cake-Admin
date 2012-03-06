@@ -23,7 +23,7 @@ Users.prototype.getRoleName = function(role) {
  * @return {boolean}
  */
 Users.prototype.isBakery = function(user) {
-    return user.role === model.record.User.BAKERY;
+    return user.role === model.record.User.ROLE_BAKERY;
 };
 
 /**

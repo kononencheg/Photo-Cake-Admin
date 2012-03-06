@@ -1,19 +1,24 @@
 /**
  * @constructor
- * @extends {tuna.view.NavigationViewController}
+ * @extends {tuna.view.ViewController}
  */
 var MainController = function() {
-    tuna.view.NavigationViewController.call(this);
+    tuna.view.ViewController.call(this);
+
+    /**
+     * @type {tuna.ui.ModuleInstance|tuna.ui.selection.Navigation}
+     * @private
+     */
+    this.__navigation = null;
 };
 
-tuna.utils.extend(MainController, tuna.view.NavigationViewController);
+tuna.utils.extend(MainController, tuna.view.ViewController);
 
 /**
  * @override
  */
 MainController.prototype._requireModules = function() {
-    tuna.view.NavigationViewController.prototype._requireModules.call(this);
-
+    this._container.requireModule('navigation');
     this._container.requireModule('template-transformer');
     this._container.requireModule('popup');
     this._container.requireModule('form');
@@ -23,7 +28,7 @@ MainController.prototype._requireModules = function() {
  * @override
  */
 MainController.prototype._initActions = function() {
-    tuna.view.NavigationViewController.prototype._initActions.call(this);
+    this.__navigation = this._container.getOneModuleInstance('navigation');
 
     var self = this;
     tuna.rest.call('users.getCurrent', null, function(user) {
@@ -81,8 +86,6 @@ MainController.prototype.__applyUser = function(user) {
     adminControlsTransformer.applyTransform(user.serialize());
 
     if (!model.resource.users.isBakery(user)) {
-        var self = this;
-
         var bakerySelectionTransformer =
             this._container.getModuleInstanceByName
                 ('template-transformer', 'bakery-selection');
@@ -100,48 +103,16 @@ MainController.prototype.__applyUser = function(user) {
             bakerySelectionForm.addEventListener('submit', function(event) {
                 event.preventDefault();
 
-                var data = bakerySelectionForm.serialize();
-                if (data['bakery_id'] !== undefined) {
-                    var bakery = model.resource.bakeries.getBakeryById
-                                    (data['bakery_id']);
-
-                    self.__updateBakery(bakery);
+                var bakeryId  = bakerySelectionForm.getValue('bakery_id');
+                if (bakeryId !== undefined) {
+                    model.resource.bakeries.setCurrentBakery
+                        (model.resource.bakeries.getBakeryById(bakeryId));
                 }
             });
 
-            self.__navigateLocation();
-
         }, 'bakery');
     } else {
-        this.__navigateLocation();
-        this.__updateBakery(user);
-    }
-};
-
-/**
- * @param {model.record.User} bakery
- * @private
- */
-MainController.prototype.__updateBakery = function(bakery) {
-    model.resource.bakeries.setCurrentBakery(bakery);
-
-    var controller = this.getCurrentController();
-    if (controller instanceof view.BakeryPageController) {
-        controller.handleBakeryChange();
-    }
-};
-
-/**
- * @private
- */
-MainController.prototype.__navigateLocation = function() {
-    var path = location.pathname.split('/');
-    path.shift();
-    
-    if (path.length > 0) {
-        this._navigation.navigate(path)
-    } else {
-        this._navigation.navigate('orders-page')
+        model.resource.bakeries.setCurrentBakery(user);
     }
 };
 

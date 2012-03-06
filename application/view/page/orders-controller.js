@@ -1,21 +1,9 @@
 /**
  * @constructor
- * @extends {view.BakeryPageController}
+ * @extends {tuna.view.PageViewController}
  */
 var OrdersController = function () {
-    view.BakeryPageController.call(this);
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.buttons.ButtonGroup}
-     */
-    //this.__orderControls = null;
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.popups.Popup}
-     */
-    //this.__orderPopup = null;
+    tuna.view.PageViewController.call(this);
 
     /**
      * @private
@@ -24,55 +12,40 @@ var OrdersController = function () {
     this.__ordersListTransformer = null;
 };
 
-tuna.utils.extend(OrdersController, view.BakeryPageController);
+tuna.utils.extend(OrdersController, tuna.view.PageViewController);
 
 /**
  * @override
  */
 OrdersController.prototype._requireModules = function() {
     this._container.requireModule('template-transformer');
-    this._container.requireModule('button-group');
     this._container.requireModule('navigation');
-    this._container.requireModule('popup');
-    this._container.requireModule('form');
 };
 
 /**
  * @override
  */
 OrdersController.prototype._initActions = function() {
-    /*var self = this;
+    var orderNavigation = this._container.getModuleInstanceByName
+        ('navigation', 'order-navigation');
 
-    this.__orderControls = this._container.getModuleInstanceByName
-                                    ('button-group', 'order-controls');
+    this._navigation.addChild
+        (orderNavigation, this._container.getOption('page-name'));
 
-    this.__orderPopup = this._container.getModuleInstanceByName
-                                        ('popup', 'edit-order');
-
-    this.__orderControls.addEventListener('edit', function(event, button) {
-        self.__orderPopup.open()
-    });*/
-
-    this.__ordersListTransformer = this._container.getModuleInstanceByName
+    var ordersListTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'orders-list');
+
+    model.resource.bakeries.addEventListener('update-current-bakery', function(event, bakery) {
+        tuna.rest.call('orders.get', { 'bakery_id': bakery.id }, function(orders) {
+            model.resource.orders.setOrders(orders);
+        }, 'order');
+    });
+
+    model.resource.orders.addEventListener('update-orders', function(event, orders) {
+        ordersListTransformer.applyTransform(tuna.model.serializeArray(orders));
+    });
 };
 
-/**
- * @override
- */
-OrdersController.prototype._updateBakery = function(bakery) {
-    var self = this;
-    tuna.rest.call('orders.get', {'bakery_id': bakery.id }, function(result) {
-        self.__ordersListTransformer.applyTransform
-            (tuna.model.serializeArray(result));
-    }, 'order');
-};
 
-/**
- * @private
- */
-OrdersController.prototype.__updateView = function() {
-
-};
 
 tuna.view.registerController('orders_page', new OrdersController());

@@ -47,44 +47,147 @@
 
 <!-- Order templates -->
 
-<tuna:template id="order_template">
+<tuna:template id="order_info_template">
+
+    <tuna:spot tuna:path="index" tuna:target="t-index" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="id"
+               tuna:target="t-id" />
+
+    <tuna:attr tuna:name="src"
+               tuna:path="cake/imageUrl"
+               tuna:target="t-cake-image-url" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="recipe/name"
+               tuna:target="t-recipe-name" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="cake/dimension/shape"
+               tuna:target="t-cake-shape" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="cake/dimension/weight"
+               tuna:target="t-cake-weight" />
+
+    <tuna:if tuna:path="cake/photoUrl" tuna:isset tuna:class="show"
+             tuna:target="t-cake-photo" />
+
+    <tuna:attr tuna:name="href"
+               tuna:path="cake/photoUrl"
+               tuna:target="t-cake-photo-url" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="client/name"
+               tuna:target="t-client-name" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="client/phone"
+               tuna:target="t-client-phone" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="client/email"
+               tuna:target="t-client-email" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="client/networkName"
+               tuna:target="t-client-network-name" />
+
+    <tuna:attr tuna:name="value"
+               tuna:path="delivery/date"
+               tuna:target="t-delivery-date" />
+
+    <tuna:spot tuna:path="delivery/address"
+               tuna:target="t-delivery-address" />
+
+    <tuna:spot tuna:path="delivery/comment"
+               tuna:target="t-delivery-comment" />
+
+    <tuna:spot tuna:path="delivery/message"
+               tuna:target="t-delivery-message" />
+
+</tuna:template>
+
+
+<tuna:template id="order_row_template">
+    <tuna:attr tuna:name="data-order-id"
+               tuna:path="id"
+               tuna:target="t-id" />
+
     <tuna:spot tuna:path="index"
-               tuna:target="t-order-index" />
-    <tuna:spot tuna:path="creationDate"
-               tuna:target="t-order-date" />
+               tuna:target="t-index" />
+
+    <tuna:spot tuna:path="date"
+               tuna:target="t-date" />
+
+    <tuna:spot tuna:path="delivery/date"
+               tuna:target="t-delivery-date" />
+
+    <tuna:spot tuna:path="client/name"
+               tuna:target="t-client-name" />
+
+    <tuna:spot tuna:path="payment/totalPrice"
+               tuna:target="t-payment-price" />
+
+    <tuna:spot tuna:path="statusName"
+               tuna:target="t-status-label" />
+
+    <tuna:spot tuna:path="deliveryStatusName"
+               tuna:target="t-delivery-status-label" />
+
+    <tuna:spot tuna:path="paymentStatusName"
+               tuna:target="t-payment-status-label" />
+
+    <tuna:if tuna:path="status" tuna:eq="1" tuna:class="label-important"
+             tuna:target="t-status-label" />
+    <tuna:if tuna:path="status" tuna:eq="2" tuna:class="label-success"
+             tuna:target="t-status-label" />
+
+    <tuna:if tuna:path="deliveryStatus" tuna:eq="0" tuna:class="label-important"
+             tuna:target="t-delivery-status-label"/>
+    <tuna:if tuna:path="deliveryStatus" tuna:eq="1" tuna:class="label-info"
+             tuna:target="t-delivery-status-label"/>
+    <tuna:if tuna:path="deliveryStatus" tuna:eq="2" tuna:class="label-success"
+             tuna:target="t-delivery-status-label"/>
+
+    <tuna:if tuna:path="paymentStatus" tuna:eq="0" tuna:class="label-important"
+             tuna:target="t-payment-status-label"/>
+    <tuna:if tuna:path="paymentStatus" tuna:eq="1" tuna:class="label-success"
+             tuna:target="t-payment-status-label"/>
+
 </tuna:template>
 
 <tuna:template id="orders_list_template">
     <tuna:list tuna:target="t-orders-list" tuna:path=""
                tuna:item-renderer-id="orders_list_item_renderer"
-               tuna:item-template-id="order_template"
+               tuna:item-template-id="order_row_template"
                tuna:key-path="id" />
 </tuna:template>
 
 <table>
     <tbody>
         <tr id="orders_list_item_renderer">
-            <td class="t-order-index"></td>
-            <td class="t-order-date"></td>
+            <td class="t-index"></td>
+            <td class="t-date"></td>
             <td class="t-delivery-date"></td>
-            <td>Сергей Кононенко</td>
-            <td>1300</td>
+            <td class="t-client-name"></td>
+            <td class="t-payment-price"></td>
             <td>
-                <span class="label label-important">Новый</span>
+                <span class="t-status-label label">Новый</span>
             </td>
             <td>
-                <span class="label label-warning">Подготовка</span>
+                <span class="t-delivery-status-label label">Подготовка</span>
             </td>
             <td>
-                <span class="label label-important">Не оплачен</span>
+                <span class="t-payment-status-label label">Не оплачен</span>
             </td>
             <td>
                 <ul class="nav nav-list">
                     <li>
-                        <a class="j-button" href="#"
-                           data-action="edit">
-                            <i class="icon-edit"></i>
-                            Редактировать
+                        <a class="j-navigation-link t-id"
+                           data-href="edit">
+                            <i class="icon-edit"></i> Редактировать
                         </a>
                     </li>
                 </ul>
@@ -122,17 +225,15 @@
         <td>
             <ul class="nav nav-list">
                 <li>
-                    <a class="t-recipe-id j-button" href="#"
-                       data-action="edit" data-recipe-id="">
-                        <i class="icon-edit"></i>
-                        Редактировать
+                    <a class="j-navigation-link t-recipe-id"
+                       data-href="edit">
+                        <i class="icon-edit"></i> Редактировать
                     </a>
                 </li>
                 <li>
-                    <a class="t-recipe-id j-button" href="#"
-                       data-action="delete" data-recipe-id="">
-                        <i class="icon-trash"></i>
-                        Удалить
+                    <a class="j-navigation-link t-recipe-id" href="#"
+                       data-href="delete" data-recipe-id="">
+                        <i class="icon-trash"></i> Удалить
                     </a>
                 </li>
             </ul>

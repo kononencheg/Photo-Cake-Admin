@@ -1,9 +1,9 @@
 /**
  * @constructor
+ * @param {Object=} data
  * @extends {tuna.model.Record}
  */
-var Order = function () {
-
+var Order = function (data) {
     /**
      * @type {string}
      */
@@ -17,30 +17,35 @@ var Order = function () {
     /**
      * @type {Date}
      */
-    this.creationDate = new Date();
+    this.date = null;
 
     /**
      * @type {model.record.Bakery}
      */
-    this.bakery = new model.record.Bakery();
+    this.bakery = null;
 
     /**
      * @type {model.record.Recipe}
      */
-    this.recipe = new model.record.Recipe();
+    this.recipe = null;
 
     /**
-     * @type {*}
+     * @type {model.record.Cake}
      */
     this.cake = null;
 
     /**
-     * @type {*}
+     * @type {model.record.Payment}
      */
     this.payment = null;
 
     /**
-     * @type {*}
+     * @type {model.record.Client}
+     */
+    this.client = null;
+
+    /**
+     * @type {model.record.Delivery}
      */
     this.delivery = null;
 
@@ -58,6 +63,8 @@ var Order = function () {
      * @type {number}
      */
     this.deliveryStatus =  0;
+
+    tuna.model.Record.call(this, data);
 };
 
 tuna.utils.extend(Order, tuna.model.Record);
@@ -68,14 +75,21 @@ tuna.utils.extend(Order, tuna.model.Record);
 Order.prototype.populate = function(data) {
     this.id = data['id'];
 
-    this.index = parseInt(this.id.substr(this.id.length - 8).split('0').join(''), 16);
-    this.creationDate = new Date(1000 * parseInt(this.id.substr(0, 8), 16));
+    this.cake = new model.record.Cake(data['cake']);
+    this.bakery = new model.record.Bakery(data['bakery']);
+    this.client = new model.record.Client(data['client']);
+    this.recipe = new model.record.Recipe(data['recipe']);
+    this.payment = new model.record.Payment(data['payment']);
+    this.delivery = new model.record.Delivery(data['delivery']);
 
-    this.bakery.populate(data['bakery']);
-    this.recipe.populate(data['recipe']);
     this.status =  data['status'];
     this.paymentStatus = data['payment_status'];
     this.deliveryStatus = data['delivery_status'];
+
+    this.index
+        = parseInt(this.id.substr(this.id.length - 8).split('0').join(''), 16);
+
+    this.date = new Date(1000 * parseInt(this.id.substr(0, 8), 16));
 };
 
 /**
@@ -85,14 +99,22 @@ Order.prototype.serialize = function() {
     return {
         'id': this.id,
         'index': this.index,
-        'creationDate':
-            this.creationDate.toJSON().substring(0, 16).replace('T', ' '),
-
+        'date': this.date && tuna.model.serializeDate(this.date),
         'bakery': this.bakery.serialize(),
+        'cake': this.cake.serialize(),
+        'payment': this.payment.serialize(),
+        'client': this.client.serialize(),
+        'delivery': this.delivery.serialize(),
         'recipe': this.recipe.serialize(),
         'status': this.status,
         'paymentStatus': this.paymentStatus,
-        'deliveryStatus': this.deliveryStatus
+        'deliveryStatus': this.deliveryStatus,
+        'statusName': model.resource.orders.getStatusName(this.status),
+        'paymentStatusName':
+            model.resource.orders.getPaymentStatusName(this.paymentStatus),
+
+        'deliveryStatusName':
+            model.resource.orders.getDeliveryStatusName(this.deliveryStatus)
     };
 };
 

@@ -1,10 +1,9 @@
 /**
  * @constructor
+ * @param {Object=} data
  * @extends {model.record.User}
  */
-var Bakery = function () {
-    model.record.User.call(this);
-
+var Bakery = function (data) {
     /**
      * @type string
      */
@@ -14,6 +13,8 @@ var Bakery = function () {
      * @type number
      */
     this.deliveryPrice = 0;
+
+    model.record.User.call(this, data);
 };
 
 tuna.utils.extend(Bakery, model.record.User);
