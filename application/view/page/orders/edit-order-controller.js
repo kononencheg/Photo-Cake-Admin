@@ -42,7 +42,7 @@ EditOrdersController.prototype._initActions = function() {
         ('form', 'edit-order-form');
 
     this.__orderForm.addEventListener('result', function(event, order) {
-        self._navigation.navigate('table');
+        self._navigation.back();
 
         model.resource.orders.addOrder(order);
     });

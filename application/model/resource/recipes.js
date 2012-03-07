@@ -1,7 +1,9 @@
 /**
  * @constructor
+ * @extends {tuna.events.EventDispatcher}
  */
 var Recipes = function () {
+    tuna.events.EventDispatcher.call(this);
 
     /**
      * @private
@@ -10,29 +12,39 @@ var Recipes = function () {
     this.__recipes = [];
 };
 
+tuna.utils.extend(Recipes, tuna.events.EventDispatcher);
+
 /**
  * @param {Array.<model.record.Recipe>} recipes
  */
 Recipes.prototype.setRecipes = function(recipes) {
     this.__recipes = recipes;
-};
 
-/**
- */
-Recipes.prototype.clearRecipes = function() {
-    this.__recipes.length = 0;
+    this.dispatch('update-recipes', recipes);
 };
-
 
 /**
  * @param {model.record.Recipe} recipe
  */
 Recipes.prototype.addRecipe = function(recipe) {
-    this.__recipes.push(recipe);
+    var i = 0,
+        l = this.__recipes.length;
+
+    while (i < l) {
+        if (this.__recipes[i].id === recipe.id) {
+            break;
+        }
+
+        i++;
+    }
+
+    this.__recipes[i] = recipe;
+
+    this.dispatch('update-recipes', this.__recipes);
 };
 
 /**
- * @param {?string} id
+ * @param {string} id
  */
 Recipes.prototype.removeRecipeById = function(id) {
     var i = 0,
@@ -47,24 +59,34 @@ Recipes.prototype.removeRecipeById = function(id) {
 
         i++;
     }
+
+    this.dispatch('update-recipes', this.__recipes);
 };
-
-
 /**
- * @return {Object}
+ * @param {string} id
+ * @return {model.record.Recipe}
  */
-Recipes.prototype.getRecipesList = function() {
-    var result = [];
-
+Recipes.prototype.getRecipeById = function(id) {
     var i = 0,
         l = this.__recipes.length;
+
     while (i < l) {
-        result.push(this.__recipes[i].serialize());
+        if (this.__recipes[i].id === id) {
+            return this.__recipes[i];
+        }
 
         i++;
     }
 
-    return result;
+    return null;
+};
+
+
+/**
+ * @return {Array.<model.record.Recipe>}
+ */
+Recipes.prototype.getRecipesList = function() {
+    return this.__recipes;
 };
 
 

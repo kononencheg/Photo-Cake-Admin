@@ -1,28 +1,37 @@
-<div class="container">
+<div class="j-template-transformer container"
+     data-name="current-bakery"
+     data-template-id="current_bakery_template">
 
-    <div id="orders_page"
-         class="j-navigation-page j-control-container page active"
-         data-page-name="orders">
+    <div class="t-current-bakery-exist">
 
-        {{> template/page/orders }}
+        <div id="orders_page"
+             class="j-navigation-page j-control-container page active"
+             data-page-name="orders">
+
+            {{> template/page/orders }}
+        </div>
+
+        <div id="recipes_page"
+             class="j-navigation-page j-control-container page"
+             data-page-name="recipes">
+
+            {{> template/page/recipes }}
+        </div>
+
+        <div id="dimensions_page"
+             class="j-navigation-page j-control-container page"
+             data-page-name="dimensions">
+
+            {{> template/page/dimensions }}
+        </div>
+
     </div>
 
-    <div id="recipes_page"
-         class="j-navigation-page j-control-container page"
-         data-page-name="recipes">
-
-        {{> template/page/recipes }}
-    </div>
-
-    <hr />
-    <div class="j-template-transformer t-bakery-hidden row"
-         data-name="admin-controls"
-         data-template-id="user_access_template">
+    <div class="t-bakery-hidden row">
 
         <div class="span12">
             <form class="j-form j-template-transformer
                          t-bakery-disabled form-inline pull-right"
-
                   data-name="bakery-selection"
                   data-template-id="bakery_selection_template">
 

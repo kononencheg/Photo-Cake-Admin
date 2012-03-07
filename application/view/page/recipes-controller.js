@@ -4,43 +4,6 @@
  */
 var RecipesController = function () {
     tuna.view.PageViewController.call(this);
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
-     */
-    this.__bakerySelectTransformer = null;
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
-     */
-    this.__recipeTableTransformer = null;
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
-     */
-    this.__addRecipeTransformer = null;
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
-     */
-    this.__addRecipeForm = null;
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.buttons.ButtonGroup}
-     */
-    this.__recipeControls = null;
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.popups.Popup}
-     */
-    this.__recipePopup = null;
-
 };
 
 tuna.utils.extend(RecipesController, tuna.view.PageViewController);
@@ -50,6 +13,8 @@ tuna.utils.extend(RecipesController, tuna.view.PageViewController);
  */
 RecipesController.prototype._requireModules = function() {
     this._container.requireModule('template-transformer');
+    this._container.requireModule('button-group');
+    this._container.requireModule('navigation');
     this._container.requireModule('form');
 };
 
@@ -57,43 +22,50 @@ RecipesController.prototype._requireModules = function() {
  * @override
  */
 RecipesController.prototype._initActions = function() {
+    var navigation = this._container.getModuleInstanceByName
+                        ('navigation', 'recipes-navigation');
+
+    this._navigation.addChild
+        (navigation, this._container.getOption('page-name'));
+
     var self = this;
+    var recipeControls = this._container.getModuleInstanceByName
+                                ('button-group', 'recipe-table');
 
-    this.__recipeTableTransformer = this._container.getModuleInstanceByName
-                                    ('template-transformer', 'recipe-table');
-
-    this.__addRecipeTransformer = this._container.getModuleInstanceByName
-                                    ('template-transformer', 'add-recipe');
-
-    this.__addRecipeForm = this._container.getModuleInstanceByName
-                                            ('form', 'add-recipe');
-
-
-    this.__recipeControls.addEventListener('delete', function(event, button) {
+    recipeControls.addEventListener('delete', function(event, button) {
         self.__deleteRecipe(button);
     });
 
-    this.__recipeControls.addEventListener('edit', function(event, button) {
-        self.__recipePopup.open()
-    });
+    model.resource.bakeries.addEventListener(
+        'update-current-bakery', function() {
+            self.__loadRecipes();
+        }
+    );
 
-    this.__addRecipeForm.addEventListener('result', function(event, recipe) {
-        model.resource.recipes.addRecipe(recipe);
+    var recipeListTransformer = this._container.getModuleInstanceByName
+        ('template-transformer', 'recipe-table');
 
-        self.__addRecipeForm.reset();
-        self.__updateView();
-    });
+    model.resource.recipes.addEventListener(
+        'update-recipes', function(event, recipes) {
+            recipeListTransformer.applyTransform(tuna.model.serialize(recipes));
+        }
+    );
+
+    this.__loadRecipes();
 };
 
 /**
  * @private
  */
-RecipesController.prototype.__updateView = function() {
-    this.__recipeTableTransformer.applyTransform
-                (model.resource.recipes.getRecipesList());
-
-    this.__addRecipeTransformer.applyTransform
-                    (model.resource.bakeries.getCurrentBakery());
+RecipesController.prototype.__loadRecipes = function() {
+    var bakery = model.resource.bakeries.getCurrentBakery();
+    if (bakery !== null) {
+        tuna.rest.call('recipes.get', {
+            'bakery_id': bakery.id
+        }, function(recipes) {
+            model.resource.recipes.setRecipes(recipes);
+        }, 'recipe');
+    }
 };
 
 /**
@@ -102,20 +74,15 @@ RecipesController.prototype.__updateView = function() {
  */
 RecipesController.prototype.__deleteRecipe = function(button) {
     if (confirm('Удалить рецепт?')) {
-        var self = this;
-
         var recipeId = button.getStringOption('recipe-id');
 
         tuna.rest.call('recipes.remove', {
             'recipe_id': recipeId
         }, function() {
             model.resource.recipes.removeRecipeById(recipeId);
-
-            self.__updateView();
         });
 
         button.setEnabled(false);
-
     }
 };
 

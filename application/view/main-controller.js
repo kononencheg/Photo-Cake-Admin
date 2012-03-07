@@ -4,12 +4,6 @@
  */
 var MainController = function() {
     tuna.view.ViewController.call(this);
-
-    /**
-     * @type {tuna.ui.ModuleInstance|tuna.ui.selection.Navigation}
-     * @private
-     */
-    this.__navigation = null;
 };
 
 tuna.utils.extend(MainController, tuna.view.ViewController);
@@ -18,8 +12,8 @@ tuna.utils.extend(MainController, tuna.view.ViewController);
  * @override
  */
 MainController.prototype._requireModules = function() {
-    this._container.requireModule('navigation');
     this._container.requireModule('template-transformer');
+    this._container.requireModule('navigation');
     this._container.requireModule('popup');
     this._container.requireModule('form');
 };
@@ -28,8 +22,6 @@ MainController.prototype._requireModules = function() {
  * @override
  */
 MainController.prototype._initActions = function() {
-    this.__navigation = this._container.getOneModuleInstance('navigation');
-
     var self = this;
     tuna.rest.call('users.getCurrent', null, function(user) {
         if (user === null) {
@@ -73,17 +65,36 @@ MainController.prototype.__showSignUpPopup = function() {
  * @param {model.record.User} user
  */
 MainController.prototype.__applyUser = function(user) {
+
+    var accessTransformer =
+        this._container.getModuleInstanceByName
+            ('template-transformer', 'body');
+
+    accessTransformer.applyTransform(user.serialize());
+
+    var currentBakeryTransformer = this._container.getModuleInstanceByName
+        ('template-transformer', 'current-bakery');
+
+    model.resource.bakeries.addEventListener(
+        'update-current-bakery', function(event, bakery) {
+            currentBakeryTransformer.applyTransform
+                (tuna.model.serialize(bakery));
+        }
+    );
+
+    model.resource.bakeries.addEventListener(
+        'remove-current-bakery', function() {
+            currentBakeryTransformer.applyTransform(null);
+        }
+    );
+
+    currentBakeryTransformer.applyTransform(null);
+
     var userInfoTransformer =
         this._container.getModuleInstanceByName
             ('template-transformer', 'user-info');
 
     userInfoTransformer.applyTransform(user.serialize());
-
-    var adminControlsTransformer =
-        this._container.getModuleInstanceByName
-            ('template-transformer', 'admin-controls');
-
-    adminControlsTransformer.applyTransform(user.serialize());
 
     if (!model.resource.users.isBakery(user)) {
         var bakerySelectionTransformer =
@@ -98,7 +109,7 @@ MainController.prototype.__applyUser = function(user) {
             model.resource.bakeries.setBakeries(bakeries);
 
             bakerySelectionTransformer.applyTransform
-                (tuna.model.serializeArray(bakeries));
+                (tuna.model.serialize(bakeries));
 
             bakerySelectionForm.addEventListener('submit', function(event) {
                 event.preventDefault();

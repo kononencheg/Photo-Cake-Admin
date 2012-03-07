@@ -16,21 +16,23 @@
         </style>
     </head>
 
-    <body class="j-navigation">
+    <body class="j-navigation j-template-transformer"
+          data-name="body"
+          data-template-id="access_template">
 
         {{> template/popup/login }}
 
         {{> template/navigation }}
         {{> template/body }}
 
-        <div class="hide">
+        <div class="j-control-container hide">
 
             {{> template/templates }}
 
             <iframe id="api_frame" name="api_frame"
                     width="0" height="0"></iframe>
-        </div>
 
+        </div>
 
         <!--[if IE]>-->
             <script type="text/javascript" src="/js/json.js"></script>

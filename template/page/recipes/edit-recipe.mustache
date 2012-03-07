@@ -1,0 +1,52 @@
+<form action="/api/" method="POST" target="api_frame"
+      class="j-template-transformer j-form"
+      data-template-id="recipe_template"
+      data-name="edit-recipe-form"
+      data-record-type="recipe">
+
+    <input type="hidden" name="method" value="recipe.edit" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <div class="page-header">
+
+        <div class="row">
+            <div class="span6">
+                <h1 class="t-name">Тирамису</h1>
+            </div>
+            <div class="span6">
+                <a class="j-navigation-link btn btn-large pull-right"
+                   data-action="back">
+                    Назад
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span6">
+            <p>
+                <span class="t-desc"></span>
+                <img class="t-image" alt src />
+            </p>
+        </div>
+
+        <div class="span5 offset1">
+            
+           <table class="table">
+                <thead>
+                    <tr>
+                        <th>Вес (кг.)</th>
+                        <th>Цена (руб.)</th>
+                    </tr>
+                </thead>
+                <tbody class="t-price-list"></tbody>
+            </table>
+
+        </div>
+    </div>
+
+</form>
+
+
+
+

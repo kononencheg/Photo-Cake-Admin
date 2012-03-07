@@ -46,6 +46,7 @@ Dimension.prototype.serialize = function() {
     return {
         'weight': this.weight,
         'shape': this.shape,
+        'shapeName': model.resource.dimensions.getShapeName(this.shape),
         'ratio': this.ratio,
         'personsCount': this.personsCount
     };

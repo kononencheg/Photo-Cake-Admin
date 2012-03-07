@@ -4,12 +4,6 @@
  */
 var OrdersController = function () {
     tuna.view.PageViewController.call(this);
-
-    /**
-     * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
-     */
-    this.__ordersListTransformer = null;
 };
 
 tuna.utils.extend(OrdersController, tuna.view.PageViewController);
@@ -26,26 +20,43 @@ OrdersController.prototype._requireModules = function() {
  * @override
  */
 OrdersController.prototype._initActions = function() {
-    var orderNavigation = this._container.getModuleInstanceByName
-        ('navigation', 'order-navigation');
+    var navigation = this._container.getModuleInstanceByName
+                            ('navigation', 'order-navigation');
 
     this._navigation.addChild
-        (orderNavigation, this._container.getOption('page-name'));
+        (navigation, this._container.getOption('page-name'));
 
     var ordersListTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'orders-list');
 
-    model.resource.bakeries.addEventListener('update-current-bakery', function(event, bakery) {
-        tuna.rest.call('orders.get', { 'bakery_id': bakery.id }, function(orders) {
-            model.resource.orders.setOrders(orders);
-        }, 'order');
-    });
+    var self = this;
+    model.resource.bakeries.addEventListener(
+        'update-current-bakery', function() {
+            self.__loadOrders();
+        }
+    );
 
-    model.resource.orders.addEventListener('update-orders', function(event, orders) {
-        ordersListTransformer.applyTransform(tuna.model.serializeArray(orders));
-    });
+    model.resource.orders.addEventListener(
+        'update-orders', function(event, orders) {
+            ordersListTransformer.applyTransform(tuna.model.serialize(orders));
+        }
+    );
+
+    this.__loadOrders();
 };
 
-
+/**
+ * @private
+ */
+OrdersController.prototype.__loadOrders = function() {
+    var bakery = model.resource.bakeries.getCurrentBakery();
+    if (bakery !== null) {
+        tuna.rest.call('orders.get', {
+            'bakery_id': bakery.id
+        }, function(orders) {
+            model.resource.orders.setOrders(orders);
+        }, 'order');
+    }
+};
 
 tuna.view.registerController('orders_page', new OrdersController());

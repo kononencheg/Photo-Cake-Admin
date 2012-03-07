@@ -32,7 +32,7 @@ var Recipe = function (data) {
     /**
      * @type Array.<Object>
      */
-    this.dimentionPrices = [];
+    this.dimentionPrices = null;
 
     tuna.model.Record.call(this, data);
 };
@@ -50,6 +50,11 @@ Recipe.prototype.populate = function(data) {
     this.imageUrl = data['image_url'];
 
     this.dimentionPrices = [];
+
+    var rawPrices = data['dimension_prices'];
+    for (var key in rawPrices) {
+        this.dimentionPrices.push(rawPrices[key]);
+    }
 };
 
 /**
@@ -62,7 +67,7 @@ Recipe.prototype.serialize = function() {
         'name': this.name,
         'desc': this.desc,
         'imageUrl': this.imageUrl,
-        'dimentionPrices': this.dimentionPrices
+        'dimensionPrices': this.dimentionPrices
     };
 };
 

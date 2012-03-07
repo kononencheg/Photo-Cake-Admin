@@ -1,23 +1,31 @@
 <div class="page-header">
-    <h1>Добавление нового рецепта</h1>
+
+    <div class="row">
+        <div class="span6">
+            <h1>Добавление нового рецепта</h1>
+        </div>
+        <div class="span6">
+            <a class="j-navigation-link btn btn-large pull-right"
+               data-action="back">
+               Назад
+            </a>
+        </div>
+    </div>
 </div>
 
 <div class="row">
     <div class="span12">
 
-        <form action="/api/"
-              method="POST"
-              target="api_frame"
+        <form action="/api/" method="POST" target="api_frame"
               enctype="multipart/form-data"
-              class="j-template-transformer j-form form-horizontal"
-              data-template-id="recipe_add_template"
-              data-record-type="recipe"
-              data-name="add-recipe">
+              class="j-form form-horizontal"
+              data-name="add-recipe"
+              data-record-type="recipe">
 
             <input type="hidden" name="method" value="recipes.add" />
             <input type="hidden" name="format" value="frame-callback" />
 
-            <input type="hidden" name="bakery_id" class="t-bakery-id" />
+            <input type="hidden" name="bakery_id" />
 
             <div class="j-form-message alert alert-error hide"></div>
 
@@ -71,9 +79,6 @@
                 <div class="form-actions">
                     <button type="submit" class="btn btn-primary">
                         Добавить
-                    </button>
-                    <button type="reset" class="btn">
-                        Очистить
                     </button>
                 </div>
 

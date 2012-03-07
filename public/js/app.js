@@ -620,14 +620,24 @@ RecordFactory.prototype.createRecord = function(name) {
   return this.__records[name].clone()
 };
 tuna.model.recordFactory = new RecordFactory;
-tuna.model.serializeArray = function(records) {
-  var result = [];
-  var i = 0, l = records.length;
-  while(i < l) {
-    result.push(records[i].serialize());
-    i++
+tuna.model.serialize = function(object) {
+  if(object !== null) {
+    if(object instanceof Array) {
+      var result = [];
+      var i = 0, l = object.length;
+      while(i < l) {
+        result.push(object[i].serialize());
+        i++
+      }
+      return result
+    }else {
+      if(object instanceof tuna.model.Record) {
+        return object.serialize()
+      }
+    }
+    return object
   }
-  return result
+  return null
 };
 tuna.model.serializeDate = function(date) {
   return date.toJSON().substring(0, 16).replace("T", " ")
@@ -792,101 +802,52 @@ tuna.tmpl.data.PathEvaluator = PathEvaluator;
 tuna.tmpl.settings.IItemSettings = function() {
 };
 var SpotSettings = function() {
-  this.__class = "";
-  this.__path = ""
-};
-SpotSettings.prototype.setTargetClass = function(className) {
-  this.__class = className
-};
-SpotSettings.prototype.getTargetClass = function() {
-  return this.__class
-};
-SpotSettings.prototype.setDataPath = function(path) {
-  this.__path = path
-};
-SpotSettings.prototype.getDataPath = function() {
-  return this.__path
+  this.targetClass = "";
+  this.dataPath = "";
+  this.filter = null
 };
 tuna.tmpl.settings.SpotSettings = SpotSettings;
 var AttributeSettings = function() {
   tuna.tmpl.settings.SpotSettings.call(this);
-  this.__attributeName = "";
-  this.__hasEvent = false
+  this.attributeName = "";
+  this.hasEvent = false
 };
 tuna.utils.extend(AttributeSettings, tuna.tmpl.settings.SpotSettings);
-AttributeSettings.prototype.setEvent = function(hasEvent) {
-  this.__hasEvent = hasEvent
-};
-AttributeSettings.prototype.hasEvent = function() {
-  return this.__hasEvent
-};
-AttributeSettings.prototype.setAttributeName = function(attributeName) {
-  this.__attributeName = attributeName
-};
-AttributeSettings.prototype.getAttributeName = function() {
-  return this.__attributeName
-};
 tuna.tmpl.settings.AttributeSettings = AttributeSettings;
 var ConditionSettings = function() {
   tuna.tmpl.settings.SpotSettings.call(this);
-  this.__actionType = "";
-  this.__actionData = "";
-  this.__operatorType = "";
-  this.__operatorData = ""
+  this.actionType = "";
+  this.actionData = "";
+  this.operatorType = "";
+  this.operatorData = ""
 };
 tuna.utils.extend(ConditionSettings, tuna.tmpl.settings.SpotSettings);
-ConditionSettings.prototype.setOperator = function(type, data) {
-  this.__operatorType = type;
-  this.__operatorData = data
-};
-ConditionSettings.prototype.getOperatorType = function() {
-  return this.__operatorType
-};
-ConditionSettings.prototype.getOperatorData = function() {
-  return this.__operatorData
-};
-ConditionSettings.prototype.setAction = function(type, data) {
-  this.__actionType = type;
-  this.__actionData = data
-};
-ConditionSettings.prototype.getActionType = function() {
-  return this.__actionType
-};
-ConditionSettings.prototype.getActionData = function() {
-  return this.__actionData
-};
 tuna.tmpl.settings.ConditionSettings = ConditionSettings;
+var CheckboxSettings = function() {
+  tuna.tmpl.settings.SpotSettings.call(this)
+};
+tuna.utils.extend(CheckboxSettings, tuna.tmpl.settings.SpotSettings);
+tuna.tmpl.settings.CheckboxSettings = CheckboxSettings;
 var ListSettings = function() {
   tuna.tmpl.settings.SpotSettings.call(this);
-  this.__keyPath = "";
-  this.__itemRendererID = "";
-  this.__itemSettings = null
+  this.keyPath = "";
+  this.itemRendererID = "";
+  this.itemSettings = null
 };
 tuna.utils.extend(ListSettings, tuna.tmpl.settings.SpotSettings);
-ListSettings.prototype.setItemKeyDataPath = function(path) {
-  this.__keyPath = path
-};
-ListSettings.prototype.getItemKeyDataPath = function() {
-  return this.__keyPath
-};
-ListSettings.prototype.setItemRendererID = function(id) {
-  this.__itemRendererID = id
-};
-ListSettings.prototype.getItemRendererID = function() {
-  return this.__itemRendererID
-};
-ListSettings.prototype.setItemSettings = function(settings) {
-  this.__itemSettings = settings
-};
-ListSettings.prototype.getItemSettings = function() {
-  return this.__itemSettings
-};
 tuna.tmpl.settings.ListSettings = ListSettings;
 var TemplateSettings = function() {
   this.__spots = [];
   this.__lists = [];
   this.__attributes = [];
-  this.__conditions = []
+  this.__conditions = [];
+  this.__comboboxex = []
+};
+TemplateSettings.prototype.addCheckbox = function(combobox) {
+  this.__comboboxex.push(combobox)
+};
+TemplateSettings.prototype.getCheckboxes = function() {
+  return this.__comboboxex
 };
 TemplateSettings.prototype.addCondition = function(condition) {
   this.__conditions.push(condition)
@@ -939,8 +900,9 @@ SpotExtractor.prototype._createItem = function() {
   return new tuna.tmpl.settings.SpotSettings
 };
 SpotExtractor.prototype._parseElement = function(element, item) {
-  item.setTargetClass(element.getAttribute(this._ns + "target"));
-  item.setDataPath(element.getAttribute(this._ns + "path"))
+  item.targetClass = element.getAttribute(this._ns + "target");
+  item.dataPath = element.getAttribute(this._ns + "path");
+  item.filter = element.getAttribute(this._ns + "filter")
 };
 SpotExtractor.prototype._saveItem = function(item, settings) {
   settings.addSpot(item)
@@ -957,10 +919,10 @@ ListExtractor.prototype._createItem = function() {
 };
 ListExtractor.prototype._parseElement = function(element, item) {
   tuna.tmpl.markup.SpotExtractor.prototype._parseElement.call(this, element, item);
-  item.setItemRendererID(element.getAttribute(this._ns + "item-renderer-id"));
-  item.setItemKeyDataPath(element.getAttribute(this._ns + "key-path"));
+  item.itemRendererID = element.getAttribute(this._ns + "item-renderer-id");
+  item.keyPath = element.getAttribute(this._ns + "key-path");
   var templateID = element.getAttribute(this._ns + "item-template-id");
-  item.setItemSettings(this.__templateBuilder.buildSettings(templateID))
+  item.itemSettings = this.__templateBuilder.buildSettings(templateID)
 };
 ListExtractor.prototype._saveItem = function(item, settings) {
   settings.addList(item)
@@ -976,8 +938,8 @@ AttributeExtractor.prototype._createItem = function() {
 };
 AttributeExtractor.prototype._parseElement = function(element, item) {
   tuna.tmpl.markup.SpotExtractor.prototype._parseElement.call(this, element, item);
-  item.setAttributeName(element.getAttribute(this._ns + "name"));
-  item.setEvent(element.getAttribute(this._ns + "event") !== null)
+  item.attributeName = element.getAttribute(this._ns + "name");
+  item.hasEvent = !!element.getAttribute(this._ns + "event")
 };
 AttributeExtractor.prototype._saveItem = function(item, settings) {
   settings.addAttribute(item)
@@ -986,8 +948,8 @@ tuna.tmpl.markup.AttributeExtractor = AttributeExtractor;
 var ConditionExtractor = function() {
   tuna.tmpl.markup.SpotExtractor.call(this);
   this._tagName = "if";
-  this.__operatorAttrs = ["isset", "eq", "ne"];
-  this.__actionAttrs = ["class", "attr"]
+  this.__operatorAttrs = ["isset", "notset", "eq", "ne"];
+  this.__actionAttrs = ["class"]
 };
 tuna.utils.extend(ConditionExtractor, tuna.tmpl.markup.SpotExtractor);
 ConditionExtractor.prototype._createItem = function() {
@@ -1005,7 +967,8 @@ ConditionExtractor.prototype.__extractAction = function(element, item) {
     attr = this.__actionAttrs[i];
     value = element.getAttribute("tuna:" + attr);
     if(value !== null) {
-      item.setAction(attr, value);
+      item.actionType = attr;
+      item.actionData = value;
       break
     }
     i++
@@ -1018,7 +981,8 @@ ConditionExtractor.prototype.__extractOperator = function(element, item) {
     attr = this.__operatorAttrs[i];
     value = element.getAttribute("tuna:" + attr);
     if(value !== null) {
-      item.setOperator(attr, value);
+      item.operatorType = attr;
+      item.operatorData = value;
       break
     }
     i++
@@ -1028,6 +992,19 @@ ConditionExtractor.prototype._saveItem = function(item, settings) {
   settings.addCondition(item)
 };
 tuna.tmpl.markup.ConditionExtractor = ConditionExtractor;
+var CheckboxExtractor = function() {
+  tuna.tmpl.markup.SpotExtractor.call(this);
+  this._tagName = "checkbox"
+};
+tuna.utils.extend(CheckboxExtractor, tuna.tmpl.markup.SpotExtractor);
+CheckboxExtractor.prototype._createItem = function() {
+  debugger;
+  return new tuna.tmpl.settings.CheckboxSettings
+};
+CheckboxExtractor.prototype._saveItem = function(item, settings) {
+  settings.addCheckbox(item)
+};
+tuna.tmpl.markup.CheckboxExtractor = CheckboxExtractor;
 var MarkupTemplateBuilder = function(doc) {
   this.__doc = doc;
   this.__templatesTable = {};
@@ -1036,6 +1013,7 @@ var MarkupTemplateBuilder = function(doc) {
 };
 MarkupTemplateBuilder.prototype.__registerExtractors = function() {
   this.__extractors.push(new tuna.tmpl.markup.SpotExtractor);
+  this.__extractors.push(new tuna.tmpl.markup.CheckboxExtractor);
   this.__extractors.push(new tuna.tmpl.markup.AttributeExtractor);
   this.__extractors.push(new tuna.tmpl.markup.ConditionExtractor);
   this.__extractors.push(new tuna.tmpl.markup.ListExtractor(this))
@@ -1085,9 +1063,13 @@ tuna.tmpl.units.CompiledUnit = CompiledUnit;
 var Spot = function(root) {
   tuna.tmpl.units.CompiledUnit.call(this, root);
   this.__pathEvaluator = new tuna.tmpl.data.PathEvaluator;
-  this._nodes = []
+  this._nodes = [];
+  this._filter = null
 };
 tuna.utils.extend(Spot, tuna.tmpl.units.CompiledUnit);
+Spot.prototype.setFilter = function(filter) {
+  this._filter = filter
+};
 Spot.prototype.setPath = function(path) {
   this.__pathEvaluator.setPath(path)
 };
@@ -1097,7 +1079,11 @@ Spot.prototype.addTargets = function(elements) {
 Spot.prototype.applyData = function(dataNode) {
   var valueNode = this.__pathEvaluator.evaluate(dataNode);
   if(valueNode !== null) {
-    this._applyValue(valueNode.getValue())
+    var value = valueNode.getValue();
+    if(this._filter !== null) {
+      value = this._filter.join(value)
+    }
+    this._applyValue(value)
   }
 };
 Spot.prototype._applyValue = function(value) {
@@ -1261,6 +1247,24 @@ List.prototype.__makeNewItem = function() {
   return template
 };
 tuna.tmpl.units.List = List;
+var Checkbox = function(root) {
+  tuna.tmpl.units.Spot.call(this, root)
+};
+tuna.utils.extend(Checkbox, tuna.tmpl.units.Spot);
+Checkbox.prototype._applyValue = function(value) {
+  var arrayValue = [];
+  if(value instanceof Array) {
+    arrayValue = tuna.utils.cloneArray(value)
+  }else {
+    arrayValue = [value + ""]
+  }
+  var i = this._nodes.length - 1;
+  while(i >= 0) {
+    this._nodes[i].checked = tuna.utils.indexOf(this._nodes.value, arrayValue) !== -1;
+    i--
+  }
+};
+tuna.tmpl.units.Checkbox = Checkbox;
 var Template = function(root) {
   tuna.tmpl.units.CompiledUnit.call(this, root || this);
   this.__items = [];
@@ -1316,6 +1320,7 @@ var TemplateCompiler = function(doc) {
 };
 TemplateCompiler.prototype.__registerItemCompilers = function() {
   this.__itemCompilers.push(new tuna.tmpl.compilers.SpotCompiler);
+  this.__itemCompilers.push(new tuna.tmpl.compilers.CheckboxCompiler);
   this.__itemCompilers.push(new tuna.tmpl.compilers.AttributeCompiler);
   this.__itemCompilers.push(new tuna.tmpl.compilers.ConditionCompiler);
   this.__itemCompilers.push(new tuna.tmpl.compilers.ListCompiler(this.__doc, this))
@@ -1353,8 +1358,11 @@ SpotCompiler.prototype._createItem = function(rootTemplate) {
   return new tuna.tmpl.units.Spot(rootTemplate)
 };
 SpotCompiler.prototype._compileItem = function(element, settings, item) {
-  item.setPath(settings.getDataPath());
-  var className = settings.getTargetClass();
+  item.setPath(settings.dataPath);
+  if(settings.filter !== null) {
+    item.setFilter(settings.filter.split("$$"))
+  }
+  var className = settings.targetClass;
   if(tuna.dom.hasClass(element, className)) {
     item.addTargets(element)
   }else {
@@ -1374,8 +1382,8 @@ AttributeCompiler.prototype._createItem = function(rootTemplate) {
 };
 AttributeCompiler.prototype._compileItem = function(element, settings, item) {
   tuna.tmpl.compilers.SpotCompiler.prototype._compileItem.call(this, element, settings, item);
-  item.setAttributeName(settings.getAttributeName());
-  item.setEvent(settings.hasEvent())
+  item.setAttributeName(settings.attributeName);
+  item.setEvent(settings.hasEvent)
 };
 tuna.tmpl.compilers.AttributeCompiler = AttributeCompiler;
 var ConditionCompiler = function() {
@@ -1390,9 +1398,9 @@ ConditionCompiler.prototype._createItem = function(rootTemplate) {
 };
 ConditionCompiler.prototype._compileItem = function(element, settings, item) {
   tuna.tmpl.compilers.SpotCompiler.prototype._compileItem.call(this, element, settings, item);
-  var action = this.__createAction(settings.getActionType(), settings.getActionData());
+  var action = this.__createAction(settings.actionType, settings.actionData);
   item.setAction(action);
-  var operator = this.__createOperator(settings.getOperatorType(), settings.getOperatorData());
+  var operator = this.__createOperator(settings.operatorType, settings.operatorData);
   item.setOperator(operator)
 };
 ConditionCompiler.prototype.__createAction = function(type, data) {
@@ -1406,6 +1414,8 @@ ConditionCompiler.prototype.__createOperator = function(type, data) {
   switch(type) {
     case "isset":
       return new __IsSetOperator;
+    case "notset":
+      return new __NotSetOperator;
     case "eq":
       return new __EqualsOperator(data);
     case "ne":
@@ -1425,6 +1435,13 @@ var __IsSetOperator = function() {
 tuna.utils.extend(__IsSetOperator, __ConditionOperator);
 __IsSetOperator.prototype.test = function(value) {
   return value != null
+};
+var __NotSetOperator = function() {
+  __ConditionOperator.call(this)
+};
+tuna.utils.extend(__NotSetOperator, __ConditionOperator);
+__NotSetOperator.prototype.test = function(value) {
+  return value == null
 };
 var __EqualsOperator = function(data) {
   __ConditionOperator.call(this, data)
@@ -1491,6 +1508,17 @@ __AttrAction.prototype.apply = function(element, testResult, value) {
     }
   }
 };
+var CheckboxCompiler = function() {
+  tuna.tmpl.compilers.SpotCompiler.call(this)
+};
+tuna.utils.extend(CheckboxCompiler, tuna.tmpl.compilers.SpotCompiler);
+CheckboxCompiler.prototype._getItemsSettings = function(settings) {
+  return settings.getCheckboxes()
+};
+CheckboxCompiler.prototype._createItem = function(rootTemplate) {
+  return new tuna.tmpl.units.Checkbox(rootTemplate)
+};
+tuna.tmpl.compilers.CheckboxCompiler = CheckboxCompiler;
 var ListCompiler = function(doc, compiler) {
   this.__doc = doc;
   this.__templateCompiler = compiler
@@ -1507,7 +1535,7 @@ ListCompiler.prototype.compile = function(element, settings, template) {
 ListCompiler.prototype.__compileLists = function(element, settings, template) {
   var root = template.getRootTemplate();
   var lists = [];
-  var className = settings.getTargetClass();
+  var className = settings.targetClass;
   if(tuna.dom.hasClass(element, className)) {
     lists.push(this.__createList(element, settings, root))
   }else {
@@ -1525,7 +1553,7 @@ ListCompiler.prototype.__compileLists = function(element, settings, template) {
 ListCompiler.prototype.__createList = function(element, settings, root) {
   var list = new tuna.tmpl.units.List(root);
   list.setCompiler(this.__templateCompiler);
-  var rendererId = settings.getItemRendererID();
+  var rendererId = settings.itemRendererID;
   var renderer = this.__doc.getElementById(rendererId);
   if(renderer !== null) {
     renderer = renderer.cloneNode(true);
@@ -1534,9 +1562,9 @@ ListCompiler.prototype.__createList = function(element, settings, root) {
   }else {
     alert("Cannot find item renderer with id: " + rendererId)
   }
-  list.setItemSettings(settings.getItemSettings());
-  list.setKeyPath(settings.getItemKeyDataPath());
-  list.setPath(settings.getDataPath());
+  list.setItemSettings(settings.itemSettings);
+  list.setKeyPath(settings.keyPath);
+  list.setPath(settings.dataPath);
   list.setListNodeRouter(new tuna.tmpl.units.ListContainerRouter(element));
   return list
 };
@@ -2538,22 +2566,24 @@ Navigation.prototype.__initMenu = function() {
   var buttonSelector = this.getStringOption("button-selector");
   if(menuSelector !== null && buttonSelector !== null) {
     var menu = tuna.dom.selectOne(menuSelector, this._target);
-    var buttons = tuna.dom.select(buttonSelector, menu);
-    var i = 0, l = buttons.length;
-    var href = null;
-    var index = null;
-    var button = null;
-    while(i < l) {
-      button = tuna.ui.buttons.create(buttons[i]);
-      href = button.getStringOption("href");
-      if(href !== null) {
-        index = href.split("/").shift();
-        if(this.__menuLinks[index] === undefined) {
-          this.__menuLinks[index] = []
+    if(menu !== null) {
+      var buttons = tuna.dom.select(buttonSelector, menu);
+      var i = 0, l = buttons.length;
+      var href = null;
+      var index = null;
+      var button = null;
+      while(i < l) {
+        button = tuna.ui.buttons.create(buttons[i]);
+        href = button.getStringOption("href");
+        if(href !== null) {
+          index = href.split("/").shift();
+          if(this.__menuLinks[index] === undefined) {
+            this.__menuLinks[index] = []
+          }
+          this.__menuLinks[index].push(button)
         }
-        this.__menuLinks[index].push(button)
+        i++
       }
-      i++
     }
   }
   var currentIndex = this.__navigationRule.getCurrentIndex();
@@ -2605,7 +2635,8 @@ Navigation.prototype.back = function() {
   if(this.isRoot()) {
     if(this.__history.length > 0) {
       this.__currentState = this.__history.pop();
-      this.navigatePath(this.__currentState.getPath(), this.__currentState.getData())
+      this.navigatePath(this.__currentState.getPath(), this.__currentState.getData());
+      history.back()
     }
   }else {
     this.getRoot().back()
@@ -2617,9 +2648,10 @@ Navigation.prototype.navigate = function(path, data) {
       if(this.__currentState === null) {
         this.__currentState = new NavigationState(this.getPathDesc())
       }
+      this.navigatePath(path, data);
       this.__history.push(this.__currentState);
-      this.__currentState = new NavigationState(path, data);
-      this.navigatePath(this.__currentState.getPath(), data)
+      this.__currentState = new NavigationState(this.getPathDesc(), data);
+      history.pushState(null, "", this.__currentState.serialize())
     }else {
       this.navigatePath(path, data)
     }
@@ -3302,18 +3334,16 @@ window["main"] = function(args) {
   tuna.view.init()
 };
 var MainController = function() {
-  tuna.view.ViewController.call(this);
-  this.__navigation = null
+  tuna.view.ViewController.call(this)
 };
 tuna.utils.extend(MainController, tuna.view.ViewController);
 MainController.prototype._requireModules = function() {
-  this._container.requireModule("navigation");
   this._container.requireModule("template-transformer");
+  this._container.requireModule("navigation");
   this._container.requireModule("popup");
   this._container.requireModule("form")
 };
 MainController.prototype._initActions = function() {
-  this.__navigation = this._container.getOneModuleInstance("navigation");
   var self = this;
   tuna.rest.call("users.getCurrent", null, function(user) {
     if(user === null) {
@@ -3341,16 +3371,24 @@ MainController.prototype.__showSignUpPopup = function() {
   })
 };
 MainController.prototype.__applyUser = function(user) {
+  var accessTransformer = this._container.getModuleInstanceByName("template-transformer", "body");
+  accessTransformer.applyTransform(user.serialize());
+  var currentBakeryTransformer = this._container.getModuleInstanceByName("template-transformer", "current-bakery");
+  model.resource.bakeries.addEventListener("update-current-bakery", function(event, bakery) {
+    currentBakeryTransformer.applyTransform(tuna.model.serialize(bakery))
+  });
+  model.resource.bakeries.addEventListener("remove-current-bakery", function() {
+    currentBakeryTransformer.applyTransform(null)
+  });
+  currentBakeryTransformer.applyTransform(null);
   var userInfoTransformer = this._container.getModuleInstanceByName("template-transformer", "user-info");
   userInfoTransformer.applyTransform(user.serialize());
-  var adminControlsTransformer = this._container.getModuleInstanceByName("template-transformer", "admin-controls");
-  adminControlsTransformer.applyTransform(user.serialize());
   if(!model.resource.users.isBakery(user)) {
     var bakerySelectionTransformer = this._container.getModuleInstanceByName("template-transformer", "bakery-selection");
     var bakerySelectionForm = this._container.getModuleInstanceByName("form", "bakery-selection");
     tuna.rest.call("users.getBakeries", null, function(bakeries) {
       model.resource.bakeries.setBakeries(bakeries);
-      bakerySelectionTransformer.applyTransform(tuna.model.serializeArray(bakeries));
+      bakerySelectionTransformer.applyTransform(tuna.model.serialize(bakeries));
       bakerySelectionForm.addEventListener("submit", function(event) {
         event.preventDefault();
         var bakeryId = bakerySelectionForm.getValue("bakery_id");
@@ -3364,45 +3402,135 @@ MainController.prototype.__applyUser = function(user) {
   }
 };
 tuna.view.setMainController(new MainController);
+var DimensionsController = function() {
+  tuna.view.PageViewController.call(this)
+};
+tuna.utils.extend(DimensionsController, tuna.view.PageViewController);
+DimensionsController.prototype._requireModules = function() {
+  this._container.requireModule("template-transformer");
+  this._container.requireModule("button-group");
+  this._container.requireModule("navigation");
+  this._container.requireModule("form")
+};
+DimensionsController.prototype._initActions = function() {
+  var navigation = this._container.getModuleInstanceByName("navigation", "dimensions-navigation");
+  this._navigation.addChild(navigation, this._container.getOption("page-name"));
+  var self = this;
+  model.resource.bakeries.addEventListener("update-current-bakery", function() {
+    self.__loadDimensions()
+  });
+  var dimensionsListTransformer = this._container.getModuleInstanceByName("template-transformer", "dimensions-list");
+  model.resource.dimensions.addEventListener("update-dimensions", function(event, dimensions) {
+    dimensionsListTransformer.applyTransform(tuna.model.serialize(dimensions))
+  });
+  this.__loadDimensions()
+};
+DimensionsController.prototype.__loadDimensions = function() {
+  var bakery = model.resource.bakeries.getCurrentBakery();
+  if(bakery !== null) {
+    tuna.rest.call("dimensions.get", {"bakery_id":bakery.id}, function(dimensions) {
+      model.resource.dimensions.setDimensions(dimensions)
+    }, "dimension")
+  }
+};
+tuna.view.registerController("dimensions_page", new DimensionsController);
 var RecipesController = function() {
-  tuna.view.PageViewController.call(this);
-  this.__bakerySelectTransformer = null;
-  this.__recipeTableTransformer = null;
-  this.__addRecipeTransformer = null;
-  this.__bakerySelectForm = null;
-  this.__addRecipeForm = null;
-  this.__recipeControls = null;
-  this.__recipePopup = null
+  tuna.view.PageViewController.call(this)
 };
 tuna.utils.extend(RecipesController, tuna.view.PageViewController);
 RecipesController.prototype._requireModules = function() {
   this._container.requireModule("template-transformer");
   this._container.requireModule("button-group");
-  this._container.requireModule("popup");
+  this._container.requireModule("navigation");
   this._container.requireModule("form")
 };
 RecipesController.prototype._initActions = function() {
+  var navigation = this._container.getModuleInstanceByName("navigation", "recipes-navigation");
+  this._navigation.addChild(navigation, this._container.getOption("page-name"));
+  var self = this;
+  var recipeControls = this._container.getModuleInstanceByName("button-group", "recipe-table");
+  recipeControls.addEventListener("delete", function(event, button) {
+    self.__deleteRecipe(button)
+  });
+  model.resource.bakeries.addEventListener("update-current-bakery", function() {
+    self.__loadRecipes()
+  });
+  var recipeListTransformer = this._container.getModuleInstanceByName("template-transformer", "recipe-table");
+  model.resource.recipes.addEventListener("update-recipes", function(event, recipes) {
+    recipeListTransformer.applyTransform(tuna.model.serialize(recipes))
+  });
+  this.__loadRecipes()
 };
-RecipesController.prototype.__updateView = function() {
-  this.__bakerySelectTransformer.applyTransform(model.resource.bakeries.getBakeriesList());
-  this.__recipeTableTransformer.applyTransform(model.resource.recipes.getRecipesList());
-  this.__addRecipeTransformer.applyTransform(model.resource.bakeries.getCurrentBakery())
+RecipesController.prototype.__loadRecipes = function() {
+  var bakery = model.resource.bakeries.getCurrentBakery();
+  if(bakery !== null) {
+    tuna.rest.call("recipes.get", {"bakery_id":bakery.id}, function(recipes) {
+      model.resource.recipes.setRecipes(recipes)
+    }, "recipe")
+  }
 };
 RecipesController.prototype.__deleteRecipe = function(button) {
   if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0440\u0435\u0446\u0435\u043f\u0442?")) {
-    var self = this;
     var recipeId = button.getStringOption("recipe-id");
     tuna.rest.call("recipes.remove", {"recipe_id":recipeId}, function() {
-      model.resource.recipes.removeRecipeById(recipeId);
-      self.__updateView()
+      model.resource.recipes.removeRecipeById(recipeId)
     });
     button.setEnabled(false)
   }
 };
 tuna.view.registerController("recipes_page", new RecipesController);
-var OrdersController = function() {
+var AddRecipeController = function() {
   tuna.view.PageViewController.call(this);
-  this.__ordersListTransformer = null
+  this.__addRecipeForm = null
+};
+tuna.utils.extend(AddRecipeController, tuna.view.PageViewController);
+AddRecipeController.prototype._requireModules = function() {
+  this._container.requireModule("form")
+};
+AddRecipeController.prototype._initActions = function() {
+  var self = this;
+  this.__addRecipeForm = this._container.getModuleInstanceByName("form", "add-recipe");
+  this.__addRecipeForm.addEventListener("result", function(event, recipe) {
+    model.resource.recipes.addRecipe(recipe);
+    self.__addRecipeForm.reset();
+    self._navigation.back()
+  })
+};
+AddRecipeController.prototype.open = function() {
+  var bakery = model.resource.bakeries.getCurrentBakery();
+  if(bakery !== null) {
+    this.__addRecipeForm.setValue("bakery_id", bakery.id)
+  }
+};
+tuna.view.registerController("add_recipe_page", new AddRecipeController);
+var EditRecipeController = function() {
+  tuna.view.PageViewController.call(this);
+  this.__recipeFormTransformer = null;
+  this.__recipeForm = null
+};
+tuna.utils.extend(EditRecipeController, tuna.view.PageViewController);
+EditRecipeController.prototype._requireModules = function() {
+  this._container.requireModule("template-transformer");
+  this._container.requireModule("form")
+};
+EditRecipeController.prototype._initActions = function() {
+  var self = this;
+  this.__recipeFormTransformer = this._container.getModuleInstanceByName("template-transformer", "edit-recipe-form");
+  this.__recipeForm = this._container.getModuleInstanceByName("form", "edit-recipe-form");
+  this.__recipeForm.addEventListener("result", function(event, recipe) {
+    self._navigation.back();
+    model.resource.recipes.addRecipe(recipe)
+  })
+};
+EditRecipeController.prototype.open = function(data) {
+  var recipe = model.resource.recipes.getRecipeById(data["recipe-id"]);
+  if(recipe !== null) {
+    this.__recipeFormTransformer.applyTransform(recipe.serialize())
+  }
+};
+tuna.view.registerController("edit_recipe_page", new EditRecipeController);
+var OrdersController = function() {
+  tuna.view.PageViewController.call(this)
 };
 tuna.utils.extend(OrdersController, tuna.view.PageViewController);
 OrdersController.prototype._requireModules = function() {
@@ -3410,17 +3538,25 @@ OrdersController.prototype._requireModules = function() {
   this._container.requireModule("navigation")
 };
 OrdersController.prototype._initActions = function() {
-  var orderNavigation = this._container.getModuleInstanceByName("navigation", "order-navigation");
-  this._navigation.addChild(orderNavigation, this._container.getOption("page-name"));
+  var navigation = this._container.getModuleInstanceByName("navigation", "order-navigation");
+  this._navigation.addChild(navigation, this._container.getOption("page-name"));
   var ordersListTransformer = this._container.getModuleInstanceByName("template-transformer", "orders-list");
-  model.resource.bakeries.addEventListener("update-current-bakery", function(event, bakery) {
+  var self = this;
+  model.resource.bakeries.addEventListener("update-current-bakery", function() {
+    self.__loadOrders()
+  });
+  model.resource.orders.addEventListener("update-orders", function(event, orders) {
+    ordersListTransformer.applyTransform(tuna.model.serialize(orders))
+  });
+  this.__loadOrders()
+};
+OrdersController.prototype.__loadOrders = function() {
+  var bakery = model.resource.bakeries.getCurrentBakery();
+  if(bakery !== null) {
     tuna.rest.call("orders.get", {"bakery_id":bakery.id}, function(orders) {
       model.resource.orders.setOrders(orders)
     }, "order")
-  });
-  model.resource.orders.addEventListener("update-orders", function(event, orders) {
-    ordersListTransformer.applyTransform(tuna.model.serializeArray(orders))
-  })
+  }
 };
 tuna.view.registerController("orders_page", new OrdersController);
 var EditOrdersController = function() {
@@ -3438,7 +3574,7 @@ EditOrdersController.prototype._initActions = function() {
   this.__orderFormTransformer = this._container.getModuleInstanceByName("template-transformer", "edit-order-form");
   this.__orderForm = this._container.getModuleInstanceByName("form", "edit-order-form");
   this.__orderForm.addEventListener("result", function(event, order) {
-    self._navigation.navigate("table");
+    self._navigation.back();
     model.resource.orders.addOrder(order)
   })
 };
@@ -3450,8 +3586,6 @@ EditOrdersController.prototype.open = function(data) {
     this.__orderForm.setValue("delivery_status", order.deliveryStatus);
     this.__orderForm.setValue("payment_status", order.paymentStatus)
   }
-};
-EditOrdersController.prototype._updateBakery = function(bakery) {
 };
 tuna.view.registerController("edit_order_page", new EditOrdersController);
 var User = function(data) {
@@ -3497,7 +3631,7 @@ var Recipe = function(data) {
   this.name = "";
   this.desc = "";
   this.imageUrl = "";
-  this.dimentionPrices = [];
+  this.dimentionPrices = null;
   tuna.model.Record.call(this, data)
 };
 tuna.utils.extend(Recipe, tuna.model.Record);
@@ -3507,10 +3641,14 @@ Recipe.prototype.populate = function(data) {
   this.name = data["name"];
   this.desc = data["desc"];
   this.imageUrl = data["image_url"];
-  this.dimentionPrices = []
+  this.dimentionPrices = [];
+  var rawPrices = data["dimension_prices"];
+  for(var key in rawPrices) {
+    this.dimentionPrices.push(rawPrices[key])
+  }
 };
 Recipe.prototype.serialize = function() {
-  return{"id":this.id, "bakeryId":this.bakeryId, "name":this.name, "desc":this.desc, "imageUrl":this.imageUrl, "dimentionPrices":this.dimentionPrices}
+  return{"id":this.id, "bakeryId":this.bakeryId, "name":this.name, "desc":this.desc, "imageUrl":this.imageUrl, "dimensionPrices":this.dimentionPrices}
 };
 model.record.Recipe = Recipe;
 tuna.model.recordFactory.registerRecord("recipe", new model.record.Recipe);
@@ -3591,7 +3729,7 @@ Dimension.prototype.populate = function(data) {
   this.personsCount = data["persons_count"]
 };
 Dimension.prototype.serialize = function() {
-  return{"weight":this.weight, "shape":this.shape, "ratio":this.ratio, "personsCount":this.personsCount}
+  return{"weight":this.weight, "shape":this.shape, "shapeName":model.resource.dimensions.getShapeName(this.shape), "ratio":this.ratio, "personsCount":this.personsCount}
 };
 model.record.Dimension = Dimension;
 tuna.model.recordFactory.registerRecord("dimension", new model.record.Dimension);
@@ -3694,16 +3832,24 @@ Bakeries.prototype.getBakeriesList = function() {
 };
 model.resource.bakeries = new Bakeries;
 var Recipes = function() {
+  tuna.events.EventDispatcher.call(this);
   this.__recipes = []
 };
+tuna.utils.extend(Recipes, tuna.events.EventDispatcher);
 Recipes.prototype.setRecipes = function(recipes) {
-  this.__recipes = recipes
-};
-Recipes.prototype.clearRecipes = function() {
-  this.__recipes.length = 0
+  this.__recipes = recipes;
+  this.dispatch("update-recipes", recipes)
 };
 Recipes.prototype.addRecipe = function(recipe) {
-  this.__recipes.push(recipe)
+  var i = 0, l = this.__recipes.length;
+  while(i < l) {
+    if(this.__recipes[i].id === recipe.id) {
+      break
+    }
+    i++
+  }
+  this.__recipes[i] = recipe;
+  this.dispatch("update-recipes", this.__recipes)
 };
 Recipes.prototype.removeRecipeById = function(id) {
   var i = 0, l = this.__recipes.length;
@@ -3714,15 +3860,20 @@ Recipes.prototype.removeRecipeById = function(id) {
     }
     i++
   }
+  this.dispatch("update-recipes", this.__recipes)
 };
-Recipes.prototype.getRecipesList = function() {
-  var result = [];
+Recipes.prototype.getRecipeById = function(id) {
   var i = 0, l = this.__recipes.length;
   while(i < l) {
-    result.push(this.__recipes[i].serialize());
+    if(this.__recipes[i].id === id) {
+      return this.__recipes[i]
+    }
     i++
   }
-  return result
+  return null
+};
+Recipes.prototype.getRecipesList = function() {
+  return this.__recipes
 };
 model.resource.recipes = new Recipes;
 var Orders = function() {
@@ -3771,6 +3922,55 @@ Orders.prototype.addOrder = function(order) {
   this.dispatch("update-orders", this.__orders)
 };
 model.resource.orders = new Orders;
+var Dimensions = function() {
+  tuna.events.EventDispatcher.call(this);
+  this.__dimensions = [];
+  this.__shapes = {"round":"\u041a\u0440\u0443\u0433", "rect":"\u041f\u0440\u044f\u043c\u043e\u0443\u0433\u043e\u043b\u044c\u043d\u0438\u043a"}
+};
+tuna.utils.extend(Dimensions, tuna.events.EventDispatcher);
+Dimensions.prototype.setDimensions = function(dimensions) {
+  this.__dimensions = dimensions;
+  this.dispatch("update-dimensions", dimensions)
+};
+Dimensions.prototype.addDimension = function(dimension) {
+  var i = 0, l = this.__dimensions.length;
+  while(i < l) {
+    if(this.__dimensions[i].id === dimension.id) {
+      break
+    }
+    i++
+  }
+  this.__dimensions[i] = dimension;
+  this.dispatch("update-dimensions", this.__dimensions)
+};
+Dimensions.prototype.removeDimensionById = function(id) {
+  var i = 0, l = this.__dimensions.length;
+  while(i < l) {
+    if(this.__dimensions[i].id === id) {
+      this.__dimensions.splice(i, 1);
+      break
+    }
+    i++
+  }
+  this.dispatch("update-dimensions", this.__dimensions)
+};
+Dimensions.prototype.getDimensionById = function(id) {
+  var i = 0, l = this.__dimensions.length;
+  while(i < l) {
+    if(this.__dimensions[i].id === id) {
+      return this.__dimensions[i]
+    }
+    i++
+  }
+  return null
+};
+Dimensions.prototype.getDimensionsList = function() {
+  return this.__dimensions
+};
+Dimensions.prototype.getShapeName = function(shape) {
+  return this.__shapes[shape]
+};
+model.resource.dimensions = new Dimensions;
 var CommonMethod = function(name) {
   tuna.rest.Method.call(this, name);
   this.__request = new tuna.net.Request;

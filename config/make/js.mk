@@ -35,6 +35,7 @@ TUNA_FILES = tuna.js \
 			 tmpl/settings/spot-settings.js \
 			 tmpl/settings/attribute-settings.js \
 			 tmpl/settings/condition-settings.js \
+			 tmpl/settings/checkbox-settings.js \
 			 tmpl/settings/list-settings.js \
 			 tmpl/settings/template-settings.js \
 			 \
@@ -43,6 +44,7 @@ TUNA_FILES = tuna.js \
 			 tmpl/markup/list-extractor.js \
 			 tmpl/markup/attribute-extractor.js \
 			 tmpl/markup/condition-extractor.js \
+			 tmpl/markup/checkbox-extractor.js \
 			 tmpl/markup/markup-template-builder.js \
 			 \
 			 tmpl/units/i-list-item-router.js \
@@ -52,6 +54,7 @@ TUNA_FILES = tuna.js \
 			 tmpl/units/attribute.js \
 			 tmpl/units/condition.js \
 			 tmpl/units/list.js \
+			 tmpl/units/checkbox.js \
 			 tmpl/units/template.js \
 			 \
 			 tmpl/compilers/i-item-compiler.js \
@@ -59,6 +62,7 @@ TUNA_FILES = tuna.js \
 			 tmpl/compilers/spot-compiler.js \
 			 tmpl/compilers/attribute-compiler.js \
 			 tmpl/compilers/condition-compiler.js \
+			 tmpl/compilers/checkbox-compiler.js \
 			 tmpl/compilers/list-compiler.js \
 			 \
 			 tmpl/tmpl.js \
@@ -128,7 +132,10 @@ TUNA_FILES = tuna.js \
 APPLICATION_FILES = main.js \
 					\
 					view/main-controller.js \
+					view/page/dimensions-controller.js \
 					view/page/recipes-controller.js \
+					view/page/recipes/add-recipe-controller.js \
+					view/page/recipes/edit-recipe-controller.js \
 					view/page/orders-controller.js \
 					view/page/orders/edit-order-controller.js \
 					\
@@ -146,6 +153,7 @@ APPLICATION_FILES = main.js \
 					model/resource/bakeries.js \
 					model/resource/recipes.js \
 					model/resource/orders.js \
+					model/resource/dimensions.js \
 					\
 					rest/common-method.js \
 					rest/common-factory.js \

@@ -6,6 +6,11 @@
 
 <!-- User templates -->
 
+<tuna:template id="current_bakery_template">
+    <tuna:if tuna:path="" tuna:notset tuna:class="hide"
+             tuna:target="t-current-bakery-exist" />
+</tuna:template>
+
 <tuna:template id="user_template">
     <tuna:spot tuna:path="email"
                tuna:target="t-user-email" />
@@ -17,12 +22,14 @@
                tuna:target="t-user-role-name" />
 </tuna:template>
 
-<tuna:template id="user_access_template">
+<tuna:template id="access_template">
+
     <tuna:if tuna:path="role" tuna:eq="1" tuna:class="disabled"
              tuna:target="t-bakery-disabled"/>
 
     <tuna:if tuna:path="role" tuna:eq="1" tuna:class="hide"
              tuna:target="t-bakery-hidden"/>
+
 </tuna:template>
 
 <!-- Bakery templates -->
@@ -71,7 +78,7 @@
                tuna:path="cake/dimension/weight"
                tuna:target="t-cake-weight" />
 
-    <tuna:if tuna:path="cake/photoUrl" tuna:isset tuna:class="show"
+    <tuna:if tuna:path="cake/photoUrl" tuna:notset tuna:class="hide"
              tuna:target="t-cake-photo" />
 
     <tuna:attr tuna:name="href"
@@ -174,13 +181,13 @@
             <td class="t-client-name"></td>
             <td class="t-payment-price"></td>
             <td>
-                <span class="t-status-label label">Новый</span>
+                <span class="t-status-label label"></span>
             </td>
             <td>
-                <span class="t-delivery-status-label label">Подготовка</span>
+                <span class="t-delivery-status-label label"></span>
             </td>
             <td>
-                <span class="t-payment-status-label label">Не оплачен</span>
+                <span class="t-payment-status-label label"></span>
             </td>
             <td>
                 <ul class="nav nav-list">
@@ -201,52 +208,109 @@
 <tuna:template id="recipe_table_template">
     <tuna:list tuna:target="t-recipe-list" tuna:path=""
                tuna:item-renderer-id="recipe_row_renderer"
-               tuna:item-template-id="recipe_row_template"
+               tuna:item-template-id="recipe_template"
                tuna:key-path="id" />
 </tuna:template>
 
-<tuna:template id="recipe_row_template">
-    <tuna:attr tuna:target="t-recipe-id" tuna:path="id" tuna:name="data-recipe-id" />
+<tuna:template id="recipe_template">
+    <tuna:attr tuna:target="t-id" tuna:path="id" tuna:name="data-recipe-id" />
 
-    <tuna:attr tuna:target="t-recipe-image" tuna:path="imageUrl" tuna:name="src" />
-    <tuna:attr tuna:target="t-recipe-image" tuna:path="name" tuna:name="alt" />
+    <tuna:attr tuna:target="t-image" tuna:path="imageUrl" tuna:name="src" />
+    <tuna:attr tuna:target="t-image" tuna:path="name" tuna:name="alt"
+               tuna:filter="Рецепт: $$" />
 
-    <tuna:spot tuna:target="t-recipe-name" tuna:path="name" />
-    <tuna:spot tuna:target="t-recipe-desc" tuna:path="desc" />
+    <tuna:spot tuna:target="t-name" tuna:path="name" />
+    <tuna:spot tuna:target="t-desc" tuna:path="desc" />
+
+    <tuna:list tuna:target="t-price-list" tuna:path="dimensionPrices"
+               tuna:item-renderer-id="dimension_price_renderer"
+               tuna:item-template-id="dimension_price_template"
+               tuna:key-path="$key" />
+
+</tuna:template>
+
+<tuna:template id="dimension_price_template">
+    <tuna:spot tuna:target="t-weight" tuna:path="weight" />
+
+    <tuna:attr tuna:target="t-price" tuna:path="price" tuna:name="value" />
+    <tuna:attr tuna:target="t-price" tuna:path="weight" tuna:name="name"
+               tuna:filter="dimension_price[$$]"/>
 </tuna:template>
 
 <table>
-    <tr id="recipe_row_renderer">
-        <td class="t-recipe-name"></td>
-        <td>
-            <img class="t-recipe-image" width="90" height="90" alt="Рецепт" />
-        </td>
-        <td class="t-recipe-desc"></td>
-        <td>
-            <ul class="nav nav-list">
-                <li>
-                    <a class="j-navigation-link t-recipe-id"
-                       data-href="edit">
-                        <i class="icon-edit"></i> Редактировать
-                    </a>
-                </li>
-                <li>
-                    <a class="j-navigation-link t-recipe-id" href="#"
-                       data-href="delete" data-recipe-id="">
-                        <i class="icon-trash"></i> Удалить
-                    </a>
-                </li>
-            </ul>
-        </td>
-    </tr>
+    <tbody>
+        <tr id="dimension_price_renderer">
+            <td class="t-weight">1</td>
+            <td>
+                <input type="text" class="t-price input-mini" />
+            </td>
+        </tr>
+        <tr id="recipe_row_renderer">
+            <td class="t-name"></td>
+            <td>
+                <img class="t-image" width="90" height="90" alt="Рецепт" />
+            </td>
+            <td class="t-desc"></td>
+            <td>
+                <ul class="nav nav-list">
+                    <li>
+                        <a class="j-navigation-link t-id"
+                           data-href="edit">
+                            <i class="icon-edit"></i> Редактировать
+                        </a>
+                    </li>
+                    <li>
+                        <a class="j-button t-id"
+                           data-action="delete">
+                            <i class="icon-trash"></i> Удалить
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
 </table>
 
-<!-- ./ Recipes table -->
+<!-- Dimensions -->
 
-<!-- Add recipe form -->
-
-<tuna:template id="recipe_add_template">
-    <tuna:attr tuna:target="t-bakery-id" tuna:path="id" tuna:name="value"/>
+<tuna:template id="dimensions_list_template">
+    <tuna:list tuna:target="t-dimensions-list" tuna:path=""
+               tuna:item-renderer-id="dimensions_list_item_renderer"
+               tuna:item-template-id="dimension_template"
+               tuna:key-path="id" />
 </tuna:template>
 
-<!-- ./ Add recipe form -->
+<tuna:template id="dimension_template">
+    <tuna:attr tuna:name="data-dimension-id" tuna:path="id"
+               tuna:target="t-id" />
+
+    <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
+    <tuna:spot tuna:target="t-weight" tuna:path="weight" />
+    <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
+    <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
+
+    <tuna:attr tuna:name="name" tuna:path="shape"
+               tuna:filter="availability_list[$$]"
+               tuna:target="t-is-available" />
+
+    <tuna:attr tuna:name="value" tuna:path="weight"
+               tuna:target="t-is-available" />
+
+    <tuna:checkbox tuna:target="t-is-available" tuna:path="isAvailable" />
+
+</tuna:template>
+
+<table>
+    <tbody>
+        <tr id="dimensions_list_item_renderer">
+            <td class="t-shape-name">Круг</td>
+            <td class="t-weight">1</td>
+            <td>
+                <input class="t-is-available" type="checkbox" />
+            </td>
+            <td class="t-ratio t-bakery-hidden">0.6</td>
+            <td class="t-persons-count t-bakery-hidden">5</td>
+            <td class="t-bakery-hidden"></td>
+        </tr>
+    </tbody>
+</table>
