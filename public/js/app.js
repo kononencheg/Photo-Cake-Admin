@@ -3645,7 +3645,7 @@ EditRecipeController.prototype._initActions = function() {
   this.__recipeForm = this._container.getModuleInstanceByName("form", "edit-recipe-form");
   this.__recipeForm.addEventListener("result", function(event, recipe) {
     self._navigation.back();
-    model.resource.recipes.addRecipe(recipe)
+    model.recipes.addItem(recipe)
   })
 };
 EditRecipeController.prototype.open = function(data) {
@@ -3757,7 +3757,7 @@ Bakery.prototype.populate = function(data) {
   model.record.User.prototype.populate.call(this, data);
   this.city = data["city"] && data["city"]["name"] || null;
   this.deliveryPrice = data["delivery_price"] || null;
-  this.dimensionIds = data["available_dimension_ids"] || null
+  this.dimensionIds = data["available_dimension_ids"] || []
 };
 Bakery.prototype.serialize = function() {
   var result = model.record.User.prototype.serialize.call(this);

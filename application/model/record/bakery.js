@@ -32,7 +32,7 @@ Bakery.prototype.populate = function(data) {
 
     this.city = data['city'] && data['city']['name'] || null;
     this.deliveryPrice = data['delivery_price'] || null;
-    this.dimensionIds = data['available_dimension_ids'] || null;
+    this.dimensionIds = data['available_dimension_ids'] || [];
 };
 
 /**
