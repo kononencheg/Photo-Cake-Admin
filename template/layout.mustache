@@ -13,12 +13,13 @@
 
             .page { display: none; }
             .page.active { display: inherit; }
+            .page.active.hide { display: none; }
         </style>
     </head>
 
-    <body class="j-navigation j-template-transformer"
-          data-name="body"
-          data-template-id="access_template">
+    <body class="j-navigation j-template-transformer container"
+          data-name="body-container"
+          data-template-id="global_template">
 
         {{> template/popup/login }}
 

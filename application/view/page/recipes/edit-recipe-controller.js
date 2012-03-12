@@ -43,7 +43,7 @@ EditRecipeController.prototype._initActions = function() {
     this.__recipeForm.addEventListener("result", function(event, recipe) {
         self._navigation.back();
 
-        model.resource.recipes.addRecipe(recipe)
+        model.recipes.addItem(recipe);
     })
 };
 
@@ -51,9 +51,31 @@ EditRecipeController.prototype._initActions = function() {
  * @override
  */
 EditRecipeController.prototype.open = function(data) {
-    var recipe = model.resource.recipes.getRecipeById(data["recipe-id"]);
-    if(recipe !== null) {
-        this.__recipeFormTransformer.applyTransform(recipe.serialize())
+    var dimensions = model.dimensions.get();
+    var recipe = model.recipes.getItemById(data["recipe-id"]);
+    var bakery = model.currentBakery.get();
+
+    if (dimensions !== null && bakery !== null && recipe !== null) {
+
+        var weights = [];
+
+        var i = 0,
+            l = dimensions.length;
+
+        var dimension = null;
+        while (i < l) {
+            dimension = dimensions[i];
+
+            if (tuna.utils.indexOf(dimension.weight, weights) === -1 &&
+                tuna.utils.indexOf(dimension.id, bakery.dimensionIds) !== -1) {
+                weights.push(dimension.weight);
+            }
+
+            i++;
+        }
+
+        this.__recipeFormTransformer.applyTransform
+            (recipe.serialize(weights.sort()))
     }
 };
 

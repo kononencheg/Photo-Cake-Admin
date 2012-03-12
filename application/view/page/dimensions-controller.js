@@ -22,51 +22,37 @@ DimensionsController.prototype._requireModules = function() {
  * @override
  */
 DimensionsController.prototype._initActions = function() {
-    var navigation = this._container.getModuleInstanceByName
-                        ('navigation', 'dimensions-navigation');
-
     this._navigation.addChild
-        (navigation, this._container.getOption('page-name'));
+        (this._container.getModuleInstanceByName('navigation', 'dimensions'));
 
     var self = this;
-    /*var recipeControls = this._container.getModuleInstanceByName
+
+    /*
+
+    var recipeControls = this._container.getModuleInstanceByName
                                 ('button-group', 'recipe-table');
 
     recipeControls.addEventListener('delete', function(event, button) {
         self.__deleteRecipe(button);
     });*/
 
-    model.resource.bakeries.addEventListener(
-        'update-current-bakery', function() {
-            self.__loadDimensions();
-        }
-    );
-
-    var dimensionsListTransformer = this._container.getModuleInstanceByName
+    var dimensionsTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'dimensions-list');
 
-    model.resource.dimensions.addEventListener(
-        'update-dimensions', function(event, dimensions) {
-            dimensionsListTransformer.applyTransform
-                                        (tuna.model.serialize(dimensions));
-        }
-    );
+    model.dimensions.addEventListener('update', function(event, dimensions) {
+        dimensionsTransformer.applyTransform(tuna.model.serialize(dimensions));
+    });
 
-    this.__loadDimensions();
-};
+    dimensionsTransformer.applyTransform
+        (tuna.model.serialize(model.dimensions.get()));
 
-/**
- * @private
- */
-DimensionsController.prototype.__loadDimensions = function() {
-    var bakery = model.resource.bakeries.getCurrentBakery();
-    if (bakery !== null) {
-        tuna.rest.call('dimensions.get', {
-            'bakery_id': bakery.id
-        }, function(dimensions) {
-            model.resource.dimensions.setDimensions(dimensions);
-        }, 'dimension');
-    }
+    var dimensionsForm = this._container.getModuleInstanceByName
+        ('form', 'dimensions-list');
+
+    dimensionsForm.addEventListener('result', function(event, bakery) {
+        model.bakeries.addItem(bakery);
+        model.currentBakery.set(bakery);
+    });
 };
 
 

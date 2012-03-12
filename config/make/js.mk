@@ -20,6 +20,9 @@ TUNA_FILES = tuna.js \
 			 net/request.js \
 			 net/net.js \
 			 \
+			 model/i-resource.js \
+			 model/list-resource.js \
+			 model/item-resource.js \
 			 model/record.js \
 			 model/model.js \
 			 \
@@ -149,11 +152,7 @@ APPLICATION_FILES = main.js \
 					model/record/cake.js \
 					model/record/order.js \
 					\
-					model/resource/users.js \
-					model/resource/bakeries.js \
-					model/resource/recipes.js \
-					model/resource/orders.js \
-					model/resource/dimensions.js \
+					model/model.js \
 					\
 					rest/common-method.js \
 					rest/common-factory.js \

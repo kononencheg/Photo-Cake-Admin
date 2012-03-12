@@ -1,36 +1,38 @@
-<!-- Common  -->
+<!-- Global  -->
 
 <select>
     <option id="option_renderer" class="t-option"></option>
 </select>
 
-<!-- User templates -->
+<tuna:template id="global_template">
 
-<tuna:template id="current_bakery_template">
-    <tuna:if tuna:path="" tuna:notset tuna:class="hide"
+    <tuna:if tuna:path="currentBakery" tuna:notset tuna:class="hide"
              tuna:target="t-current-bakery-exist" />
+
+    <tuna:checkbox tuna:path="currentBakery/dimensionIds"
+                   tuna:target="t-is-dimension-available" />
+
+    <tuna:attr tuna:path="currentBakery/id" tuna:name="value"
+               tuna:target="t-current-bakery-id" />
+
+    <tuna:if tuna:path="currentUser/role" tuna:eq="1" tuna:class="disabled"
+             tuna:target="t-bakery-disabled" />
+
+    <tuna:if tuna:path="currentUser/role" tuna:eq="1" tuna:class="hide"
+             tuna:target="t-bakery-hidden" />
+
+    <tuna:spot tuna:path="currentUser/email"
+               tuna:target="t-current-user-email" />
+
+    <tuna:spot tuna:path="currentUser/role"
+               tuna:target="t-current-user-role" />
+
+    <tuna:spot tuna:path="currentUser/roleName"
+               tuna:target="t-current-user-role-name" />
+
+
 </tuna:template>
 
-<tuna:template id="user_template">
-    <tuna:spot tuna:path="email"
-               tuna:target="t-user-email" />
-
-    <tuna:spot tuna:path="role"
-               tuna:target="t-user-role" />
-
-    <tuna:spot tuna:path="roleName"
-               tuna:target="t-user-role-name" />
-</tuna:template>
-
-<tuna:template id="access_template">
-
-    <tuna:if tuna:path="role" tuna:eq="1" tuna:class="disabled"
-             tuna:target="t-bakery-disabled"/>
-
-    <tuna:if tuna:path="role" tuna:eq="1" tuna:class="hide"
-             tuna:target="t-bakery-hidden"/>
-
-</tuna:template>
 
 <!-- Bakery templates -->
 
@@ -214,6 +216,7 @@
 
 <tuna:template id="recipe_template">
     <tuna:attr tuna:target="t-id" tuna:path="id" tuna:name="data-recipe-id" />
+    <tuna:attr tuna:target="t-id-input" tuna:path="id" tuna:name="value" />
 
     <tuna:attr tuna:target="t-image" tuna:path="imageUrl" tuna:name="src" />
     <tuna:attr tuna:target="t-image" tuna:path="name" tuna:name="alt"
@@ -234,7 +237,7 @@
 
     <tuna:attr tuna:target="t-price" tuna:path="price" tuna:name="value" />
     <tuna:attr tuna:target="t-price" tuna:path="weight" tuna:name="name"
-               tuna:filter="dimension_price[$$]"/>
+               tuna:filter="dimension_prices[$$]"/>
 </tuna:template>
 
 <table>
@@ -289,14 +292,8 @@
     <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
     <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
 
-    <tuna:attr tuna:name="name" tuna:path="shape"
-               tuna:filter="availability_list[$$]"
-               tuna:target="t-is-available" />
-
-    <tuna:attr tuna:name="value" tuna:path="weight"
-               tuna:target="t-is-available" />
-
-    <tuna:checkbox tuna:target="t-is-available" tuna:path="isAvailable" />
+    <tuna:attr tuna:name="value" tuna:path="id"
+               tuna:target="t-id-checkbox" />
 
 </tuna:template>
 
@@ -305,8 +302,9 @@
         <tr id="dimensions_list_item_renderer">
             <td class="t-shape-name">Круг</td>
             <td class="t-weight">1</td>
-            <td>
-                <input class="t-is-available" type="checkbox" />
+            <td class="t-current-bakery-exist">
+                <input class="t-is-dimension-available t-id-checkbox"
+                       type="checkbox" name="dimension_ids[]" />
             </td>
             <td class="t-ratio t-bakery-hidden">0.6</td>
             <td class="t-persons-count t-bakery-hidden">5</td>

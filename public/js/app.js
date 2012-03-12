@@ -30,6 +30,9 @@ tuna.view = {};
 tuna.utils.toArray = function(list) {
   return Array.prototype.slice.call(list)
 };
+tuna.utils.isArray = function(list) {
+  return list !== null && list.push !== undefined && list.length !== undefined && !isNaN(list.length)
+};
 tuna.utils.implement = function(Class, Interface) {
   if(!tuna.IS_COMPILED) {
     for(var method in Interface.prototype) {
@@ -63,7 +66,7 @@ tuna.utils.nextTick = function(callback) {
   setTimeout(callback, 0)
 };
 tuna.utils.clone = function(object, clones) {
-  if(object instanceof Array) {
+  if(tuna.utils.isArray(object)) {
     return tuna.utils.cloneArray(object)
   }else {
     if(object instanceof Date) {
@@ -591,7 +594,98 @@ tuna.net.decode = function(search) {
   }
   return result
 };
+var IResource = function() {
+};
+IResource.prototype.set = function(data) {
+};
+IResource.prototype.get = function() {
+};
+IResource.prototype.clear = function() {
+};
+tuna.model.IResource = IResource;
+var ListResource = function(methodName, recordType) {
+  tuna.events.EventDispatcher.call(this);
+  this._methodName = methodName || null;
+  this._recordType = recordType || null;
+  this._list = []
+};
+tuna.utils.implement(ListResource, tuna.model.IResource);
+tuna.utils.extend(ListResource, tuna.events.EventDispatcher);
+ListResource.prototype.load = function(args) {
+  var self = this;
+  if(this._methodName !== null) {
+    tuna.rest.call(this._methodName, args || null, function(records) {
+      self.set(records)
+    }, this._recordType)
+  }
+};
+ListResource.prototype.set = function(list) {
+  this._list = list;
+  this.dispatch("update", this._list)
+};
+ListResource.prototype.get = function() {
+  return this._list
+};
+ListResource.prototype.clear = function() {
+  this._list.length = 0;
+  this.dispatch("update", this._list)
+};
+ListResource.prototype.addItem = function(record) {
+  var i = 0, l = this._list.length;
+  while(i < l) {
+    if(this._list[i].id === record.id) {
+      break
+    }
+    i++
+  }
+  this._list[i] = record;
+  this.dispatch("update", this._list)
+};
+ListResource.prototype.removeItem = function(record) {
+  this.removeItemById(record.id)
+};
+ListResource.prototype.removeItemById = function(id) {
+  var i = 0, l = this._list.length;
+  while(i < l) {
+    if(this._list[i].id === id) {
+      this._list.splice(i, 1);
+      break
+    }
+    i++
+  }
+  this.dispatch("update", this._list)
+};
+ListResource.prototype.getItemById = function(id) {
+  var i = 0, l = this._list.length;
+  while(i < l) {
+    if(this._list[i].id === id) {
+      return this._list[i]
+    }
+    i++
+  }
+  return null
+};
+tuna.model.ListResource = ListResource;
+var ItemResource = function() {
+  tuna.events.EventDispatcher.call(this);
+  this._item = null
+};
+tuna.utils.implement(ItemResource, tuna.model.IResource);
+tuna.utils.extend(ItemResource, tuna.events.EventDispatcher);
+ItemResource.prototype.set = function(item) {
+  this._item = item;
+  this.dispatch("update", this._item)
+};
+ItemResource.prototype.get = function() {
+  return this._item
+};
+ItemResource.prototype.clear = function() {
+  this._item = null;
+  this.dispatch("update", this._item)
+};
+tuna.model.ItemResource = ItemResource;
 var Record = function(data) {
+  this.id = "";
   if(data !== undefined) {
     this.populate(data)
   }
@@ -607,7 +701,7 @@ Record.prototype.clone = function() {
 };
 Record.prototype.populate = function(data) {
 };
-Record.prototype.serialize = function() {
+Record.prototype.serialize = function(options) {
 };
 tuna.model.Record = Record;
 var RecordFactory = function() {
@@ -622,7 +716,7 @@ RecordFactory.prototype.createRecord = function(name) {
 tuna.model.recordFactory = new RecordFactory;
 tuna.model.serialize = function(object) {
   if(object !== null) {
-    if(object instanceof Array) {
+    if(tuna.utils.isArray(object)) {
       var result = [];
       var i = 0, l = object.length;
       while(i < l) {
@@ -998,7 +1092,6 @@ var CheckboxExtractor = function() {
 };
 tuna.utils.extend(CheckboxExtractor, tuna.tmpl.markup.SpotExtractor);
 CheckboxExtractor.prototype._createItem = function() {
-  debugger;
   return new tuna.tmpl.settings.CheckboxSettings
 };
 CheckboxExtractor.prototype._saveItem = function(item, settings) {
@@ -1055,7 +1148,7 @@ var CompiledUnit = function(root) {
 CompiledUnit.prototype.getRootTemplate = function() {
   return this.__rootTemplate
 };
-CompiledUnit.prototype.destroy = function() {
+CompiledUnit.prototype.destroy = function(isHard) {
 };
 CompiledUnit.prototype.applyData = function(dataNode) {
 };
@@ -1098,6 +1191,21 @@ Spot.prototype._applyValue = function(value) {
     }
     i--
   }
+};
+Spot.prototype.destroy = function(isHard) {
+  if(isHard) {
+    var node = null;
+    while(this._nodes.length > 0) {
+      node = this._nodes.shift();
+      if(node.parentNode !== null) {
+        node.parentNode.removeChild(node);
+        this.getRootTemplate().registerChildRemoval(node)
+      }
+    }
+  }else {
+    this._nodes.length = 0
+  }
+  this.__pathEvaluator = null
 };
 tuna.tmpl.units.Spot = Spot;
 var Attribute = function(root) {
@@ -1223,18 +1331,20 @@ List.prototype.__updateItem = function(itemNode, oldItemsTable) {
   var keyNode = this.__keyPathEvaluator.evaluate(itemNode);
   if(keyNode !== null) {
     var key = keyNode.getValue();
-    if(oldItemsTable[key] === undefined) {
-      this.addItem(this.__makeNewItem(), key)
-    }else {
-      this.__itemsTable[key] = oldItemsTable[key];
-      delete oldItemsTable[key]
+    if(key !== null) {
+      if(oldItemsTable[key] === undefined) {
+        this.addItem(this.__makeNewItem(), key)
+      }else {
+        this.__itemsTable[key] = oldItemsTable[key];
+        delete oldItemsTable[key]
+      }
+      this.__itemsTable[key].applyData(itemNode)
     }
-    this.__itemsTable[key].applyData(itemNode)
   }
 };
 List.prototype.__destroyItems = function(itemsTable) {
   for(var key in itemsTable) {
-    itemsTable[key].destroy();
+    itemsTable[key].destroy(true);
     delete itemsTable[key]
   }
 };
@@ -1246,22 +1356,46 @@ List.prototype.__makeNewItem = function() {
   rootTemplate.registerChildCreation(itemElement);
   return template
 };
+List.prototype.destroy = function(isHard) {
+  for(var key in this.__itemsTable) {
+    this.__itemsTable[key].destroy(isHard);
+    this.__itemsTable[key] = null
+  }
+  this.__templateCompiler = null;
+  this.__itemRenderer = null;
+  this.__itemSettings = null;
+  this.__pathEvaluator = null;
+  this.__keyPathEvaluator = null;
+  this.__listNodeRouter = null;
+  this.__itemsTable = null
+};
 tuna.tmpl.units.List = List;
 var Checkbox = function(root) {
   tuna.tmpl.units.Spot.call(this, root)
 };
 tuna.utils.extend(Checkbox, tuna.tmpl.units.Spot);
 Checkbox.prototype._applyValue = function(value) {
-  var arrayValue = [];
-  if(value instanceof Array) {
-    arrayValue = tuna.utils.cloneArray(value)
-  }else {
-    arrayValue = [value + ""]
-  }
-  var i = this._nodes.length - 1;
-  while(i >= 0) {
-    this._nodes[i].checked = tuna.utils.indexOf(this._nodes.value, arrayValue) !== -1;
-    i--
+  if(value !== null) {
+    var i = this._nodes.length - 1;
+    if(value === true || value === false) {
+      while(i >= 0) {
+        this._nodes[i].checked = value;
+        i--
+      }
+    }else {
+      if(tuna.utils.isArray(value)) {
+        while(i >= 0) {
+          this._nodes[i].checked = tuna.utils.indexOf(this._nodes[i].value, value) !== -1;
+          i--
+        }
+      }else {
+        value = value + "";
+        while(i >= 0) {
+          this._nodes[i].checked = this._nodes[i].value === value;
+          i--
+        }
+      }
+    }
   }
 };
 tuna.tmpl.units.Checkbox = Checkbox;
@@ -1280,13 +1414,13 @@ Template.prototype.addItems = function(items) {
   this.__items = this.__items.concat(items)
 };
 Template.prototype.registerChildCreation = function(child) {
-  this.__createdChildren.push(child)
+  this.__createdChildren = this.__createdChildren.concat(child)
 };
 Template.prototype.fetchCreatedChildren = function() {
   return this.__createdChildren.splice(0, this.__createdChildren.length)
 };
 Template.prototype.registerChildRemoval = function(child) {
-  this.__removedChildren.push(child)
+  this.__removedChildren = this.__removedChildren.concat(child)
 };
 Template.prototype.fetchRemovedChildren = function() {
   return this.__removedChildren.splice(0, this.__removedChildren.length)
@@ -1298,14 +1432,15 @@ Template.prototype.applyData = function(dataNode) {
     i--
   }
 };
-Template.prototype.destroy = function() {
+Template.prototype.destroy = function(isHard) {
   var i = this.__items.length - 1;
   while(i >= 0) {
-    this.__items[i].destroy();
+    this.__items[i].destroy(isHard);
     i--
   }
-  this.__target.parentNode.removeChild(this.__target);
-  this.getRootTemplate().registerChildRemoval(this.__target)
+  if(isHard) {
+    this.__target.parentNode.removeChild(this.__target)
+  }
 };
 tuna.tmpl.units.Template = Template;
 var IItemCompiler = function() {
@@ -1617,9 +1752,11 @@ Module.prototype.__isInContext = function(target, context) {
   var isolators = tuna.ui.modules.getIsolators();
   var i = 0, l = isolators.length;
   while(i < l) {
-    result = result && tuna.dom.getParentWithClass(target, isolators[i], context) === null;
-    if(!result) {
-      break
+    if(target !== context) {
+      result = result && !tuna.dom.hasClass(target, isolators[i]) && tuna.dom.getParentWithClass(target, isolators[i], context) === null;
+      if(!result) {
+        break
+      }
     }
     i++
   }
@@ -2061,7 +2198,7 @@ Form.prototype.setValue = function(name, value) {
       var i = 0, l = elements.length;
       var stringValue = "";
       var arrayValue = [];
-      if(value instanceof Array) {
+      if(tuna.utils.isArray(value)) {
         arrayValue = tuna.utils.cloneArray(value);
         stringValue = value.join(",")
       }else {
@@ -2348,7 +2485,7 @@ tuna.ui.forms.serialize = function(formElement) {
   while(i < l) {
     name = elements[i].name;
     if(result[name] !== undefined) {
-      if(!(result[name] instanceof Array)) {
+      if(!tuna.utils.isArray(result[name])) {
         result[name] = [result[name]]
       }
       result[name].push(elements[i].value)
@@ -2410,6 +2547,12 @@ TemplateTransformer.prototype.destroy = function() {
   }
   this.__template = null;
   this.__transformHandler = null
+};
+TemplateTransformer.prototype.reset = function() {
+  var transformHandler = this.__transformHandler;
+  this.destroy();
+  this.init();
+  this.__transformHandler = transformHandler
 };
 tuna.ui.transformers.TemplateTransformer = TemplateTransformer;
 var ISelectionGroup = function() {
@@ -2514,7 +2657,6 @@ var Navigation = function(target) {
   this.__menuLinks = {};
   this.__parent = null;
   this.__children = {};
-  this.__name = null;
   this.__history = [];
   this.__currentState = null;
   this._setDefaultOption("selection-class", "active");
@@ -2529,7 +2671,7 @@ Navigation.prototype.init = function() {
 };
 Navigation.prototype.__initNavigation = function() {
   this.__navigationRule = new tuna.ui.selection.rule.NavigationSelectionRule;
-  var itemsCollection = new tuna.ui.selection.items.NamedElementsCollection("data-page-name");
+  var itemsCollection = new tuna.ui.selection.items.NamedElementsCollection("data-name");
   var selectionView = new tuna.ui.selection.view.ClassSelectionView(this._target);
   selectionView.setSelectionClass(this.getStringOption("selection-class"));
   selectionView.setItemSelector(this.getStringOption("item-selector"));
@@ -2617,10 +2759,8 @@ Navigation.prototype.getPathDesc = function() {
 };
 Navigation.prototype.getRelatedPath = function() {
   var result = [];
-  if(this.__name !== null) {
-    result.push(this.__name)
-  }
   if(this.__parent !== null) {
+    result.push(this.getName());
     result = this.__parent.getRelatedPath().concat(result)
   }
   return result
@@ -2636,14 +2776,14 @@ Navigation.prototype.back = function() {
     if(this.__history.length > 0) {
       this.__currentState = this.__history.pop();
       this.navigatePath(this.__currentState.getPath(), this.__currentState.getData());
-      history.back()
+      window.history.back()
     }
   }else {
     this.getRoot().back()
   }
 };
 Navigation.prototype.navigate = function(path, data) {
-  if(path instanceof Array) {
+  if(tuna.utils.isArray(path)) {
     if(this.isRoot()) {
       if(this.__currentState === null) {
         this.__currentState = new NavigationState(this.getPathDesc())
@@ -2651,7 +2791,7 @@ Navigation.prototype.navigate = function(path, data) {
       this.navigatePath(path, data);
       this.__history.push(this.__currentState);
       this.__currentState = new NavigationState(this.getPathDesc(), data);
-      history.pushState(null, "", this.__currentState.serialize())
+      window.history.pushState(null, "", this.__currentState.serialize())
     }else {
       this.navigatePath(path, data)
     }
@@ -2675,18 +2815,14 @@ Navigation.prototype.navigatePath = function(path, data) {
     return this.__children[index].navigatePath(path, data)
   }
 };
-Navigation.prototype.addChild = function(navigation, name) {
+Navigation.prototype.addChild = function(navigation) {
   if(navigation !== null) {
-    navigation.setName(name);
     navigation.setParent(this);
-    this.__children[name] = navigation
+    this.__children[navigation.getName()] = navigation
   }
 };
 Navigation.prototype.setParent = function(navigation) {
   this.__parent = navigation
-};
-Navigation.prototype.setName = function(name) {
-  this.__name = name
 };
 var NavigationState = function(path, data) {
   this.__path = path;
@@ -3007,15 +3143,13 @@ NavigationSelectionRule.prototype.selectIndex = function(index) {
         this._eventDispatcher.dispatch("close", this.__currentIndex)
       }
       this.__currentIndex = index;
+      this.__updateController();
       this._selectionView.applySelectionAt(this.__currentIndex);
       this._eventDispatcher.dispatch("open", this.__currentIndex);
-      result = true
-    }
-    if(result) {
-      this.__updateController();
       if(this.__currentController !== null && this.__currentController instanceof tuna.view.PageViewController) {
         this.__currentController.open(this.__openData)
       }
+      result = true
     }
   }
   return result
@@ -3327,8 +3461,9 @@ model.record = {};
 model.resource = {};
 var rest = {};
 var view = {};
-window["main"] = function(args) {
-  tuna.utils.config.init(args);
+window["main"] = function() {
+  tuna.utils.config.init({"role":["\u0410\u0434\u043c\u0438\u043d", "\u041a\u043e\u043d\u0434\u0438\u0442\u0435\u0440\u0441\u043a\u0430\u044f"], "orderStatus":["\u041d\u0435\u0430\u043a\u0442\u0438\u0432\u0435\u043d", "\u041d\u043e\u0432\u044b\u0439", "\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d", "\u041e\u0442\u043a\u043b\u043e\u043d\u0435\u043d"], "deliveryStatus":["\u041f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430", "\u0412&nbsp;\u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435", 
+  "\u0414\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u043e"], "paymentStatus":["\u041d\u0435&nbsp;\u043e\u043f\u043b\u0430\u0447\u0435\u043d\u043e", "\u041e\u043f\u043b\u0430\u0447\u0435\u043d\u043e"], "shape":{"round":"\u041a\u0440\u0443\u0433", "rect":"\u041f\u0440\u044f\u043c\u043e\u0443\u0433\u043e\u043b\u044c\u043d\u0438\u043a"}});
   tuna.ui.modules.addIsolator("j-control-container");
   tuna.dom.setSelectorEngine(Sizzle);
   tuna.view.init()
@@ -3351,7 +3486,7 @@ MainController.prototype._initActions = function() {
     }else {
       self.__applyUser(user)
     }
-  }, "user");
+  }, "bakery");
   this.__initSingOutForm()
 };
 MainController.prototype.__initSingOutForm = function() {
@@ -3371,35 +3506,38 @@ MainController.prototype.__showSignUpPopup = function() {
   })
 };
 MainController.prototype.__applyUser = function(user) {
-  var accessTransformer = this._container.getModuleInstanceByName("template-transformer", "body");
-  accessTransformer.applyTransform(user.serialize());
-  var currentBakeryTransformer = this._container.getModuleInstanceByName("template-transformer", "current-bakery");
-  model.resource.bakeries.addEventListener("update-current-bakery", function(event, bakery) {
-    currentBakeryTransformer.applyTransform(tuna.model.serialize(bakery))
-  });
-  model.resource.bakeries.addEventListener("remove-current-bakery", function() {
-    currentBakeryTransformer.applyTransform(null)
-  });
-  currentBakeryTransformer.applyTransform(null);
-  var userInfoTransformer = this._container.getModuleInstanceByName("template-transformer", "user-info");
-  userInfoTransformer.applyTransform(user.serialize());
-  if(!model.resource.users.isBakery(user)) {
-    var bakerySelectionTransformer = this._container.getModuleInstanceByName("template-transformer", "bakery-selection");
-    var bakerySelectionForm = this._container.getModuleInstanceByName("form", "bakery-selection");
-    tuna.rest.call("users.getBakeries", null, function(bakeries) {
-      model.resource.bakeries.setBakeries(bakeries);
-      bakerySelectionTransformer.applyTransform(tuna.model.serialize(bakeries));
-      bakerySelectionForm.addEventListener("submit", function(event) {
-        event.preventDefault();
-        var bakeryId = bakerySelectionForm.getValue("bakery_id");
-        if(bakeryId !== undefined) {
-          model.resource.bakeries.setCurrentBakery(model.resource.bakeries.getBakeryById(bakeryId))
-        }
-      })
-    }, "bakery")
+  if(user.role === model.record.User.ROLE_ADMIN) {
+    var bakeryForm = this._container.getModuleInstanceByName("form", "bakery-selection");
+    bakeryForm.addEventListener("submit", function(event) {
+      event.preventDefault();
+      var id = bakeryForm.getValue("bakery_id");
+      if(id !== undefined) {
+        model.currentBakery.set(model.bakeries.getItemById(id))
+      }
+    });
+    var bakeryTransformer = this._container.getModuleInstanceByName("template-transformer", "bakery-selection");
+    model.bakeries.addEventListener("update", function(event, bakeries) {
+      bakeryTransformer.applyTransform(tuna.model.serialize(bakeries))
+    });
+    model.bakeries.load()
   }else {
-    model.resource.bakeries.setCurrentBakery(user)
+    model.currentBakery.set(user)
   }
+  var globalTransformer = this._container.getModuleInstanceByName("template-transformer", "body-container");
+  function updateGlobalTransformer() {
+    var bakery = model.currentBakery.get();
+    globalTransformer.reset();
+    globalTransformer.applyTransform({"currentUser":tuna.model.serialize(user), "currentBakery":tuna.model.serialize(bakery)})
+  }
+  model.currentBakery.addEventListener("update", updateGlobalTransformer);
+  var navigation = this._container.getModuleInstanceByName("navigation", "body-container");
+  navigation.addEventListener("open", function(event, index) {
+    if(index === "dimensions") {
+      updateGlobalTransformer()
+    }
+  });
+  updateGlobalTransformer();
+  model.dimensions.load()
 };
 tuna.view.setMainController(new MainController);
 var DimensionsController = function() {
@@ -3413,29 +3551,23 @@ DimensionsController.prototype._requireModules = function() {
   this._container.requireModule("form")
 };
 DimensionsController.prototype._initActions = function() {
-  var navigation = this._container.getModuleInstanceByName("navigation", "dimensions-navigation");
-  this._navigation.addChild(navigation, this._container.getOption("page-name"));
+  this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "dimensions"));
   var self = this;
-  model.resource.bakeries.addEventListener("update-current-bakery", function() {
-    self.__loadDimensions()
+  var dimensionsTransformer = this._container.getModuleInstanceByName("template-transformer", "dimensions-list");
+  model.dimensions.addEventListener("update", function(event, dimensions) {
+    dimensionsTransformer.applyTransform(tuna.model.serialize(dimensions))
   });
-  var dimensionsListTransformer = this._container.getModuleInstanceByName("template-transformer", "dimensions-list");
-  model.resource.dimensions.addEventListener("update-dimensions", function(event, dimensions) {
-    dimensionsListTransformer.applyTransform(tuna.model.serialize(dimensions))
-  });
-  this.__loadDimensions()
-};
-DimensionsController.prototype.__loadDimensions = function() {
-  var bakery = model.resource.bakeries.getCurrentBakery();
-  if(bakery !== null) {
-    tuna.rest.call("dimensions.get", {"bakery_id":bakery.id}, function(dimensions) {
-      model.resource.dimensions.setDimensions(dimensions)
-    }, "dimension")
-  }
+  dimensionsTransformer.applyTransform(tuna.model.serialize(model.dimensions.get()));
+  var dimensionsForm = this._container.getModuleInstanceByName("form", "dimensions-list");
+  dimensionsForm.addEventListener("result", function(event, bakery) {
+    model.bakeries.addItem(bakery);
+    model.currentBakery.set(bakery)
+  })
 };
 tuna.view.registerController("dimensions_page", new DimensionsController);
 var RecipesController = function() {
-  tuna.view.PageViewController.call(this)
+  tuna.view.PageViewController.call(this);
+  this.__loadRecipes = tuna.utils.bind(this.__loadRecipes, this)
 };
 tuna.utils.extend(RecipesController, tuna.view.PageViewController);
 RecipesController.prototype._requireModules = function() {
@@ -3445,35 +3577,35 @@ RecipesController.prototype._requireModules = function() {
   this._container.requireModule("form")
 };
 RecipesController.prototype._initActions = function() {
-  var navigation = this._container.getModuleInstanceByName("navigation", "recipes-navigation");
-  this._navigation.addChild(navigation, this._container.getOption("page-name"));
+  this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "recipes"));
   var self = this;
   var recipeControls = this._container.getModuleInstanceByName("button-group", "recipe-table");
   recipeControls.addEventListener("delete", function(event, button) {
     self.__deleteRecipe(button)
   });
-  model.resource.bakeries.addEventListener("update-current-bakery", function() {
-    self.__loadRecipes()
-  });
   var recipeListTransformer = this._container.getModuleInstanceByName("template-transformer", "recipe-table");
-  model.resource.recipes.addEventListener("update-recipes", function(event, recipes) {
+  model.recipes.addEventListener("update", function(event, recipes) {
     recipeListTransformer.applyTransform(tuna.model.serialize(recipes))
-  });
+  })
+};
+RecipesController.prototype.open = function() {
+  model.currentBakery.addEventListener("update", this.__loadRecipes);
   this.__loadRecipes()
 };
+RecipesController.prototype.close = function() {
+  model.currentBakery.removeEventListener("update", this.__loadRecipes)
+};
 RecipesController.prototype.__loadRecipes = function() {
-  var bakery = model.resource.bakeries.getCurrentBakery();
+  var bakery = model.currentBakery.get();
   if(bakery !== null) {
-    tuna.rest.call("recipes.get", {"bakery_id":bakery.id}, function(recipes) {
-      model.resource.recipes.setRecipes(recipes)
-    }, "recipe")
+    model.recipes.load({"bakery_id":bakery.id})
   }
 };
 RecipesController.prototype.__deleteRecipe = function(button) {
   if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0440\u0435\u0446\u0435\u043f\u0442?")) {
     var recipeId = button.getStringOption("recipe-id");
     tuna.rest.call("recipes.remove", {"recipe_id":recipeId}, function() {
-      model.resource.recipes.removeRecipeById(recipeId)
+      model.recipes.removeItemById(recipeId)
     });
     button.setEnabled(false)
   }
@@ -3491,16 +3623,10 @@ AddRecipeController.prototype._initActions = function() {
   var self = this;
   this.__addRecipeForm = this._container.getModuleInstanceByName("form", "add-recipe");
   this.__addRecipeForm.addEventListener("result", function(event, recipe) {
-    model.resource.recipes.addRecipe(recipe);
+    model.recipes.addItem(recipe);
     self.__addRecipeForm.reset();
     self._navigation.back()
   })
-};
-AddRecipeController.prototype.open = function() {
-  var bakery = model.resource.bakeries.getCurrentBakery();
-  if(bakery !== null) {
-    this.__addRecipeForm.setValue("bakery_id", bakery.id)
-  }
 };
 tuna.view.registerController("add_recipe_page", new AddRecipeController);
 var EditRecipeController = function() {
@@ -3523,14 +3649,27 @@ EditRecipeController.prototype._initActions = function() {
   })
 };
 EditRecipeController.prototype.open = function(data) {
-  var recipe = model.resource.recipes.getRecipeById(data["recipe-id"]);
-  if(recipe !== null) {
-    this.__recipeFormTransformer.applyTransform(recipe.serialize())
+  var dimensions = model.dimensions.get();
+  var recipe = model.recipes.getItemById(data["recipe-id"]);
+  var bakery = model.currentBakery.get();
+  if(dimensions !== null && bakery !== null && recipe !== null) {
+    var weights = [];
+    var i = 0, l = dimensions.length;
+    var dimension = null;
+    while(i < l) {
+      dimension = dimensions[i];
+      if(tuna.utils.indexOf(dimension.weight, weights) === -1 && tuna.utils.indexOf(dimension.id, bakery.dimensionIds) !== -1) {
+        weights.push(dimension.weight)
+      }
+      i++
+    }
+    this.__recipeFormTransformer.applyTransform(recipe.serialize(weights.sort()))
   }
 };
 tuna.view.registerController("edit_recipe_page", new EditRecipeController);
 var OrdersController = function() {
-  tuna.view.PageViewController.call(this)
+  tuna.view.PageViewController.call(this);
+  this.__loadOrders = tuna.utils.bind(this.__loadOrders, this)
 };
 tuna.utils.extend(OrdersController, tuna.view.PageViewController);
 OrdersController.prototype._requireModules = function() {
@@ -3538,24 +3677,23 @@ OrdersController.prototype._requireModules = function() {
   this._container.requireModule("navigation")
 };
 OrdersController.prototype._initActions = function() {
-  var navigation = this._container.getModuleInstanceByName("navigation", "order-navigation");
-  this._navigation.addChild(navigation, this._container.getOption("page-name"));
+  this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "orders"));
   var ordersListTransformer = this._container.getModuleInstanceByName("template-transformer", "orders-list");
-  var self = this;
-  model.resource.bakeries.addEventListener("update-current-bakery", function() {
-    self.__loadOrders()
-  });
-  model.resource.orders.addEventListener("update-orders", function(event, orders) {
+  model.orders.addEventListener("update", function(event, orders) {
     ordersListTransformer.applyTransform(tuna.model.serialize(orders))
-  });
+  })
+};
+OrdersController.prototype.open = function() {
+  model.currentBakery.addEventListener("update", this.__loadOrders);
   this.__loadOrders()
 };
+OrdersController.prototype.close = function() {
+  model.currentBakery.removeEventListener("update", this.__loadOrders)
+};
 OrdersController.prototype.__loadOrders = function() {
-  var bakery = model.resource.bakeries.getCurrentBakery();
+  var bakery = model.currentBakery.get();
   if(bakery !== null) {
-    tuna.rest.call("orders.get", {"bakery_id":bakery.id}, function(orders) {
-      model.resource.orders.setOrders(orders)
-    }, "order")
+    model.orders.load({"bakery_id":bakery.id})
   }
 };
 tuna.view.registerController("orders_page", new OrdersController);
@@ -3575,11 +3713,11 @@ EditOrdersController.prototype._initActions = function() {
   this.__orderForm = this._container.getModuleInstanceByName("form", "edit-order-form");
   this.__orderForm.addEventListener("result", function(event, order) {
     self._navigation.back();
-    model.resource.orders.addOrder(order)
+    model.orders.addItem(order)
   })
 };
 EditOrdersController.prototype.open = function(data) {
-  var order = model.resource.orders.getOrderById(data["order-id"]);
+  var order = model.orders.getItemById(data["order-id"]);
   if(order !== null) {
     this.__orderFormTransformer.applyTransform(order.serialize());
     this.__orderForm.setValue("status", order.status);
@@ -3589,7 +3727,6 @@ EditOrdersController.prototype.open = function(data) {
 };
 tuna.view.registerController("edit_order_page", new EditOrdersController);
 var User = function(data) {
-  this.id = "";
   this.name = "";
   this.email = "";
   this.role = -1;
@@ -3603,7 +3740,7 @@ User.prototype.populate = function(data) {
   this.role = data["role"]
 };
 User.prototype.serialize = function() {
-  return{"id":this.id, "email":this.email, "role":this.role, "roleName":model.resource.users.getRoleName(this.role)}
+  return{"id":this.id, "email":this.email, "role":this.role, "roleName":tuna.utils.config.get("role")[this.role]}
 };
 model.record.User = User;
 model.record.User.ROLE_ADMIN = 0;
@@ -3612,16 +3749,22 @@ tuna.model.recordFactory.registerRecord("user", new model.record.User);
 var Bakery = function(data) {
   this.city = "";
   this.deliveryPrice = 0;
+  this.dimensionIds = null;
   model.record.User.call(this, data)
 };
 tuna.utils.extend(Bakery, model.record.User);
 Bakery.prototype.populate = function(data) {
   model.record.User.prototype.populate.call(this, data);
-  this.city = data["city"] && data["city"]["name"];
-  this.deliveryPrice = data["delivery_price"]
+  this.city = data["city"] && data["city"]["name"] || null;
+  this.deliveryPrice = data["delivery_price"] || null;
+  this.dimensionIds = data["available_dimension_ids"] || null
 };
 Bakery.prototype.serialize = function() {
-  return{"id":this.id, "name":this.name + " (" + this.city + ")", "email":this.email, "deliveryPrice":this.deliveryPrice}
+  var result = model.record.User.prototype.serialize.call(this);
+  result["name"] = this.city;
+  result["deliveryPrice"] = this.deliveryPrice;
+  result["dimensionIds"] = this.dimensionIds;
+  return result
 };
 model.record.Bakery = Bakery;
 tuna.model.recordFactory.registerRecord("bakery", new model.record.Bakery);
@@ -3641,14 +3784,29 @@ Recipe.prototype.populate = function(data) {
   this.name = data["name"];
   this.desc = data["desc"];
   this.imageUrl = data["image_url"];
-  this.dimentionPrices = [];
-  var rawPrices = data["dimension_prices"];
-  for(var key in rawPrices) {
-    this.dimentionPrices.push(rawPrices[key])
-  }
+  this.dimentionPrices = data["dimension_prices"] || null
 };
-Recipe.prototype.serialize = function() {
-  return{"id":this.id, "bakeryId":this.bakeryId, "name":this.name, "desc":this.desc, "imageUrl":this.imageUrl, "dimensionPrices":this.dimentionPrices}
+Recipe.prototype.serialize = function(weights) {
+  var result = {"id":this.id, "bakeryId":this.bakeryId, "name":this.name, "desc":this.desc, "imageUrl":this.imageUrl, "dimensionPrices":this.dimentionPrices};
+  if(weights !== undefined) {
+    var prices = [];
+    var i = 0, l = weights.length;
+    var weightKey = null;
+    var price = null;
+    while(i < l) {
+      price = {"weight":weights[i]};
+      if(this.dimentionPrices !== null) {
+        weightKey = (weights[i] + "").replace(".", "_");
+        if(this.dimentionPrices[weightKey] !== undefined) {
+          price["price"] = this.dimentionPrices[weightKey]["price"]
+        }
+      }
+      prices.push(price);
+      i++
+    }
+    result["dimensionPrices"] = prices
+  }
+  return result
 };
 model.record.Recipe = Recipe;
 tuna.model.recordFactory.registerRecord("recipe", new model.record.Recipe);
@@ -3715,6 +3873,7 @@ Payment.prototype.serialize = function() {
 model.record.Payment = Payment;
 tuna.model.recordFactory.registerRecord("payment", new model.record.Payment);
 var Dimension = function(data) {
+  this.id = "";
   this.weight = 0;
   this.shape = "";
   this.ratio = 0;
@@ -3723,13 +3882,14 @@ var Dimension = function(data) {
 };
 tuna.utils.extend(Dimension, tuna.model.Record);
 Dimension.prototype.populate = function(data) {
+  this.id = data["id"];
   this.weight = data["weight"];
   this.shape = data["shape"];
   this.ratio = data["ratio"];
   this.personsCount = data["persons_count"]
 };
 Dimension.prototype.serialize = function() {
-  return{"weight":this.weight, "shape":this.shape, "shapeName":model.resource.dimensions.getShapeName(this.shape), "ratio":this.ratio, "personsCount":this.personsCount}
+  return{"id":this.id, "weight":this.weight, "shape":this.shape, "shapeName":tuna.utils.config.get("shape")[this.shape], "ratio":this.ratio, "personsCount":this.personsCount}
 };
 model.record.Dimension = Dimension;
 tuna.model.recordFactory.registerRecord("dimension", new model.record.Dimension);
@@ -3781,196 +3941,16 @@ Order.prototype.populate = function(data) {
   this.date = new Date(1E3 * parseInt(this.id.substr(0, 8), 16))
 };
 Order.prototype.serialize = function() {
-  return{"id":this.id, "index":this.index, "date":this.date && tuna.model.serializeDate(this.date), "bakery":this.bakery.serialize(), "cake":this.cake.serialize(), "payment":this.payment.serialize(), "client":this.client.serialize(), "delivery":this.delivery.serialize(), "recipe":this.recipe.serialize(), "status":this.status, "paymentStatus":this.paymentStatus, "deliveryStatus":this.deliveryStatus, "statusName":model.resource.orders.getStatusName(this.status), "paymentStatusName":model.resource.orders.getPaymentStatusName(this.paymentStatus), 
-  "deliveryStatusName":model.resource.orders.getDeliveryStatusName(this.deliveryStatus)}
+  return{"id":this.id, "index":this.index, "date":this.date && tuna.model.serializeDate(this.date), "bakery":this.bakery.serialize(), "cake":this.cake.serialize(), "payment":this.payment.serialize(), "client":this.client.serialize(), "delivery":this.delivery.serialize(), "recipe":this.recipe.serialize(), "status":this.status, "paymentStatus":this.paymentStatus, "deliveryStatus":this.deliveryStatus, "statusName":tuna.utils.config.get("orderStatus")[this.status], "paymentStatusName":tuna.utils.config.get("paymentStatus")[this.paymentStatus], 
+  "deliveryStatusName":tuna.utils.config.get("deliveryStatus")[this.deliveryStatus]}
 };
 model.record.Order = Order;
 tuna.model.recordFactory.registerRecord("order", new model.record.Order);
-var Users = function() {
-  this.__roles = ["\u0410\u0434\u043c\u0438\u043d", "\u041a\u043e\u043d\u0434\u0438\u0442\u0435\u0440\u0441\u043a\u0430\u044f"]
-};
-Users.prototype.getRoleName = function(role) {
-  return this.__roles[role]
-};
-Users.prototype.isBakery = function(user) {
-  return user.role === model.record.User.ROLE_BAKERY
-};
-model.resource.users = new Users;
-var Bakeries = function() {
-  tuna.events.EventDispatcher.call(this);
-  this.__bakeries = [];
-  this.__currentBakery = null
-};
-tuna.utils.extend(Bakeries, tuna.events.EventDispatcher);
-Bakeries.prototype.setBakeries = function(bakeries) {
-  this.__bakeries = bakeries;
-  this.dispatch("update-bakeries", bakeries)
-};
-Bakeries.prototype.getBakeryById = function(id) {
-  var i = 0, l = this.__bakeries.length;
-  while(i < l) {
-    if(this.__bakeries[i].id === id) {
-      return this.__bakeries[i]
-    }
-    i++
-  }
-  return null
-};
-Bakeries.prototype.getCurrentBakery = function() {
-  return this.__currentBakery
-};
-Bakeries.prototype.setCurrentBakery = function(bakery) {
-  this.__currentBakery = bakery;
-  if(bakery !== null) {
-    this.dispatch("update-current-bakery", bakery)
-  }else {
-    this.dispatch("remove-current-bakery")
-  }
-};
-Bakeries.prototype.getBakeriesList = function() {
-  return this.__bakeries
-};
-model.resource.bakeries = new Bakeries;
-var Recipes = function() {
-  tuna.events.EventDispatcher.call(this);
-  this.__recipes = []
-};
-tuna.utils.extend(Recipes, tuna.events.EventDispatcher);
-Recipes.prototype.setRecipes = function(recipes) {
-  this.__recipes = recipes;
-  this.dispatch("update-recipes", recipes)
-};
-Recipes.prototype.addRecipe = function(recipe) {
-  var i = 0, l = this.__recipes.length;
-  while(i < l) {
-    if(this.__recipes[i].id === recipe.id) {
-      break
-    }
-    i++
-  }
-  this.__recipes[i] = recipe;
-  this.dispatch("update-recipes", this.__recipes)
-};
-Recipes.prototype.removeRecipeById = function(id) {
-  var i = 0, l = this.__recipes.length;
-  while(i < l) {
-    if(this.__recipes[i].id === id) {
-      this.__recipes.splice(i, 1);
-      break
-    }
-    i++
-  }
-  this.dispatch("update-recipes", this.__recipes)
-};
-Recipes.prototype.getRecipeById = function(id) {
-  var i = 0, l = this.__recipes.length;
-  while(i < l) {
-    if(this.__recipes[i].id === id) {
-      return this.__recipes[i]
-    }
-    i++
-  }
-  return null
-};
-Recipes.prototype.getRecipesList = function() {
-  return this.__recipes
-};
-model.resource.recipes = new Recipes;
-var Orders = function() {
-  tuna.events.EventDispatcher.call(this);
-  this.__statuses = ["\u041d\u0435\u0430\u043a\u0442\u0438\u0432\u0435\u043d", "\u041d\u043e\u0432\u044b\u0439", "\u041f\u043e\u0434\u0442\u0432\u0435\u0440\u0436\u0434\u0435\u043d", "\u041e\u0442\u043a\u043b\u043e\u043d\u0435\u043d"];
-  this.__deliveryStatuses = ["\u041f\u043e\u0434\u0433\u043e\u0442\u043e\u0432\u043a\u0430", "\u0412&nbsp;\u043f\u0440\u043e\u0446\u0435\u0441\u0441\u0435", "\u0414\u043e\u0441\u0442\u0430\u0432\u043b\u0435\u043d\u043e"];
-  this.__paymentStatuses = ["\u041d\u0435&nbsp;\u043e\u043f\u043b\u0430\u0447\u0435\u043d\u043e", "\u041e\u043f\u043b\u0430\u0447\u0435\u043d\u043e"];
-  this.__orders = []
-};
-tuna.utils.extend(Orders, tuna.events.EventDispatcher);
-Orders.prototype.getStatusName = function(status) {
-  return this.__statuses[status]
-};
-Orders.prototype.getDeliveryStatusName = function(status) {
-  return this.__deliveryStatuses[status]
-};
-Orders.prototype.getPaymentStatusName = function(status) {
-  return this.__paymentStatuses[status]
-};
-Orders.prototype.setOrders = function(orders) {
-  this.__orders = orders;
-  this.dispatch("update-orders", orders)
-};
-Orders.prototype.getOrders = function() {
-  return this.__orders
-};
-Orders.prototype.getOrderById = function(id) {
-  var i = 0, l = this.__orders.length;
-  while(i < l) {
-    if(this.__orders[i].id === id) {
-      return this.__orders[i]
-    }
-    i++
-  }
-  return null
-};
-Orders.prototype.addOrder = function(order) {
-  var i = 0, l = this.__orders.length;
-  while(i < l) {
-    if(this.__orders[i].id === order.id) {
-      break
-    }
-    i++
-  }
-  this.__orders[i] = order;
-  this.dispatch("update-orders", this.__orders)
-};
-model.resource.orders = new Orders;
-var Dimensions = function() {
-  tuna.events.EventDispatcher.call(this);
-  this.__dimensions = [];
-  this.__shapes = {"round":"\u041a\u0440\u0443\u0433", "rect":"\u041f\u0440\u044f\u043c\u043e\u0443\u0433\u043e\u043b\u044c\u043d\u0438\u043a"}
-};
-tuna.utils.extend(Dimensions, tuna.events.EventDispatcher);
-Dimensions.prototype.setDimensions = function(dimensions) {
-  this.__dimensions = dimensions;
-  this.dispatch("update-dimensions", dimensions)
-};
-Dimensions.prototype.addDimension = function(dimension) {
-  var i = 0, l = this.__dimensions.length;
-  while(i < l) {
-    if(this.__dimensions[i].id === dimension.id) {
-      break
-    }
-    i++
-  }
-  this.__dimensions[i] = dimension;
-  this.dispatch("update-dimensions", this.__dimensions)
-};
-Dimensions.prototype.removeDimensionById = function(id) {
-  var i = 0, l = this.__dimensions.length;
-  while(i < l) {
-    if(this.__dimensions[i].id === id) {
-      this.__dimensions.splice(i, 1);
-      break
-    }
-    i++
-  }
-  this.dispatch("update-dimensions", this.__dimensions)
-};
-Dimensions.prototype.getDimensionById = function(id) {
-  var i = 0, l = this.__dimensions.length;
-  while(i < l) {
-    if(this.__dimensions[i].id === id) {
-      return this.__dimensions[i]
-    }
-    i++
-  }
-  return null
-};
-Dimensions.prototype.getDimensionsList = function() {
-  return this.__dimensions
-};
-Dimensions.prototype.getShapeName = function(shape) {
-  return this.__shapes[shape]
-};
-model.resource.dimensions = new Dimensions;
+model.bakeries = new tuna.model.ListResource("users.getBakeries", "bakery");
+model.recipes = new tuna.model.ListResource("recipes.get", "recipe");
+model.orders = new tuna.model.ListResource("orders.get", "order");
+model.dimensions = new tuna.model.ListResource("dimensions.get", "dimension");
+model.currentBakery = new tuna.model.ItemResource;
 var CommonMethod = function(name) {
   tuna.rest.Method.call(this, name);
   this.__request = new tuna.net.Request;

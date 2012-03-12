@@ -1,47 +1,43 @@
-<div class="j-navigation"
-     data-name="order-navigation">
+<div class="j-navigation-page page active"
+     data-name="table">
 
-    <div class="j-navigation-page page active"
-         data-page-name="table">
-
-        <div class="page-header">
-            <h1>Заказы</h1>
-        </div>
-
-        <div class="row">
-            <div class="span12">
-
-                <table class="table table-bordered table-striped">
-                    <thead>
-                    <tr>
-                        <th>№</th>
-                        <th>Время заказа</th>
-                        <th>Время доставки</th>
-                        <th>Клиент</th>
-                        <th>Стоимость</th>
-                        <th>Статус</th>
-                        <th>Доставка</th>
-                        <th>Оплата</th>
-                        <th>Действия</th>
-                    </tr>
-                    </thead>
-                    <tbody class="j-template-transformer j-button-group t-orders-list"
-                           data-name="orders-list"
-                           data-template-id="orders_list_template"></tbody>
-                </table>
-
-            </div>
-        </div>
-
+    <div class="page-header">
+        <h1>Заказы</h1>
     </div>
 
-    <div id="edit_order_page"
-         class="j-navigation-page j-control-container page"
-         data-page-name="edit">
+    <div class="row">
+        <div class="span12">
 
-        {{> template/page/orders/edit-order }}
+            <table class="table table-bordered table-striped">
+                <thead>
+                <tr>
+                    <th>№</th>
+                    <th>Время заказа</th>
+                    <th>Время доставки</th>
+                    <th>Клиент</th>
+                    <th>Стоимость</th>
+                    <th>Статус</th>
+                    <th>Доставка</th>
+                    <th>Оплата</th>
+                    <th>Действия</th>
+                </tr>
+                </thead>
+                <tbody class="j-template-transformer j-button-group t-orders-list"
+                       data-name="orders-list"
+                       data-template-id="orders_list_template"></tbody>
+            </table>
 
+        </div>
     </div>
+
+</div>
+
+<div id="edit_order_page"
+     class="j-navigation-page j-control-container page"
+     data-name="edit">
+
+    {{> template/page/orders/edit-order }}
+
 </div>
 
 

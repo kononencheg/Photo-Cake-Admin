@@ -1,61 +1,56 @@
-<div class="j-navigation"
-     data-name="recipes-navigation">
+<div class="j-navigation-page page active"
+     data-name="table">
 
-    <div class="j-navigation-page page active"
-         data-page-name="table">
-
-        <div class="page-header">
-            <div class="row">
-                <div class="span6">
-                    <h1>Рецепты</h1>
-                </div>
-                <div class="span6">
-                    <a class="j-navigation-link
-                              btn btn-large btn-primary pull-right"
-                       data-href="add">
-                        Добавить рецепт
-                    </a>
-                </div>
-            </div>
-        </div>
-
+    <div class="page-header">
         <div class="row">
-            <div class="j-template-transformer j-button-group span12"
-                 data-template-id="recipe_table_template"
-                 data-name="recipe-table">
-
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Название</th>
-                            <th>Картинка</th>
-                            <th>Описание</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody class="t-recipe-list"></tbody>
-                </table>
-
+            <div class="span6">
+                <h1>Рецепты</h1>
+            </div>
+            <div class="span6">
+                <a class="j-navigation-link
+                          btn btn-large btn-primary pull-right"
+                   data-href="add">
+                    Добавить рецепт
+                </a>
             </div>
         </div>
-
     </div>
 
-    <div id="add_recipe_page"
-         class="j-navigation-page j-control-container page"
-         data-page-name="add">
+    <div class="row">
+        <div class="j-template-transformer j-button-group span12"
+             data-template-id="recipe_table_template"
+             data-name="recipe-table">
 
-        {{> template/page/recipes/add-recipe }}
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Название</th>
+                        <th>Картинка</th>
+                        <th>Описание</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody class="t-recipe-list"></tbody>
+            </table>
 
+        </div>
     </div>
 
-    <div id="edit_recipe_page"
-         class="j-navigation-page j-control-container page"
-         data-page-name="edit">
+</div>
 
-        {{> template/page/recipes/edit-recipe }}
+<div id="add_recipe_page"
+     class="j-navigation-page j-control-container page"
+     data-name="add">
 
-    </div>
+    {{> template/page/recipes/add-recipe }}
+
+</div>
+
+<div id="edit_recipe_page"
+     class="j-navigation-page j-control-container page"
+     data-name="edit">
+
+    {{> template/page/recipes/edit-recipe }}
 
 </div>
 

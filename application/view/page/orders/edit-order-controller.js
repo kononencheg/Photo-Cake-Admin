@@ -44,7 +44,7 @@ EditOrdersController.prototype._initActions = function() {
     this.__orderForm.addEventListener('result', function(event, order) {
         self._navigation.back();
 
-        model.resource.orders.addOrder(order);
+        model.orders.addItem(order);
     });
 };
 
@@ -52,9 +52,10 @@ EditOrdersController.prototype._initActions = function() {
  * @override
  */
 EditOrdersController.prototype.open = function(data) {
-    var order = model.resource.orders.getOrderById(data['order-id']);
+    var order = model.orders.getItemById(data['order-id']);
     if (order !== null) {
         this.__orderFormTransformer.applyTransform(order.serialize());
+
         this.__orderForm.setValue('status', order.status);
         this.__orderForm.setValue('delivery_status', order.deliveryStatus);
         this.__orderForm.setValue('payment_status', order.paymentStatus);

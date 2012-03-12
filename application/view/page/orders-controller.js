@@ -4,6 +4,12 @@
  */
 var OrdersController = function () {
     tuna.view.PageViewController.call(this);
+
+    /**
+     * @type {function()}
+     * @private
+     */
+    this.__loadOrders = tuna.utils.bind(this.__loadOrders, this);
 };
 
 tuna.utils.extend(OrdersController, tuna.view.PageViewController);
@@ -20,42 +26,40 @@ OrdersController.prototype._requireModules = function() {
  * @override
  */
 OrdersController.prototype._initActions = function() {
-    var navigation = this._container.getModuleInstanceByName
-                            ('navigation', 'order-navigation');
-
     this._navigation.addChild
-        (navigation, this._container.getOption('page-name'));
+        (this._container.getModuleInstanceByName('navigation', 'orders'));
 
     var ordersListTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'orders-list');
 
-    var self = this;
-    model.resource.bakeries.addEventListener(
-        'update-current-bakery', function() {
-            self.__loadOrders();
-        }
-    );
+    model.orders.addEventListener('update', function(event, orders) {
+        ordersListTransformer.applyTransform(tuna.model.serialize(orders));
+    });
+};
 
-    model.resource.orders.addEventListener(
-        'update-orders', function(event, orders) {
-            ordersListTransformer.applyTransform(tuna.model.serialize(orders));
-        }
-    );
+/**
+ * @override
+ */
+OrdersController.prototype.open = function() {
+    model.currentBakery.addEventListener('update', this.__loadOrders);
 
     this.__loadOrders();
+};
+
+/**
+ * @override
+ */
+OrdersController.prototype.close = function() {
+    model.currentBakery.removeEventListener('update', this.__loadOrders);
 };
 
 /**
  * @private
  */
 OrdersController.prototype.__loadOrders = function() {
-    var bakery = model.resource.bakeries.getCurrentBakery();
+    var bakery = model.currentBakery.get();
     if (bakery !== null) {
-        tuna.rest.call('orders.get', {
-            'bakery_id': bakery.id
-        }, function(orders) {
-            model.resource.orders.setOrders(orders);
-        }, 'order');
+        model.orders.load({ 'bakery_id': bakery.id });
     }
 };
 

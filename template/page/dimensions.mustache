@@ -1,35 +1,43 @@
-<div class="j-navigation"
-     data-name="dimensions-navigation">
+<div class="j-navigation-page page active"
+     data-name="table">
 
-    <div class="j-navigation-page page active"
-         data-page-name="table">
-
-        <div class="page-header">
-            <div class="row">
-                <div class="span6">
-                    <h1>Формы</h1>
-                </div>
-                <div class="span6">
-                    <a class="j-navigation-link
-                              btn btn-large btn-primary pull-right"
-                       data-href="add">
-                        Добавить размер
-                    </a>
-                </div>
+    <div class="page-header">
+        <div class="row">
+            <div class="span6">
+                <h1>Формы</h1>
+            </div>
+            <div class="span6">
+                <a class="j-navigation-link
+                          btn btn-large btn-primary pull-right"
+                   data-href="add">
+                    Добавить размер
+                </a>
             </div>
         </div>
+    </div>
 
-        <div class="row">
-            <div class="j-template-transformer j-button-group span12"
-                 data-template-id="dimensions_list_template"
-                 data-name="dimensions-list">
+    <div class="row">
+        <div class="span12">
+
+            <form action="/api/" method="POST" target="api_frame"
+                  class="j-form j-template-transformer j-button-group"
+                  data-template-id="dimensions_list_template"
+                  data-name="dimensions-list"
+                  data-record-type="bakery">
+
+                <input type="hidden" name="method" value="users.editBakery" />
+                <input type="hidden" name="format" value="frame-callback" />
+
+                <input type="hidden" name="id" class="t-current-bakery-id" />
+
+                <div class="j-form-message alert alert-error hide"></div>
 
                 <table class="table table-bordered table-striped">
                     <thead>
                         <tr>
                             <th>Форма</th>
                             <th>Вес (кг.)</th>
-                            <th>Наличие</th>
+                            <th class="t-current-bakery-exist">Наличие</th>
                             <th class="t-bakery-hidden">Масштаб *</th>
                             <th class="t-bakery-hidden">Количество людей</th>
                             <th class="t-bakery-hidden">Действия</th>
@@ -38,26 +46,32 @@
                     <tbody class="t-dimensions-list"></tbody>
                 </table>
 
-            </div>
+                <div class="t-current-bakery-exist form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Сохранить
+                    </button>
+                </div>
+
+            </form>
+
         </div>
-
     </div>
 
-    <div id="add_recipe_page"
-         class="j-navigation-page j-control-container page"
-         data-page-name="add">
+</div>
 
-        {{!> template/page/dimensions/add-dimensions }}
+<div id="add_recipe_page"
+     class="j-navigation-page j-control-container page"
+     data-name="add">
 
-    </div>
+    {{!> template/page/dimensions/add-dimensions }}
 
-    <div id="edit_recipe_page"
-         class="j-navigation-page j-control-container page"
-         data-page-name="edit">
+</div>
 
-        {{!> template/page/dimensions/edit-dimensions }}
+<div id="edit_recipe_page"
+     class="j-navigation-page j-control-container page"
+     data-name="edit">
 
-    </div>
+    {{!> template/page/dimensions/edit-dimensions }}
 
 </div>
 

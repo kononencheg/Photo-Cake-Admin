@@ -7,11 +7,6 @@ var User = function (data) {
     /**
      * @type {string}
      */
-    this.id = '';
-
-    /**
-     * @type {string}
-     */
     this.name = '';
 
     /**
@@ -47,7 +42,7 @@ User.prototype.serialize = function() {
         'id': this.id,
         'email': this.email,
         'role': this.role,
-        'roleName': model.resource.users.getRoleName(this.role)
+        'roleName': tuna.utils.config.get('role')[this.role]
     };
 };
 

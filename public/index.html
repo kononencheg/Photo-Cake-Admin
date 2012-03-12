@@ -13,16 +13,17 @@
 
             .page { display: none; }
             .page.active { display: inherit; }
+            .page.active.hide { display: none; }
         </style>
     </head>
 
-    <body class="j-navigation j-template-transformer"
-          data-name="body"
-          data-template-id="access_template">
+    <body class="j-navigation j-template-transformer container"
+          data-name="body-container"
+          data-template-id="global_template">
 
         <form action="/api/" method="POST" target="api_frame"
               class="j-form j-popup form-horizontal hide"
-              data-name="sign-in" data-record-type="user">
+              data-name="sign-in" data-record-type="bakery">
         
             <input type="hidden" name="method" value="users.signIn" />
             <input type="hidden" name="format" value="frame-callback" />
@@ -106,638 +107,642 @@
                         <button type="submit" class="btn">Выход</button>
                     </form>
         
-                    <ul class="j-template-transformer nav pull-right"
-                        data-name="user-info"
-                        data-template-id="user_template">
-        
+                    <ul class="nav pull-right">
                         <li>
                             <a>
-                                <span class="t-user-role-name"></span> :
+                                <span class="t-current-user-role-name"></span> :
                                 <i class="icon-user icon-white"></i>
-                                <span class="t-user-email"></span>
+                                <span class="t-current-user-email"></span>
                             </a>
                         </li>
                     </ul>
                 </div>
             </div>
-        </div>        <div class="j-template-transformer container"
-             data-name="current-bakery"
-             data-template-id="current_bakery_template">
+        </div>        <div id="orders_page"
+             class="j-navigation-page j-navigation j-control-container
+                    t-current-bakery-exist page active"
+             data-name="orders">
         
-            <div class="t-current-bakery-exist">
-        
-                <div id="orders_page"
-                     class="j-navigation-page j-control-container page active"
-                     data-page-name="orders">
-        
-                    <div class="j-navigation"
-                         data-name="order-navigation">
-                    
-                        <div class="j-navigation-page page active"
-                             data-page-name="table">
-                    
-                            <div class="page-header">
-                                <h1>Заказы</h1>
+            <div class="j-navigation-page page active"
+                 data-name="table">
+            
+                <div class="page-header">
+                    <h1>Заказы</h1>
+                </div>
+            
+                <div class="row">
+                    <div class="span12">
+            
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th>№</th>
+                                <th>Время заказа</th>
+                                <th>Время доставки</th>
+                                <th>Клиент</th>
+                                <th>Стоимость</th>
+                                <th>Статус</th>
+                                <th>Доставка</th>
+                                <th>Оплата</th>
+                                <th>Действия</th>
+                            </tr>
+                            </thead>
+                            <tbody class="j-template-transformer j-button-group t-orders-list"
+                                   data-name="orders-list"
+                                   data-template-id="orders_list_template"></tbody>
+                        </table>
+            
+                    </div>
+                </div>
+            
+            </div>
+            
+            <div id="edit_order_page"
+                 class="j-navigation-page j-control-container page"
+                 data-name="edit">
+            
+                <form action="/api/" method="POST" target="api_frame"
+                      class="j-form j-template-transformer form-horizontal"
+                      data-template-id="order_info_template"
+                      data-name="edit-order-form"
+                      data-record-type="order">
+                
+                    <input type="hidden" name="method" value="orders.edit" />
+                    <input type="hidden" name="format" value="frame-callback" />
+                
+                    <input type="hidden" name="id" class="t-id" />
+                
+                    <div class="page-header">
+                        <div class="row">
+                            <div class="span7">
+                                <h1>Заказ № <span class="t-index">2145</span></h1>
                             </div>
-                    
-                            <div class="row">
-                                <div class="span12">
-                    
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                        <tr>
-                                            <th>№</th>
-                                            <th>Время заказа</th>
-                                            <th>Время доставки</th>
-                                            <th>Клиент</th>
-                                            <th>Стоимость</th>
-                                            <th>Статус</th>
-                                            <th>Доставка</th>
-                                            <th>Оплата</th>
-                                            <th>Действия</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody class="j-template-transformer j-button-group t-orders-list"
-                                               data-name="orders-list"
-                                               data-template-id="orders_list_template"></tbody>
-                                    </table>
-                    
+                            <div class="span5">
+                                <div class="btn-group pull-right">
+                                    <a class="j-navigation-link btn btn-large"
+                                       data-action="back">
+                                        Назад
+                                    </a>
+                                    <button type="submit"
+                                            class="btn btn-large btn-primary">
+                                        Сохранить изменения
+                                    </button>
                                 </div>
                             </div>
-                    
-                        </div>
-                    
-                        <div id="edit_order_page"
-                             class="j-navigation-page j-control-container page"
-                             data-page-name="edit">
-                    
-                            <form action="/api/" method="POST" target="api_frame"
-                                  class="j-form j-template-transformer form-horizontal"
-                                  data-template-id="order_info_template"
-                                  data-name="edit-order-form"
-                                  data-record-type="order">
-                            
-                                <input type="hidden" name="method" value="orders.edit" />
-                                <input type="hidden" name="format" value="frame-callback" />
-                            
-                                <input type="hidden" name="id" class="t-id" />
-                            
-                                <div class="page-header">
-                                    <div class="row">
-                                        <div class="span7">
-                                            <h1>Заказ № <span class="t-index">2145</span></h1>
-                                        </div>
-                                        <div class="span5">
-                                            <div class="btn-group pull-right">
-                                                <a class="j-navigation-link btn btn-large"
-                                                   data-action="back">
-                                                    Назад
-                                                </a>
-                                                <button type="submit"
-                                                        class="btn btn-large btn-primary">
-                                                    Сохранить изменения
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                <div class="row">
-                            
-                                    <div class="span6">
-                            
-                                        <fieldset>
-                                            <legend>Данные торта</legend>
-                            
-                                            <div class="control-group pagination-centered">
-                                                <img class="t-cake-image-url" alt="Торт"
-                                                     src="http://files.fotonatorte.local/cake_image_4f54a5012f58c.jpg"  />
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Рецепт: </label>
-                                                <div class="controls">
-                                                    <input class="t-recipe-name" disabled type="text"
-                                                           value="Марципан" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Вес (кг.): </label>
-                                                <div class="controls">
-                                                    <input class="t-cake-weight" disabled type="text"
-                                                           value="1.5" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="t-cake-photo control-group hide">
-                                                <label class="control-label">Фото: </label>
-                                                <div class="controls">
-                                                    <a class="t-cake-photo-url btn">Скачать</a>
-                                                </div>
-                                            </div>
-                                        </fieldset>
-                            
-                                        <fieldset>
-                                            <legend>Статус</legend>
-                            
-                                            <div class="j-status-input control-group">
-                                                <label class="control-label">Статус заказа: </label>
-                                                <div class="controls">
-                                                    <label class="radio inline">
-                                                        <input value="1" type="radio" name="status" />
-                                                        <span class="label label-important">Новый</span>
-                                                    </label>
-                                                    <label class="radio inline">
-                                                        <input value="2" type="radio" name="status" />
-                                                        <span class="label label-success">Подтвержден</span>
-                                                    </label>
-                                                    <label class="radio inline">
-                                                        <input value="3" type="radio" name="status" />
-                                                        <span class="label">Отклонен</span>
-                                                    </label>
-                                                    <p class="j-message help-block"></p>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="j-delivery_status-input control-group">
-                                                <label class="control-label">Статус доставки: </label>
-                                                <div class="controls">
-                                                    <label class="radio inline">
-                                                        <input value="0" type="radio" name="delivery_status" />
-                                                        <span class="label label-important">Подготовка</span>
-                                                    </label>
-                                                    <label class="radio inline">
-                                                        <input value="1" type="radio" name="delivery_status" />
-                                                        <span class="label label-info">В доставке</span>
-                                                    </label>
-                                                    <label class="radio inline">
-                                                        <input value="2" type="radio" name="delivery_status" />
-                                                        <span class="label label-success">Доставлено</span>
-                                                    </label>
-                                                    <p class="j-message help-block"></p>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="j-payment_status-input control-group">
-                                                <label class="control-label">Статус оплаты: </label>
-                                                <div class="controls">
-                                                    <label class="radio inline">
-                                                        <input value="0" type="radio" name="payment_status" />
-                                                        <span class="label label-important">Не оплачен</span>
-                                                    </label>
-                                                    <label class="radio inline">
-                                                        <input value="1" type="radio" name="payment_status" />
-                                                        <span class="label label-success">Оплачен</span>
-                                                    </label>
-                                                    <p class="j-message help-block"></p>
-                                                </div>
-                                            </div>
-                            
-                                        </fieldset>
-                            
-                                    </div>
-                            
-                                    <div class="span6">
-                            
-                                        <fieldset>
-                                            <legend>Данные клиента</legend>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Имя: </label>
-                                                <div class="controls">
-                                                    <input class="t-client-name" disabled type="text"
-                                                           value="Сергей Кононенко" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Телефон: </label>
-                                                <div class="controls">
-                                                    <input class="t-client-phone" disabled type="text"
-                                                           value="+7 (952) 232-90-25" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Email: </label>
-                                                <div class="controls">
-                                                    <input class="t-client-email" disabled type="text"
-                                                           value="kononencheg@gmail.com" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Источник: </label>
-                                                <div class="controls">
-                                                    <input class="t-client-network-name" disabled type="text"
-                                                           value="Вконтакте" />
-                                                </div>
-                                            </div>
-                            
-                                        </fieldset>
-                            
-                                        <fieldset>
-                                            <legend>Данные доставки</legend>
-                            
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Адрес: </label>
-                                                <div class="controls">
-                                                    <textarea class="t-delivery-address" disabled></textarea>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Время: </label>
-                                                <div class="controls">
-                                                    <input class="t-delivery-date" disabled type="text"
-                                                           value="24-02-2012 20:00" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Комментарий: </label>
-                                                <div class="controls">
-                                                    <textarea class="t-delivery-comment" disabled></textarea>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Записка: </label>
-                                                <div class="controls">
-                                                    <textarea class="t-delivery-message" disabled></textarea>
-                                                </div>
-                                            </div>
-                            
-                            
-                                        </fieldset>
-                            
-                                        <fieldset>
-                                            <legend>Данные оплаты</legend>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Сумма: </label>
-                                                <div class="controls">
-                                                    <input class="t-payment-price" disabled type="text" />
-                                                </div>
-                                            </div>
-                            
-                                            <div class="control-group">
-                                                <label class="control-label">Метод оплаты: </label>
-                                                <div class="controls">
-                                                    <select disabled>
-                                                        <option>Наличными</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                            
-                                        </fieldset>
-                            
-                                    </div>
-                            
-                                </div>
-                            
-                            </form>                    
                         </div>
                     </div>
-                    
-                    
+                
+                    <div class="row">
+                
+                        <div class="span6">
+                
+                            <fieldset>
+                                <legend>Данные торта</legend>
+                
+                                <div class="control-group pagination-centered">
+                                    <img class="t-cake-image-url" alt="Торт"
+                                         src="http://files.fotonatorte.local/cake_image_4f54a5012f58c.jpg"  />
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Рецепт: </label>
+                                    <div class="controls">
+                                        <input class="t-recipe-name" disabled type="text"
+                                               value="Марципан" />
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Вес (кг.): </label>
+                                    <div class="controls">
+                                        <input class="t-cake-weight" disabled type="text"
+                                               value="1.5" />
+                                    </div>
+                                </div>
+                
+                                <div class="t-cake-photo control-group hide">
+                                    <label class="control-label">Фото: </label>
+                                    <div class="controls">
+                                        <a class="t-cake-photo-url btn">Скачать</a>
+                                    </div>
+                                </div>
+                            </fieldset>
+                
+                            <fieldset>
+                                <legend>Статус</legend>
+                
+                                <div class="j-status-input control-group">
+                                    <label class="control-label">Статус заказа: </label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input value="1" type="radio" name="status" />
+                                            <span class="label label-important">Новый</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input value="2" type="radio" name="status" />
+                                            <span class="label label-success">Подтвержден</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input value="3" type="radio" name="status" />
+                                            <span class="label">Отклонен</span>
+                                        </label>
+                                        <p class="j-message help-block"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="j-delivery_status-input control-group">
+                                    <label class="control-label">Статус доставки: </label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input value="0" type="radio" name="delivery_status" />
+                                            <span class="label label-important">Подготовка</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input value="1" type="radio" name="delivery_status" />
+                                            <span class="label label-info">В доставке</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input value="2" type="radio" name="delivery_status" />
+                                            <span class="label label-success">Доставлено</span>
+                                        </label>
+                                        <p class="j-message help-block"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="j-payment_status-input control-group">
+                                    <label class="control-label">Статус оплаты: </label>
+                                    <div class="controls">
+                                        <label class="radio inline">
+                                            <input value="0" type="radio" name="payment_status" />
+                                            <span class="label label-important">Не оплачен</span>
+                                        </label>
+                                        <label class="radio inline">
+                                            <input value="1" type="radio" name="payment_status" />
+                                            <span class="label label-success">Оплачен</span>
+                                        </label>
+                                        <p class="j-message help-block"></p>
+                                    </div>
+                                </div>
+                
+                            </fieldset>
+                
+                        </div>
+                
+                        <div class="span6">
+                
+                            <fieldset>
+                                <legend>Данные клиента</legend>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Имя: </label>
+                                    <div class="controls">
+                                        <input class="t-client-name" disabled type="text"
+                                               value="Сергей Кононенко" />
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Телефон: </label>
+                                    <div class="controls">
+                                        <input class="t-client-phone" disabled type="text"
+                                               value="+7 (952) 232-90-25" />
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Email: </label>
+                                    <div class="controls">
+                                        <input class="t-client-email" disabled type="text"
+                                               value="kononencheg@gmail.com" />
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Источник: </label>
+                                    <div class="controls">
+                                        <input class="t-client-network-name" disabled type="text"
+                                               value="Вконтакте" />
+                                    </div>
+                                </div>
+                
+                            </fieldset>
+                
+                            <fieldset>
+                                <legend>Данные доставки</legend>
+                
+                
+                                <div class="control-group">
+                                    <label class="control-label">Адрес: </label>
+                                    <div class="controls">
+                                        <textarea class="t-delivery-address" disabled></textarea>
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Время: </label>
+                                    <div class="controls">
+                                        <input class="t-delivery-date" disabled type="text"
+                                               value="24-02-2012 20:00" />
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Комментарий: </label>
+                                    <div class="controls">
+                                        <textarea class="t-delivery-comment" disabled></textarea>
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Записка: </label>
+                                    <div class="controls">
+                                        <textarea class="t-delivery-message" disabled></textarea>
+                                    </div>
+                                </div>
+                
+                
+                            </fieldset>
+                
+                            <fieldset>
+                                <legend>Данные оплаты</legend>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Сумма: </label>
+                                    <div class="controls">
+                                        <input class="t-payment-price" disabled type="text" />
+                                    </div>
+                                </div>
+                
+                                <div class="control-group">
+                                    <label class="control-label">Метод оплаты: </label>
+                                    <div class="controls">
+                                        <select disabled>
+                                            <option>Наличными</option>
+                                        </select>
+                                    </div>
+                                </div>
+                
+                            </fieldset>
+                
+                        </div>
+                
+                    </div>
+                
+                </form>            
+            </div>
+            
+            
+        </div>
+        
+        <div id="recipes_page"
+             class="j-navigation-page j-navigation j-control-container page
+                    t-current-bakery-exist"
+             data-name="recipes">
+        
+            <div class="j-navigation-page page active"
+                 data-name="table">
+            
+                <div class="page-header">
+                    <div class="row">
+                        <div class="span6">
+                            <h1>Рецепты</h1>
+                        </div>
+                        <div class="span6">
+                            <a class="j-navigation-link
+                                      btn btn-large btn-primary pull-right"
+                               data-href="add">
+                                Добавить рецепт
+                            </a>
+                        </div>
+                    </div>
                 </div>
-        
-                <div id="recipes_page"
-                     class="j-navigation-page j-control-container page"
-                     data-page-name="recipes">
-        
-                    <div class="j-navigation"
-                         data-name="recipes-navigation">
-                    
-                        <div class="j-navigation-page page active"
-                             data-page-name="table">
-                    
-                            <div class="page-header">
-                                <div class="row">
-                                    <div class="span6">
-                                        <h1>Рецепты</h1>
-                                    </div>
-                                    <div class="span6">
-                                        <a class="j-navigation-link
-                                                  btn btn-large btn-primary pull-right"
-                                           data-href="add">
-                                            Добавить рецепт
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                    
-                            <div class="row">
-                                <div class="j-template-transformer j-button-group span12"
-                                     data-template-id="recipe_table_template"
-                                     data-name="recipe-table">
-                    
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Название</th>
-                                                <th>Картинка</th>
-                                                <th>Описание</th>
-                                                <th>Действия</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="t-recipe-list"></tbody>
-                                    </table>
-                    
-                                </div>
-                            </div>
-                    
+            
+                <div class="row">
+                    <div class="j-template-transformer j-button-group span12"
+                         data-template-id="recipe_table_template"
+                         data-name="recipe-table">
+            
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Название</th>
+                                    <th>Картинка</th>
+                                    <th>Описание</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody class="t-recipe-list"></tbody>
+                        </table>
+            
+                    </div>
+                </div>
+            
+            </div>
+            
+            <div id="add_recipe_page"
+                 class="j-navigation-page j-control-container page"
+                 data-name="add">
+            
+                <div class="page-header">
+                
+                    <div class="row">
+                        <div class="span6">
+                            <h1>Добавление нового рецепта</h1>
                         </div>
-                    
-                        <div id="add_recipe_page"
-                             class="j-navigation-page j-control-container page"
-                             data-page-name="add">
-                    
-                            <div class="page-header">
-                            
-                                <div class="row">
-                                    <div class="span6">
-                                        <h1>Добавление нового рецепта</h1>
-                                    </div>
-                                    <div class="span6">
-                                        <a class="j-navigation-link btn btn-large pull-right"
-                                           data-action="back">
-                                           Назад
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="span12">
-                            
-                                    <form action="/api/" method="POST" target="api_frame"
-                                          enctype="multipart/form-data"
-                                          class="j-form form-horizontal"
-                                          data-name="add-recipe"
-                                          data-record-type="recipe">
-                            
-                                        <input type="hidden" name="method" value="recipes.add" />
-                                        <input type="hidden" name="format" value="frame-callback" />
-                            
-                                        <input type="hidden" name="bakery_id" />
-                            
-                                        <div class="j-form-message alert alert-error hide"></div>
-                            
-                                        <fieldset>
-                            
-                                            <div class="j-recipe_name-input control-group">
-                                                <label class="control-label" for="add_recipe_name">
-                                                    Название:
-                                                </label>
-                                                <div class="controls">
-                                                    <div class="input">
-                                                        <input name="recipe_name" id="add_recipe_name"
-                                                               type="text" />
-                                                    </div>
-                                                    <p class="j-message help-block">
-                                                        Общеизвестное название рецепта.
-                                                    </p>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="j-recipe_desc-input control-group">
-                                                <label class="control-label" for="add_recipe_desc">
-                                                    Описание рецепта:
-                                                </label>
-                                                <div class="controls">
-                                                    <div class="input">
-                                                        <textarea name="recipe_desc" rows="7"
-                                                                  id="add_recipe_desc"></textarea>
-                                                    </div>
-                                                    <p class="j-message help-block">
-                                                        Подробное описание рецепта.
-                                                    </p>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="j-recipe_image-input control-group">
-                                                <label class="control-label" for="add_recipe_image">
-                                                    Картинка:
-                                                </label>
-                                                <div class="controls">
-                                                    <div class="input">
-                                                        <input name="recipe_image" type="file"
-                                                               id="add_recipe_image" />
-                                                    </div>
-                                                    <p class="j-message help-block">
-                                                        Картинка в списке и в окне описания рецептов.
-                                                    </p>
-                                                </div>
-                                            </div>
-                            
-                                            <div class="form-actions">
-                                                <button type="submit" class="btn btn-primary">
-                                                    Добавить
-                                                </button>
-                                            </div>
-                            
-                                        </fieldset>
-                                    </form>
-                                </div>
-                            </div>                    
+                        <div class="span6">
+                            <a class="j-navigation-link btn btn-large pull-right"
+                               data-action="back">
+                               Назад
+                            </a>
                         </div>
-                    
-                        <div id="edit_recipe_page"
-                             class="j-navigation-page j-control-container page"
-                             data-page-name="edit">
-                    
-                            <form action="/api/" method="POST" target="api_frame"
-                                  class="j-template-transformer j-form"
-                                  data-template-id="recipe_template"
-                                  data-name="edit-recipe-form"
-                                  data-record-type="recipe">
-                            
-                                <input type="hidden" name="method" value="recipe.edit" />
-                                <input type="hidden" name="format" value="frame-callback" />
-                            
-                                <div class="page-header">
-                            
-                                    <div class="row">
-                                        <div class="span6">
-                                            <h1 class="t-name">Тирамису</h1>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="span12">
+                
+                        <form action="/api/" method="POST" target="api_frame"
+                              enctype="multipart/form-data"
+                              class="j-form form-horizontal"
+                              data-name="add-recipe"
+                              data-record-type="recipe">
+                
+                            <input type="hidden" name="method" value="recipes.add" />
+                            <input type="hidden" name="format" value="frame-callback" />
+                
+                            <input type="hidden" name="bakery_id" class="t-current-bakery-id" />
+                
+                            <div class="j-form-message alert alert-error hide"></div>
+                
+                            <fieldset>
+                
+                                <div class="j-recipe_name-input control-group">
+                                    <label class="control-label" for="add_recipe_name">
+                                        Название:
+                                    </label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input name="recipe_name" id="add_recipe_name"
+                                                   type="text" />
                                         </div>
-                                        <div class="span6">
-                                            <a class="j-navigation-link btn btn-large pull-right"
-                                               data-action="back">
-                                                Назад
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            
-                                <div class="row">
-                                    <div class="span6">
-                                        <p>
-                                            <span class="t-desc"></span>
-                                            <img class="t-image" alt src />
+                                        <p class="j-message help-block">
+                                            Общеизвестное название рецепта.
                                         </p>
                                     </div>
-                            
-                                    <div class="span5 offset1">
-                                        
-                                       <table class="table">
-                                            <thead>
-                                                <tr>
-                                                    <th>Вес (кг.)</th>
-                                                    <th>Цена (руб.)</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody class="t-price-list"></tbody>
-                                        </table>
-                            
+                                </div>
+                
+                                <div class="j-recipe_desc-input control-group">
+                                    <label class="control-label" for="add_recipe_desc">
+                                        Описание рецепта:
+                                    </label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <textarea name="recipe_desc" rows="7"
+                                                      id="add_recipe_desc"></textarea>
+                                        </div>
+                                        <p class="j-message help-block">
+                                            Подробное описание рецепта.
+                                        </p>
                                     </div>
                                 </div>
-                            
-                            </form>
-                            
-                            
-                            
-                            
-                    
-                        </div>
-                    
+                
+                                <div class="j-recipe_image-input control-group">
+                                    <label class="control-label" for="add_recipe_image">
+                                        Картинка:
+                                    </label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input name="recipe_image" type="file"
+                                                   id="add_recipe_image" />
+                                        </div>
+                                        <p class="j-message help-block">
+                                            Картинка в списке и в окне описания рецептов.
+                                        </p>
+                                    </div>
+                                </div>
+                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        Добавить
+                                    </button>
+                                </div>
+                
+                            </fieldset>
+                        </form>
                     </div>
-                    
-                </div>
-        
-                <div id="dimensions_page"
-                     class="j-navigation-page j-control-container page"
-                     data-page-name="dimensions">
-        
-                    <div class="j-navigation"
-                         data-name="dimensions-navigation">
-                    
-                        <div class="j-navigation-page page active"
-                             data-page-name="table">
-                    
-                            <div class="page-header">
-                                <div class="row">
-                                    <div class="span6">
-                                        <h1>Формы</h1>
-                                    </div>
-                                    <div class="span6">
-                                        <a class="j-navigation-link
-                                                  btn btn-large btn-primary pull-right"
-                                           data-href="add">
-                                            Добавить размер
-                                        </a>
-                                    </div>
-                                </div>
+                </div>            
+            </div>
+            
+            <div id="edit_recipe_page"
+                 class="j-navigation-page j-control-container page"
+                 data-name="edit">
+            
+                <form action="/api/" method="POST" target="api_frame"
+                      class="j-template-transformer j-form"
+                      data-template-id="recipe_template"
+                      data-name="edit-recipe-form"
+                      data-record-type="recipe">
+                
+                    <input type="hidden" name="method" value="recipe.edit" />
+                    <input type="hidden" name="format" value="frame-callback" />
+                    <input type="hidden" name="id" class="t-id-input" />
+                
+                    <div class="page-header">
+                
+                        <div class="row">
+                            <div class="span6">
+                                <h1 class="t-name">Тирамису</h1>
                             </div>
-                    
-                            <div class="row">
-                                <div class="j-template-transformer j-button-group span12"
-                                     data-template-id="dimensions_list_template"
-                                     data-name="dimensions-list">
-                    
-                                    <table class="table table-bordered table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Форма</th>
-                                                <th>Вес (кг.)</th>
-                                                <th>Наличие</th>
-                                                <th class="t-bakery-hidden">Масштаб *</th>
-                                                <th class="t-bakery-hidden">Количество людей</th>
-                                                <th class="t-bakery-hidden">Действия</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="t-dimensions-list"></tbody>
-                                    </table>
-                    
-                                </div>
+                            <div class="span6">
+                                <a class="j-navigation-link btn btn-large pull-right"
+                                   data-action="back">
+                                    Назад
+                                </a>
                             </div>
-                    
                         </div>
-                    
-                        <div id="add_recipe_page"
-                             class="j-navigation-page j-control-container page"
-                             data-page-name="add">
-                    
-                    
-                        </div>
-                    
-                        <div id="edit_recipe_page"
-                             class="j-navigation-page j-control-container page"
-                             data-page-name="edit">
-                    
-                    
-                        </div>
-                    
                     </div>
-                    
-                </div>
-        
+                
+                    <div class="row">
+                        <div class="span6">
+                            <p>
+                                <span class="t-desc"></span>
+                                <img class="t-image" alt src />
+                            </p>
+                        </div>
+                
+                        <div class="span5 offset1">
+                            
+                           <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Вес (кг.)</th>
+                                        <th>Цена (руб.)</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="t-price-list"></tbody>
+                            </table>
+                
+                            <div class="t-current-bakery-exist form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    Сохранить
+                                </button>
+                            </div>
+                
+                        </div>
+                    </div>
+                
+                </form>
+                
+                
+                
+                
+            
             </div>
+            
+        </div>
         
-            <div class="t-bakery-hidden row">
+        <div id="dimensions_page"
+             class="j-navigation-page j-navigation j-control-container page"
+             data-name="dimensions">
         
-                <div class="span12">
-                    <form class="j-form j-template-transformer
-                                 t-bakery-disabled form-inline pull-right"
-                          data-name="bakery-selection"
-                          data-template-id="bakery_selection_template">
-        
-                        <label>
-                            Кондитерская:
-        
-                            <select name="bakery_id" class="t-bakery-select">
-                                <option value="-1"></option>
-                            </select>
-                        </label>
-        
-                        <input type="submit" class="btn" value="Выбрать" />
-                    </form>
+            <div class="j-navigation-page page active"
+                 data-name="table">
+            
+                <div class="page-header">
+                    <div class="row">
+                        <div class="span6">
+                            <h1>Формы</h1>
+                        </div>
+                        <div class="span6">
+                            <a class="j-navigation-link
+                                      btn btn-large btn-primary pull-right"
+                               data-href="add">
+                                Добавить размер
+                            </a>
+                        </div>
+                    </div>
                 </div>
+            
+                <div class="row">
+                    <div class="span12">
+            
+                        <form action="/api/" method="POST" target="api_frame"
+                              class="j-form j-template-transformer j-button-group"
+                              data-template-id="dimensions_list_template"
+                              data-name="dimensions-list"
+                              data-record-type="bakery">
+            
+                            <input type="hidden" name="method" value="users.editBakery" />
+                            <input type="hidden" name="format" value="frame-callback" />
+            
+                            <input type="hidden" name="id" class="t-current-bakery-id" />
+            
+                            <div class="j-form-message alert alert-error hide"></div>
+            
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Форма</th>
+                                        <th>Вес (кг.)</th>
+                                        <th class="t-current-bakery-exist">Наличие</th>
+                                        <th class="t-bakery-hidden">Масштаб *</th>
+                                        <th class="t-bakery-hidden">Количество людей</th>
+                                        <th class="t-bakery-hidden">Действия</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="t-dimensions-list"></tbody>
+                            </table>
+            
+                            <div class="t-current-bakery-exist form-actions">
+                                <button type="submit" class="btn btn-primary">
+                                    Сохранить
+                                </button>
+                            </div>
+            
+                        </form>
+            
+                    </div>
+                </div>
+            
             </div>
+            
+            <div id="add_recipe_page"
+                 class="j-navigation-page j-control-container page"
+                 data-name="add">
+            
+            
+            </div>
+            
+            <div id="edit_recipe_page"
+                 class="j-navigation-page j-control-container page"
+                 data-name="edit">
+            
+            
+            </div>
+            
+        </div>
         
+        
+        <div class="t-bakery-hidden row">
+        
+            <div class="span12">
+                <form class="j-form j-template-transformer
+                             t-bakery-disabled form-inline pull-right"
+                      data-name="bakery-selection"
+                      data-template-id="bakery_selection_template">
+        
+                    <label>
+                        Кондитерская:
+        
+                        <select name="bakery_id" class="t-bakery-select">
+                            <option value="-1"></option>
+                        </select>
+                    </label>
+        
+                    <input type="submit" class="btn" value="Выбрать" />
+                </form>
+            </div>
         </div>
         
         
 
         <div class="j-control-container hide">
 
-            <!-- Common  -->
+            <!-- Global  -->
             
             <select>
                 <option id="option_renderer" class="t-option"></option>
             </select>
             
-            <!-- User templates -->
+            <tuna:template id="global_template">
             
-            <tuna:template id="current_bakery_template">
-                <tuna:if tuna:path="" tuna:notset tuna:class="hide"
+                <tuna:if tuna:path="currentBakery" tuna:notset tuna:class="hide"
                          tuna:target="t-current-bakery-exist" />
+            
+                <tuna:checkbox tuna:path="currentBakery/dimensionIds"
+                               tuna:target="t-is-dimension-available" />
+            
+                <tuna:attr tuna:path="currentBakery/id" tuna:name="value"
+                           tuna:target="t-current-bakery-id" />
+            
+                <tuna:if tuna:path="currentUser/role" tuna:eq="1" tuna:class="disabled"
+                         tuna:target="t-bakery-disabled" />
+            
+                <tuna:if tuna:path="currentUser/role" tuna:eq="1" tuna:class="hide"
+                         tuna:target="t-bakery-hidden" />
+            
+                <tuna:spot tuna:path="currentUser/email"
+                           tuna:target="t-current-user-email" />
+            
+                <tuna:spot tuna:path="currentUser/role"
+                           tuna:target="t-current-user-role" />
+            
+                <tuna:spot tuna:path="currentUser/roleName"
+                           tuna:target="t-current-user-role-name" />
+            
+            
             </tuna:template>
             
-            <tuna:template id="user_template">
-                <tuna:spot tuna:path="email"
-                           tuna:target="t-user-email" />
-            
-                <tuna:spot tuna:path="role"
-                           tuna:target="t-user-role" />
-            
-                <tuna:spot tuna:path="roleName"
-                           tuna:target="t-user-role-name" />
-            </tuna:template>
-            
-            <tuna:template id="access_template">
-            
-                <tuna:if tuna:path="role" tuna:eq="1" tuna:class="disabled"
-                         tuna:target="t-bakery-disabled"/>
-            
-                <tuna:if tuna:path="role" tuna:eq="1" tuna:class="hide"
-                         tuna:target="t-bakery-hidden"/>
-            
-            </tuna:template>
             
             <!-- Bakery templates -->
             
@@ -921,6 +926,7 @@
             
             <tuna:template id="recipe_template">
                 <tuna:attr tuna:target="t-id" tuna:path="id" tuna:name="data-recipe-id" />
+                <tuna:attr tuna:target="t-id-input" tuna:path="id" tuna:name="value" />
             
                 <tuna:attr tuna:target="t-image" tuna:path="imageUrl" tuna:name="src" />
                 <tuna:attr tuna:target="t-image" tuna:path="name" tuna:name="alt"
@@ -941,7 +947,7 @@
             
                 <tuna:attr tuna:target="t-price" tuna:path="price" tuna:name="value" />
                 <tuna:attr tuna:target="t-price" tuna:path="weight" tuna:name="name"
-                           tuna:filter="dimension_price[$$]"/>
+                           tuna:filter="dimension_prices[$$]"/>
             </tuna:template>
             
             <table>
@@ -996,14 +1002,8 @@
                 <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
                 <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
             
-                <tuna:attr tuna:name="name" tuna:path="shape"
-                           tuna:filter="availability_list[$$]"
-                           tuna:target="t-is-available" />
-            
-                <tuna:attr tuna:name="value" tuna:path="weight"
-                           tuna:target="t-is-available" />
-            
-                <tuna:checkbox tuna:target="t-is-available" tuna:path="isAvailable" />
+                <tuna:attr tuna:name="value" tuna:path="id"
+                           tuna:target="t-id-checkbox" />
             
             </tuna:template>
             
@@ -1012,8 +1012,9 @@
                     <tr id="dimensions_list_item_renderer">
                         <td class="t-shape-name">Круг</td>
                         <td class="t-weight">1</td>
-                        <td>
-                            <input class="t-is-available" type="checkbox" />
+                        <td class="t-current-bakery-exist">
+                            <input class="t-is-dimension-available t-id-checkbox"
+                                   type="checkbox" name="dimension_ids[]" />
                         </td>
                         <td class="t-ratio t-bakery-hidden">0.6</td>
                         <td class="t-persons-count t-bakery-hidden">5</td>

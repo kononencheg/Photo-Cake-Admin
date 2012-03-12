@@ -14,6 +14,11 @@ var Bakery = function (data) {
      */
     this.deliveryPrice = 0;
 
+    /**
+     * @type {Array.<string>}
+     */
+    this.dimensionIds = null;
+
     model.record.User.call(this, data);
 };
 
@@ -25,20 +30,21 @@ tuna.utils.extend(Bakery, model.record.User);
 Bakery.prototype.populate = function(data) {
     model.record.User.prototype.populate.call(this, data);
 
-    this.city = data['city'] && data['city']['name'];
-    this.deliveryPrice = data['delivery_price'];
+    this.city = data['city'] && data['city']['name'] || null;
+    this.deliveryPrice = data['delivery_price'] || null;
+    this.dimensionIds = data['available_dimension_ids'] || null;
 };
 
 /**
  * @override
  */
 Bakery.prototype.serialize = function() {
-    return {
-        'id': this.id,
-        'name': this.name + ' (' + this.city + ')',
-        'email': this.email,
-        'deliveryPrice': this.deliveryPrice
-    };
+    var result = model.record.User.prototype.serialize.call(this);
+    result['name'] = this.city;
+    result['deliveryPrice'] = this.deliveryPrice;
+    result['dimensionIds'] = this.dimensionIds;
+
+    return result;
 };
 
 /**

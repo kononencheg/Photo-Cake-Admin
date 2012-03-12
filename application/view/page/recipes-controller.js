@@ -4,6 +4,13 @@
  */
 var RecipesController = function () {
     tuna.view.PageViewController.call(this);
+
+    /**
+     * @type {function()}
+     * @private
+     */
+    this.__loadRecipes = tuna.utils.bind(this.__loadRecipes, this);
+
 };
 
 tuna.utils.extend(RecipesController, tuna.view.PageViewController);
@@ -22,13 +29,11 @@ RecipesController.prototype._requireModules = function() {
  * @override
  */
 RecipesController.prototype._initActions = function() {
-    var navigation = this._container.getModuleInstanceByName
-                        ('navigation', 'recipes-navigation');
-
     this._navigation.addChild
-        (navigation, this._container.getOption('page-name'));
+        (this._container.getModuleInstanceByName('navigation', 'recipes'));
 
     var self = this;
+
     var recipeControls = this._container.getModuleInstanceByName
                                 ('button-group', 'recipe-table');
 
@@ -36,35 +41,36 @@ RecipesController.prototype._initActions = function() {
         self.__deleteRecipe(button);
     });
 
-    model.resource.bakeries.addEventListener(
-        'update-current-bakery', function() {
-            self.__loadRecipes();
-        }
-    );
-
     var recipeListTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'recipe-table');
 
-    model.resource.recipes.addEventListener(
-        'update-recipes', function(event, recipes) {
-            recipeListTransformer.applyTransform(tuna.model.serialize(recipes));
-        }
-    );
+    model.recipes.addEventListener('update', function(event, recipes) {
+        recipeListTransformer.applyTransform(tuna.model.serialize(recipes));
+    });
+};
 
+/**
+ * @override
+ */
+RecipesController.prototype.open = function() {
+    model.currentBakery.addEventListener('update', this.__loadRecipes);
     this.__loadRecipes();
+};
+
+/**
+ * @override
+ */
+RecipesController.prototype.close = function() {
+    model.currentBakery.removeEventListener('update', this.__loadRecipes);
 };
 
 /**
  * @private
  */
 RecipesController.prototype.__loadRecipes = function() {
-    var bakery = model.resource.bakeries.getCurrentBakery();
+    var bakery = model.currentBakery.get();
     if (bakery !== null) {
-        tuna.rest.call('recipes.get', {
-            'bakery_id': bakery.id
-        }, function(recipes) {
-            model.resource.recipes.setRecipes(recipes);
-        }, 'recipe');
+        model.recipes.load({ 'bakery_id': bakery.id });
     }
 };
 
@@ -79,7 +85,7 @@ RecipesController.prototype.__deleteRecipe = function(button) {
         tuna.rest.call('recipes.remove', {
             'recipe_id': recipeId
         }, function() {
-            model.resource.recipes.removeRecipeById(recipeId);
+            model.recipes.removeItemById(recipeId);
         });
 
         button.setEnabled(false);

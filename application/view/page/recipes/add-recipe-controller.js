@@ -31,21 +31,11 @@ AddRecipeController.prototype._initActions = function() {
         ('form', 'add-recipe');
 
     this.__addRecipeForm.addEventListener('result', function(event, recipe) {
-        model.resource.recipes.addRecipe(recipe);
+        model.recipes.addItem(recipe);
 
         self.__addRecipeForm.reset();
         self._navigation.back();
     });
-};
-
-/**
- * @override
- */
-AddRecipeController.prototype.open = function() {
-    var bakery = model.resource.bakeries.getCurrentBakery();
-    if (bakery !== null) {
-        this.__addRecipeForm.setValue('bakery_id', bakery.id);
-    }
 };
 
 

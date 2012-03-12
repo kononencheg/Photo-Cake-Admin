@@ -29,7 +29,7 @@ MainController.prototype._initActions = function() {
         } else {
             self.__applyUser(user);
         }
-    }, 'user');
+    }, 'bakery');
 
     this.__initSingOutForm();
 };
@@ -65,66 +65,59 @@ MainController.prototype.__showSignUpPopup = function() {
  * @param {model.record.User} user
  */
 MainController.prototype.__applyUser = function(user) {
+    if (user.role === model.record.User.ROLE_ADMIN) {
 
-    var accessTransformer =
-        this._container.getModuleInstanceByName
-            ('template-transformer', 'body');
+        var bakeryForm = this._container.getModuleInstanceByName
+            ('form', 'bakery-selection');
 
-    accessTransformer.applyTransform(user.serialize());
+        bakeryForm.addEventListener('submit', function(event) {
+            event.preventDefault();
 
-    var currentBakeryTransformer = this._container.getModuleInstanceByName
-        ('template-transformer', 'current-bakery');
+            var id  = bakeryForm.getValue('bakery_id');
+            if (id !== undefined) {
+                model.currentBakery.set(model.bakeries.getItemById(id));
+            }
+        });
 
-    model.resource.bakeries.addEventListener(
-        'update-current-bakery', function(event, bakery) {
-            currentBakeryTransformer.applyTransform
-                (tuna.model.serialize(bakery));
-        }
-    );
+        var bakeryTransformer = this._container.getModuleInstanceByName
+            ('template-transformer', 'bakery-selection');
 
-    model.resource.bakeries.addEventListener(
-        'remove-current-bakery', function() {
-            currentBakeryTransformer.applyTransform(null);
-        }
-    );
+        model.bakeries.addEventListener('update', function(event, bakeries) {
+            bakeryTransformer.applyTransform(tuna.model.serialize(bakeries));
+        });
 
-    currentBakeryTransformer.applyTransform(null);
-
-    var userInfoTransformer =
-        this._container.getModuleInstanceByName
-            ('template-transformer', 'user-info');
-
-    userInfoTransformer.applyTransform(user.serialize());
-
-    if (!model.resource.users.isBakery(user)) {
-        var bakerySelectionTransformer =
-            this._container.getModuleInstanceByName
-                ('template-transformer', 'bakery-selection');
-
-        var bakerySelectionForm =
-            this._container.getModuleInstanceByName
-                ('form', 'bakery-selection');
-
-        tuna.rest.call('users.getBakeries', null, function(bakeries) {
-            model.resource.bakeries.setBakeries(bakeries);
-
-            bakerySelectionTransformer.applyTransform
-                (tuna.model.serialize(bakeries));
-
-            bakerySelectionForm.addEventListener('submit', function(event) {
-                event.preventDefault();
-
-                var bakeryId  = bakerySelectionForm.getValue('bakery_id');
-                if (bakeryId !== undefined) {
-                    model.resource.bakeries.setCurrentBakery
-                        (model.resource.bakeries.getBakeryById(bakeryId));
-                }
-            });
-
-        }, 'bakery');
+        model.bakeries.load();
     } else {
-        model.resource.bakeries.setCurrentBakery(user);
+        model.currentBakery.set(user);
     }
+
+    var globalTransformer = this._container.getModuleInstanceByName
+        ('template-transformer', 'body-container');
+
+    function updateGlobalTransformer() {
+        var bakery = model.currentBakery.get();
+
+        globalTransformer.reset();
+        globalTransformer.applyTransform({
+            'currentUser': tuna.model.serialize(user),
+            'currentBakery': tuna.model.serialize(bakery)
+        });
+    }
+
+    model.currentBakery.addEventListener('update', updateGlobalTransformer);
+
+    var navigation = this._container.getModuleInstanceByName
+        ('navigation', 'body-container');
+
+    navigation.addEventListener('open', function(event, index) {
+        if (index === 'dimensions') {
+            updateGlobalTransformer();
+        }
+    });
+
+    updateGlobalTransformer();
+
+    model.dimensions.load();
 };
 
 tuna.view.setMainController(new MainController());

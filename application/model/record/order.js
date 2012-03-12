@@ -109,12 +109,10 @@ Order.prototype.serialize = function() {
         'status': this.status,
         'paymentStatus': this.paymentStatus,
         'deliveryStatus': this.deliveryStatus,
-        'statusName': model.resource.orders.getStatusName(this.status),
-        'paymentStatusName':
-            model.resource.orders.getPaymentStatusName(this.paymentStatus),
 
-        'deliveryStatusName':
-            model.resource.orders.getDeliveryStatusName(this.deliveryStatus)
+        'statusName':        tuna.utils.config.get('orderStatus')[this.status],
+        'paymentStatusName': tuna.utils.config.get('paymentStatus')[this.paymentStatus],
+        'deliveryStatusName':tuna.utils.config.get('deliveryStatus')[this.deliveryStatus]
     };
 };
 

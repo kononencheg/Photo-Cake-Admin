@@ -48,20 +48,16 @@ Recipe.prototype.populate = function(data) {
     this.name = data['name'];
     this.desc = data['desc'];
     this.imageUrl = data['image_url'];
-
-    this.dimentionPrices = [];
-
-    var rawPrices = data['dimension_prices'];
-    for (var key in rawPrices) {
-        this.dimentionPrices.push(rawPrices[key]);
-    }
+    this.dimentionPrices = data['dimension_prices'] || null;
 };
 
 /**
- * @override
+ *
+ * @param {Array.<string>=} weights
+ * @return {Object}
  */
-Recipe.prototype.serialize = function() {
-    return {
+Recipe.prototype.serialize = function(weights) {
+    var result = {
         'id': this.id,
         'bakeryId': this.bakeryId,
         'name': this.name,
@@ -69,6 +65,35 @@ Recipe.prototype.serialize = function() {
         'imageUrl': this.imageUrl,
         'dimensionPrices': this.dimentionPrices
     };
+
+    if (weights !== undefined) {
+        var prices = [];
+
+        var i = 0,
+            l = weights.length;
+
+        var weightKey = null;
+        var price = null;
+        while (i < l) {
+            price = { 'weight': weights[i] };
+
+            if (this.dimentionPrices !== null) {
+                weightKey = (weights[i] + '').replace('.', '_');
+                if (this.dimentionPrices[weightKey] !== undefined) {
+                    price['price'] = this.dimentionPrices[weightKey]['price'];
+                }
+            }
+
+            prices.push(price);
+
+            i++;
+        }
+
+        result['dimensionPrices'] = prices;
+    }
+
+
+    return result;
 };
 
 /**
