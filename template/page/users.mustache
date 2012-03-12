@@ -1,0 +1,89 @@
+<div class="j-navigation-page page active"
+     data-name="table">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="span6">
+                <h1>Кондитерские</h1>
+            </div>
+            <div class="span6">
+                <a class="j-navigation-link
+                          btn btn-large btn-primary pull-right"
+                   data-href="add">
+                    Добавить кондитерскую
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="j-template-transformer j-button-group span12"
+             data-template-id="bakeries_list_template"
+             data-name="list">
+
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Имя</th>
+                        <th>Email</th>
+                        <th>Город</th>
+                        <th>Цена доставки</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody class="t-list"></tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<div class="j-navigation-page page"
+     data-name="add">
+
+    {{> template/page/users/add-user }}
+</div>
+
+<div class="j-control-container hide">
+
+    <tuna:template id="bakeries_list_template">
+        <tuna:list tuna:target="t-list" tuna:path=""
+                   tuna:item-renderer-id="bakeries_list_item_renderer"
+                   tuna:item-template-id="bakery_template"
+                   tuna:key-path="id" />
+
+    </tuna:template>
+
+    <tuna:template id="bakery_template">
+        <tuna:attr tuna:name="data-id" tuna:path="id"
+                   tuna:target="t-id" />
+
+        <tuna:spot tuna:target="t-name" tuna:path="name" />
+        <tuna:spot tuna:target="t-email" tuna:path="email" />
+        <tuna:spot tuna:target="t-city" tuna:path="city" />
+        <tuna:spot tuna:target="t-delivery-price" tuna:path="deliveryPrice" />
+
+    </tuna:template>
+
+    <table>
+        <tbody>
+            <tr id="bakeries_list_item_renderer">
+                <td class="t-name">Имя</td>
+                <td class="t-email">Email</td>
+                <td class="t-city">Город</td>
+                <td class="t-delivery-price">Цена доставки</td>
+                <td>
+                    <ul class="nav nav-list">
+                        <li>
+                            <a class="j-button t-id"
+                               data-action="delete">
+                                <i class="icon-trash"></i> Удалить
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

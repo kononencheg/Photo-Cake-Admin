@@ -11,19 +11,15 @@ var RecipesController = function () {
      */
     this.__loadRecipes = tuna.utils.bind(this.__loadRecipes, this);
 
+    /**
+     * @override
+     */
+    this._modules = [ 'template-transformer', 'navigation', 'button-group',
+                      'form' ];
+
 };
 
 tuna.utils.extend(RecipesController, tuna.view.PageViewController);
-
-/**
- * @override
- */
-RecipesController.prototype._requireModules = function() {
-    this._container.requireModule('template-transformer');
-    this._container.requireModule('button-group');
-    this._container.requireModule('navigation');
-    this._container.requireModule('form');
-};
 
 /**
  * @override
@@ -32,13 +28,21 @@ RecipesController.prototype._initActions = function() {
     this._navigation.addChild
         (this._container.getModuleInstanceByName('navigation', 'recipes'));
 
-    var self = this;
-
     var recipeControls = this._container.getModuleInstanceByName
                                 ('button-group', 'recipe-table');
 
     recipeControls.addEventListener('delete', function(event, button) {
-        self.__deleteRecipe(button);
+        if (confirm('Удалить рецепт?')) {
+            var recipeId = button.getStringOption('recipe-id');
+
+            tuna.rest.call('recipes.remove', {
+                'recipe_id': recipeId
+            }, function() {
+                model.recipes.removeItemById(recipeId);
+            });
+
+            button.setEnabled(false);
+        }
     });
 
     var recipeListTransformer = this._container.getModuleInstanceByName
@@ -71,24 +75,6 @@ RecipesController.prototype.__loadRecipes = function() {
     var bakery = model.currentBakery.get();
     if (bakery !== null) {
         model.recipes.load({ 'bakery_id': bakery.id });
-    }
-};
-
-/**
- * @private
- * @param {tuna.ui.buttons.Button} button
- */
-RecipesController.prototype.__deleteRecipe = function(button) {
-    if (confirm('Удалить рецепт?')) {
-        var recipeId = button.getStringOption('recipe-id');
-
-        tuna.rest.call('recipes.remove', {
-            'recipe_id': recipeId
-        }, function() {
-            model.recipes.removeItemById(recipeId);
-        });
-
-        button.setEnabled(false);
     }
 };
 

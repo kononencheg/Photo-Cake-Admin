@@ -10,16 +10,14 @@ var AddRecipeController = function () {
      * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
      */
     this.__addRecipeForm = null;
+
+    /**
+     * @override
+     */
+    this._modules = [ 'form' ];
 };
 
 tuna.utils.extend(AddRecipeController, tuna.view.PageViewController);
-
-/**
- * @override
- */
-AddRecipeController.prototype._requireModules = function() {
-    this._container.requireModule('form');
-};
 
 /**
  * @override

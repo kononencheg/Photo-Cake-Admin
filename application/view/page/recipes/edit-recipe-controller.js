@@ -16,17 +16,15 @@ var EditRecipeController = function() {
      * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
      */
     this.__recipeForm = null
+
+
+    /**
+     * @override
+     */
+    this._modules = [ 'template-transformer', 'form' ];
 };
 
 tuna.utils.extend(EditRecipeController, tuna.view.PageViewController);
-
-/**
- * @override
- */
-EditRecipeController.prototype._requireModules = function() {
-    this._container.requireModule("template-transformer");
-    this._container.requireModule("form")
-};
 
 /**
  * @override

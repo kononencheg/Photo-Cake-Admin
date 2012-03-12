@@ -40,7 +40,8 @@ Bakery.prototype.populate = function(data) {
  */
 Bakery.prototype.serialize = function() {
     var result = model.record.User.prototype.serialize.call(this);
-    result['name'] = this.city;
+    result['name'] = this.name;
+    result['city'] = this.city;
     result['deliveryPrice'] = this.deliveryPrice;
     result['dimensionIds'] = this.dimensionIds;
 

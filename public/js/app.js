@@ -1238,14 +1238,22 @@ Attribute.prototype._applyValue = function(value) {
 Attribute.prototype.__setAttribute = function(value) {
   var i = this._nodes.length - 1;
   while(i >= 0) {
-    this._nodes[i].setAttribute(this.__attributeName, value + "");
+    if(this._nodes[i][this.__attributeName] !== undefined) {
+      this._nodes[i][this.__attributeName] = value
+    }else {
+      this._nodes[i].setAttribute(this.__attributeName, value + "")
+    }
     i--
   }
 };
 Attribute.prototype.__removeAttribute = function() {
   var i = this._nodes.length - 1;
   while(i >= 0) {
-    this._nodes[i].removeAttribute(this.__attributeName);
+    if(this._nodes[i][this.__attributeName] !== undefined) {
+      this._nodes[i][this.__attributeName] = null
+    }else {
+      this._nodes[i].removeAttribute(this.__attributeName)
+    }
     i--
   }
 };
@@ -1725,14 +1733,14 @@ var Module = function(selector) {
 Module.prototype.getSelector = function() {
   return this._selector
 };
-Module.prototype.init = function(context, container, options) {
+Module.prototype.init = function(context, container) {
   var instances = [];
   var targets = this._findTargets(context);
   var i = 0, l = targets.length;
   var instance = null;
   while(i < l) {
     if(this.__isInContext(targets[i], context)) {
-      instance = this.initInstance(targets[i], container, options);
+      instance = this.initInstance(targets[i], container);
       if(instance !== null) {
         instance.init();
         instances.push(instance)
@@ -1769,7 +1777,7 @@ Module.prototype.destroy = function(instances) {
     i++
   }
 };
-Module.prototype.initInstance = function(target, container, options) {
+Module.prototype.initInstance = function(target, container) {
 };
 Module.prototype.destroyInstance = function(instance) {
 };
@@ -1845,8 +1853,8 @@ ModuleInstance.prototype.destroy = function() {
 tuna.ui.ModuleInstance = ModuleInstance;
 var ModuleContainer = function(target) {
   tuna.ui.ModuleInstance.call(this, target);
-  this.__moduleArgs = {};
-  this.__moduleInstances = {}
+  this.__modules = [];
+  this.__instances = {}
 };
 tuna.utils.extend(ModuleContainer, tuna.ui.ModuleInstance);
 ModuleContainer.prototype.render = function(element) {
@@ -1858,50 +1866,43 @@ ModuleContainer.prototype.render = function(element) {
 ModuleContainer.prototype.clear = function() {
   this._target.innerHTML = ""
 };
-ModuleContainer.prototype.requireModule = function(type, var_args) {
-  var args = tuna.utils.toArray(arguments);
-  args.shift();
-  if(this.__moduleArgs[type] === undefined) {
-    this.__moduleArgs[type] = [null]
-  }
-  if(args.length > 0) {
-    this.__moduleArgs[type].push(args)
-  }else {
-    this.__moduleArgs[type][0] = []
-  }
+ModuleContainer.prototype.requireModule = function(type) {
+  this.__modules.push(type)
 };
 ModuleContainer.prototype.initModules = function(target) {
   target = target || this._target;
+  var i = 0, l = this.__modules.length;
+  var type = null;
   var module = null;
-  var instances = null;
-  for(var type in this.__moduleArgs) {
+  while(i < l) {
+    type = this.__modules[i];
     module = tuna.ui.modules.getModule(type);
     if(module !== null) {
-      if(this.__moduleInstances[type] === undefined) {
-        this.__moduleInstances[type] = []
+      if(this.__instances[type] === undefined) {
+        this.__instances[type] = []
       }
-      instances = this.__initModule(module, target, this.__moduleArgs[type]);
-      this.__moduleInstances[type] = this.__moduleInstances[type].concat(instances)
+      this.__instances[type] = this.__instances[type].concat(module.init(target, this))
     }else {
       alert('Unknown module "' + type + '"')
     }
+    i++
   }
 };
 ModuleContainer.prototype.getModuleInstances = function(type) {
-  if(this.__moduleInstances[type] !== undefined) {
-    return this.__moduleInstances[type]
+  if(this.__instances[type] !== undefined) {
+    return this.__instances[type]
   }
   return null
 };
 ModuleContainer.prototype.getOneModuleInstance = function(type) {
-  if(this.__moduleInstances[type] !== undefined && this.__moduleInstances[type][0] !== undefined) {
-    return this.__moduleInstances[type][0]
+  if(this.__instances[type] !== undefined && this.__instances[type][0] !== undefined) {
+    return this.__instances[type][0]
   }
   return null
 };
 ModuleContainer.prototype.getModuleInstanceByName = function(type, name) {
-  if(this.__moduleInstances[type] !== undefined) {
-    var instances = this.__moduleInstances[type];
+  if(this.__instances[type] !== undefined) {
+    var instances = this.__instances[type];
     var i = 0, l = instances.length;
     while(i < l) {
       if(instances[i].getName() === name) {
@@ -1913,22 +1914,10 @@ ModuleContainer.prototype.getModuleInstanceByName = function(type, name) {
   return null
 };
 ModuleContainer.prototype.destroyModules = function() {
-  for(var name in this.__moduleInstances) {
-    tuna.ui.modules.getModule(name).destroy(this.__moduleInstances[name]);
-    this.__moduleInstances[name].length = 0
+  for(var name in this.__instances) {
+    tuna.ui.modules.getModule(name).destroy(this.__instances[name]);
+    this.__instances[name].length = 0
   }
-};
-ModuleContainer.prototype.__initModule = function(module, target, moduleArgs) {
-  var result = [];
-  var commonArgs = [target, this];
-  var i = moduleArgs.length - 1;
-  while(i >= 0) {
-    if(moduleArgs[i] !== null) {
-      result = result.concat(module.init.apply(module, commonArgs.concat(moduleArgs[i])))
-    }
-    i--
-  }
-  return result
 };
 tuna.ui.ModuleContainer = ModuleContainer;
 tuna.ui.modules.__typeTable = {};
@@ -2054,7 +2043,15 @@ var Button = function(target) {
 tuna.utils.extend(Button, tuna.ui.ModuleInstance);
 Button.prototype.init = function() {
   if(!this.__isInit) {
-    this.__isInit = true
+    this.__isInit = true;
+    var self = this;
+    tuna.dom.addEventListener(this._target, "click", function(event) {
+      if(self.isEnabled()) {
+        self.dispatch("click")
+      }else {
+        tuna.dom.stopPropagation(event)
+      }
+    })
   }
 };
 Button.prototype.setActive = function(isActive) {
@@ -3132,27 +3129,26 @@ NavigationSelectionRule.prototype.navigate = function(index, data) {
   return this.selectIndex(index)
 };
 NavigationSelectionRule.prototype.selectIndex = function(index) {
-  var result = false;
-  if(this.__currentController === null || this.__currentController instanceof tuna.view.PageViewController && this.__currentController.canClose(index)) {
+  if(this.isIndexEnabled(index) && this.__currentIndex !== index) {
+    if(this.__currentIndex !== null) {
+      if(this.__currentController instanceof tuna.view.PageViewController && this.__currentController.canClose(index)) {
+        if(this.__currentController instanceof tuna.view.PageViewController) {
+          this.__currentController.close()
+        }
+      }
+      this._selectionView.destroySelectionAt(this.__currentIndex);
+      this._eventDispatcher.dispatch("close", this.__currentIndex)
+    }
+    this.__currentIndex = index;
+    this.__updateController();
+    this._selectionView.applySelectionAt(this.__currentIndex);
+    this._eventDispatcher.dispatch("open", this.__currentIndex);
     if(this.__currentController !== null && this.__currentController instanceof tuna.view.PageViewController) {
-      this.__currentController.close()
+      this.__currentController.open(this.__openData)
     }
-    if(this.isIndexEnabled(index) && this.__currentIndex !== index) {
-      if(this.__currentIndex !== null) {
-        this._selectionView.destroySelectionAt(this.__currentIndex);
-        this._eventDispatcher.dispatch("close", this.__currentIndex)
-      }
-      this.__currentIndex = index;
-      this.__updateController();
-      this._selectionView.applySelectionAt(this.__currentIndex);
-      this._eventDispatcher.dispatch("open", this.__currentIndex);
-      if(this.__currentController !== null && this.__currentController instanceof tuna.view.PageViewController) {
-        this.__currentController.open(this.__openData)
-      }
-      result = true
-    }
+    return true
   }
-  return result
+  return false
 };
 NavigationSelectionRule.prototype.__updateController = function() {
   this.__currentController = null;
@@ -3300,22 +3296,14 @@ PopupModule.prototype.initInstance = function(target) {
   return tuna.ui.popups.create(target)
 };
 tuna.ui.modules.register("popup", new PopupModule);
-var PopupButtonModule = function() {
-  tuna.ui.Module.call(this, ".j-popup-button")
+var ButtonModule = function() {
+  tuna.ui.Module.call(this, ".j-button")
 };
-tuna.utils.extend(PopupButtonModule, tuna.ui.Module);
-PopupButtonModule.prototype.initInstance = function(target) {
-  var popupElement = tuna.dom.selectOne(target.getAttribute("data-popup-selector"));
-  var popup = null;
-  if(popupElement !== null) {
-    popup = tuna.ui.popups.create(popupElement);
-    tuna.dom.addEventListener(target, "click", function(event) {
-      popup.open()
-    })
-  }
-  return popup
+tuna.utils.extend(ButtonModule, tuna.ui.Module);
+ButtonModule.prototype.initInstance = function(target) {
+  return tuna.ui.buttons.create(target)
 };
-tuna.ui.modules.register("popup-button", new PopupButtonModule);
+tuna.ui.modules.register("button", new ButtonModule);
 var SelectionGroupModule = function() {
   tuna.ui.Module.call(this, ".j-selection-group")
 };
@@ -3404,7 +3392,8 @@ tuna.view.init = function() {
 };
 var ViewController = function() {
   this._container = null;
-  this._isActive = false
+  this._isActive = false;
+  this._modules = []
 };
 tuna.utils.implement(ViewController, tuna.ui.transformers.ITransformHandler);
 ViewController.prototype.isActive = function() {
@@ -3423,6 +3412,11 @@ ViewController.prototype.terminate = function() {
   this._isActive = false
 };
 ViewController.prototype._requireModules = function() {
+  var i = 0, l = this._modules.length;
+  while(i < l) {
+    this._container.requireModule(this._modules[i]);
+    i++
+  }
 };
 ViewController.prototype._initActions = function() {
 };
@@ -3469,15 +3463,10 @@ window["main"] = function() {
   tuna.view.init()
 };
 var MainController = function() {
-  tuna.view.ViewController.call(this)
+  tuna.view.ViewController.call(this);
+  this._modules = ["template-transformer", "navigation", "popup", "form"]
 };
 tuna.utils.extend(MainController, tuna.view.ViewController);
-MainController.prototype._requireModules = function() {
-  this._container.requireModule("template-transformer");
-  this._container.requireModule("navigation");
-  this._container.requireModule("popup");
-  this._container.requireModule("form")
-};
 MainController.prototype._initActions = function() {
   var self = this;
   tuna.rest.call("users.getCurrent", null, function(user) {
@@ -3537,22 +3526,27 @@ MainController.prototype.__applyUser = function(user) {
     }
   });
   updateGlobalTransformer();
-  model.dimensions.load()
+  model.dimensions.load();
+  model.cities.load()
 };
 tuna.view.setMainController(new MainController);
 var DimensionsController = function() {
-  tuna.view.PageViewController.call(this)
+  tuna.view.PageViewController.call(this);
+  this._modules = ["template-transformer", "navigation", "button-group", "form"]
 };
 tuna.utils.extend(DimensionsController, tuna.view.PageViewController);
-DimensionsController.prototype._requireModules = function() {
-  this._container.requireModule("template-transformer");
-  this._container.requireModule("button-group");
-  this._container.requireModule("navigation");
-  this._container.requireModule("form")
-};
 DimensionsController.prototype._initActions = function() {
   this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "dimensions"));
-  var self = this;
+  var dimensionsControls = this._container.getModuleInstanceByName("button-group", "dimensions-list");
+  dimensionsControls.addEventListener("delete", function(event, button) {
+    if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0444\u043e\u0440\u043c\u0443?")) {
+      var id = button.getStringOption("dimension-id");
+      tuna.rest.call("dimensions.remove", {"id":id}, function() {
+        model.dimensions.removeItemById(id)
+      });
+      button.setEnabled(false)
+    }
+  });
   var dimensionsTransformer = this._container.getModuleInstanceByName("template-transformer", "dimensions-list");
   model.dimensions.addEventListener("update", function(event, dimensions) {
     dimensionsTransformer.applyTransform(tuna.model.serialize(dimensions))
@@ -3562,26 +3556,77 @@ DimensionsController.prototype._initActions = function() {
   dimensionsForm.addEventListener("result", function(event, bakery) {
     model.bakeries.addItem(bakery);
     model.currentBakery.set(bakery)
+  });
+  var addDimensionForm = this._container.getModuleInstanceByName("form", "add-dimension");
+  var self = this;
+  addDimensionForm.addEventListener("result", function(event, dimension) {
+    model.dimensions.addItem(dimension);
+    self._navigation.back()
   })
 };
 tuna.view.registerController("dimensions_page", new DimensionsController);
+var UsersController = function() {
+  tuna.view.PageViewController.call(this);
+  this._modules = ["template-transformer", "navigation", "button-group", "form", "button", "popup"]
+};
+tuna.utils.extend(UsersController, tuna.view.PageViewController);
+UsersController.prototype._initActions = function() {
+  this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "users"));
+  var controls = this._container.getModuleInstanceByName("button-group", "list");
+  controls.addEventListener("delete", function(event, button) {
+    if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u043a\u043e\u043d\u0434\u0438\u0442\u0435\u0440\u0441\u043a\u0443\u044e?")) {
+      var id = button.getStringOption("id");
+      tuna.rest.call("users.remove", {"id":id}, function() {
+        model.bakeries.removeItemById(id)
+      });
+      button.setEnabled(false)
+    }
+  });
+  var listTransformer = this._container.getModuleInstanceByName("template-transformer", "list");
+  model.bakeries.addEventListener("update", function(event, bakeries) {
+    listTransformer.applyTransform(tuna.model.serialize(bakeries))
+  });
+  listTransformer.applyTransform(tuna.model.serialize(model.bakeries.get()));
+  var addForm = this._container.getModuleInstanceByName("form", "add");
+  var self = this;
+  addForm.addEventListener("result", function(event, bakery) {
+    model.bakeries.addItem(bakery);
+    self._navigation.back()
+  });
+  var citiesTransformer = this._container.getModuleInstanceByName("template-transformer", "cities-list");
+  model.cities.addEventListener("update", function(event, cities) {
+    citiesTransformer.applyTransform(tuna.model.serialize(cities))
+  });
+  citiesTransformer.applyTransform(tuna.model.serialize(model.cities.get()));
+  var addCityPopup = this._container.getModuleInstanceByName("popup", "add-city");
+  var addCityButton = this._container.getModuleInstanceByName("button", "add-city");
+  addCityButton.addEventListener("click", function() {
+    addCityPopup.open()
+  });
+  var addCityForm = this._container.getModuleInstanceByName("form", "add-city");
+  addCityForm.addEventListener("result", function(event, city) {
+    model.cities.addItem(city);
+    addCityPopup.close()
+  })
+};
+tuna.view.registerController("users_page", new UsersController);
 var RecipesController = function() {
   tuna.view.PageViewController.call(this);
-  this.__loadRecipes = tuna.utils.bind(this.__loadRecipes, this)
+  this.__loadRecipes = tuna.utils.bind(this.__loadRecipes, this);
+  this._modules = ["template-transformer", "navigation", "button-group", "form"]
 };
 tuna.utils.extend(RecipesController, tuna.view.PageViewController);
-RecipesController.prototype._requireModules = function() {
-  this._container.requireModule("template-transformer");
-  this._container.requireModule("button-group");
-  this._container.requireModule("navigation");
-  this._container.requireModule("form")
-};
 RecipesController.prototype._initActions = function() {
   this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "recipes"));
-  var self = this;
   var recipeControls = this._container.getModuleInstanceByName("button-group", "recipe-table");
   recipeControls.addEventListener("delete", function(event, button) {
-    self.__deleteRecipe(button)
+    if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0440\u0435\u0446\u0435\u043f\u0442?")) {
+      var recipeId = button.getStringOption("recipe-id");
+      tuna.rest.call("recipes.remove", {"recipe_id":recipeId}, function() {
+        model.recipes.removeItemById(recipeId)
+      });
+      button.setEnabled(false)
+    }
   });
   var recipeListTransformer = this._container.getModuleInstanceByName("template-transformer", "recipe-table");
   model.recipes.addEventListener("update", function(event, recipes) {
@@ -3601,24 +3646,13 @@ RecipesController.prototype.__loadRecipes = function() {
     model.recipes.load({"bakery_id":bakery.id})
   }
 };
-RecipesController.prototype.__deleteRecipe = function(button) {
-  if(confirm("\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0440\u0435\u0446\u0435\u043f\u0442?")) {
-    var recipeId = button.getStringOption("recipe-id");
-    tuna.rest.call("recipes.remove", {"recipe_id":recipeId}, function() {
-      model.recipes.removeItemById(recipeId)
-    });
-    button.setEnabled(false)
-  }
-};
 tuna.view.registerController("recipes_page", new RecipesController);
 var AddRecipeController = function() {
   tuna.view.PageViewController.call(this);
-  this.__addRecipeForm = null
+  this.__addRecipeForm = null;
+  this._modules = ["form"]
 };
 tuna.utils.extend(AddRecipeController, tuna.view.PageViewController);
-AddRecipeController.prototype._requireModules = function() {
-  this._container.requireModule("form")
-};
 AddRecipeController.prototype._initActions = function() {
   var self = this;
   this.__addRecipeForm = this._container.getModuleInstanceByName("form", "add-recipe");
@@ -3632,13 +3666,10 @@ tuna.view.registerController("add_recipe_page", new AddRecipeController);
 var EditRecipeController = function() {
   tuna.view.PageViewController.call(this);
   this.__recipeFormTransformer = null;
-  this.__recipeForm = null
+  this.__recipeForm = null;
+  this._modules = ["template-transformer", "form"]
 };
 tuna.utils.extend(EditRecipeController, tuna.view.PageViewController);
-EditRecipeController.prototype._requireModules = function() {
-  this._container.requireModule("template-transformer");
-  this._container.requireModule("form")
-};
 EditRecipeController.prototype._initActions = function() {
   var self = this;
   this.__recipeFormTransformer = this._container.getModuleInstanceByName("template-transformer", "edit-recipe-form");
@@ -3669,13 +3700,10 @@ EditRecipeController.prototype.open = function(data) {
 tuna.view.registerController("edit_recipe_page", new EditRecipeController);
 var OrdersController = function() {
   tuna.view.PageViewController.call(this);
-  this.__loadOrders = tuna.utils.bind(this.__loadOrders, this)
+  this.__loadOrders = tuna.utils.bind(this.__loadOrders, this);
+  this._modules = ["template-transformer", "navigation"]
 };
 tuna.utils.extend(OrdersController, tuna.view.PageViewController);
-OrdersController.prototype._requireModules = function() {
-  this._container.requireModule("template-transformer");
-  this._container.requireModule("navigation")
-};
 OrdersController.prototype._initActions = function() {
   this._navigation.addChild(this._container.getModuleInstanceByName("navigation", "orders"));
   var ordersListTransformer = this._container.getModuleInstanceByName("template-transformer", "orders-list");
@@ -3700,13 +3728,10 @@ tuna.view.registerController("orders_page", new OrdersController);
 var EditOrdersController = function() {
   tuna.view.PageViewController.call(this);
   this.__orderFormTransformer = null;
-  this.__orderForm = null
+  this.__orderForm = null;
+  this._modules = ["template-transformer", "form"]
 };
 tuna.utils.extend(EditOrdersController, tuna.view.PageViewController);
-EditOrdersController.prototype._requireModules = function() {
-  this._container.requireModule("template-transformer");
-  this._container.requireModule("form")
-};
 EditOrdersController.prototype._initActions = function() {
   var self = this;
   this.__orderFormTransformer = this._container.getModuleInstanceByName("template-transformer", "edit-order-form");
@@ -3761,7 +3786,8 @@ Bakery.prototype.populate = function(data) {
 };
 Bakery.prototype.serialize = function() {
   var result = model.record.User.prototype.serialize.call(this);
-  result["name"] = this.city;
+  result["name"] = this.name;
+  result["city"] = this.city;
   result["deliveryPrice"] = this.deliveryPrice;
   result["dimensionIds"] = this.dimensionIds;
   return result
@@ -3946,7 +3972,25 @@ Order.prototype.serialize = function() {
 };
 model.record.Order = Order;
 tuna.model.recordFactory.registerRecord("order", new model.record.Order);
+var City = function(data) {
+  this.id = "";
+  this.name = "";
+  this.timezoneOffset = 0;
+  tuna.model.Record.call(this, data)
+};
+tuna.utils.extend(City, tuna.model.Record);
+City.prototype.populate = function(data) {
+  this.id = data["id"];
+  this.name = data["name"];
+  this.timezoneOffset = data["timezone_offset"]
+};
+City.prototype.serialize = function() {
+  return{"id":this.id, "name":this.name}
+};
+model.record.City = City;
+tuna.model.recordFactory.registerRecord("city", new model.record.City);
 model.bakeries = new tuna.model.ListResource("users.getBakeries", "bakery");
+model.cities = new tuna.model.ListResource("cities.get", "city");
 model.recipes = new tuna.model.ListResource("recipes.get", "recipe");
 model.orders = new tuna.model.ListResource("orders.get", "order");
 model.dimensions = new tuna.model.ListResource("dimensions.get", "dimension");

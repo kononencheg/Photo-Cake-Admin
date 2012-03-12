@@ -4,19 +4,14 @@
  */
 var MainController = function() {
     tuna.view.ViewController.call(this);
+
+    /**
+     * @override
+     */
+    this._modules = [ 'template-transformer', 'navigation', 'popup', 'form' ];
 };
 
 tuna.utils.extend(MainController, tuna.view.ViewController);
-
-/**
- * @override
- */
-MainController.prototype._requireModules = function() {
-    this._container.requireModule('template-transformer');
-    this._container.requireModule('navigation');
-    this._container.requireModule('popup');
-    this._container.requireModule('form');
-};
 
 /**
  * @override
@@ -118,6 +113,7 @@ MainController.prototype.__applyUser = function(user) {
     updateGlobalTransformer();
 
     model.dimensions.load();
+    model.cities.load();
 };
 
 tuna.view.setMainController(new MainController());

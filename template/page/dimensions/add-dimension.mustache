@@ -1,0 +1,79 @@
+<div class="page-header">
+
+    <div class="row">
+        <div class="span6">
+            <h1>Добавление новой формы</h1>
+        </div>
+        <div class="span6">
+            <a class="j-navigation-link btn btn-large pull-right"
+               data-action="back">
+               Назад
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+
+        <form action="/api/" method="POST" target="api_frame"
+              class="j-form form-horizontal"
+              data-name="add-dimension"
+              data-record-type="dimension">
+
+            <input type="hidden" name="method" value="dimensions.add" />
+            <input type="hidden" name="format" value="frame-callback" />
+
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                <div class="j-shape-input control-group">
+                    <label class="control-label">Форма:</label>
+                    <div class="controls">
+                        <div class="input">
+                            <select class="input-medium" name="shape">
+                                <option value="round">Круг</option>
+                                <option value="rect">Прямоугольник</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="j-weight-input control-group">
+                    <label class="control-label">Вес (кг.):</label>
+                    <div class="controls">
+                        <div class="input">
+                            <input class="input-mini" name="weight" type="text"  />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="j-ratio-input control-group">
+                    <label class="control-label">Масштаб:</label>
+                    <div class="controls">
+                        <div class="input">
+                            <input class="input-mini" name="ratio" type="text"  />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="j-persons_count-input control-group">
+                    <label class="control-label">Количество людей:</label>
+                    <div class="controls">
+                        <div class="input">
+                            <input class="input-mini" name="persons_count" type="text"  />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-primary">
+                        Добавить
+                    </button>
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</div>

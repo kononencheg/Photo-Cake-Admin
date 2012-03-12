@@ -118,7 +118,7 @@ TUNA_FILES = tuna.js \
 			 ui/modules/form.js \
 			 ui/modules/navigation.js \
 			 ui/modules/popup.js \
-			 ui/modules/popup-button.js \
+			 ui/modules/button.js \
 			 ui/modules/selection-group.js \
 			 ui/modules/template-transformer.js \
 			 ui/modules/button-group.js \
@@ -136,6 +136,7 @@ APPLICATION_FILES = main.js \
 					\
 					view/main-controller.js \
 					view/page/dimensions-controller.js \
+					view/page/users-controller.js \
 					view/page/recipes-controller.js \
 					view/page/recipes/add-recipe-controller.js \
 					view/page/recipes/edit-recipe-controller.js \
@@ -151,6 +152,7 @@ APPLICATION_FILES = main.js \
 					model/record/dimension.js \
 					model/record/cake.js \
 					model/record/order.js \
+					model/record/city.js \
 					\
 					model/model.js \
 					\

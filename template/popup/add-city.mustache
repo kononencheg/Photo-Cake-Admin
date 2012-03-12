@@ -1,0 +1,57 @@
+<form action="/api/" method="POST" target="api_frame"
+      class="j-form j-popup form-horizontal hide"
+      data-name="add-city"
+      data-record-type="city">
+
+    <input type="hidden" name="method" value="cities.add" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Добавить город</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                <div class="j-name-input control-group">
+                    <label class="control-label"> Название: </label>
+                    <div class="controls">
+                        <div class="input">
+                            <input name="name" type="text" />
+                        </div>
+                        <p class="j-message help-block"></p>
+                    </div>
+                </div>
+
+                <div class="j-timezone_offset-input control-group">
+                    <label class="control-label"> Часовой пояс: </label>
+                    <div class="controls">
+                        <div class="input">
+                            <select class="input-small" name="timezone_offset">
+                                <option value="240">UTC +4</option>
+                                <option value="300">UTC +5</option>
+                                <option value="360">UTC +6</option>
+                                <option value="420">UTC +7</option>
+                                <option value="480">UTC +8</option>
+                                <option value="540">UTC +9</option>
+                                <option value="600">UTC +10</option>
+                                <option value="660">UTC +11</option>
+                            </select>
+                        </div>
+                        <p class="j-message help-block"></p>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+
+        <div class="modal-footer">
+            <a class="j-popup-close btn">Закрыть</a>
+            <input type="submit" class="btn btn-primary" value="Добавить" />
+        </div>
+    </div>
+    <div class="modal-backdrop"></div>
+</form>

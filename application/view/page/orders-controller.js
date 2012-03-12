@@ -10,17 +10,14 @@ var OrdersController = function () {
      * @private
      */
     this.__loadOrders = tuna.utils.bind(this.__loadOrders, this);
+
+    /**
+     * @override
+     */
+    this._modules = [ 'template-transformer', 'navigation' ];
 };
 
 tuna.utils.extend(OrdersController, tuna.view.PageViewController);
-
-/**
- * @override
- */
-OrdersController.prototype._requireModules = function() {
-    this._container.requireModule('template-transformer');
-    this._container.requireModule('navigation');
-};
 
 /**
  * @override

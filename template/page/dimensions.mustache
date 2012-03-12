@@ -20,7 +20,7 @@
         <div class="span12">
 
             <form action="/api/" method="POST" target="api_frame"
-                  class="j-form j-template-transformer j-button-group"
+                  class="j-form j-template-transformer j-button-group form-inline"
                   data-template-id="dimensions_list_template"
                   data-name="dimensions-list"
                   data-record-type="bakery">
@@ -37,7 +37,6 @@
                         <tr>
                             <th>Форма</th>
                             <th>Вес (кг.)</th>
-                            <th class="t-current-bakery-exist">Наличие</th>
                             <th class="t-bakery-hidden">Масштаб *</th>
                             <th class="t-bakery-hidden">Количество людей</th>
                             <th class="t-bakery-hidden">Действия</th>
@@ -59,19 +58,64 @@
 
 </div>
 
-<div id="add_recipe_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page page"
      data-name="add">
 
-    {{!> template/page/dimensions/add-dimensions }}
+    {{> template/page/dimensions/add-dimension }}
 
 </div>
 
-<div id="edit_recipe_page"
-     class="j-navigation-page j-control-container page"
-     data-name="edit">
+<div class="j-control-container hide">
 
-    {{!> template/page/dimensions/edit-dimensions }}
+    <tuna:template id="dimensions_list_template">
+        <tuna:list tuna:target="t-dimensions-list" tuna:path=""
+                   tuna:item-renderer-id="dimensions_list_item_renderer"
+                   tuna:item-template-id="dimension_template"
+                   tuna:key-path="id" />
+    </tuna:template>
+
+    <tuna:template id="dimension_template">
+        <tuna:attr tuna:name="data-dimension-id" tuna:path="id"
+                   tuna:target="t-id" />
+
+        <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
+        <tuna:spot tuna:target="t-weight" tuna:path="weight" />
+        <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
+        <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
+
+        <tuna:attr tuna:name="value" tuna:path="id"
+                   tuna:target="t-id-checkbox" />
+
+    </tuna:template>
+
+    <table>
+        <tbody>
+        <tr id="dimensions_list_item_renderer">
+            <td>
+                <label>
+                    <input class="t-current-bakery-exist
+                                      t-is-dimension-available
+                                      t-id-checkbox"
+                           type="checkbox" name="dimension_ids[]" />
+                    <span class="t-shape-name"></span>
+                </label>
+            </td>
+
+            <td class="t-weight"></td>
+            <td class="t-ratio t-bakery-hidden"></td>
+            <td class="t-persons-count t-bakery-hidden"></td>
+            <td class="t-bakery-hidden">
+                <ul class="nav nav-list">
+                    <li>
+                        <a class="j-button t-id"
+                           data-action="delete">
+                            <i class="icon-trash"></i> Удалить
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 
 </div>
-

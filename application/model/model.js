@@ -7,6 +7,11 @@ model.bakeries = new tuna.model.ListResource('users.getBakeries', 'bakery');
 /**
  * @type tuna.model.ListResource
  */
+model.cities = new tuna.model.ListResource('cities.get', 'city');
+
+/**
+ * @type tuna.model.ListResource
+ */
 model.recipes = new tuna.model.ListResource('recipes.get', 'recipe');
 
 /**

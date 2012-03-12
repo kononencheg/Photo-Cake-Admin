@@ -4,19 +4,16 @@
  */
 var DimensionsController = function () {
     tuna.view.PageViewController.call(this);
+
+    /**
+     * @override
+     */
+    this._modules = [ 'template-transformer', 'navigation', 'button-group',
+                      'form' ];
+
 };
 
 tuna.utils.extend(DimensionsController, tuna.view.PageViewController);
-
-/**
- * @override
- */
-DimensionsController.prototype._requireModules = function() {
-    this._container.requireModule('template-transformer');
-    this._container.requireModule('button-group');
-    this._container.requireModule('navigation');
-    this._container.requireModule('form');
-};
 
 /**
  * @override
@@ -25,16 +22,20 @@ DimensionsController.prototype._initActions = function() {
     this._navigation.addChild
         (this._container.getModuleInstanceByName('navigation', 'dimensions'));
 
-    var self = this;
+    var dimensionsControls = this._container.getModuleInstanceByName
+        ('button-group', 'dimensions-list');
 
-    /*
+    dimensionsControls.addEventListener('delete', function(event, button) {
+        if (confirm('Удалить форму?')) {
+            var id = button.getStringOption('dimension-id');
 
-    var recipeControls = this._container.getModuleInstanceByName
-                                ('button-group', 'recipe-table');
+            tuna.rest.call('dimensions.remove', { 'id': id }, function() {
+                model.dimensions.removeItemById(id);
+            });
 
-    recipeControls.addEventListener('delete', function(event, button) {
-        self.__deleteRecipe(button);
-    });*/
+            button.setEnabled(false);
+        }
+    });
 
     var dimensionsTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'dimensions-list');
@@ -52,6 +53,17 @@ DimensionsController.prototype._initActions = function() {
     dimensionsForm.addEventListener('result', function(event, bakery) {
         model.bakeries.addItem(bakery);
         model.currentBakery.set(bakery);
+    });
+
+    var addDimensionForm = this._container.getModuleInstanceByName
+        ('form', 'add-dimension');
+
+    var self = this;
+
+    addDimensionForm.addEventListener('result', function(event, dimension) {
+        model.dimensions.addItem(dimension);
+
+        self._navigation.back();
     });
 };
 

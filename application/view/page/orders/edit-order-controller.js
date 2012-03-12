@@ -17,17 +17,14 @@ var EditOrdersController = function () {
      * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
      */
     this.__orderForm = null;
+
+    /**
+     * @override
+     */
+    this._modules = [ 'template-transformer', 'form' ];
 };
 
 tuna.utils.extend(EditOrdersController, tuna.view.PageViewController);
-
-/**
- * @override
- */
-EditOrdersController.prototype._requireModules = function() {
-    this._container.requireModule('template-transformer');
-    this._container.requireModule('form');
-};
 
 /**
  * @override

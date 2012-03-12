@@ -11,9 +11,11 @@
             body { padding-top: 60px; }
             a { cursor: pointer; }
 
+            .hide { display: none !important }
+            .show { display: inherit !important }
+
             .page { display: none; }
             .page.active { display: inherit; }
-            .page.active.hide { display: none; }
         </style>
     </head>
 
@@ -88,6 +90,11 @@
                         </li>
                         <li class="j-navigation-link" data-href="dimensions/table">
                             <a>Формы</a>
+                        </li>
+                        <li class="j-navigation-link t-bakery-hidden"
+                            data-href="users/table">
+        
+                            <a>Кондитерские</a>
                         </li>
                         <li class="j-navigation-link" data-href="decorations">
                             <a>Декорации</a>
@@ -477,13 +484,12 @@
                             <fieldset>
                 
                                 <div class="j-recipe_name-input control-group">
-                                    <label class="control-label" for="add_recipe_name">
+                                    <label class="control-label">
                                         Название:
                                     </label>
                                     <div class="controls">
                                         <div class="input">
-                                            <input name="recipe_name" id="add_recipe_name"
-                                                   type="text" />
+                                            <input name="recipe_name" type="text" />
                                         </div>
                                         <p class="j-message help-block">
                                             Общеизвестное название рецепта.
@@ -492,13 +498,12 @@
                                 </div>
                 
                                 <div class="j-recipe_desc-input control-group">
-                                    <label class="control-label" for="add_recipe_desc">
+                                    <label class="control-label">
                                         Описание рецепта:
                                     </label>
                                     <div class="controls">
                                         <div class="input">
-                                            <textarea name="recipe_desc" rows="7"
-                                                      id="add_recipe_desc"></textarea>
+                                            <textarea name="recipe_desc" rows="7"></textarea>
                                         </div>
                                         <p class="j-message help-block">
                                             Подробное описание рецепта.
@@ -507,13 +512,12 @@
                                 </div>
                 
                                 <div class="j-recipe_image-input control-group">
-                                    <label class="control-label" for="add_recipe_image">
+                                    <label class="control-label">
                                         Картинка:
                                     </label>
                                     <div class="controls">
                                         <div class="input">
-                                            <input name="recipe_image" type="file"
-                                                   id="add_recipe_image" />
+                                            <input name="recipe_image" type="file" />
                                         </div>
                                         <p class="j-message help-block">
                                             Картинка в списке и в окне описания рецептов.
@@ -543,7 +547,7 @@
                       data-name="edit-recipe-form"
                       data-record-type="recipe">
                 
-                    <input type="hidden" name="method" value="recipe.edit" />
+                    <input type="hidden" name="method" value="recipes.edit" />
                     <input type="hidden" name="format" value="frame-callback" />
                     <input type="hidden" name="id" class="t-id-input" />
                 
@@ -627,7 +631,7 @@
                     <div class="span12">
             
                         <form action="/api/" method="POST" target="api_frame"
-                              class="j-form j-template-transformer j-button-group"
+                              class="j-form j-template-transformer j-button-group form-inline"
                               data-template-id="dimensions_list_template"
                               data-name="dimensions-list"
                               data-record-type="bakery">
@@ -644,7 +648,6 @@
                                     <tr>
                                         <th>Форма</th>
                                         <th>Вес (кг.)</th>
-                                        <th class="t-current-bakery-exist">Наличие</th>
                                         <th class="t-bakery-hidden">Масштаб *</th>
                                         <th class="t-bakery-hidden">Количество людей</th>
                                         <th class="t-bakery-hidden">Действия</th>
@@ -666,21 +669,411 @@
             
             </div>
             
-            <div id="add_recipe_page"
-                 class="j-navigation-page j-control-container page"
+            <div class="j-navigation-page page"
                  data-name="add">
             
+                <div class="page-header">
+                
+                    <div class="row">
+                        <div class="span6">
+                            <h1>Добавление новой формы</h1>
+                        </div>
+                        <div class="span6">
+                            <a class="j-navigation-link btn btn-large pull-right"
+                               data-action="back">
+                               Назад
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="span12">
+                
+                        <form action="/api/" method="POST" target="api_frame"
+                              class="j-form form-horizontal"
+                              data-name="add-dimension"
+                              data-record-type="dimension">
+                
+                            <input type="hidden" name="method" value="dimensions.add" />
+                            <input type="hidden" name="format" value="frame-callback" />
+                
+                            <div class="j-form-message alert alert-error hide"></div>
+                
+                            <fieldset>
+                
+                                <div class="j-shape-input control-group">
+                                    <label class="control-label">Форма:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <select class="input-medium" name="shape">
+                                                <option value="round">Круг</option>
+                                                <option value="rect">Прямоугольник</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="j-weight-input control-group">
+                                    <label class="control-label">Вес (кг.):</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input class="input-mini" name="weight" type="text"  />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="j-ratio-input control-group">
+                                    <label class="control-label">Масштаб:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input class="input-mini" name="ratio" type="text"  />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="j-persons_count-input control-group">
+                                    <label class="control-label">Количество людей:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input class="input-mini" name="persons_count" type="text"  />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        Добавить
+                                    </button>
+                                </div>
+                
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>            
+            </div>
+            
+            <div class="j-control-container hide">
+            
+                <tuna:template id="dimensions_list_template">
+                    <tuna:list tuna:target="t-dimensions-list" tuna:path=""
+                               tuna:item-renderer-id="dimensions_list_item_renderer"
+                               tuna:item-template-id="dimension_template"
+                               tuna:key-path="id" />
+                </tuna:template>
+            
+                <tuna:template id="dimension_template">
+                    <tuna:attr tuna:name="data-dimension-id" tuna:path="id"
+                               tuna:target="t-id" />
+            
+                    <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
+                    <tuna:spot tuna:target="t-weight" tuna:path="weight" />
+                    <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
+                    <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
+            
+                    <tuna:attr tuna:name="value" tuna:path="id"
+                               tuna:target="t-id-checkbox" />
+            
+                </tuna:template>
+            
+                <table>
+                    <tbody>
+                    <tr id="dimensions_list_item_renderer">
+                        <td>
+                            <label>
+                                <input class="t-current-bakery-exist
+                                                  t-is-dimension-available
+                                                  t-id-checkbox"
+                                       type="checkbox" name="dimension_ids[]" />
+                                <span class="t-shape-name"></span>
+                            </label>
+                        </td>
+            
+                        <td class="t-weight"></td>
+                        <td class="t-ratio t-bakery-hidden"></td>
+                        <td class="t-persons-count t-bakery-hidden"></td>
+                        <td class="t-bakery-hidden">
+                            <ul class="nav nav-list">
+                                <li>
+                                    <a class="j-button t-id"
+                                       data-action="delete">
+                                        <i class="icon-trash"></i> Удалить
+                                    </a>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            
+            </div>        </div>
+        
+        <div id="users_page"
+             class="j-navigation-page j-navigation j-control-container page"
+             data-name="users">
+        
+            <div class="j-navigation-page page active"
+                 data-name="table">
+            
+                <div class="page-header">
+                    <div class="row">
+                        <div class="span6">
+                            <h1>Кондитерские</h1>
+                        </div>
+                        <div class="span6">
+                            <a class="j-navigation-link
+                                      btn btn-large btn-primary pull-right"
+                               data-href="add">
+                                Добавить кондитерскую
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            
+                <div class="row">
+                    <div class="j-template-transformer j-button-group span12"
+                         data-template-id="bakeries_list_template"
+                         data-name="list">
+            
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Имя</th>
+                                    <th>Email</th>
+                                    <th>Город</th>
+                                    <th>Цена доставки</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody class="t-list"></tbody>
+                        </table>
+                    </div>
+                </div>
             
             </div>
             
-            <div id="edit_recipe_page"
-                 class="j-navigation-page j-control-container page"
-                 data-name="edit">
+            <div class="j-navigation-page page"
+                 data-name="add">
             
+                <div class="page-header">
+                
+                    <div class="row">
+                        <div class="span8">
+                            <h1>Добавление новой кондитерской</h1>
+                        </div>
+                        <div class="span4">
+                            <a class="j-navigation-link btn btn-large pull-right"
+                               data-action="back">
+                               Назад
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="span12">
+                
+                        <form action="/api/" method="POST" target="api_frame"
+                              class="j-form form-horizontal"
+                              data-name="add"
+                              data-record-type="bakery">
+                
+                            <input type="hidden" name="method" value="users.addBakery" />
+                            <input type="hidden" name="format" value="frame-callback" />
+                
+                            <div class="j-form-message alert alert-error hide"></div>
+                
+                            <fieldset>
+                
+                                <div class="j-name-input control-group">
+                                    <label class="control-label">Имя:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input type="text" name="name" />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="j-email-input control-group">
+                                    <label class="control-label">Email:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input type="text" name="email" />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="j-password-input control-group">
+                                    <label class="control-label">Пароль:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input type="password" name="password" />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="j-city_id-input control-group">
+                                    <label class="control-label">Город:</label>
+                                    <div class="controls">
+                                        <div class="j-template-transformer input"
+                                             data-name="cities-list"
+                                             data-template-id="cities_list_template">
+                
+                                            <select class="t-list" name="city_id"></select>
+                                        </div>
+                                        <p class="help-block">
+                                            <span class="j-message"></span>
+                                            <a class="j-button"
+                                               data-name="add-city">
+                                                Добавить город
+                                            </a>
+                                        </p>
+                                    </div>
+                                </div>
+                
+                                <div class="j-delivery_price-input control-group">
+                                    <label class="control-label">Цена доставки:</label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input type="text" name="delivery_price" />
+                                        </div>
+                                    </div>
+                                </div>
+                
+                                <div class="form-actions">
+                                    <button type="submit" class="btn btn-primary">
+                                        Добавить
+                                    </button>
+                                </div>
+                
+                            </fieldset>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="j-control-container hide">
+                
+                
+                    <tuna:template id="cities_list_template">
+                        <tuna:list tuna:path=""
+                                   tuna:target="t-list"
+                                   tuna:item-renderer-id="option_renderer"
+                                   tuna:item-template-id="city_option_template"
+                                   tuna:key-path="id" />
+                    </tuna:template>
+                
+                    <tuna:template id="city_option_template">
+                        <tuna:attr tuna:name="value"
+                                   tuna:path="id"
+                                   tuna:target="t-option" />
+                
+                        <tuna:spot tuna:path="name"
+                                   tuna:target="t-option" />
+                    </tuna:template>
+                
+                </div>
+                
+                <form action="/api/" method="POST" target="api_frame"
+                      class="j-form j-popup form-horizontal hide"
+                      data-name="add-city"
+                      data-record-type="city">
+                
+                    <input type="hidden" name="method" value="cities.add" />
+                    <input type="hidden" name="format" value="frame-callback" />
+                
+                    <div class="modal">
+                        <div class="modal-header">
+                            <h3>Добавить город</h3>
+                        </div>
+                
+                        <div class="modal-body">
+                            <div class="j-form-message alert alert-error hide"></div>
+                
+                            <fieldset>
+                
+                                <div class="j-name-input control-group">
+                                    <label class="control-label"> Название: </label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <input name="name" type="text" />
+                                        </div>
+                                        <p class="j-message help-block"></p>
+                                    </div>
+                                </div>
+                
+                                <div class="j-timezone_offset-input control-group">
+                                    <label class="control-label"> Часовой пояс: </label>
+                                    <div class="controls">
+                                        <div class="input">
+                                            <select class="input-small" name="timezone_offset">
+                                                <option value="240">UTC +4</option>
+                                                <option value="300">UTC +5</option>
+                                                <option value="360">UTC +6</option>
+                                                <option value="420">UTC +7</option>
+                                                <option value="480">UTC +8</option>
+                                                <option value="540">UTC +9</option>
+                                                <option value="600">UTC +10</option>
+                                                <option value="660">UTC +11</option>
+                                            </select>
+                                        </div>
+                                        <p class="j-message help-block"></p>
+                                    </div>
+                                </div>
+                
+                            </fieldset>
+                        </div>
+                
+                        <div class="modal-footer">
+                            <a class="j-popup-close btn">Закрыть</a>
+                            <input type="submit" class="btn btn-primary" value="Добавить" />
+                        </div>
+                    </div>
+                    <div class="modal-backdrop"></div>
+                </form>            </div>
             
-            </div>
+            <div class="j-control-container hide">
             
-        </div>
+                <tuna:template id="bakeries_list_template">
+                    <tuna:list tuna:target="t-list" tuna:path=""
+                               tuna:item-renderer-id="bakeries_list_item_renderer"
+                               tuna:item-template-id="bakery_template"
+                               tuna:key-path="id" />
+            
+                </tuna:template>
+            
+                <tuna:template id="bakery_template">
+                    <tuna:attr tuna:name="data-id" tuna:path="id"
+                               tuna:target="t-id" />
+            
+                    <tuna:spot tuna:target="t-name" tuna:path="name" />
+                    <tuna:spot tuna:target="t-email" tuna:path="email" />
+                    <tuna:spot tuna:target="t-city" tuna:path="city" />
+                    <tuna:spot tuna:target="t-delivery-price" tuna:path="deliveryPrice" />
+            
+                </tuna:template>
+            
+                <table>
+                    <tbody>
+                        <tr id="bakeries_list_item_renderer">
+                            <td class="t-name">Имя</td>
+                            <td class="t-email">Email</td>
+                            <td class="t-city">Город</td>
+                            <td class="t-delivery-price">Цена доставки</td>
+                            <td>
+                                <ul class="nav nav-list">
+                                    <li>
+                                        <a class="j-button t-id"
+                                           data-action="delete">
+                                            <i class="icon-trash"></i> Удалить
+                                        </a>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            
+            </div>        </div>
         
         
         <div class="t-bakery-hidden row">
@@ -983,45 +1376,7 @@
                     </tr>
                 </tbody>
             </table>
-            
-            <!-- Dimensions -->
-            
-            <tuna:template id="dimensions_list_template">
-                <tuna:list tuna:target="t-dimensions-list" tuna:path=""
-                           tuna:item-renderer-id="dimensions_list_item_renderer"
-                           tuna:item-template-id="dimension_template"
-                           tuna:key-path="id" />
-            </tuna:template>
-            
-            <tuna:template id="dimension_template">
-                <tuna:attr tuna:name="data-dimension-id" tuna:path="id"
-                           tuna:target="t-id" />
-            
-                <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
-                <tuna:spot tuna:target="t-weight" tuna:path="weight" />
-                <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
-                <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
-            
-                <tuna:attr tuna:name="value" tuna:path="id"
-                           tuna:target="t-id-checkbox" />
-            
-            </tuna:template>
-            
-            <table>
-                <tbody>
-                    <tr id="dimensions_list_item_renderer">
-                        <td class="t-shape-name">Круг</td>
-                        <td class="t-weight">1</td>
-                        <td class="t-current-bakery-exist">
-                            <input class="t-is-dimension-available t-id-checkbox"
-                                   type="checkbox" name="dimension_ids[]" />
-                        </td>
-                        <td class="t-ratio t-bakery-hidden">0.6</td>
-                        <td class="t-persons-count t-bakery-hidden">5</td>
-                        <td class="t-bakery-hidden"></td>
-                    </tr>
-                </tbody>
-            </table>
+
             <iframe id="api_frame" name="api_frame"
                     width="0" height="0"></iframe>
 
