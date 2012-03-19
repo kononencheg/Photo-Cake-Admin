@@ -19,17 +19,12 @@ model.resource = {};
 var rest = {};
 
 /**
- * @namespace
+ * @param {!Node} body
  */
-var view = {};
-
-/**
- * @param {Object} args
- */
-window['main'] = function() {
+window['main'] = function(body) {
     tuna.utils.config.init({
         'role': [ 'Админ', 'Кондитерская' ],
-        'orderStatus': [ 'Неактивен', 'Новый', 'Подтвержден', 'Отклонен' ],
+        'orderStatus': [  'Новый', 'Подтвержден', 'Отклонен' ],
         'deliveryStatus': [ 'Подготовка', 'В&nbsp;процессе', 'Доставлено' ],
         'paymentStatus': [ 'Не&nbsp;оплачено', 'Оплачено' ],
         'shape': { 'round':'Круг', 'rect': 'Прямоугольник' }
@@ -37,5 +32,5 @@ window['main'] = function() {
 
     tuna.ui.modules.addIsolator('j-control-container');
     tuna.dom.setSelectorEngine(Sizzle);
-    tuna.view.init();
+    tuna.view.init(body);
 };

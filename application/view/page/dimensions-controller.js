@@ -62,7 +62,6 @@ DimensionsController.prototype._initActions = function() {
 
     addDimensionForm.addEventListener('result', function(event, dimension) {
         model.dimensions.addItem(dimension);
-
         self._navigation.back();
     });
 };

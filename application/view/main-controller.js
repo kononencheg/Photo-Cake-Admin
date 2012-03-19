@@ -18,6 +18,7 @@ tuna.utils.extend(MainController, tuna.view.ViewController);
  */
 MainController.prototype._initActions = function() {
     var self = this;
+
     tuna.rest.call('users.getCurrent', null, function(user) {
         if (user === null) {
             self.__showSignUpPopup();
@@ -35,7 +36,7 @@ MainController.prototype._initActions = function() {
 MainController.prototype.__initSingOutForm = function() {
     var form = this._container.getModuleInstanceByName('form', 'sign-out');
     form.addEventListener('result', function() {
-        location.reload()
+        location.reload();
     });
 };
 
@@ -43,16 +44,17 @@ MainController.prototype.__initSingOutForm = function() {
  * @private
  */
 MainController.prototype.__showSignUpPopup = function() {
-    var popup = this._container.getModuleInstanceByName('popup', 'sign-in');
-    popup.open();
+    var self = this;
 
+    var popup = this._container.getModuleInstanceByName('popup', 'sign-in');
     var form = this._container.getModuleInstanceByName('form', 'sign-in');
 
-    var self = this;
     form.addEventListener('result', function(event, user) {
         self.__applyUser(user);
         popup.close();
     });
+
+    popup.open();
 };
 
 /**
@@ -60,8 +62,22 @@ MainController.prototype.__showSignUpPopup = function() {
  * @param {model.record.User} user
  */
 MainController.prototype.__applyUser = function(user) {
-    if (user.role === model.record.User.ROLE_ADMIN) {
+    var globalTransformer = this._container.getModuleInstanceByName
+        ('template-transformer', 'body-container');
 
+    model.currentBakery.addEventListener('update', function(event, bakery) {
+        globalTransformer.reset();
+        globalTransformer.applyTransform({
+            'currentUser': tuna.model.serialize(user),
+            'currentBakery': tuna.model.serialize(bakery)
+        });
+
+        model.dimensions.load({ 'bakery_id': bakery.id });
+        model.recipes.load({ 'bakery_id': bakery.id });
+        model.orders.load({ 'bakery_id': bakery.id });
+    });
+
+    if (user.role === model.record.User.ROLE_ADMIN) {
         var bakeryForm = this._container.getModuleInstanceByName
             ('form', 'bakery-selection');
 
@@ -85,35 +101,6 @@ MainController.prototype.__applyUser = function(user) {
     } else {
         model.currentBakery.set(user);
     }
-
-    var globalTransformer = this._container.getModuleInstanceByName
-        ('template-transformer', 'body-container');
-
-    function updateGlobalTransformer() {
-        var bakery = model.currentBakery.get();
-
-        globalTransformer.reset();
-        globalTransformer.applyTransform({
-            'currentUser': tuna.model.serialize(user),
-            'currentBakery': tuna.model.serialize(bakery)
-        });
-    }
-
-    model.currentBakery.addEventListener('update', updateGlobalTransformer);
-
-    var navigation = this._container.getModuleInstanceByName
-        ('navigation', 'body-container');
-
-    navigation.addEventListener('open', function(event, index) {
-        if (index === 'dimensions') {
-            updateGlobalTransformer();
-        }
-    });
-
-    updateGlobalTransformer();
-
-    model.dimensions.load();
-    model.cities.load();
 };
 
 tuna.view.setMainController(new MainController());

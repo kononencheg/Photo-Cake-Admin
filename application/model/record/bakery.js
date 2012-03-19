@@ -14,11 +14,6 @@ var Bakery = function (data) {
      */
     this.deliveryPrice = 0;
 
-    /**
-     * @type {Array.<string>}
-     */
-    this.dimensionIds = null;
-
     model.record.User.call(this, data);
 };
 
@@ -32,7 +27,6 @@ Bakery.prototype.populate = function(data) {
 
     this.city = data['city'] && data['city']['name'] || null;
     this.deliveryPrice = data['delivery_price'] || null;
-    this.dimensionIds = data['available_dimension_ids'] || [];
 };
 
 /**
@@ -43,7 +37,6 @@ Bakery.prototype.serialize = function() {
     result['name'] = this.name;
     result['city'] = this.city;
     result['deliveryPrice'] = this.deliveryPrice;
-    result['dimensionIds'] = this.dimensionIds;
 
     return result;
 };

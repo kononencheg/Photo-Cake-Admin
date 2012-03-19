@@ -75,6 +75,8 @@ UsersController.prototype._initActions = function() {
         model.cities.addItem(city);
         addCityPopup.close();
     });
+
+    model.cities.load();
 };
 
 

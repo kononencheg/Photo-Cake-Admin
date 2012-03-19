@@ -6,12 +6,6 @@ var RecipesController = function () {
     tuna.view.PageViewController.call(this);
 
     /**
-     * @type {function()}
-     * @private
-     */
-    this.__loadRecipes = tuna.utils.bind(this.__loadRecipes, this);
-
-    /**
      * @override
      */
     this._modules = [ 'template-transformer', 'navigation', 'button-group',
@@ -51,31 +45,9 @@ RecipesController.prototype._initActions = function() {
     model.recipes.addEventListener('update', function(event, recipes) {
         recipeListTransformer.applyTransform(tuna.model.serialize(recipes));
     });
-};
 
-/**
- * @override
- */
-RecipesController.prototype.open = function() {
-    model.currentBakery.addEventListener('update', this.__loadRecipes);
-    this.__loadRecipes();
-};
-
-/**
- * @override
- */
-RecipesController.prototype.close = function() {
-    model.currentBakery.removeEventListener('update', this.__loadRecipes);
-};
-
-/**
- * @private
- */
-RecipesController.prototype.__loadRecipes = function() {
-    var bakery = model.currentBakery.get();
-    if (bakery !== null) {
-        model.recipes.load({ 'bakery_id': bakery.id });
-    }
+    recipeListTransformer.applyTransform
+        (tuna.model.serialize(model.recipes.get()));
 };
 
 tuna.view.registerController('recipes_page', new RecipesController());

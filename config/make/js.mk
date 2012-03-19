@@ -1,10 +1,8 @@
 JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
-			  --compilation_level WHITESPACE_ONLY \
+			  --compilation_level ADVANCED_OPTIMIZATIONS \
 			  --externs library/externs.js \
-			  --debug \
-			  --formatting PRETTY_PRINT \
-			   #ADVANCED_OPTIMIZATIONS \
+			  #--debug \
 
 TUNA_FILES = tuna.js \
 			 \
@@ -79,6 +77,7 @@ TUNA_FILES = tuna.js \
 			 ui/popups/popups.js \
 			 \
 			 ui/buttons/button.js \
+			 ui/buttons/popup-button.js \
 			 ui/buttons/button-group.js \
 			 ui/buttons/buttons.js \
 			 \
@@ -119,6 +118,7 @@ TUNA_FILES = tuna.js \
 			 ui/modules/navigation.js \
 			 ui/modules/popup.js \
 			 ui/modules/button.js \
+			 ui/modules/popup-button.js \
 			 ui/modules/selection-group.js \
 			 ui/modules/template-transformer.js \
 			 ui/modules/button-group.js \

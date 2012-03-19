@@ -15,8 +15,13 @@ var EditRecipeController = function() {
      * @private
      * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
      */
-    this.__recipeForm = null
+    this.__recipeForm = null;
 
+    /**
+     * @type {string}
+     * @private
+     */
+    this.__recipeId = '';
 
     /**
      * @override
@@ -42,39 +47,42 @@ EditRecipeController.prototype._initActions = function() {
         self._navigation.back();
 
         model.recipes.addItem(recipe);
-    })
+    });
+
+    model.dimensions.addEventListener('update', function(event, dimensions) {
+        self.__updateRecipe();
+    });
 };
 
 /**
  * @override
  */
 EditRecipeController.prototype.open = function(data) {
-    var dimensions = model.dimensions.get();
-    var recipe = model.recipes.getItemById(data["recipe-id"]);
-    var bakery = model.currentBakery.get();
+    this.__recipeId = data["recipe-id"];
+    this.__updateRecipe();
+};
 
-    if (dimensions !== null && bakery !== null && recipe !== null) {
 
+
+/**
+ * @private
+ */
+EditRecipeController.prototype.__updateRecipe = function() {
+    var recipe = model.recipes.getItemById(this.__recipeId);
+    if (recipe !== null) {
         var weights = [];
 
-        var i = 0,
-            l = dimensions.length;
-
-        var dimension = null;
-        while (i < l) {
-            dimension = dimensions[i];
-
-            if (tuna.utils.indexOf(dimension.weight, weights) === -1 &&
-                tuna.utils.indexOf(dimension.id, bakery.dimensionIds) !== -1) {
+        model.dimensions.each(function(dimension) {
+            if (tuna.utils.indexOf(dimension.weight, weights) === -1) {
                 weights.push(dimension.weight);
             }
-
-            i++;
-        }
+        });
 
         this.__recipeFormTransformer.applyTransform
-            (recipe.serialize(weights.sort()))
+            (recipe.serialize(weights.sort()));
     }
 };
+
+
 
 tuna.view.registerController("edit_recipe_page", new EditRecipeController);

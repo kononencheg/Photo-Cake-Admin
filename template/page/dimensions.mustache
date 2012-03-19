@@ -37,9 +37,9 @@
                         <tr>
                             <th>Форма</th>
                             <th>Вес (кг.)</th>
-                            <th class="t-bakery-hidden">Масштаб *</th>
-                            <th class="t-bakery-hidden">Количество людей</th>
-                            <th class="t-bakery-hidden">Действия</th>
+                            <th>Размер (см.)</th>
+                            <th>Количество людей</th>
+                            <th>Действия</th>
                         </tr>
                     </thead>
                     <tbody class="t-dimensions-list"></tbody>
@@ -80,7 +80,7 @@
 
         <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
         <tuna:spot tuna:target="t-weight" tuna:path="weight" />
-        <tuna:spot tuna:target="t-ratio" tuna:path="ratio" />
+        <tuna:spot tuna:target="t-size" tuna:path="size" />
         <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
 
         <tuna:attr tuna:name="value" tuna:path="id"
@@ -91,20 +91,11 @@
     <table>
         <tbody>
         <tr id="dimensions_list_item_renderer">
-            <td>
-                <label>
-                    <input class="t-current-bakery-exist
-                                      t-is-dimension-available
-                                      t-id-checkbox"
-                           type="checkbox" name="dimension_ids[]" />
-                    <span class="t-shape-name"></span>
-                </label>
-            </td>
-
+            <td class="t-shape-name"></td>
             <td class="t-weight"></td>
-            <td class="t-ratio t-bakery-hidden"></td>
-            <td class="t-persons-count t-bakery-hidden"></td>
-            <td class="t-bakery-hidden">
+            <td class="t-size"></td>
+            <td class="t-persons-count"></td>
+            <td>
                 <ul class="nav nav-list">
                     <li>
                         <a class="j-button t-id"

@@ -9,9 +9,6 @@
     <tuna:if tuna:path="currentBakery" tuna:notset tuna:class="hide"
              tuna:target="t-current-bakery-exist" />
 
-    <tuna:checkbox tuna:path="currentBakery/dimensionIds"
-                   tuna:target="t-is-dimension-available" />
-
     <tuna:attr tuna:path="currentBakery/id" tuna:name="value"
                tuna:target="t-current-bakery-id" />
 
@@ -148,9 +145,9 @@
     <tuna:spot tuna:path="paymentStatusName"
                tuna:target="t-payment-status-label" />
 
-    <tuna:if tuna:path="status" tuna:eq="1" tuna:class="label-important"
+    <tuna:if tuna:path="status" tuna:eq="0" tuna:class="label-important"
              tuna:target="t-status-label" />
-    <tuna:if tuna:path="status" tuna:eq="2" tuna:class="label-success"
+    <tuna:if tuna:path="status" tuna:eq="1" tuna:class="label-success"
              tuna:target="t-status-label" />
 
     <tuna:if tuna:path="deliveryStatus" tuna:eq="0" tuna:class="label-important"
