@@ -1,0 +1,79 @@
+<form id="add_decoration_popup" action="/api/" method="POST" target="api_frame"
+      enctype="multipart/form-data"
+      class="j-form form-horizontal hide"
+      data-name="add-decoration"
+      data-record-type="decoration">
+
+    <input type="hidden" name="method" value="decorations.add" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Добавить элемент оформления</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                <div class="j-name-input control-group">
+                    <label class="control-label"> Имя: </label>
+                    <div class="controls">
+                        <div class="input">
+                            <input name="name" type="text" />
+                        </div>
+                        <p class="j-message help-block"></p>
+                    </div>
+                </div>
+
+                <div class="j-image-input control-group">
+                    <label class="control-label"> Картинка: </label>
+                    <div class="controls">
+                        <div class="input">
+                            <input name="image" type="file" />
+                        </div>
+                        <p class="j-message help-block"></p>
+                    </div>
+                </div>
+
+                <div class="j-is_autorotate-input control-group">
+                    <label class="control-label"> Автоповорот: </label>
+                    <div class="controls">
+                        <div class="input">
+                            <input name="is_autorotate" type="checkbox" value="1" />
+                        </div>
+                        <p class="j-message help-block"></p>
+                    </div>
+                </div>
+
+                <div class="j-group-input control-group">
+                    <label class="control-label"> Группа: </label>
+                    <div class="controls">
+                        <label class="radio inline">
+                            <input name="group" type="radio" value="0" checked> 1
+                        </label>
+                        <label class="radio inline">
+                            <input name="group" type="radio" value="1"> 2
+                        </label>
+                        <label class="radio inline">
+                            <input name="group" type="radio" value="2"> 3
+                        </label>
+                        <label class="radio inline">
+                            <input name="group" type="radio" value="2"> 4
+                        </label>
+
+                        <p class="j-message help-block"></p>
+                    </div>
+                </div>
+
+            </fieldset>
+        </div>
+
+        <div class="modal-footer">
+            <a class="j-popup-close btn">Закрыть</a>
+            <input type="submit" class="btn btn-primary" value="Добавить" />
+        </div>
+    </div>
+    <div class="modal-backdrop"></div>
+</form>

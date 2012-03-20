@@ -1,0 +1,120 @@
+<div class="j-navigation-page page active"
+     data-name="table">
+
+    <div class="page-header">
+        <div class="row">
+            <div class="span12">
+                <h1>Декорации</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="span6">
+            <h2>Используемые</h2>
+
+            <form action="/api/" method="POST" target="api_frame"
+                  class="j-form j-template-transformer j-button-group form-inline"
+                  data-template-id="available_decorations_list_template"
+                  data-name="available-decorations-list"
+                  data-record-type="bakery">
+
+                <input type="hidden" name="method" value="users.editBakery" />
+                <input type="hidden" name="format" value="frame-callback" />
+
+                <input type="hidden" name="id" class="t-current-bakery-id" />
+
+                <div class="j-form-message alert alert-error hide"></div>
+
+                <ul class="t-decorations-list nav thumbnails"></ul>
+
+                <button class="btn btn-primary" type="submit">Сохранить</button>
+            </form>
+        </div>
+        <div class="span6">
+            <h2>Доступные</h2>
+
+            <ul class="j-template-transformer j-button-group
+                       t-decorations-list nav thumbnails"
+                data-name="decorations-list"
+                data-template-id="decorations_list_template">
+
+            </ul>
+
+            <a class="j-popup-button t-bakery-hidden btn btn-primary"
+               data-name="add-decoration"
+               data-popup-id="add_decoration_popup">
+                Добавить
+            </a>
+        </div>
+    </div>
+</div>
+
+{{> template/popup/add-decoration }}
+
+<div class="j-control-container hide">
+
+    <tuna:template id="decorations_list_template">
+        <tuna:list tuna:item-renderer-id="decorations_list_item_renderer"
+                   tuna:item-template-id="decoration_template"
+                   tuna:key-path="id"
+                   tuna:path="/"
+                   tuna:target="t-decorations-list" />
+
+    </tuna:template>
+
+    <tuna:template id="available_decorations_list_template">
+        <tuna:list tuna:item-renderer-id="available_decorations_list_item_renderer"
+                   tuna:item-template-id="decoration_template"
+                   tuna:key-path="id"
+                   tuna:path="/"
+                   tuna:target="t-decorations-list" />
+
+    </tuna:template>
+
+    <tuna:template id="decoration_template">
+        <tuna:attr tuna:name="data-decoration-id" tuna:path="id"
+                   tuna:target="t-id" />
+
+        <tuna:attr tuna:name="name" tuna:path="id"
+                   tuna:filter="decoration_prices[$$]"
+                   tuna:target="t-id-input" />
+
+        <tuna:attr tuna:name="value" tuna:path="price"
+                   tuna:target="t-id-input" />
+
+        <tuna:attr tuna:name="src" tuna:path="imageUrl"
+                   tuna:target="t-image" />
+
+        <tuna:spot tuna:path="name"
+                   tuna:target="t-name" />
+
+    </tuna:template>
+
+    <ul>
+        <li id="decorations_list_item_renderer" class="span6">
+            <a class="thumbnail">
+                <span class="j-button t-id pull-left"
+                      data-action="add">
+                    <i class="icon-arrow-left"></i><span class="t-name"></span>
+                </span>
+
+                <img class="t-image" width="30" alt="Элемент декорации" />
+            </a>
+        </li>
+        <li id="available_decorations_list_item_renderer" class="span6">
+            <a class="thumbnail">
+
+                <span class="j-button t-id pull-right"
+                      data-action="remove">
+                    <span class="t-name"></span><i class="icon-arrow-right"></i>
+                </span>
+
+                Цена: <input class="t-id-input input-small" type="text" />
+
+                <img class="t-image pull-right" width="30" alt="Элемент декорации" />
+            </a>
+        </li>
+    </ul>
+
+</div>

@@ -25,6 +25,11 @@ model.orders = new tuna.model.ListResource('orders.get', 'order');
 model.dimensions = new tuna.model.ListResource('dimensions.get', 'dimension');
 
 /**
+ * @type tuna.model.ListResource
+ */
+model.decorations = new tuna.model.ListResource('decorations.get', 'decoration');
+
+/**
  * @type tuna.model.ItemResource
  */
 model.currentBakery = new tuna.model.ItemResource();

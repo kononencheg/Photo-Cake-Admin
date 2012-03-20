@@ -72,9 +72,11 @@ MainController.prototype.__applyUser = function(user) {
             'currentBakery': tuna.model.serialize(bakery)
         });
 
-        model.dimensions.load({ 'bakery_id': bakery.id });
-        model.recipes.load({ 'bakery_id': bakery.id });
-        model.orders.load({ 'bakery_id': bakery.id });
+        if (bakery !== null) {
+            model.dimensions.load({ 'bakery_id': bakery.id });
+            model.recipes.load({ 'bakery_id': bakery.id });
+            model.orders.load({ 'bakery_id': bakery.id });
+        }
     });
 
     if (user.role === model.record.User.ROLE_ADMIN) {
@@ -98,6 +100,11 @@ MainController.prototype.__applyUser = function(user) {
         });
 
         model.bakeries.load();
+
+        globalTransformer.applyTransform({
+            'currentUser': tuna.model.serialize(user)
+        });
+
     } else {
         model.currentBakery.set(user);
     }

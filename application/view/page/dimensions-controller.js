@@ -47,13 +47,6 @@ DimensionsController.prototype._initActions = function() {
     dimensionsTransformer.applyTransform
         (tuna.model.serialize(model.dimensions.get()));
 
-    var dimensionsForm = this._container.getModuleInstanceByName
-        ('form', 'dimensions-list');
-
-    dimensionsForm.addEventListener('result', function(event, bakery) {
-        model.bakeries.addItem(bakery);
-        model.currentBakery.set(bakery);
-    });
 
     var addDimensionForm = this._container.getModuleInstanceByName
         ('form', 'add-dimension');

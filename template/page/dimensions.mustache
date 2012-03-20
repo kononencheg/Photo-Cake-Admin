@@ -17,41 +17,22 @@
     </div>
 
     <div class="row">
-        <div class="span12">
+        <div class="span12 j-template-transformer j-button-group"
+             data-template-id="dimensions_list_template"
+             data-name="dimensions-list">
 
-            <form action="/api/" method="POST" target="api_frame"
-                  class="j-form j-template-transformer j-button-group form-inline"
-                  data-template-id="dimensions_list_template"
-                  data-name="dimensions-list"
-                  data-record-type="bakery">
-
-                <input type="hidden" name="method" value="users.editBakery" />
-                <input type="hidden" name="format" value="frame-callback" />
-
-                <input type="hidden" name="id" class="t-current-bakery-id" />
-
-                <div class="j-form-message alert alert-error hide"></div>
-
-                <table class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>Форма</th>
-                            <th>Вес (кг.)</th>
-                            <th>Размер (см.)</th>
-                            <th>Количество людей</th>
-                            <th>Действия</th>
-                        </tr>
-                    </thead>
-                    <tbody class="t-dimensions-list"></tbody>
-                </table>
-
-                <div class="t-current-bakery-exist form-actions">
-                    <button type="submit" class="btn btn-primary">
-                        Сохранить
-                    </button>
-                </div>
-
-            </form>
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Форма</th>
+                        <th>Вес (кг.)</th>
+                        <th>Размер (см.)</th>
+                        <th>Количество людей</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody class="t-dimensions-list"></tbody>
+            </table>
 
         </div>
     </div>
@@ -90,22 +71,22 @@
 
     <table>
         <tbody>
-        <tr id="dimensions_list_item_renderer">
-            <td class="t-shape-name"></td>
-            <td class="t-weight"></td>
-            <td class="t-size"></td>
-            <td class="t-persons-count"></td>
-            <td>
-                <ul class="nav nav-list">
-                    <li>
-                        <a class="j-button t-id"
-                           data-action="delete">
-                            <i class="icon-trash"></i> Удалить
-                        </a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
+            <tr id="dimensions_list_item_renderer">
+                <td class="t-shape-name"></td>
+                <td class="t-weight"></td>
+                <td class="t-size"></td>
+                <td class="t-persons-count"></td>
+                <td>
+                    <ul class="nav nav-list">
+                        <li>
+                            <a class="j-button t-id"
+                               data-action="delete">
+                                <i class="icon-trash"></i> Удалить
+                            </a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
         </tbody>
     </table>
 

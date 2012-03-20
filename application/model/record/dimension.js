@@ -55,7 +55,7 @@ Dimension.prototype.serialize = function() {
         'weight': this.weight,
         'shape': this.shape,
         'shapeName': tuna.utils.config.get('shape')[this.shape],
-        'size': 9 / this.ratio,
+        'size': Math.round(90 / this.ratio) / 10,
         'personsCount': this.personsCount
     };
 };

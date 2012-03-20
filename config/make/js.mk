@@ -2,7 +2,7 @@ JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
 			  --compilation_level ADVANCED_OPTIMIZATIONS \
 			  --externs library/externs.js \
-			  #--debug \
+			  --debug \
 
 TUNA_FILES = tuna.js \
 			 \
@@ -135,6 +135,7 @@ TUNA_FILES = tuna.js \
 APPLICATION_FILES = main.js \
 					\
 					view/main-controller.js \
+					view/page/decorations-controller.js \
 					view/page/dimensions-controller.js \
 					view/page/users-controller.js \
 					view/page/recipes-controller.js \
@@ -153,6 +154,7 @@ APPLICATION_FILES = main.js \
 					model/record/cake.js \
 					model/record/order.js \
 					model/record/city.js \
+					model/record/decoration.js \
 					\
 					model/model.js \
 					\

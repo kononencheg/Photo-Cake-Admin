@@ -14,6 +14,11 @@ var Bakery = function (data) {
      */
     this.deliveryPrice = 0;
 
+    /**
+     * @type {Object.<string, number>}
+     */
+    this.decorationPrices = {};
+
     model.record.User.call(this, data);
 };
 
@@ -27,6 +32,12 @@ Bakery.prototype.populate = function(data) {
 
     this.city = data['city'] && data['city']['name'] || null;
     this.deliveryPrice = data['delivery_price'] || null;
+    this.decorationPrices = {};
+
+    var prices = data['decoration_prices'];
+    for (var decorationId in prices) {
+        this.decorationPrices[decorationId] = prices[decorationId]['price'];
+    }
 };
 
 /**
