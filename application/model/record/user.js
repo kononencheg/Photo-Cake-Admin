@@ -42,7 +42,7 @@ User.prototype.serialize = function() {
         'id': this.id,
         'email': this.email,
         'role': this.role,
-        'roleName': tuna.utils.config.get('role')[this.role]
+        'roleName': tuna.utils.config.get('role', this.role)
     };
 };
 

@@ -62,6 +62,22 @@ MainController.prototype.__showSignUpPopup = function() {
  * @param {model.record.User} user
  */
 MainController.prototype.__applyUser = function(user) {
+    var applicationFrame = tuna.dom.selectOne('#application_frame');
+    var navigation = this._container.getModuleInstanceByName
+        ('navigation', 'body-container');
+
+    navigation.addEventListener('open', function(event, page) {
+        if (page === 'application') {
+            var bakery = model.currentBakery.get();
+
+            if (bakery !== null) {
+                applicationFrame.src = tuna.utils.config.get('app', 'bakery') +
+                    '?bakery_id=' + bakery.id;
+            } else {
+                applicationFrame.src = tuna.utils.config.get('app', 'site');
+            }
+        }
+    });
     var globalTransformer = this._container.getModuleInstanceByName
         ('template-transformer', 'body-container');
 

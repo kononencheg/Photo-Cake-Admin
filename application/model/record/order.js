@@ -110,9 +110,9 @@ Order.prototype.serialize = function() {
         'paymentStatus': this.paymentStatus,
         'deliveryStatus': this.deliveryStatus,
 
-        'statusName':        tuna.utils.config.get('orderStatus')[this.status],
-        'paymentStatusName': tuna.utils.config.get('paymentStatus')[this.paymentStatus],
-        'deliveryStatusName':tuna.utils.config.get('deliveryStatus')[this.deliveryStatus]
+        'statusName':        tuna.utils.config.get('order_status', this.status),
+        'paymentStatusName': tuna.utils.config.get('payment_status', this.paymentStatus),
+        'deliveryStatusName':tuna.utils.config.get('delivery_status', this.deliveryStatus)
     };
 };
 
