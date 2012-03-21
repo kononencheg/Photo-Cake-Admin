@@ -28,4 +28,15 @@ OrdersController.prototype._initActions = function() {
     });
 };
 
+/**
+ * @override
+ */
+OrdersController.prototype.open = function() {
+    var bakery = model.currentBakery.get();
+
+    if (bakery !== null) {
+        model.orders.load({ 'bakery_id': bakery.id }, true);
+    }
+};
+
 tuna.view.registerController('orders_page', new OrdersController());
