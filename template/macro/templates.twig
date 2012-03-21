@@ -1,0 +1,55 @@
+{% macro list(path, target, item_renderer, item_template, key_path) %}
+
+    <tuna:list tuna:target="{{ target }}" tuna:path="{{ path }}"
+               tuna:item-renderer-id="{{ item_renderer }}"
+               tuna:item-template-id="{{ item_template }}"
+               tuna:key-path="{{ key_path|default('$key') }}" />
+
+{% endmacro %}
+
+{% macro spot(path, target, filter) %}
+
+    <tuna:spot tuna:path="{{ path }}"
+            {% if filter %} tuna:filter="{{ filter }}" {% endif %}
+               tuna:target="{{ target }}" />
+
+{% endmacro %}
+
+{% macro attr(path, target, name, filter) %}
+
+    <tuna:attr tuna:name="{{ name }}"
+               tuna:path="{{ path }}"
+               {% if filter %} tuna:filter="{{ filter }}" {% endif %}
+               tuna:target="{{ target }}" />
+
+{% endmacro %}
+
+{% macro notset(path, target, actions) %}
+    {% if (actions) %}
+
+        <tuna:if tuna:path="{{ path }}" tuna:notset
+                 {% for key, value in actions %}
+                    tuna:{{ key }}="{{ value }}"
+                 {% endfor %}
+                 tuna:target="{{ target }}" />
+
+    {% endif %}
+{% endmacro %}
+
+{% macro eq(path, to, target, actions) %}
+    {% if (actions) %}
+
+        <tuna:if tuna:path="{{ path }}" tuna:eq="{{ to }}"
+                {% for key, value in actions %}
+                 tuna:{{ key }}="{{ value }}"
+                {% endfor %}
+                 tuna:target="{{ target }}" />
+
+    {% endif %}
+{% endmacro %}
+
+{% macro switch(path, target, cases) %}
+    {% for to, actions in cases %}
+        {{ _self.eq(path, to, target, actions) }}
+    {% endfor %}
+{% endmacro %}

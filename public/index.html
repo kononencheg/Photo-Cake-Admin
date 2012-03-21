@@ -613,6 +613,241 @@
     </div>
 </form></div>
 
+<div class="j-control-container hide">
+
+    <tuna:template id="order_info_template">
+
+        
+    <tuna:attr tuna:name="value"
+               tuna:path="id"
+                              tuna:target="t-id" />
+
+
+        
+    <tuna:spot tuna:path="index"
+                           tuna:target="t-index" />
+
+
+
+        
+    <tuna:spot tuna:path="cake/dimension/weight"
+                           tuna:target="t-cake-weight" />
+
+
+        
+    <tuna:attr tuna:name="src"
+               tuna:path="cake/imageUrl"
+                              tuna:target="t-cake-image-url" />
+
+
+
+            
+        <tuna:if tuna:path="cake/photoUrl" tuna:notset
+                                     tuna:class="hide"
+                                  tuna:target="t-cake-photo" />
+
+    
+        
+    <tuna:attr tuna:name="href"
+               tuna:path="cake/photoUrl"
+                              tuna:target="t-cake-photo-url" />
+
+
+
+        
+    <tuna:spot tuna:path="recipe/name"
+                           tuna:target="t-recipe-name" />
+
+
+
+        
+    <tuna:spot tuna:path="client/name"
+                           tuna:target="t-client-name" />
+
+
+        
+    <tuna:spot tuna:path="client/phone"
+                           tuna:target="t-client-phone" />
+
+
+        
+    <tuna:spot tuna:path="client/email"
+                           tuna:target="t-client-email" />
+
+
+        
+    <tuna:spot tuna:path="client/networkName"
+                           tuna:target="t-client-network-name" />
+
+
+
+        
+    <tuna:spot tuna:path="delivery/address"
+                           tuna:target="t-delivery-address" />
+
+
+        
+    <tuna:spot tuna:path="delivery/comment"
+                           tuna:target="t-delivery-comment" />
+
+
+        
+    <tuna:spot tuna:path="delivery/message"
+                           tuna:target="t-delivery-message" />
+
+
+        
+    <tuna:spot tuna:path="delivery/date"
+                           tuna:target="t-delivery-date" />
+
+
+
+        
+    <tuna:spot tuna:path="payment/totalPrice"
+                           tuna:target="t-payment-price" />
+
+
+
+    </tuna:template>
+
+    <tuna:template id="order_row_template">
+
+        
+    <tuna:attr tuna:name="data-order-id"
+               tuna:path="id"
+                              tuna:target="t-id" />
+
+
+
+        
+    <tuna:spot tuna:path="index"
+                           tuna:target="t-index" />
+
+
+        
+    <tuna:spot tuna:path="date"
+                           tuna:target="t-date" />
+
+
+
+        
+    <tuna:spot tuna:path="statusName"
+                           tuna:target="t-status-label" />
+
+
+        
+    <tuna:spot tuna:path="deliveryStatusName"
+                           tuna:target="t-delivery-status-label" />
+
+
+        
+    <tuna:spot tuna:path="paymentStatusName"
+                           tuna:target="t-payment-status-label" />
+
+
+
+        
+    <tuna:spot tuna:path="delivery/date"
+                           tuna:target="t-delivery-date" />
+
+
+        
+    <tuna:spot tuna:path="client/name"
+                           tuna:target="t-client-name" />
+
+
+        
+    <tuna:spot tuna:path="payment/totalPrice"
+                           tuna:target="t-payment-price" />
+
+
+
+                        
+        <tuna:if tuna:path="status" tuna:eq="0"
+                                 tuna:class="label-important"
+                                 tuna:target="t-status-label" />
+
+    
+                
+        <tuna:if tuna:path="status" tuna:eq="1"
+                                 tuna:class="label-success"
+                                 tuna:target="t-status-label" />
+
+    
+    
+
+                        
+        <tuna:if tuna:path="deliveryStatus" tuna:eq="0"
+                                 tuna:class="label-important"
+                                 tuna:target="t-delivery-status-label" />
+
+    
+                
+        <tuna:if tuna:path="deliveryStatus" tuna:eq="1"
+                                 tuna:class="label-info"
+                                 tuna:target="t-delivery-status-label" />
+
+    
+                
+        <tuna:if tuna:path="deliveryStatus" tuna:eq="2"
+                                 tuna:class="label-success"
+                                 tuna:target="t-delivery-status-label" />
+
+    
+    
+
+                        
+        <tuna:if tuna:path="paymentStatus" tuna:eq="0"
+                                 tuna:class="label-important"
+                                 tuna:target="t-payment-status-label" />
+
+    
+                
+        <tuna:if tuna:path="paymentStatus" tuna:eq="1"
+                                 tuna:class="label-success"
+                                 tuna:target="t-payment-status-label" />
+
+    
+    
+
+    </tuna:template>
+
+    <tuna:template id="orders_list_template">
+        
+    <tuna:list tuna:target="t-orders-list" tuna:path="/"
+               tuna:item-renderer-id="orders_list_item_renderer"
+               tuna:item-template-id="order_row_template"
+               tuna:key-path="id" />
+
+
+    </tuna:template>
+
+    <table>
+        <tbody>
+        <tr id="orders_list_item_renderer">
+            <td class="t-index"></td>
+            <td class="t-date"></td>
+            <td class="t-delivery-date"></td>
+            <td class="t-client-name"></td>
+            <td class="t-payment-price"></td>
+            <td><span class="t-status-label label"></span></td>
+            <td><span class="t-delivery-status-label label"></span></td>
+            <td><span class="t-payment-status-label label"></span></td>
+            <td>
+                <ul class="nav nav-list">
+                    <li>
+                        <a class="j-navigation-link t-id"
+                           data-href="edit">
+                            <i class="icon-edit"></i> Редактировать
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
 
 }
 </div>
@@ -836,7 +1071,124 @@
 
 </div>
 
-}
+<div class="j-control-container hide">
+
+    <tuna:template id="recipe_table_template">
+        
+    <tuna:list tuna:target="t-recipe-list" tuna:path="/"
+               tuna:item-renderer-id="recipe_row_renderer"
+               tuna:item-template-id="recipe_template"
+               tuna:key-path="id" />
+
+
+    </tuna:template>
+
+    <tuna:template id="recipe_template">
+
+        
+    <tuna:attr tuna:name="data-recipe-id"
+               tuna:path="id"
+                              tuna:target="t-id" />
+
+
+        
+    <tuna:attr tuna:name="value"
+               tuna:path="id"
+                              tuna:target="t-id-input" />
+
+
+
+        
+    <tuna:attr tuna:name="src"
+               tuna:path="imageUrl"
+                              tuna:target="t-image" />
+
+
+
+        
+    <tuna:attr tuna:name="alt"
+               tuna:path="name"
+                tuna:filter="Рецепт: $$"                tuna:target="t-image" />
+
+
+        
+    <tuna:spot tuna:path="name"
+                           tuna:target="t-name" />
+
+
+
+        
+    <tuna:spot tuna:path="desc"
+                           tuna:target="t-desc" />
+
+
+
+        
+    <tuna:list tuna:target="t-price-list" tuna:path="dimensionPrices"
+               tuna:item-renderer-id="dimension_price_renderer"
+               tuna:item-template-id="dimension_price_template"
+               tuna:key-path="$key" />
+
+
+
+    </tuna:template>
+
+    <tuna:template id="dimension_price_template">
+        
+    <tuna:spot tuna:path="weight"
+                           tuna:target="t-weight" />
+
+
+
+        
+    <tuna:attr tuna:name="value"
+               tuna:path="price"
+                              tuna:target="t-price" />
+
+
+        
+    <tuna:attr tuna:name="name"
+               tuna:path="weight"
+                tuna:filter="dimension_prices[$$]"                tuna:target="t-price" />
+
+
+    </tuna:template>
+
+    <table>
+        <tbody>
+        <tr id="dimension_price_renderer">
+            <td class="t-weight">1</td>
+            <td>
+                <input type="text" class="t-price input-mini" />
+            </td>
+        </tr>
+        <tr id="recipe_row_renderer">
+            <td class="t-name"></td>
+            <td>
+                <img class="t-image" width="90" height="90" alt="Рецепт" />
+            </td>
+            <td class="t-desc"></td>
+            <td>
+                <ul class="nav nav-list">
+                    <li>
+                        <a class="j-navigation-link t-id"
+                           data-href="edit">
+                            <i class="icon-edit"></i> Редактировать
+                        </a>
+                    </li>
+                    <li>
+                        <a class="j-button t-id"
+                           data-action="delete">
+                            <i class="icon-trash"></i> Удалить
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>}
 </div>
 
 <div id="dimensions_page"
@@ -1609,279 +1961,89 @@
 
 </div>
 
-
-
-
-        <div class="j-control-container hide">
-
-            <!-- Global  -->
-
-<select>
-    <option id="option_renderer" class="t-option"></option>
-</select>
-
-<tuna:template id="global_template">
-    <tuna:if tuna:path="currentBakery" tuna:notset tuna:class="hide"
-             tuna:target="t-current-bakery-exist" />
-
-    <tuna:attr tuna:path="currentBakery/id" tuna:name="value"
-               tuna:target="t-current-bakery-id" />
-
-    <tuna:if tuna:path="currentUser/role" tuna:eq="1" tuna:class="disabled"
-             tuna:target="t-bakery-disabled" />
-
-    <tuna:if tuna:path="currentUser/role" tuna:eq="1" tuna:class="hide"
-             tuna:target="t-bakery-hidden" />
-
-    <tuna:spot tuna:path="currentUser/email"
-               tuna:target="t-current-user-email" />
-
-    <tuna:spot tuna:path="currentUser/role"
-               tuna:target="t-current-user-role" />
-
-    <tuna:spot tuna:path="currentUser/roleName"
-               tuna:target="t-current-user-role-name" />
-</tuna:template>
-
-
-<!-- Bakery templates -->
-
-<tuna:template id="bakery_selection_template">
-    <tuna:list tuna:path=""
-               tuna:target="t-bakery-select"
+<div class="j-control-container hide">
+    <tuna:template id="bakery_selection_template">
+        
+    <tuna:list tuna:target="t-bakery-select" tuna:path="/"
                tuna:item-renderer-id="option_renderer"
                tuna:item-template-id="bakery_option_template"
                tuna:key-path="id" />
-</tuna:template>
 
-<tuna:template id="bakery_option_template">
+
+    </tuna:template>
+
+    <tuna:template id="bakery_option_template">
+        
     <tuna:attr tuna:name="value"
                tuna:path="id"
-               tuna:target="t-option" />
-
-    <tuna:spot tuna:target="t-option"
-               tuna:path="name" />
-</tuna:template>
+                              tuna:target="t-option" />
 
 
-<!-- Order templates -->
+        
+    <tuna:spot tuna:path="name"
+                           tuna:target="t-option" />
 
-<tuna:template id="order_info_template">
 
-    <tuna:spot tuna:path="index" tuna:target="t-index" />
+    </tuna:template>
+</div>
 
+        <div class="j-control-container hide">
+
+            <select>
+                <option id="option_renderer" class="t-option"></option>
+            </select>
+
+            <tuna:template id="global_template">
+
+                    
+        <tuna:if tuna:path="currentBakery" tuna:notset
+                                     tuna:class="hide"
+                                  tuna:target="t-current-bakery-exist" />
+
+    
+                
     <tuna:attr tuna:name="value"
-               tuna:path="id"
-               tuna:target="t-id" />
-
-    <tuna:attr tuna:name="src"
-               tuna:path="cake/imageUrl"
-               tuna:target="t-cake-image-url" />
-
-    <tuna:spot tuna:path="recipe/name"
-               tuna:target="t-recipe-name" />
-
-    <tuna:spot tuna:path="cake/dimension/weight"
-               tuna:target="t-cake-weight" />
-
-    <tuna:spot tuna:path="client/name"
-               tuna:target="t-client-name" />
-
-    <tuna:spot tuna:path="client/phone"
-               tuna:target="t-client-phone" />
-
-    <tuna:spot tuna:path="client/email"
-               tuna:target="t-client-email" />
-
-    <tuna:spot tuna:path="client/networkName"
-               tuna:target="t-client-network-name" />
-
-    <tuna:spot tuna:path="delivery/address"
-               tuna:target="t-delivery-address" />
-
-    <tuna:spot tuna:path="delivery/comment"
-               tuna:target="t-delivery-comment" />
-
-    <tuna:spot tuna:path="delivery/message"
-               tuna:target="t-delivery-message" />
-
-    <tuna:spot tuna:path="delivery/date"
-               tuna:target="t-delivery-date" />
-
-    <tuna:spot tuna:path="payment/totalPrice"
-               tuna:target="t-payment-price" />
+               tuna:path="currentBakery/id"
+                              tuna:target="t-current-bakery-id" />
 
 
-    <tuna:if tuna:path="cake/photoUrl" tuna:notset tuna:class="hide"
-             tuna:target="t-cake-photo" />
 
-    <tuna:attr tuna:name="href"
-               tuna:path="cake/photoUrl"
-               tuna:target="t-cake-photo-url" />
+                
+    <tuna:spot tuna:path="currentUser/email"
+                           tuna:target="t-current-user-email" />
 
 
-</tuna:template>
+
+                
+    <tuna:spot tuna:path="currentUser/role"
+                           tuna:target="t-current-user-role" />
 
 
-<tuna:template id="order_row_template">
-    <tuna:attr tuna:name="data-order-id"
-               tuna:path="id"
-               tuna:target="t-id" />
+                    
+        <tuna:if tuna:path="currentUser/role" tuna:eq="1"
+                                 tuna:class="disabled"
+                                 tuna:target="t-bakery-disabled" />
 
-    <tuna:spot tuna:path="index"
-               tuna:target="t-index" />
+    
+                    
+        <tuna:if tuna:path="currentUser/role" tuna:eq="1"
+                                 tuna:class="hide"
+                                 tuna:target="t-bakery-hidden" />
 
-    <tuna:spot tuna:path="date"
-               tuna:target="t-date" />
+    
 
-    <tuna:spot tuna:path="delivery/date"
-               tuna:target="t-delivery-date" />
+                
+    <tuna:spot tuna:path="currentUser/roleName"
+                           tuna:target="t-current-user-role-name" />
 
-    <tuna:spot tuna:path="client/name"
-               tuna:target="t-client-name" />
 
-    <tuna:spot tuna:path="payment/totalPrice"
-               tuna:target="t-payment-price" />
 
-    <tuna:spot tuna:path="statusName"
-               tuna:target="t-status-label" />
-
-    <tuna:spot tuna:path="deliveryStatusName"
-               tuna:target="t-delivery-status-label" />
-
-    <tuna:spot tuna:path="paymentStatusName"
-               tuna:target="t-payment-status-label" />
-
-    <tuna:if tuna:path="status" tuna:eq="0" tuna:class="label-important"
-             tuna:target="t-status-label" />
-    <tuna:if tuna:path="status" tuna:eq="1" tuna:class="label-success"
-             tuna:target="t-status-label" />
-
-    <tuna:if tuna:path="deliveryStatus" tuna:eq="0" tuna:class="label-important"
-             tuna:target="t-delivery-status-label"/>
-    <tuna:if tuna:path="deliveryStatus" tuna:eq="1" tuna:class="label-info"
-             tuna:target="t-delivery-status-label"/>
-    <tuna:if tuna:path="deliveryStatus" tuna:eq="2" tuna:class="label-success"
-             tuna:target="t-delivery-status-label"/>
-
-    <tuna:if tuna:path="paymentStatus" tuna:eq="0" tuna:class="label-important"
-             tuna:target="t-payment-status-label"/>
-    <tuna:if tuna:path="paymentStatus" tuna:eq="1" tuna:class="label-success"
-             tuna:target="t-payment-status-label"/>
-
-</tuna:template>
-
-<tuna:template id="orders_list_template">
-    <tuna:list tuna:target="t-orders-list" tuna:path=""
-               tuna:item-renderer-id="orders_list_item_renderer"
-               tuna:item-template-id="order_row_template"
-               tuna:key-path="id" />
-</tuna:template>
-
-<table>
-    <tbody>
-        <tr id="orders_list_item_renderer">
-            <td class="t-index"></td>
-            <td class="t-date"></td>
-            <td class="t-delivery-date"></td>
-            <td class="t-client-name"></td>
-            <td class="t-payment-price"></td>
-            <td>
-                <span class="t-status-label label"></span>
-            </td>
-            <td>
-                <span class="t-delivery-status-label label"></span>
-            </td>
-            <td>
-                <span class="t-payment-status-label label"></span>
-            </td>
-            <td>
-                <ul class="nav nav-list">
-                    <li>
-                        <a class="j-navigation-link t-id"
-                           data-href="edit">
-                            <i class="icon-edit"></i> Редактировать
-                        </a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-<!-- Recipes table -->
-
-<tuna:template id="recipe_table_template">
-    <tuna:list tuna:target="t-recipe-list" tuna:path=""
-               tuna:item-renderer-id="recipe_row_renderer"
-               tuna:item-template-id="recipe_template"
-               tuna:key-path="id" />
-</tuna:template>
-
-<tuna:template id="recipe_template">
-    <tuna:attr tuna:target="t-id" tuna:path="id" tuna:name="data-recipe-id" />
-    <tuna:attr tuna:target="t-id-input" tuna:path="id" tuna:name="value" />
-
-    <tuna:attr tuna:target="t-image" tuna:path="imageUrl" tuna:name="src" />
-    <tuna:attr tuna:target="t-image" tuna:path="name" tuna:name="alt"
-               tuna:filter="Рецепт: $$" />
-
-    <tuna:spot tuna:target="t-name" tuna:path="name" />
-    <tuna:spot tuna:target="t-desc" tuna:path="desc" />
-
-    <tuna:list tuna:target="t-price-list" tuna:path="dimensionPrices"
-               tuna:item-renderer-id="dimension_price_renderer"
-               tuna:item-template-id="dimension_price_template"
-               tuna:key-path="$key" />
-
-</tuna:template>
-
-<tuna:template id="dimension_price_template">
-    <tuna:spot tuna:target="t-weight" tuna:path="weight" />
-
-    <tuna:attr tuna:target="t-price" tuna:path="price" tuna:name="value" />
-    <tuna:attr tuna:target="t-price" tuna:path="weight" tuna:name="name"
-               tuna:filter="dimension_prices[$$]"/>
-</tuna:template>
-
-<table>
-    <tbody>
-        <tr id="dimension_price_renderer">
-            <td class="t-weight">1</td>
-            <td>
-                <input type="text" class="t-price input-mini" />
-            </td>
-        </tr>
-        <tr id="recipe_row_renderer">
-            <td class="t-name"></td>
-            <td>
-                <img class="t-image" width="90" height="90" alt="Рецепт" />
-            </td>
-            <td class="t-desc"></td>
-            <td>
-                <ul class="nav nav-list">
-                    <li>
-                        <a class="j-navigation-link t-id"
-                           data-href="edit">
-                            <i class="icon-edit"></i> Редактировать
-                        </a>
-                    </li>
-                    <li>
-                        <a class="j-button t-id"
-                           data-action="delete">
-                            <i class="icon-trash"></i> Удалить
-                        </a>
-                    </li>
-                </ul>
-            </td>
-        </tr>
-    </tbody>
-</table>
-
-            <iframe id="api_frame" name="api_frame"
-                    width="0" height="0"></iframe>
+            </tuna:template>
 
         </div>
+
+        <iframe id="api_frame" name="api_frame" class="hide"
+                width="0" height="0"></iframe>
 
         <!--[if IE]>-->
             <script type="text/javascript" src="/js/json.js"></script>

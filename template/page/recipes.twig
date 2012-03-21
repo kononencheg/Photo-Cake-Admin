@@ -52,3 +52,71 @@
     {% include 'page/recipes/edit-recipe.twig' %}
 </div>
 
+<div class="j-control-container hide">
+
+    <tuna:template id="recipe_table_template">
+        {{ tmpl.list('/', 't-recipe-list',
+                 'recipe_row_renderer',
+                 'recipe_template', 'id') }}
+    </tuna:template>
+
+    <tuna:template id="recipe_template">
+
+        {{ tmpl.attr('id', 't-id', 'data-recipe-id') }}
+        {{ tmpl.attr('id', 't-id-input', 'value') }}
+
+        {{ tmpl.attr('imageUrl', 't-image', 'src') }}
+
+        {{ tmpl.attr('name', 't-image', 'alt', 'Рецепт: $$') }}
+        {{ tmpl.spot('name', 't-name') }}
+
+        {{ tmpl.spot('desc', 't-desc') }}
+
+        {{ tmpl.list('dimensionPrices', 't-price-list',
+                 'dimension_price_renderer',
+                 'dimension_price_template') }}
+
+    </tuna:template>
+
+    <tuna:template id="dimension_price_template">
+        {{ tmpl.spot('weight', 't-weight') }}
+
+        {{ tmpl.attr('price',  't-price', 'value') }}
+        {{ tmpl.attr('weight', 't-price', 'name', 'dimension_prices[$$]') }}
+    </tuna:template>
+
+    <table>
+        <tbody>
+        <tr id="dimension_price_renderer">
+            <td class="t-weight">1</td>
+            <td>
+                <input type="text" class="t-price input-mini" />
+            </td>
+        </tr>
+        <tr id="recipe_row_renderer">
+            <td class="t-name"></td>
+            <td>
+                <img class="t-image" width="90" height="90" alt="Рецепт" />
+            </td>
+            <td class="t-desc"></td>
+            <td>
+                <ul class="nav nav-list">
+                    <li>
+                        <a class="j-navigation-link t-id"
+                           data-href="edit">
+                            <i class="icon-edit"></i> Редактировать
+                        </a>
+                    </li>
+                    <li>
+                        <a class="j-button t-id"
+                           data-action="delete">
+                            <i class="icon-trash"></i> Удалить
+                        </a>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>

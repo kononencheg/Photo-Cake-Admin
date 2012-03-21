@@ -65,4 +65,15 @@
 
 </div>
 
+<div class="j-control-container hide">
+    <tuna:template id="bakery_selection_template">
+        {{ tmpl.list('/', 't-bakery-select',
+                     'option_renderer',
+                     'bakery_option_template', 'id') }}
+    </tuna:template>
 
+    <tuna:template id="bakery_option_template">
+        {{ tmpl.attr('id', 't-option', 'value') }}
+        {{ tmpl.spot('name', 't-option') }}
+    </tuna:template>
+</div>

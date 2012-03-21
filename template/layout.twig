@@ -1,4 +1,5 @@
 {% import "macro/forms.twig" as forms %}
+{% import "macro/templates.twig" as tmpl %}
 
 <!DOCTYPE html>
 <html xmlns:tuna>
@@ -30,15 +31,31 @@
         {% include 'navigation.twig' %}
         {% include 'body.twig' %}
 
-
         <div class="j-control-container hide">
 
-            {% include 'templates.twig' %}
+            <select>
+                <option id="option_renderer" class="t-option"></option>
+            </select>
 
-            <iframe id="api_frame" name="api_frame"
-                    width="0" height="0"></iframe>
+            <tuna:template id="global_template">
+
+                {{ tmpl.notset('currentBakery', 't-current-bakery-exist', { 'class': 'hide' }) }}
+                {{ tmpl.attr  ('currentBakery/id', 't-current-bakery-id', 'value') }}
+
+                {{ tmpl.spot('currentUser/email', 't-current-user-email') }}
+
+                {{ tmpl.spot('currentUser/role', 't-current-user-role') }}
+                {{ tmpl.eq  ('currentUser/role', 1, 't-bakery-disabled', { 'class': 'disabled' }) }}
+                {{ tmpl.eq  ('currentUser/role', 1, 't-bakery-hidden',   { 'class': 'hide' }) }}
+
+                {{ tmpl.spot('currentUser/roleName', 't-current-user-role-name') }}
+
+            </tuna:template>
 
         </div>
+
+        <iframe id="api_frame" name="api_frame" class="hide"
+                width="0" height="0"></iframe>
 
         <!--[if IE]>-->
             <script type="text/javascript" src="/js/json.js"></script>
