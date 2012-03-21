@@ -1,0 +1,124 @@
+{% macro class_list(classes) %}
+    {% for class in classes %}
+        {{ class }}
+    {% endfor %}
+{% endmacro %}
+
+{% macro input_help(desc, extension) %}
+
+    <p class="help-block">
+        <span class="j-message">{{ desc }}</span>
+        {{ extension|raw }}
+    </p>
+
+{% endmacro %}
+
+{% macro info(title, classes, value, desc, extension) %}
+
+    <div class="control-group">
+        <label class="control-label">{{ title }}</label>
+        <div class="controls">
+            <span class="uneditable-input {{ _self.class_list(classes) }}">
+                {{ value }}
+            </span>
+            {{ _self.input_help(desc, extension) }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% macro input(name, title, desc, type, classes, extension) %}
+
+<div class="j-{{ name }}-input control-group">
+    <label class="control-label">{{ title }}:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="{{ _self.class_list(classes) }}"
+                   type="{{ type|default('text') }}"
+                   name="{{ name }}" />
+        </div>
+        {{ _self.input_help(desc, extension) }}
+    </div>
+</div>
+
+{% endmacro %}
+
+{% macro textarea(name, title, desc, rows, classes, extension) %}
+
+    <div class="j-{{ name }}-input control-group">
+        <label class="control-label">{{ title }}:</label>
+        <div class="controls">
+            <div class="input">
+                <textarea class="{{ _self.class_list(classes) }}"
+                          rows="{{ rows|default(4) }}"
+                          name="{{ name }}"></textarea>
+            </div>
+            {{ _self.input_help(desc, extension) }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% macro select(name, title, desc, options, classes, extension) %}
+
+    <div class="j-{{ name }}-input control-group">
+        <label class="control-label">{{ title }}:</label>
+        <div class="controls">
+            <div class="input">
+                <select class="{{ _self.class_list(classes) }}"
+                        name="{{ name }}">
+
+                    {% for key, option in options %}
+                        <option value="{{ key }}">{{ option }}</option>
+                    {% endfor %}
+
+                </select>
+            </div>
+
+            {{ _self.input_help(desc, extension) }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+{% macro button(title, value, classes) %}
+
+    <div class="control-group">
+        <label class="control-label">{{ title }}: </label>
+        <div class="controls">
+            <a class="{{ _self.class_list(classes) }} btn">
+                {{ value }}
+            </a>
+        </div>
+    </div>
+
+{% endmacro %}
+
+
+{% macro radio(name, title, desc, options, extension) %}
+
+    <div class="j-{{ name }}-input control-group">
+        <label class="control-label">{{ title }}:</label>
+        <div class="controls">
+
+            {% for key, option in options %}
+                <label class="radio inline">
+                    <input value="{{ key }}" type="radio" name="{{ name }}" />
+                    <span class="label {{ option.class }}">{{ option.label }}</span>
+                </label>
+            {% endfor %}
+
+            {{ _self.input_help(desc, extension) }}
+        </div>
+    </div>
+
+{% endmacro %}
+
+
+{% macro submit(title) %}
+
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">{{ title }}</button>
+    </div>
+
+{% endmacro %}

@@ -1,3 +1,5 @@
+{% import "macro/forms.twig" as forms %}
+
 <!DOCTYPE html>
 <html xmlns:tuna>
     <head>
@@ -23,14 +25,15 @@
           data-name="body-container"
           data-template-id="global_template">
 
-        {{> template/popup/login }}
+        {% include 'popup/login.twig' %}
 
-        {{> template/navigation }}
-        {{> template/body }}
+        {% include 'navigation.twig' %}
+        {% include 'body.twig' %}
+
 
         <div class="j-control-container hide">
 
-            {{> template/templates }}
+            {% include 'templates.twig' %}
 
             <iframe id="api_frame" name="api_frame"
                     width="0" height="0"></iframe>

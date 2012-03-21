@@ -62,44 +62,23 @@
                tuna:path="cake/imageUrl"
                tuna:target="t-cake-image-url" />
 
-    <tuna:attr tuna:name="value"
-               tuna:path="recipe/name"
+    <tuna:spot tuna:path="recipe/name"
                tuna:target="t-recipe-name" />
 
-    <tuna:attr tuna:name="value"
-               tuna:path="cake/dimension/shape"
-               tuna:target="t-cake-shape" />
-
-    <tuna:attr tuna:name="value"
-               tuna:path="cake/dimension/weight"
+    <tuna:spot tuna:path="cake/dimension/weight"
                tuna:target="t-cake-weight" />
 
-    <tuna:if tuna:path="cake/photoUrl" tuna:notset tuna:class="hide"
-             tuna:target="t-cake-photo" />
-
-    <tuna:attr tuna:name="href"
-               tuna:path="cake/photoUrl"
-               tuna:target="t-cake-photo-url" />
-
-    <tuna:attr tuna:name="value"
-               tuna:path="client/name"
+    <tuna:spot tuna:path="client/name"
                tuna:target="t-client-name" />
 
-    <tuna:attr tuna:name="value"
-               tuna:path="client/phone"
+    <tuna:spot tuna:path="client/phone"
                tuna:target="t-client-phone" />
 
-    <tuna:attr tuna:name="value"
-               tuna:path="client/email"
+    <tuna:spot tuna:path="client/email"
                tuna:target="t-client-email" />
 
-    <tuna:attr tuna:name="value"
-               tuna:path="client/networkName"
+    <tuna:spot tuna:path="client/networkName"
                tuna:target="t-client-network-name" />
-
-    <tuna:attr tuna:name="value"
-               tuna:path="delivery/date"
-               tuna:target="t-delivery-date" />
 
     <tuna:spot tuna:path="delivery/address"
                tuna:target="t-delivery-address" />
@@ -109,6 +88,21 @@
 
     <tuna:spot tuna:path="delivery/message"
                tuna:target="t-delivery-message" />
+
+    <tuna:spot tuna:path="delivery/date"
+               tuna:target="t-delivery-date" />
+
+    <tuna:spot tuna:path="payment/totalPrice"
+               tuna:target="t-payment-price" />
+
+
+    <tuna:if tuna:path="cake/photoUrl" tuna:notset tuna:class="hide"
+             tuna:target="t-cake-photo" />
+
+    <tuna:attr tuna:name="href"
+               tuna:path="cake/photoUrl"
+               tuna:target="t-cake-photo-url" />
+
 
 </tuna:template>
 

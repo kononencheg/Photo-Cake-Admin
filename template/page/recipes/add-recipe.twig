@@ -1,0 +1,42 @@
+<div class="page-header">
+
+    <div class="row">
+        <div class="span6">
+            <h1>Добавление нового рецепта</h1>
+        </div>
+        <div class="span6">
+            <a class="j-navigation-link btn btn-large pull-right"
+               data-action="back">
+               Назад
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="span12">
+
+        <form action="/api/" method="POST" target="api_frame"
+              enctype="multipart/form-data"
+              class="j-form form-horizontal"
+              data-name="add-recipe"
+              data-record-type="recipe">
+
+            <input type="hidden" name="method" value="recipes.add" />
+            <input type="hidden" name="format" value="frame-callback" />
+
+            <input type="hidden" name="bakery_id" class="t-current-bakery-id" />
+
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                {{ forms.input('name', 'Название', 'Общеизвестное название рецепта.') }}
+                {{ forms.textarea('desc', 'Описание', 'Подробное описание рецепта.', 7) }}
+                {{ forms.input('image', 'Картинка', 'Картинка в списке и в окне описания рецептов.', 'file') }}
+                {{ forms.submit('Добавить') }}
+
+            </fieldset>
+        </form>
+    </div>
+</div>

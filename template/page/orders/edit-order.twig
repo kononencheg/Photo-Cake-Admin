@@ -1,0 +1,105 @@
+<form action="/api/" method="POST" target="api_frame"
+      class="j-form j-template-transformer form-horizontal"
+      data-template-id="order_info_template"
+      data-name="edit-order-form"
+      data-record-type="order">
+
+    <input type="hidden" name="method" value="orders.edit" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <input type="hidden" name="id" class="t-id" />
+
+    <div class="page-header">
+        <div class="row">
+            <div class="span7">
+                <h1>Заказ № <span class="t-index"></span></h1>
+            </div>
+            <div class="span5">
+                <div class="btn-group pull-right">
+                    <a class="j-navigation-link btn btn-large"
+                       data-action="back">
+                        Назад
+                    </a>
+                    <button type="submit"
+                            class="btn btn-large btn-primary">
+                        Сохранить изменения
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+
+        <div class="span6">
+
+            <fieldset>
+                <legend>Данные торта</legend>
+
+                <div class="control-group pagination-centered">
+                    <img class="t-cake-image-url" alt="Торт" />
+                </div>
+
+                {{ forms.info('Рецепт',    [ 't-recipe-name' ]) }}
+                {{ forms.info('Вес (кг.)', [ 't-cake-weight' ]) }}
+                {{ forms.button('Фото', 'Скачать', [ 't-cake-photo', 't-cake-photo-url', 'hide' ]) }}
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Статус</legend>
+
+                {{ forms.radio('status', 'Статус заказа', null, {
+                    '0': { 'label': 'Новый', 'class': 'label-important' },
+                    '1': { 'label': 'Подтвержден', 'class': 'label-success' },
+                    '2': { 'label': 'Отклонен', 'class': 'label-invert' },
+                }) }}
+
+                {{ forms.radio('delivery_status', 'Статус доставки', null, {
+                    '0': { 'label': 'Подготовка', 'class': 'label-important' },
+                    '1': { 'label': 'В доставке', 'class': 'label-info' },
+                    '2': { 'label': 'Доставлено', 'class': 'label-success' },
+                }) }}
+
+                {{ forms.radio('payment_status', 'Статус оплаты', null, {
+                    '0': { 'label': 'Не оплачен', 'class': 'label-important' },
+                    '1': { 'label': 'Оплачен', 'class': 'label-success' },
+                }) }}
+
+            </fieldset>
+
+        </div>
+
+        <div class="span6">
+
+            <fieldset>
+                <legend>Данные клиента</legend>
+
+                {{ forms.info('Имя',      [ 't-client-name' ]) }}
+                {{ forms.info('Телефон',  [ 't-client-phone' ]) }}
+                {{ forms.info('Email',    [ 't-client-email' ]) }}
+                {{ forms.info('Сайт', [ 't-client-network-name' ], null, 'Сайт, с которого поступил заказ') }}
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Данные доставки</legend>
+
+                {{ forms.info('Адрес', [ 't-delivery-address' ]) }}
+                {{ forms.info('Email',    [ 't-client-email' ]) }}
+                {{ forms.info('Время',    [ 't-delivery-date' ]) }}
+                {{ forms.info('Комментарий', [ 't-delivery-comment' ]) }}
+                {{ forms.info('Записка', [ 't-delivery-message' ]) }}
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Данные оплаты</legend>
+
+                {{ forms.info('Сумма (руб.)', [ 't-payment-price' ]) }}
+                {{ forms.info('Метод оплаты', null, 'Наличными') }}
+
+            </fieldset>
+        </div>
+    </div>
+</form>

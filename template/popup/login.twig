@@ -1,0 +1,29 @@
+<form action="/api/" method="POST" target="api_frame"
+      class="j-form j-popup form-horizontal hide"
+      data-name="sign-in" data-record-type="bakery">
+
+    <input type="hidden" name="method" value="users.signIn" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Войти</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                {{ forms.input('email', 'Email', 'Адрес, который вы указали при регистрации.') }}
+                {{ forms.input('password', 'Пароль', 'Пароль который вы указали при регистрации.', 'password') }}
+
+            </fieldset>
+        </div>
+
+        <div class="modal-footer">
+            <input type="submit" class="btn btn-primary" value="Войти" />
+        </div>
+    </div>
+    <div class="modal-backdrop"></div>
+</form>

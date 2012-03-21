@@ -3,7 +3,7 @@
             t-current-bakery-exist page active"
      data-name="orders">
 
-    {{> template/page/orders }}
+    {% include 'page/orders.twig' %}}
 </div>
 
 <div id="recipes_page"
@@ -11,7 +11,7 @@
             t-current-bakery-exist"
      data-name="recipes">
 
-    {{> template/page/recipes }}
+    {% include 'page/recipes.twig' %}}
 </div>
 
 <div id="dimensions_page"
@@ -19,7 +19,7 @@
             t-current-bakery-exist"
      data-name="dimensions">
 
-    {{> template/page/dimensions }}
+    {% include 'page/dimensions.twig' %}}
 </div>
 
 <div id="decorations_page"
@@ -27,20 +27,20 @@
             t-current-bakery-exist"
      data-name="decorations">
 
-    {{> template/page/decorations }}
+    {% include 'page/decorations.twig' %}}
 </div>
 
 <div id="users_page"
      class="j-navigation-page j-navigation j-control-container page"
      data-name="users">
 
-    {{> template/page/users }}
+    {% include 'page/users.twig' %}}
 </div>
 
 <div class="j-navigation-page page"
      data-name="application">
 
-    {{> template/page/application }}
+    {% include 'page/application.twig' %}}
 </div>
 
 <div class="t-bakery-hidden row">

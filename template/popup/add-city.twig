@@ -1,0 +1,35 @@
+<form action="/api/" method="POST" target="api_frame"
+      class="j-form j-popup form-horizontal hide"
+      data-name="add-city"
+      data-record-type="city">
+
+    <input type="hidden" name="method" value="cities.add" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Добавить город</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                {{ forms.input('name', 'Название') }}
+                {{ forms.select('timezone_offset', 'Часовой пояс', '', {
+                    '240': 'UTC +4', '300': 'UTC +5', '360': 'UTC +6',
+                    '420': 'UTC +7', '480': 'UTC +8', '540': 'UTC +9',
+                    '600': 'UTC +10', '660': 'UTC +11',
+                }) }}
+
+            </fieldset>
+        </div>
+
+        <div class="modal-footer">
+            <a class="j-popup-close btn">Закрыть</a>
+            <input type="submit" class="btn btn-primary" value="Добавить" />
+        </div>
+    </div>
+    <div class="modal-backdrop"></div>
+</form>

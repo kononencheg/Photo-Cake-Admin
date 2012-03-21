@@ -7,8 +7,7 @@ include config/make/*.mk
 all: js html
 
 html:
-	  mustache $^ $(LAYOUT_TEMPLATE) > \
-			   $(addprefix $(HTML_PUBLIC_DIR), index.html)
+	  $(HTML_COMPILER) > $(addprefix $(HTML_PUBLIC_DIR), index.html)
 
 js: $(JS_APP)
 	$(JS_COMPILER) $(addprefix --js , $^) \
