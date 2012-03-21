@@ -73,8 +73,8 @@
         {{ tmpl.spot('desc', 't-desc') }}
 
         {{ tmpl.list('dimensionPrices', 't-price-list',
-                 'dimension_price_renderer',
-                 'dimension_price_template') }}
+                     'dimension_price_renderer',
+                     'dimension_price_template') }}
 
     </tuna:template>
 
@@ -89,15 +89,12 @@
         <tbody>
         <tr id="dimension_price_renderer">
             <td class="t-weight">1</td>
-            <td>
-                <input type="text" class="t-price input-mini" />
-            </td>
+            <td><input type="text" class="t-price input-mini" /></td>
         </tr>
+
         <tr id="recipe_row_renderer">
             <td class="t-name"></td>
-            <td>
-                <img class="t-image" width="90" height="90" alt="Рецепт" />
-            </td>
+            <td><img class="t-image" width="90" height="90" alt="Рецепт" /></td>
             <td class="t-desc"></td>
             <td>
                 <ul class="nav nav-list">
