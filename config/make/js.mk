@@ -2,7 +2,7 @@ JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
 			  --compilation_level ADVANCED_OPTIMIZATIONS \
 			  --externs library/externs.js \
-			  --debug \
+			  #--debug \
 
 TUNA_FILES = tuna.js \
 			 \
