@@ -205,14 +205,17 @@
 
     <div class="page-header">
         <div class="row">
-            <div class="span7">
+            <div class="span5">
                 <h1>Заказ № <span class="t-index"></span></h1>
             </div>
-            <div class="span5">
+            <div class="span7">
                 <div class="btn-group pull-right">
                     <a class="j-navigation-link btn btn-large"
                        data-action="back">
                         Назад
+                    </a>
+                    <a class="t-print-order btn btn-large" target="_blank">
+                        Версия для печати
                     </a>
                     <button type="submit"
                             class="btn btn-large btn-primary">
@@ -624,6 +627,13 @@
 
 
         
+    <tuna:attr tuna:name="href"
+               tuna:path="id"
+                tuna:filter="/api/?method=orders.print&amp;id=$$"                tuna:target="t-print-order" />
+
+
+
+        
     <tuna:spot tuna:path="index"
                            tuna:target="t-index" />
 
@@ -705,6 +715,8 @@
         
     <tuna:spot tuna:path="payment/totalPrice"
                            tuna:target="t-payment-price" />
+
+
 
 
 

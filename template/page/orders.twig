@@ -44,6 +44,8 @@
     <tuna:template id="order_info_template">
 
         {{ tmpl.attr('id', 't-id', 'value') }}
+        {{ tmpl.attr('id', 't-print-order', 'href', '/api/?method=orders.print&id=$$') }}
+
         {{ tmpl.spot('index', 't-index') }}
 
         {{ tmpl.spot('cake/dimension/weight', 't-cake-weight') }}
@@ -65,6 +67,8 @@
         {{ tmpl.spot('delivery/date', 't-delivery-date') }}
 
         {{ tmpl.spot('payment/totalPrice', 't-payment-price') }}
+
+
 
     </tuna:template>
 
