@@ -48,6 +48,13 @@ DecorationsController.prototype._initActions = function() {
 
     model.decorations.load();
 
+    var saveForm = this._container.getModuleInstanceByName
+        ('form', 'available-decorations-list');
+
+    saveForm.addEventListener('result', function(event, bakery) {
+        model.currentBakery.set(bakery);
+    });
+
     var addDecorationButton = this._container.getModuleInstanceByName
         ('popup-button', 'add-decoration');
 
@@ -72,8 +79,9 @@ DecorationsController.prototype._initActions = function() {
 
         if (bakery.decorationPrices[decorationId] === undefined) {
             bakery.decorationPrices[decorationId] = 0;
-            self.__updateDecorationLists();
         }
+
+        self.__updateDecorationLists();
     });
 
     var removeControls =this._container.getModuleInstanceByName

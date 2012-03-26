@@ -114,23 +114,23 @@ TUNA_FILES = tuna.js \
 			 ui/selection/view/abstract-selection-view.js \
 			 ui/selection/view/class-selection-view.js \
 			 \
+			 view/view.js \
+			 view/view-controller.js \
+			 view/page-view-controller.js \
+			 \
 			 ui/modules/form.js \
 			 ui/modules/navigation.js \
 			 ui/modules/popup.js \
 			 ui/modules/button.js \
 			 ui/modules/popup-button.js \
-			 ui/modules/selection-group.js \
 			 ui/modules/template-transformer.js \
 			 ui/modules/button-group.js \
-			 ui/modules/swf.js \
-			 ui/modules/input-filter.js \
-			 ui/modules/autocomplete.js \
-			 ui/modules/carousel.js \
-			 \
-			 view/view.js \
-			 view/view-controller.js \
-			 view/page-view-controller.js \
-			 
+			 #ui/modules/selection-group.js \
+			 #ui/modules/swf.js \
+			 #ui/modules/input-filter.js \
+			 #ui/modules/autocomplete.js \
+			 #ui/modules/carousel.js \
+
 
 APPLICATION_FILES = main.js \
 					\
