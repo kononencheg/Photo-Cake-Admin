@@ -84,7 +84,7 @@ DecorationsController.prototype._initActions = function() {
         self.__updateDecorationLists();
     });
 
-    var removeControls =this._container.getModuleInstanceByName
+    var removeControls = this._container.getModuleInstanceByName
         ('button-group', 'available-decorations-list');
 
     removeControls.addEventListener('remove', function(event, button) {
