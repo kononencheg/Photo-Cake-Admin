@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var RecipesController = function () {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
     /**
      * @override
@@ -13,7 +13,7 @@ var RecipesController = function () {
 
 };
 
-tuna.utils.extend(RecipesController, tuna.view.PageViewController);
+tuna.utils.extend(RecipesController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -50,4 +50,4 @@ RecipesController.prototype._initActions = function() {
         (tuna.model.serialize(model.recipes.get()));
 };
 
-tuna.view.registerController('recipes_page', new RecipesController());
+tuna.control.registerController('recipes_page', new RecipesController());

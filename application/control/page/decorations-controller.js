@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var DecorationsController = function () {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
     /**
      * @type {function()}
@@ -31,7 +31,7 @@ var DecorationsController = function () {
                       'form', 'popup-button' ];
 };
 
-tuna.utils.extend(DecorationsController, tuna.view.PageViewController);
+tuna.utils.extend(DecorationsController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -122,4 +122,4 @@ DecorationsController.prototype.__updateDecorationLists = function() {
     }
 };
 
-tuna.view.registerController('decorations_page', new DecorationsController());
+tuna.control.registerController('decorations_page', new DecorationsController());

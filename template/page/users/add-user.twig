@@ -48,7 +48,7 @@
 <div class="j-control-container hide">
     <tuna:template id="cities_list_template">
         <tuna:list tuna:path=""
-                   tuna:target="t-list"
+                   tuna:target=".t-list"
                    tuna:item-renderer-id="option_renderer"
                    tuna:item-template-id="city_option_template"
                    tuna:key-path="id" />
@@ -57,10 +57,10 @@
     <tuna:template id="city_option_template">
         <tuna:attr tuna:name="value"
                    tuna:path="id"
-                   tuna:target="t-option" />
+                   tuna:target=".t-option" />
 
         <tuna:spot tuna:path="name"
-                   tuna:target="t-option" />
+                   tuna:target=".t-option" />
     </tuna:template>
 
 </div>

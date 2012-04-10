@@ -3,7 +3,7 @@
  * @param {Object=} data
  * @extends {tuna.model.Record}
  */
-var Decoration = function (data) {
+model.record.Decoration = function (data) {
 
     /**
      * @type {string}
@@ -23,12 +23,12 @@ var Decoration = function (data) {
     tuna.model.Record.call(this, data);
 };
 
-tuna.utils.extend(Decoration, tuna.model.Record);
+tuna.utils.extend(model.record.Decoration, tuna.model.Record);
 
 /**
  * @override
  */
-Decoration.prototype.populate = function(data) {
+model.record.Decoration.prototype.populate = function(data) {
     this.id = data['id'];
     this.name = data['name'];
     this.imageUrl = data['image_url'];
@@ -38,7 +38,7 @@ Decoration.prototype.populate = function(data) {
 /**
  * @override
  */
-Decoration.prototype.serialize = function(bakery) {
+model.record.Decoration.prototype.serialize = function(bakery) {
     var price = 0;
     if (bakery !== undefined) {
         price = bakery.decorationPrices[this.id] || 0;
@@ -53,10 +53,5 @@ Decoration.prototype.serialize = function(bakery) {
     };
 };
 
-/**
- * @constructor
- * @extends {Decoration}
- */
-model.record.Decoration = Decoration;
 
 tuna.model.recordFactory.registerRecord('decoration', new model.record.Decoration());

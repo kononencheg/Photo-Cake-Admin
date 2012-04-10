@@ -1,6 +1,6 @@
 {% macro list(path, target, item_renderer, item_template, key_path) %}
 
-    <tuna:list tuna:target="{{ target }}" tuna:path="{{ path }}"
+    <tuna:list tuna:target=".{{ target }}" tuna:path="{{ path }}"
                tuna:item-renderer-id="{{ item_renderer }}"
                tuna:item-template-id="{{ item_template }}"
                tuna:key-path="{{ key_path|default('$key') }}" />
@@ -11,7 +11,7 @@
 
     <tuna:spot tuna:path="{{ path }}"
             {% if filter %} tuna:filter="{{ filter }}" {% endif %}
-               tuna:target="{{ target }}" />
+               tuna:target=".{{ target }}" />
 
 {% endmacro %}
 
@@ -20,7 +20,7 @@
     <tuna:attr tuna:name="{{ name }}"
                tuna:path="{{ path }}"
                {% if filter %} tuna:filter="{{ filter }}" {% endif %}
-               tuna:target="{{ target }}" />
+               tuna:target=".{{ target }}" />
 
 {% endmacro %}
 
@@ -31,7 +31,7 @@
                  {% for key, value in actions %}
                     tuna:{{ key }}="{{ value }}"
                  {% endfor %}
-                 tuna:target="{{ target }}" />
+                 tuna:target=".{{ target }}" />
 
     {% endif %}
 {% endmacro %}
@@ -43,7 +43,7 @@
                 {% for key, value in actions %}
                  tuna:{{ key }}="{{ value }}"
                 {% endfor %}
-                 tuna:target="{{ target }}" />
+                 tuna:target=".{{ target }}" />
 
     {% endif %}
 {% endmacro %}

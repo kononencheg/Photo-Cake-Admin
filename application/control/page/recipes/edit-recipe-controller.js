@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var EditRecipeController = function() {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
     /**
      * @private
@@ -29,7 +29,7 @@ var EditRecipeController = function() {
     this._modules = [ 'template-transformer', 'form' ];
 };
 
-tuna.utils.extend(EditRecipeController, tuna.view.PageViewController);
+tuna.utils.extend(EditRecipeController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -85,4 +85,4 @@ EditRecipeController.prototype.__updateRecipe = function() {
 
 
 
-tuna.view.registerController("edit_recipe_page", new EditRecipeController);
+tuna.control.registerController("edit_recipe_page", new EditRecipeController);

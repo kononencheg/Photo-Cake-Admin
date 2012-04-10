@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.ViewController}
+ * @extends {tuna.control.ViewController}
  */
 var MainController = function() {
-    tuna.view.ViewController.call(this);
+    tuna.control.ViewController.call(this);
 
     /**
      * @override
@@ -11,7 +11,7 @@ var MainController = function() {
     this._modules = [ 'template-transformer', 'navigation', 'popup', 'form' ];
 };
 
-tuna.utils.extend(MainController, tuna.view.ViewController);
+tuna.utils.extend(MainController, tuna.control.ViewController);
 
 /**
  * @override
@@ -126,4 +126,4 @@ MainController.prototype.__applyUser = function(user) {
     }
 };
 
-tuna.view.setMainController(new MainController());
+tuna.control.setMainController(new MainController());

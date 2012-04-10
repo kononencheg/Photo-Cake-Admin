@@ -99,7 +99,7 @@ Order.prototype.serialize = function() {
     return {
         'id': this.id,
         'index': this.index,
-        'date': this.date && tuna.model.serializeDate(this.date),
+        'date': this.date && tuna.utils.dateToString(this.date),
         'bakery': this.bakery.serialize(),
         'cake': this.cake.serialize(),
         'payment': this.payment.serialize(),

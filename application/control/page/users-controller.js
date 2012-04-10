@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var UsersController = function () {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
     /**
      * @override
@@ -13,7 +13,7 @@ var UsersController = function () {
 
 };
 
-tuna.utils.extend(UsersController, tuna.view.PageViewController);
+tuna.utils.extend(UsersController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -80,4 +80,4 @@ UsersController.prototype._initActions = function() {
 };
 
 
-tuna.view.registerController('users_page', new UsersController());
+tuna.control.registerController('users_page', new UsersController());

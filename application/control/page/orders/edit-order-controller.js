@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var EditOrdersController = function () {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
 
     /**
@@ -24,7 +24,7 @@ var EditOrdersController = function () {
     this._modules = [ 'template-transformer', 'form' ];
 };
 
-tuna.utils.extend(EditOrdersController, tuna.view.PageViewController);
+tuna.utils.extend(EditOrdersController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -59,4 +59,4 @@ EditOrdersController.prototype.open = function(data) {
     }
 };
 
-tuna.view.registerController('edit_order_page', new EditOrdersController());
+tuna.control.registerController('edit_order_page', new EditOrdersController());

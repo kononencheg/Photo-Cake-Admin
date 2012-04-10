@@ -22,11 +22,11 @@ var rest = {};
  * @param {!Node} body
  */
 window['main'] = function(body) {
-    tuna.ui.modules.addIsolator('j-control-container');
+    tuna.ui.addIsolator('j-control-container');
     tuna.dom.setSelectorEngine(Sizzle);
 
     tuna.rest.call('config.get', { 'app': 'admin-panel' }, function(result) {
         tuna.utils.config.init(result);
-        tuna.view.init(body);
+        tuna.control.init(body);
     });
 };

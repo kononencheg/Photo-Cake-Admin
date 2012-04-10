@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var DimensionsController = function () {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
     /**
      * @override
@@ -13,7 +13,7 @@ var DimensionsController = function () {
 
 };
 
-tuna.utils.extend(DimensionsController, tuna.view.PageViewController);
+tuna.utils.extend(DimensionsController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -60,4 +60,4 @@ DimensionsController.prototype._initActions = function() {
 };
 
 
-tuna.view.registerController('dimensions_page', new DimensionsController());
+tuna.control.registerController('dimensions_page', new DimensionsController());

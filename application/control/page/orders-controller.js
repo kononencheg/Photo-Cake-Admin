@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.view.PageViewController}
+ * @extends {tuna.control.PageViewController}
  */
 var OrdersController = function () {
-    tuna.view.PageViewController.call(this);
+    tuna.control.PageViewController.call(this);
 
     /**
      * @override
@@ -11,7 +11,7 @@ var OrdersController = function () {
     this._modules = [ 'template-transformer', 'navigation' ];
 };
 
-tuna.utils.extend(OrdersController, tuna.view.PageViewController);
+tuna.utils.extend(OrdersController, tuna.control.PageViewController);
 
 /**
  * @override
@@ -39,4 +39,4 @@ OrdersController.prototype.open = function() {
     }
 };
 
-tuna.view.registerController('orders_page', new OrdersController());
+tuna.control.registerController('orders_page', new OrdersController());

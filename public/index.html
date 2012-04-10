@@ -623,98 +623,98 @@
         
     <tuna:attr tuna:name="value"
                tuna:path="id"
-                              tuna:target="t-id" />
+                              tuna:target=".t-id" />
 
 
         
     <tuna:attr tuna:name="href"
                tuna:path="id"
-                tuna:filter="/api/?method=orders.print&amp;id=$$"                tuna:target="t-print-order" />
+                tuna:filter="/api/?method=orders.print&amp;id=$$"                tuna:target=".t-print-order" />
 
 
 
         
     <tuna:spot tuna:path="index"
-                           tuna:target="t-index" />
+                           tuna:target=".t-index" />
 
 
 
         
     <tuna:spot tuna:path="cake/dimension/weight"
-                           tuna:target="t-cake-weight" />
+                           tuna:target=".t-cake-weight" />
 
 
         
     <tuna:attr tuna:name="src"
                tuna:path="cake/imageUrl"
-                              tuna:target="t-cake-image-url" />
+                              tuna:target=".t-cake-image-url" />
 
 
 
             
         <tuna:if tuna:path="cake/photoUrl" tuna:notset
                                      tuna:class="hide"
-                                  tuna:target="t-cake-photo" />
+                                  tuna:target=".t-cake-photo" />
 
     
         
     <tuna:attr tuna:name="href"
                tuna:path="cake/photoUrl"
-                              tuna:target="t-cake-photo-url" />
+                              tuna:target=".t-cake-photo-url" />
 
 
 
         
     <tuna:spot tuna:path="recipe/name"
-                           tuna:target="t-recipe-name" />
+                           tuna:target=".t-recipe-name" />
 
 
 
         
     <tuna:spot tuna:path="client/name"
-                           tuna:target="t-client-name" />
+                           tuna:target=".t-client-name" />
 
 
         
     <tuna:spot tuna:path="client/phone"
-                           tuna:target="t-client-phone" />
+                           tuna:target=".t-client-phone" />
 
 
         
     <tuna:spot tuna:path="client/email"
-                           tuna:target="t-client-email" />
+                           tuna:target=".t-client-email" />
 
 
         
     <tuna:spot tuna:path="client/networkName"
-                           tuna:target="t-client-network-name" />
+                           tuna:target=".t-client-network-name" />
 
 
 
         
     <tuna:spot tuna:path="delivery/address"
-                           tuna:target="t-delivery-address" />
+                           tuna:target=".t-delivery-address" />
 
 
         
     <tuna:spot tuna:path="delivery/comment"
-                           tuna:target="t-delivery-comment" />
+                           tuna:target=".t-delivery-comment" />
 
 
         
     <tuna:spot tuna:path="delivery/message"
-                           tuna:target="t-delivery-message" />
+                           tuna:target=".t-delivery-message" />
 
 
         
     <tuna:spot tuna:path="delivery/date"
-                           tuna:target="t-delivery-date" />
+                           tuna:target=".t-delivery-date" />
 
 
 
         
     <tuna:spot tuna:path="payment/totalPrice"
-                           tuna:target="t-payment-price" />
+                           tuna:target=".t-payment-price" />
 
 
 
@@ -727,63 +727,63 @@
         
     <tuna:attr tuna:name="data-order-id"
                tuna:path="id"
-                              tuna:target="t-id" />
+                              tuna:target=".t-id" />
 
 
 
         
     <tuna:spot tuna:path="index"
-                           tuna:target="t-index" />
+                           tuna:target=".t-index" />
 
 
         
     <tuna:spot tuna:path="date"
-                           tuna:target="t-date" />
+                           tuna:target=".t-date" />
 
 
 
         
     <tuna:spot tuna:path="statusName"
-                           tuna:target="t-status-label" />
+                           tuna:target=".t-status-label" />
 
 
         
     <tuna:spot tuna:path="deliveryStatusName"
-                           tuna:target="t-delivery-status-label" />
+                           tuna:target=".t-delivery-status-label" />
 
 
         
     <tuna:spot tuna:path="paymentStatusName"
-                           tuna:target="t-payment-status-label" />
+                           tuna:target=".t-payment-status-label" />
 
 
 
         
     <tuna:spot tuna:path="delivery/date"
-                           tuna:target="t-delivery-date" />
+                           tuna:target=".t-delivery-date" />
 
 
         
     <tuna:spot tuna:path="client/name"
-                           tuna:target="t-client-name" />
+                           tuna:target=".t-client-name" />
 
 
         
     <tuna:spot tuna:path="payment/totalPrice"
-                           tuna:target="t-payment-price" />
+                           tuna:target=".t-payment-price" />
 
 
 
                         
         <tuna:if tuna:path="status" tuna:eq="0"
                                  tuna:class="label-important"
-                                 tuna:target="t-status-label" />
+                                 tuna:target=".t-status-label" />
 
     
                 
         <tuna:if tuna:path="status" tuna:eq="1"
                                  tuna:class="label-success"
-                                 tuna:target="t-status-label" />
+                                 tuna:target=".t-status-label" />
 
     
     
@@ -791,19 +791,19 @@
                         
         <tuna:if tuna:path="deliveryStatus" tuna:eq="0"
                                  tuna:class="label-important"
-                                 tuna:target="t-delivery-status-label" />
+                                 tuna:target=".t-delivery-status-label" />
 
     
                 
         <tuna:if tuna:path="deliveryStatus" tuna:eq="1"
                                  tuna:class="label-info"
-                                 tuna:target="t-delivery-status-label" />
+                                 tuna:target=".t-delivery-status-label" />
 
     
                 
         <tuna:if tuna:path="deliveryStatus" tuna:eq="2"
                                  tuna:class="label-success"
-                                 tuna:target="t-delivery-status-label" />
+                                 tuna:target=".t-delivery-status-label" />
 
     
     
@@ -811,13 +811,13 @@
                         
         <tuna:if tuna:path="paymentStatus" tuna:eq="0"
                                  tuna:class="label-important"
-                                 tuna:target="t-payment-status-label" />
+                                 tuna:target=".t-payment-status-label" />
 
     
                 
         <tuna:if tuna:path="paymentStatus" tuna:eq="1"
                                  tuna:class="label-success"
-                                 tuna:target="t-payment-status-label" />
+                                 tuna:target=".t-payment-status-label" />
 
     
     
@@ -826,7 +826,7 @@
 
     <tuna:template id="orders_list_template">
         
-    <tuna:list tuna:target="t-orders-list" tuna:path="/"
+    <tuna:list tuna:target=".t-orders-list" tuna:path="/"
                tuna:item-renderer-id="orders_list_item_renderer"
                tuna:item-template-id="order_row_template"
                tuna:key-path="id" />
@@ -1086,7 +1086,7 @@
 
     <tuna:template id="recipe_table_template">
         
-    <tuna:list tuna:target="t-recipe-list" tuna:path="/"
+    <tuna:list tuna:target=".t-recipe-list" tuna:path="/"
                tuna:item-renderer-id="recipe_row_renderer"
                tuna:item-template-id="recipe_template"
                tuna:key-path="id" />
@@ -1099,43 +1099,43 @@
         
     <tuna:attr tuna:name="data-recipe-id"
                tuna:path="id"
-                              tuna:target="t-id" />
+                              tuna:target=".t-id" />
 
 
         
     <tuna:attr tuna:name="value"
                tuna:path="id"
-                              tuna:target="t-id-input" />
+                              tuna:target=".t-id-input" />
 
 
 
         
     <tuna:attr tuna:name="src"
                tuna:path="imageUrl"
-                              tuna:target="t-image" />
+                              tuna:target=".t-image" />
 
 
 
         
     <tuna:attr tuna:name="alt"
                tuna:path="name"
-                tuna:filter="Рецепт: $$"                tuna:target="t-image" />
+                tuna:filter="Рецепт: $$"                tuna:target=".t-image" />
 
 
         
     <tuna:spot tuna:path="name"
-                           tuna:target="t-name" />
+                           tuna:target=".t-name" />
 
 
 
         
     <tuna:spot tuna:path="desc"
-                           tuna:target="t-desc" />
+                           tuna:target=".t-desc" />
 
 
 
         
-    <tuna:list tuna:target="t-price-list" tuna:path="dimensionPrices"
+    <tuna:list tuna:target=".t-price-list" tuna:path="dimensionPrices"
                tuna:item-renderer-id="dimension_price_renderer"
                tuna:item-template-id="dimension_price_template"
                tuna:key-path="$key" />
@@ -1147,20 +1147,20 @@
     <tuna:template id="dimension_price_template">
         
     <tuna:spot tuna:path="weight"
-                           tuna:target="t-weight" />
+                           tuna:target=".t-weight" />
 
 
 
         
     <tuna:attr tuna:name="value"
                tuna:path="price"
-                              tuna:target="t-price" />
+                              tuna:target=".t-price" />
 
 
         
     <tuna:attr tuna:name="name"
                tuna:path="weight"
-                tuna:filter="dimension_prices[$$]"                tuna:target="t-price" />
+                tuna:filter="dimension_prices[$$]"                tuna:target=".t-price" />
 
 
     </tuna:template>
@@ -1336,7 +1336,7 @@
 <div class="j-control-container hide">
 
     <tuna:template id="dimensions_list_template">
-        <tuna:list tuna:target="t-dimensions-list" tuna:path=""
+        <tuna:list tuna:target=".t-dimensions-list" tuna:path=""
                    tuna:item-renderer-id="dimensions_list_item_renderer"
                    tuna:item-template-id="dimension_template"
                    tuna:key-path="id" />
@@ -1344,15 +1344,15 @@
 
     <tuna:template id="dimension_template">
         <tuna:attr tuna:name="data-dimension-id" tuna:path="id"
-                   tuna:target="t-id" />
+                   tuna:target=".t-id" />
 
-        <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
-        <tuna:spot tuna:target="t-weight" tuna:path="weight" />
-        <tuna:spot tuna:target="t-size" tuna:path="size" />
-        <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
+        <tuna:spot tuna:target=".t-shape-name" tuna:path="shapeName" />
+        <tuna:spot tuna:target=".t-weight" tuna:path="weight" />
+        <tuna:spot tuna:target=".t-size" tuna:path="size" />
+        <tuna:spot tuna:target=".t-persons-count" tuna:path="personsCount" />
 
         <tuna:attr tuna:name="value" tuna:path="id"
-                   tuna:target="t-id-checkbox" />
+                   tuna:target=".t-id-checkbox" />
 
     </tuna:template>
 
@@ -1522,7 +1522,7 @@
                    tuna:item-template-id="decoration_template"
                    tuna:key-path="id"
                    tuna:path="/"
-                   tuna:target="t-decorations-list" />
+                   tuna:target=".t-decorations-list" />
 
     </tuna:template>
 
@@ -1531,26 +1531,26 @@
                    tuna:item-template-id="decoration_template"
                    tuna:key-path="id"
                    tuna:path="/"
-                   tuna:target="t-decorations-list" />
+                   tuna:target=".t-decorations-list" />
 
     </tuna:template>
 
     <tuna:template id="decoration_template">
         <tuna:attr tuna:name="data-decoration-id" tuna:path="id"
-                   tuna:target="t-id" />
+                   tuna:target=".t-id" />
 
         <tuna:attr tuna:name="name" tuna:path="id"
                    tuna:filter="decoration_prices[$$]"
-                   tuna:target="t-id-input" />
+                   tuna:target=".t-id-input" />
 
         <tuna:attr tuna:name="value" tuna:path="price"
-                   tuna:target="t-id-input" />
+                   tuna:target=".t-id-input" />
 
         <tuna:attr tuna:name="src" tuna:path="imageUrl"
-                   tuna:target="t-image" />
+                   tuna:target=".t-image" />
 
         <tuna:spot tuna:path="name"
-                   tuna:target="t-name" />
+                   tuna:target=".t-name" />
 
     </tuna:template>
 
@@ -1782,7 +1782,7 @@
 <div class="j-control-container hide">
     <tuna:template id="cities_list_template">
         <tuna:list tuna:path=""
-                   tuna:target="t-list"
+                   tuna:target=".t-list"
                    tuna:item-renderer-id="option_renderer"
                    tuna:item-template-id="city_option_template"
                    tuna:key-path="id" />
@@ -1791,10 +1791,10 @@
     <tuna:template id="city_option_template">
         <tuna:attr tuna:name="value"
                    tuna:path="id"
-                   tuna:target="t-option" />
+                   tuna:target=".t-option" />
 
         <tuna:spot tuna:path="name"
-                   tuna:target="t-option" />
+                   tuna:target=".t-option" />
     </tuna:template>
 
 </div>
@@ -1883,7 +1883,7 @@
 <div class="j-control-container hide">
 
     <tuna:template id="bakeries_list_template">
-        <tuna:list tuna:target="t-list" tuna:path=""
+        <tuna:list tuna:target=".t-list" tuna:path=""
                    tuna:item-renderer-id="bakeries_list_item_renderer"
                    tuna:item-template-id="bakery_template"
                    tuna:key-path="id" />
@@ -1892,12 +1892,12 @@
 
     <tuna:template id="bakery_template">
         <tuna:attr tuna:name="data-id" tuna:path="id"
-                   tuna:target="t-id" />
+                   tuna:target=".t-id" />
 
-        <tuna:spot tuna:target="t-name" tuna:path="name" />
-        <tuna:spot tuna:target="t-email" tuna:path="email" />
-        <tuna:spot tuna:target="t-city" tuna:path="city" />
-        <tuna:spot tuna:target="t-delivery-price" tuna:path="deliveryPrice" />
+        <tuna:spot tuna:target=".t-name" tuna:path="name" />
+        <tuna:spot tuna:target=".t-email" tuna:path="email" />
+        <tuna:spot tuna:target=".t-city" tuna:path="city" />
+        <tuna:spot tuna:target=".t-delivery-price" tuna:path="deliveryPrice" />
 
     </tuna:template>
 
@@ -1967,7 +1967,7 @@
 <div class="j-control-container hide">
     <tuna:template id="bakery_selection_template">
         
-    <tuna:list tuna:target="t-bakery-select" tuna:path="/"
+    <tuna:list tuna:target=".t-bakery-select" tuna:path="/"
                tuna:item-renderer-id="option_renderer"
                tuna:item-template-id="bakery_option_template"
                tuna:key-path="id" />
@@ -1979,12 +1979,12 @@
         
     <tuna:attr tuna:name="value"
                tuna:path="id"
-                              tuna:target="t-option" />
+                              tuna:target=".t-option" />
 
 
         
     <tuna:spot tuna:path="name"
-                           tuna:target="t-option" />
+                           tuna:target=".t-option" />
 
 
     </tuna:template>
@@ -2001,43 +2001,43 @@
                     
         <tuna:if tuna:path="currentBakery" tuna:notset
                                      tuna:class="hide"
-                                  tuna:target="t-current-bakery-exist" />
+                                  tuna:target=".t-current-bakery-exist" />
 
     
                 
     <tuna:attr tuna:name="value"
                tuna:path="currentBakery/id"
-                              tuna:target="t-current-bakery-id" />
+                              tuna:target=".t-current-bakery-id" />
 
 
 
                 
     <tuna:spot tuna:path="currentUser/email"
-                           tuna:target="t-current-user-email" />
+                           tuna:target=".t-current-user-email" />
 
 
 
                 
     <tuna:spot tuna:path="currentUser/role"
-                           tuna:target="t-current-user-role" />
+                           tuna:target=".t-current-user-role" />
 
 
                     
         <tuna:if tuna:path="currentUser/role" tuna:eq="1"
                                  tuna:class="disabled"
-                                 tuna:target="t-bakery-disabled" />
+                                 tuna:target=".t-bakery-disabled" />
 
     
                     
         <tuna:if tuna:path="currentUser/role" tuna:eq="1"
                                  tuna:class="hide"
-                                 tuna:target="t-bakery-hidden" />
+                                 tuna:target=".t-bakery-hidden" />
 
     
 
                 
     <tuna:spot tuna:path="currentUser/roleName"
-                           tuna:target="t-current-user-role-name" />
+                           tuna:target=".t-current-user-role-name" />
 
 
 

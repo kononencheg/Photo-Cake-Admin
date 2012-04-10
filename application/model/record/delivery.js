@@ -44,7 +44,7 @@ Delivery.prototype.populate = function(data) {
  */
 Delivery.prototype.serialize = function() {
     return {
-        'date': this.date && tuna.model.serializeDate(this.date),
+        'date': this.date && tuna.utils.dateToString(this.date),
         'address': this.address,
         'comment': this.comment,
         'message': this.message
