@@ -43,30 +43,30 @@
 
     <tuna:template id="order_info_template">
 
-        {{ tmpl.attr('id', 't-id', 'value') }}
-        {{ tmpl.attr('id', 't-print-order', 'href', '/api/?method=orders.print&id=$$') }}
+        {{ tmpl.attr('id', '.t-id', 'value') }}
+        {{ tmpl.attr('id', '.t-print-order', 'href', '/api/?method=orders.print&id=$$') }}
 
-        {{ tmpl.spot('index', 't-index') }}
+        {{ tmpl.spot('index', '.t-index') }}
 
         {{ tmpl.spot('cake/dimension/weight', 't-cake-weight') }}
-        {{ tmpl.attr('cake/imageUrl', 't-cake-image-url', 'src' ) }}
+        {{ tmpl.attr('cake/imageUrl', '.t-cake-image-url', 'src' ) }}
 
-        {{ tmpl.notset('cake/photoUrl', 't-cake-photo', { 'class': 'hide' }) }}
-        {{ tmpl.attr  ('cake/photoUrl', 't-cake-photo-url', 'href') }}
+        {{ tmpl.notset('cake/photoUrl', '.t-cake-photo', { 'class': 'hide' }) }}
+        {{ tmpl.attr  ('cake/photoUrl', '.t-cake-photo-url', 'href') }}
 
-        {{ tmpl.spot('recipe/name', 't-recipe-name') }}
+        {{ tmpl.spot('recipe/name', '.t-recipe-name') }}
 
-        {{ tmpl.spot('client/name', 't-client-name') }}
-        {{ tmpl.spot('client/phone', 't-client-phone') }}
-        {{ tmpl.spot('client/email', 't-client-email') }}
-        {{ tmpl.spot('client/networkName', 't-client-network-name') }}
+        {{ tmpl.spot('client/name', '.t-client-name') }}
+        {{ tmpl.spot('client/phone', '.t-client-phone') }}
+        {{ tmpl.spot('client/email', '.t-client-email') }}
+        {{ tmpl.spot('client/networkName', '.t-client-network-name') }}
 
-        {{ tmpl.spot('delivery/address', 't-delivery-address') }}
-        {{ tmpl.spot('delivery/comment', 't-delivery-comment') }}
-        {{ tmpl.spot('delivery/message', 't-delivery-message') }}
-        {{ tmpl.spot('delivery/date', 't-delivery-date') }}
+        {{ tmpl.spot('delivery/address', '.t-delivery-address') }}
+        {{ tmpl.spot('delivery/comment', '.t-delivery-comment') }}
+        {{ tmpl.spot('delivery/message', '.t-delivery-message') }}
+        {{ tmpl.spot('delivery/date', '.t-delivery-date') }}
 
-        {{ tmpl.spot('payment/totalPrice', 't-payment-price') }}
+        {{ tmpl.spot('payment/totalPrice', '.t-payment-price') }}
 
 
 
@@ -74,39 +74,39 @@
 
     <tuna:template id="order_row_template">
 
-        {{ tmpl.attr('id', 't-id', 'data-order-id') }}
+        {{ tmpl.attr('id', '.t-id', 'data-order-id') }}
 
-        {{ tmpl.spot('index', 't-index') }}
-        {{ tmpl.spot('date', 't-date') }}
+        {{ tmpl.spot('index', '.t-index') }}
+        {{ tmpl.spot('date', '.t-date') }}
 
-        {{ tmpl.spot('statusName', 't-status-label') }}
-        {{ tmpl.spot('deliveryStatusName', 't-delivery-status-label') }}
-        {{ tmpl.spot('paymentStatusName', 't-payment-status-label') }}
+        {{ tmpl.spot('statusName', '.t-status-label') }}
+        {{ tmpl.spot('deliveryStatusName', '.t-delivery-status-label') }}
+        {{ tmpl.spot('paymentStatusName', '.t-payment-status-label') }}
 
-        {{ tmpl.spot('delivery/date', 't-delivery-date') }}
-        {{ tmpl.spot('client/name', 't-client-name') }}
-        {{ tmpl.spot('payment/totalPrice', 't-payment-price') }}
+        {{ tmpl.spot('delivery/date', '.t-delivery-date') }}
+        {{ tmpl.spot('client/name', '.t-client-name') }}
+        {{ tmpl.spot('payment/totalPrice', '.t-payment-price') }}
 
-        {{ tmpl.switch('status', 't-status-label', {
-        '0': { 'class': 'label-important' },
-        '1': { 'class': 'label-success' },
-    }) }}
+        {{ tmpl.switch('status', '.t-status-label', {
+            '0': { 'class': 'label-important' },
+            '1': { 'class': 'label-success' },
+        }) }}
 
-        {{ tmpl.switch('deliveryStatus', 't-delivery-status-label', {
-        '0': { 'class': 'label-important' },
-        '1': { 'class': 'label-info' },
-        '2': { 'class': 'label-success' },
-    }) }}
+        {{ tmpl.switch('deliveryStatus', '.t-delivery-status-label', {
+            '0': { 'class': 'label-important' },
+            '1': { 'class': 'label-info' },
+            '2': { 'class': 'label-success' },
+        }) }}
 
-        {{ tmpl.switch('paymentStatus', 't-payment-status-label', {
-        '0': { 'class': 'label-important' },
-        '1': { 'class': 'label-success' }
-    }) }}
+        {{ tmpl.switch('paymentStatus', '.t-payment-status-label', {
+            '0': { 'class': 'label-important' },
+            '1': { 'class': 'label-success' }
+        }) }}
 
     </tuna:template>
 
     <tuna:template id="orders_list_template">
-        {{ tmpl.list('/', 't-orders-list',
+        {{ tmpl.list('/', '.t-orders-list',
                  'orders_list_item_renderer',
                  'order_row_template', 'id') }}
     </tuna:template>

@@ -239,7 +239,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Рецепт</label>
+        <label class="control-label">Рецепт:</label>
         <div class="controls">
             <span class="uneditable-input             t-recipe-name
     ">
@@ -258,7 +258,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Вес (кг.)</label>
+        <label class="control-label">Вес (кг.):</label>
         <div class="controls">
             <span class="uneditable-input             t-cake-weight
     ">
@@ -392,7 +392,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Имя</label>
+        <label class="control-label">Имя:</label>
         <div class="controls">
             <span class="uneditable-input             t-client-name
     ">
@@ -411,7 +411,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Телефон</label>
+        <label class="control-label">Телефон:</label>
         <div class="controls">
             <span class="uneditable-input             t-client-phone
     ">
@@ -430,7 +430,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Email</label>
+        <label class="control-label">Email:</label>
         <div class="controls">
             <span class="uneditable-input             t-client-email
     ">
@@ -449,7 +449,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Сайт</label>
+        <label class="control-label">Сайт:</label>
         <div class="controls">
             <span class="uneditable-input             t-client-network-name
     ">
@@ -474,7 +474,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Адрес</label>
+        <label class="control-label">Адрес:</label>
         <div class="controls">
             <span class="uneditable-input             t-delivery-address
     ">
@@ -493,7 +493,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Email</label>
+        <label class="control-label">Email:</label>
         <div class="controls">
             <span class="uneditable-input             t-client-email
     ">
@@ -512,7 +512,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Время</label>
+        <label class="control-label">Время:</label>
         <div class="controls">
             <span class="uneditable-input             t-delivery-date
     ">
@@ -531,7 +531,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Комментарий</label>
+        <label class="control-label">Комментарий:</label>
         <div class="controls">
             <span class="uneditable-input             t-delivery-comment
     ">
@@ -550,7 +550,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Записка</label>
+        <label class="control-label">Записка:</label>
         <div class="controls">
             <span class="uneditable-input             t-delivery-message
     ">
@@ -575,7 +575,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Сумма (руб.)</label>
+        <label class="control-label">Сумма (руб.):</label>
         <div class="controls">
             <span class="uneditable-input             t-payment-price
     ">
@@ -594,7 +594,7 @@
 
                 
     <div class="control-group">
-        <label class="control-label">Метод оплаты</label>
+        <label class="control-label">Метод оплаты:</label>
         <div class="controls">
             <span class="uneditable-input     ">
                 Наличными
@@ -629,7 +629,7 @@
         
     <tuna:attr tuna:name="href"
                tuna:path="id"
-                tuna:filter="/api/?method=orders.print&amp;id=$$"                tuna:target=".t-print-order" />
+                tuna:pattern="/api/?method=orders.print&amp;id=$$"                tuna:target=".t-print-order" />
 
 
 
@@ -641,7 +641,7 @@
 
         
     <tuna:spot tuna:path="cake/dimension/weight"
-                           tuna:target=".t-cake-weight" />
+                           tuna:target="t-cake-weight" />
 
 
         
@@ -1112,14 +1112,14 @@
         
     <tuna:attr tuna:name="src"
                tuna:path="imageUrl"
-                              tuna:target=".t-image" />
+                              tuna:target="t-image" />
 
 
 
         
     <tuna:attr tuna:name="alt"
                tuna:path="name"
-                tuna:filter="Рецепт: $$"                tuna:target=".t-image" />
+                tuna:pattern="Рецепт: $$"                tuna:target=".t-image" />
 
 
         
@@ -1160,7 +1160,7 @@
         
     <tuna:attr tuna:name="name"
                tuna:path="weight"
-                tuna:filter="dimension_prices[$$]"                tuna:target=".t-price" />
+                tuna:pattern="dimension_prices[$$]"                tuna:target=".t-price" />
 
 
     </tuna:template>
@@ -1405,7 +1405,7 @@
                   data-name="available-decorations-list"
                   data-record-type="bakery">
 
-                <input type="hidden" name="method" value="users.editBakery" />
+                <input type="hidden" name="method" value="users.editBakeryDecorations" />
                 <input type="hidden" name="format" value="frame-callback" />
 
                 <input type="hidden" name="id" class="t-current-bakery-id" />
@@ -1540,7 +1540,7 @@
                    tuna:target=".t-id" />
 
         <tuna:attr tuna:name="name" tuna:path="id"
-                   tuna:filter="decoration_prices[$$]"
+                   tuna:pattern="decoration_prices[$$]"
                    tuna:target=".t-id-input" />
 
         <tuna:attr tuna:name="value" tuna:path="price"
@@ -1942,6 +1942,245 @@
 
 </div>
 
+<div id="profile_page"
+     class="j-navigation-page j-control-container page"
+     data-name="profile">
+
+    <div class="page-header">
+    <h1>Профиль</h1>
+</div>
+
+<div class="row">
+    <div class="span12">
+
+        <form action="/api/" method="POST" target="api_frame"
+              class="j-form form-horizontal"
+              data-name="edit"
+              data-record-type="bakery">
+
+            <input type="hidden" name="method" value="users.editBakery" />
+            <input type="hidden" name="format" value="frame-callback" />
+            <input type="hidden" name="id" class="t-current-bakery-id" />
+
+
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+                <legend>Основное</legend>
+
+                
+<div class="j-name-input control-group">
+    <label class="control-label">Название:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-name
+    "
+                   type="text"
+                   name="name" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message">Название кондитерской</span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+                
+<div class="j-email-input control-group">
+    <label class="control-label">Email:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-email
+    "
+                   type="text"
+                   name="email" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message">Адрес, зарегистрированный для входа в панель управления</span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+
+                
+    <div class="control-group">
+        <label class="control-label">Пароль:</label>
+        <div class="controls">
+            <span class="uneditable-input     ">
+                <a class="j-button" data-name="change-password">Сменить</a>
+            </span>
+            
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+        </div>
+    </div>
+
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Контакты</legend>
+
+                
+<div class="j-contact_name-input control-group">
+    <label class="control-label">Контактное лицо:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-contact-name
+    "
+                   type="text"
+                   name="contact_name" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+                
+<div class="j-contact_phone-input control-group">
+    <label class="control-label">Контактный телефон:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-contact-phone
+    "
+                   type="text"
+                   name="contact_phone" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+                
+<div class="j-contact_email-input control-group">
+    <label class="control-label">Контактный email:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-contact-email
+    "
+                   type="text"
+                   name="contact_email" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Доставка и оплата</legend>
+
+                
+    <div class="j-address-input control-group">
+        <label class="control-label">Адрес самовывоза:</label>
+        <div class="controls">
+            <div class="input">
+                <textarea class="            t-current-bakery-address
+    "
+                          rows="4"
+                          name="address"></textarea>
+            </div>
+            
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+        </div>
+    </div>
+
+
+                
+<div class="j-delivery_price-input control-group">
+    <label class="control-label">Цена доставки:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-delivery-price
+    "
+                   type="text"
+                   name="delivery_price" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+                
+<div class="j-cash_extra_charge-input control-group">
+    <label class="control-label">Наценка за нал. (%):</label>
+    <div class="controls">
+        <div class="input">
+            <input class="            t-current-bakery-cash-extra-charge
+    "
+                   type="text"
+                   name="cash_extra_charge" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message"></span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+            </fieldset>
+
+            
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Сохранить</button>
+    </div>
+
+
+
+        </form>
+
+    </div>
+</div>
+
+</div>
+
 <div class="t-bakery-hidden row">
 
     <div class="span12">
@@ -2008,6 +2247,55 @@
     <tuna:attr tuna:name="value"
                tuna:path="currentBakery/id"
                               tuna:target=".t-current-bakery-id" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/name"
+                              tuna:target=".t-current-bakery-name" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/email"
+                              tuna:target=".t-current-bakery-email" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/address"
+                              tuna:target=".t-current-bakery-address" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/deliveryPrice"
+                              tuna:target=".t-current-bakery-delivery-price" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/cashExtraCharge"
+                              tuna:target=".t-current-bakery-cash-extra-charge" />
+
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/contactName"
+                              tuna:target=".t-current-bakery-cash-contact-name" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/contactEmail"
+                              tuna:target=".t-current-bakery-cash-contact-email" />
+
+
+                
+    <tuna:attr tuna:name="value"
+               tuna:path="currentBakery/contactPhone"
+                              tuna:target=".t-current-bakery-cash-contact-phone" />
 
 
 

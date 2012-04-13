@@ -1,0 +1,51 @@
+<div class="page-header">
+    <h1>Профиль</h1>
+</div>
+
+<div class="row">
+    <div class="span12">
+
+        <form action="/api/" method="POST" target="api_frame"
+              class="j-form form-horizontal"
+              data-name="edit"
+              data-record-type="bakery">
+
+            <input type="hidden" name="method" value="users.editBakery" />
+            <input type="hidden" name="format" value="frame-callback" />
+            <input type="hidden" name="id" class="t-current-bakery-id" />
+
+
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+                <legend>Основное</legend>
+
+                {{ forms.input('name', 'Название', 'Название кондитерской', 'text', ['t-current-bakery-name']) }}
+                {{ forms.input('email', 'Email', 'Адрес, зарегистрированный для входа в панель управления', 'text', ['t-current-bakery-email']) }}
+
+                {{ forms.info('Пароль', [], '<a class="j-button" data-name="change-password">Сменить</a>') }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Контакты</legend>
+
+                {{ forms.input('contact_name', 'Контактное лицо', null, null, ['t-current-bakery-contact-name']) }}
+                {{ forms.input('contact_phone', 'Контактный телефон', null, null, ['t-current-bakery-contact-phone']) }}
+                {{ forms.input('contact_email', 'Контактный email', null, null, ['t-current-bakery-contact-email']) }}
+            </fieldset>
+
+            <fieldset>
+                <legend>Доставка и оплата</legend>
+
+                {{ forms.textarea('address', 'Адрес самовывоза', null, null, ['t-current-bakery-address']) }}
+                {{ forms.input('delivery_price', 'Цена доставки', null, 'text', ['t-current-bakery-delivery-price']) }}
+                {{ forms.input('cash_extra_charge', 'Наценка за нал. (%)', null, 'text', ['t-current-bakery-cash-extra-charge']) }}
+            </fieldset>
+
+            {{ forms.submit('Сохранить') }}
+
+        </form>
+
+    </div>
+</div>
+

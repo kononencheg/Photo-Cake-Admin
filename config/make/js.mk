@@ -2,6 +2,7 @@ JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
 			  --compilation_level ADVANCED_OPTIMIZATIONS \
 			  --externs library/externs.js \
+			  --formatting PRETTY_PRINT \
 			  --debug \
 
 TUNA_FILES = tuna.js \
@@ -145,6 +146,7 @@ TUNA_FILES = tuna.js \
 APPLICATION_FILES = main.js \
 					\
 					control/main-controller.js \
+					control/page/profile-controller.js \
 					control/page/decorations-controller.js \
 					control/page/dimensions-controller.js \
 					control/page/users-controller.js \

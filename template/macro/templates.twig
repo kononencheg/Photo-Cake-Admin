@@ -1,26 +1,26 @@
 {% macro list(path, target, item_renderer, item_template, key_path) %}
 
-    <tuna:list tuna:target=".{{ target }}" tuna:path="{{ path }}"
+    <tuna:list tuna:target="{{ target }}" tuna:path="{{ path }}"
                tuna:item-renderer-id="{{ item_renderer }}"
                tuna:item-template-id="{{ item_template }}"
                tuna:key-path="{{ key_path|default('$key') }}" />
 
 {% endmacro %}
 
-{% macro spot(path, target, filter) %}
+{% macro spot(path, target, pattern) %}
 
     <tuna:spot tuna:path="{{ path }}"
-            {% if filter %} tuna:filter="{{ filter }}" {% endif %}
-               tuna:target=".{{ target }}" />
+            {% if pattern %} tuna:pattern="{{ pattern }}" {% endif %}
+               tuna:target="{{ target }}" />
 
 {% endmacro %}
 
-{% macro attr(path, target, name, filter) %}
+{% macro attr(path, target, name, pattern) %}
 
     <tuna:attr tuna:name="{{ name }}"
                tuna:path="{{ path }}"
-               {% if filter %} tuna:filter="{{ filter }}" {% endif %}
-               tuna:target=".{{ target }}" />
+               {% if pattern %} tuna:pattern="{{ pattern }}" {% endif %}
+               tuna:target="{{ target }}" />
 
 {% endmacro %}
 
@@ -31,7 +31,7 @@
                  {% for key, value in actions %}
                     tuna:{{ key }}="{{ value }}"
                  {% endfor %}
-                 tuna:target=".{{ target }}" />
+                 tuna:target="{{ target }}" />
 
     {% endif %}
 {% endmacro %}
@@ -43,7 +43,7 @@
                 {% for key, value in actions %}
                  tuna:{{ key }}="{{ value }}"
                 {% endfor %}
-                 tuna:target=".{{ target }}" />
+                 tuna:target="{{ target }}" />
 
     {% endif %}
 {% endmacro %}

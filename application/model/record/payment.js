@@ -34,9 +34,9 @@ tuna.utils.extend(Payment, tuna.model.Record);
  */
 Payment.prototype.populate = function(data) {
     this.paymentMethod = data['payment_method'];
-    this.decorationPrice = data['decoration_price'];
-    this.deliveryPrice = data['delivery_price'];
-    this.recipePrice = data['recipe_price'];
+    this.decorationPrice = data['decoration_price'] || 0;
+    this.deliveryPrice = data['delivery_price'] || 0;
+    this.recipePrice = data['recipe_price'] || 0;
 };
 
 /**

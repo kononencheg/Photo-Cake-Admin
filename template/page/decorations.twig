@@ -19,7 +19,7 @@
                   data-name="available-decorations-list"
                   data-record-type="bakery">
 
-                <input type="hidden" name="method" value="users.editBakery" />
+                <input type="hidden" name="method" value="users.editBakeryDecorations" />
                 <input type="hidden" name="format" value="frame-callback" />
 
                 <input type="hidden" name="id" class="t-current-bakery-id" />
@@ -77,7 +77,7 @@
                    tuna:target=".t-id" />
 
         <tuna:attr tuna:name="name" tuna:path="id"
-                   tuna:filter="decoration_prices[$$]"
+                   tuna:pattern="decoration_prices[$$]"
                    tuna:target=".t-id-input" />
 
         <tuna:attr tuna:name="value" tuna:path="price"
