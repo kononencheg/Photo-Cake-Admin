@@ -2179,7 +2179,96 @@
     </div>
 </div>
 
+<form action="/api/" method="POST" target="api_frame"
+      class="j-form j-popup form-horizontal hide"
+      data-name="change-password">
+
+    <input type="hidden" name="method" value="users.changePassword" />
+    <input type="hidden" name="format" value="frame-callback" />
+
+    <input type="hidden" name="id" class="t-current-bakery-id" />
+
+    <div class="modal">
+        <div class="modal-header">
+            <h3>Сменить пароль</h3>
+        </div>
+
+        <div class="modal-body">
+            <div class="j-form-message alert alert-error hide"></div>
+
+            <fieldset>
+
+                
+<div class="j-new_password-input control-group">
+    <label class="control-label">Новый пароль:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="    "
+                   type="password"
+                   name="new_password" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message">Пароль, который вы хотите</span>
+        
+    </p>
+
+
+    </div>
 </div>
+
+
+                
+<div class="j-confirm_password-input control-group">
+    <label class="control-label">Повторите пароль:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="    "
+                   type="password"
+                   name="confirm_password" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message">Пароль, который вы хотите</span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+                
+<div class="j-old_password-input control-group">
+    <label class="control-label">Текущий пароль:</label>
+    <div class="controls">
+        <div class="input">
+            <input class="    "
+                   type="password"
+                   name="old_password" />
+        </div>
+        
+    <p class="help-block">
+        <span class="j-message">Пароль, под которым вы вошли</span>
+        
+    </p>
+
+
+    </div>
+</div>
+
+
+
+            </fieldset>
+        </div>
+
+        <div class="modal-footer">
+            <a class="j-popup-close btn">Закрыть</a>
+            <input type="submit" class="btn btn-primary" value="Созранить" />
+        </div>
+    </div>
+    <div class="modal-backdrop"></div>
+</form></div>
 
 <div class="t-bakery-hidden row">
 
