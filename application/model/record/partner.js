@@ -34,4 +34,4 @@ model.record.Partner.prototype.serialize = function() {
     return result;
 };
 
-tuna.model.recordFactory.registerRecord('bakery', new model.record.Partner());
+tuna.model.recordFactory.registerRecord('partner', new model.record.Partner());

@@ -75,6 +75,9 @@ $Config$$.prototype.$init$ = function $$Config$$$$$init$$($data$$19$$) {
 $Config$$.prototype.get = function $$Config$$$$get$($key$$15$$, $subKey$$) {
   return this.$__data$[$key$$15$$] !== $JSCompiler_alias_VOID$$ ? $subKey$$ !== $JSCompiler_alias_VOID$$ ? this.$__data$[$key$$15$$][$subKey$$] || $JSCompiler_alias_NULL$$ : this.$__data$[$key$$15$$] : $JSCompiler_alias_NULL$$
 };
+$Config$$.prototype.set = function $$Config$$$$set$($key$$16$$, $value$$41$$) {
+  this.$__data$[$key$$16$$] = $value$$41$$
+};
 var $tuna$utils$config$$ = new $Config$$;
 function $tuna$dom$select$$($selector$$, $opt_context$$5$$) {
   return $tuna$dom$__selectorEngine$$ !== $JSCompiler_alias_NULL$$ ? $tuna$dom$__selectorEngine$$($selector$$, $opt_context$$5$$) : []
@@ -432,8 +435,8 @@ var $tuna$rest$methodFactory$$ = new function() {
   this.$__methods$ = {};
   this.$__defaultMethod$ = $JSCompiler_alias_NULL$$
 };
-function $tuna$tmpl$data$DataNode$$($value$$42$$, $opt_parent$$, $opt_key$$1$$) {
-  this.$__value$ = $value$$42$$;
+function $tuna$tmpl$data$DataNode$$($value$$43$$, $opt_parent$$, $opt_key$$1$$) {
+  this.$__value$ = $value$$43$$;
   this.$__parent$ = $opt_parent$$ || $tuna$tmpl$data$NULL_NODE$$;
   this.$__key$ = $opt_key$$1$$ || $JSCompiler_alias_NULL$$;
   this.$__keyNode$ = $JSCompiler_alias_NULL$$;
@@ -452,13 +455,13 @@ $JSCompiler_prototypeAlias$$.$getValue$ = $JSCompiler_get$$("$__value$");
 $JSCompiler_prototypeAlias$$.getStringValue = function $$JSCompiler_prototypeAlias$$$getStringValue$() {
   return this.$__value$ !== $JSCompiler_alias_NULL$$ ? this.$__value$.toString() : $JSCompiler_alias_NULL$$
 };
-function $JSCompiler_StaticMethods_growChild$$($JSCompiler_StaticMethods_growChild$self$$, $key$$16$$) {
+function $JSCompiler_StaticMethods_growChild$$($JSCompiler_StaticMethods_growChild$self$$, $key$$17$$) {
   if($JSCompiler_StaticMethods_growChild$self$$ === $tuna$tmpl$data$NULL_NODE$$) {
     return $JSCompiler_StaticMethods_growChild$self$$
   }
-  $JSCompiler_StaticMethods_growChild$self$$.$__children$[$key$$16$$] === $JSCompiler_alias_VOID$$ && ($JSCompiler_StaticMethods_growChild$self$$.$__children$[$key$$16$$] = $JSCompiler_StaticMethods_growChild$self$$.$__value$ !== $JSCompiler_alias_NULL$$ && $JSCompiler_StaticMethods_growChild$self$$.$__value$[$key$$16$$] !== $JSCompiler_alias_VOID$$ ? new $tuna$tmpl$data$DataNode$$($JSCompiler_StaticMethods_growChild$self$$.$__value$[$key$$16$$], $JSCompiler_StaticMethods_growChild$self$$, $key$$16$$) : 
+  $JSCompiler_StaticMethods_growChild$self$$.$__children$[$key$$17$$] === $JSCompiler_alias_VOID$$ && ($JSCompiler_StaticMethods_growChild$self$$.$__children$[$key$$17$$] = $JSCompiler_StaticMethods_growChild$self$$.$__value$ !== $JSCompiler_alias_NULL$$ && $JSCompiler_StaticMethods_growChild$self$$.$__value$[$key$$17$$] !== $JSCompiler_alias_VOID$$ ? new $tuna$tmpl$data$DataNode$$($JSCompiler_StaticMethods_growChild$self$$.$__value$[$key$$17$$], $JSCompiler_StaticMethods_growChild$self$$, $key$$17$$) : 
   $tuna$tmpl$data$NULL_NODE$$);
-  return $JSCompiler_StaticMethods_growChild$self$$.$__children$[$key$$16$$]
+  return $JSCompiler_StaticMethods_growChild$self$$.$__children$[$key$$17$$]
 }
 var $tuna$tmpl$data$NULL_NODE$$ = new $tuna$tmpl$data$DataNode$$($JSCompiler_alias_NULL$$);
 function $tuna$tmpl$data$PathEvaluator$$() {
@@ -667,29 +670,29 @@ function $tuna$tmpl$units$condition$EqualsOperator$$($opt_data$$9$$) {
   this.$_data$ = $opt_data$$9$$ || ""
 }
 $tuna$utils$extend$$($tuna$tmpl$units$condition$EqualsOperator$$, $tuna$tmpl$units$condition$ConditionOperator$$);
-$tuna$tmpl$units$condition$EqualsOperator$$.prototype.test = function $$tuna$tmpl$units$condition$EqualsOperator$$$$test$($value$$46$$) {
-  return $value$$46$$ === this.$_data$ || $value$$46$$ + "" === this.$_data$
+$tuna$tmpl$units$condition$EqualsOperator$$.prototype.test = function $$tuna$tmpl$units$condition$EqualsOperator$$$$test$($value$$47$$) {
+  return $value$$47$$ === this.$_data$ || $value$$47$$ + "" === this.$_data$
 };
 function $tuna$tmpl$units$condition$IsSetOperator$$() {
   this.$_data$ = ""
 }
 $tuna$utils$extend$$($tuna$tmpl$units$condition$IsSetOperator$$, $tuna$tmpl$units$condition$ConditionOperator$$);
-$tuna$tmpl$units$condition$IsSetOperator$$.prototype.test = function $$tuna$tmpl$units$condition$IsSetOperator$$$$test$($value$$47$$) {
-  return $value$$47$$ != $JSCompiler_alias_NULL$$
+$tuna$tmpl$units$condition$IsSetOperator$$.prototype.test = function $$tuna$tmpl$units$condition$IsSetOperator$$$$test$($value$$48$$) {
+  return $value$$48$$ != $JSCompiler_alias_NULL$$
 };
 function $tuna$tmpl$units$condition$NotEqualsOperator$$($opt_data$$10$$) {
   this.$_data$ = $opt_data$$10$$ || ""
 }
 $tuna$utils$extend$$($tuna$tmpl$units$condition$NotEqualsOperator$$, $tuna$tmpl$units$condition$ConditionOperator$$);
-$tuna$tmpl$units$condition$NotEqualsOperator$$.prototype.test = function $$tuna$tmpl$units$condition$NotEqualsOperator$$$$test$($value$$48$$) {
-  return!($value$$48$$ == this.$_data$ || $value$$48$$ + "" == this.$_data$)
+$tuna$tmpl$units$condition$NotEqualsOperator$$.prototype.test = function $$tuna$tmpl$units$condition$NotEqualsOperator$$$$test$($value$$49$$) {
+  return!($value$$49$$ == this.$_data$ || $value$$49$$ + "" == this.$_data$)
 };
 function $tuna$tmpl$units$condition$NotSetOperator$$() {
   this.$_data$ = ""
 }
 $tuna$utils$extend$$($tuna$tmpl$units$condition$NotSetOperator$$, $tuna$tmpl$units$condition$ConditionOperator$$);
-$tuna$tmpl$units$condition$NotSetOperator$$.prototype.test = function $$tuna$tmpl$units$condition$NotSetOperator$$$$test$($value$$49$$) {
-  return $value$$49$$ == $JSCompiler_alias_NULL$$
+$tuna$tmpl$units$condition$NotSetOperator$$.prototype.test = function $$tuna$tmpl$units$condition$NotSetOperator$$$$test$($value$$50$$) {
+  return $value$$50$$ == $JSCompiler_alias_NULL$$
 };
 function $tuna$tmpl$units$Unit$$($root$$) {
   this.$_rootTemplate$ = $root$$
@@ -706,16 +709,16 @@ $tuna$utils$extend$$($tuna$tmpl$units$Spot$$, $tuna$tmpl$units$Unit$$);
 $tuna$tmpl$units$Spot$$.prototype.$setPath$ = function $$tuna$tmpl$units$Spot$$$$$setPath$$($path$$6$$) {
   this.$__pathEvaluator$.$setPath$($path$$6$$)
 };
-$tuna$tmpl$units$Spot$$.prototype.$applyData$ = function $$tuna$tmpl$units$Spot$$$$$applyData$$($dataNode$$5_value$$50$$) {
-  $dataNode$$5_value$$50$$ = this.$__pathEvaluator$.evaluate($dataNode$$5_value$$50$$).$getValue$();
-  this.$_pattern$ !== $JSCompiler_alias_NULL$$ && $dataNode$$5_value$$50$$ !== $JSCompiler_alias_NULL$$ && ($dataNode$$5_value$$50$$ = this.$_pattern$.join($dataNode$$5_value$$50$$));
-  this.$_applyValue$($dataNode$$5_value$$50$$)
+$tuna$tmpl$units$Spot$$.prototype.$applyData$ = function $$tuna$tmpl$units$Spot$$$$$applyData$$($dataNode$$5_value$$51$$) {
+  $dataNode$$5_value$$51$$ = this.$__pathEvaluator$.evaluate($dataNode$$5_value$$51$$).$getValue$();
+  this.$_pattern$ !== $JSCompiler_alias_NULL$$ && $dataNode$$5_value$$51$$ !== $JSCompiler_alias_NULL$$ && ($dataNode$$5_value$$51$$ = this.$_pattern$.join($dataNode$$5_value$$51$$));
+  this.$_applyValue$($dataNode$$5_value$$51$$)
 };
-$tuna$tmpl$units$Spot$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Spot$$$$$_applyValue$$($i$$20_value$$51$$) {
+$tuna$tmpl$units$Spot$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Spot$$$$$_applyValue$$($i$$20_value$$52$$) {
   var $html$$1$$ = "";
-  $i$$20_value$$51$$ !== $JSCompiler_alias_NULL$$ && ($html$$1$$ = $i$$20_value$$51$$.toString());
-  for($i$$20_value$$51$$ = this.$_nodes$.length - 1;0 <= $i$$20_value$$51$$;) {
-    this.$_nodes$[$i$$20_value$$51$$].innerHTML !== $html$$1$$ && (this.$_nodes$[$i$$20_value$$51$$].innerHTML = $html$$1$$), $i$$20_value$$51$$--
+  $i$$20_value$$52$$ !== $JSCompiler_alias_NULL$$ && ($html$$1$$ = $i$$20_value$$52$$.toString());
+  for($i$$20_value$$52$$ = this.$_nodes$.length - 1;0 <= $i$$20_value$$52$$;) {
+    this.$_nodes$[$i$$20_value$$52$$].innerHTML !== $html$$1$$ && (this.$_nodes$[$i$$20_value$$52$$].innerHTML = $html$$1$$), $i$$20_value$$52$$--
   }
 };
 $tuna$tmpl$units$Spot$$.prototype.$destroy$ = function $$tuna$tmpl$units$Spot$$$$$destroy$$() {
@@ -728,14 +731,14 @@ function $tuna$tmpl$units$Attribute$$($root$$2$$, $attributeName$$2$$) {
   this.$__dispatchAttribute$ = $tuna$utils$bind$$(this.$__dispatchAttribute$, this)
 }
 $tuna$utils$extend$$($tuna$tmpl$units$Attribute$$, $tuna$tmpl$units$Spot$$);
-$tuna$tmpl$units$Attribute$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Attribute$$$$$_applyValue$$($i$$inline_74_value$$52$$) {
-  if($i$$inline_74_value$$52$$ !== $JSCompiler_alias_NULL$$) {
+$tuna$tmpl$units$Attribute$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Attribute$$$$$_applyValue$$($i$$inline_74_value$$53$$) {
+  if($i$$inline_74_value$$53$$ !== $JSCompiler_alias_NULL$$) {
     for(var $i$$inline_71$$ = this.$_nodes$.length - 1;0 <= $i$$inline_71$$;) {
-      this.$_nodes$[$i$$inline_71$$][this.$__attributeName$] !== $JSCompiler_alias_VOID$$ && (this.$_nodes$[$i$$inline_71$$][this.$__attributeName$] = $i$$inline_74_value$$52$$), this.$_nodes$[$i$$inline_71$$].setAttribute(this.$__attributeName$, $i$$inline_74_value$$52$$ + ""), $i$$inline_71$$--
+      this.$_nodes$[$i$$inline_71$$][this.$__attributeName$] !== $JSCompiler_alias_VOID$$ && (this.$_nodes$[$i$$inline_71$$][this.$__attributeName$] = $i$$inline_74_value$$53$$), this.$_nodes$[$i$$inline_71$$].setAttribute(this.$__attributeName$, $i$$inline_74_value$$53$$ + ""), $i$$inline_71$$--
     }
   }else {
-    for($i$$inline_74_value$$52$$ = this.$_nodes$.length - 1;0 <= $i$$inline_74_value$$52$$;) {
-      this.$_nodes$[$i$$inline_74_value$$52$$][this.$__attributeName$] !== $JSCompiler_alias_VOID$$ && (this.$_nodes$[$i$$inline_74_value$$52$$][this.$__attributeName$] = ""), this.$_nodes$[$i$$inline_74_value$$52$$].removeAttribute(this.$__attributeName$), $i$$inline_74_value$$52$$--
+    for($i$$inline_74_value$$53$$ = this.$_nodes$.length - 1;0 <= $i$$inline_74_value$$53$$;) {
+      this.$_nodes$[$i$$inline_74_value$$53$$][this.$__attributeName$] !== $JSCompiler_alias_VOID$$ && (this.$_nodes$[$i$$inline_74_value$$53$$][this.$__attributeName$] = ""), this.$_nodes$[$i$$inline_74_value$$53$$].removeAttribute(this.$__attributeName$), $i$$inline_74_value$$53$$--
     }
   }
   this.$__hasEvent$ && setTimeout(this.$__dispatchAttribute$, 0)
@@ -758,30 +761,30 @@ function $tuna$tmpl$units$Condition$$($root$$3$$, $action$$, $operator$$) {
   this.$__operator$ = $operator$$
 }
 $tuna$utils$extend$$($tuna$tmpl$units$Condition$$, $tuna$tmpl$units$Spot$$);
-$tuna$tmpl$units$Condition$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Condition$$$$$_applyValue$$($value$$54$$) {
-  for(var $testResult$$2$$ = this.$__operator$.test($value$$54$$), $i$$24$$ = this.$_nodes$.length - 1;0 <= $i$$24$$;) {
-    this.$__action$.apply(this.$_nodes$[$i$$24$$], $testResult$$2$$, $value$$54$$), $i$$24$$--
+$tuna$tmpl$units$Condition$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Condition$$$$$_applyValue$$($value$$55$$) {
+  for(var $testResult$$2$$ = this.$__operator$.test($value$$55$$), $i$$24$$ = this.$_nodes$.length - 1;0 <= $i$$24$$;) {
+    this.$__action$.apply(this.$_nodes$[$i$$24$$], $testResult$$2$$, $value$$55$$), $i$$24$$--
   }
 };
 function $tuna$tmpl$units$Checkbox$$($root$$4$$) {
   $tuna$tmpl$units$Spot$$.call(this, $root$$4$$)
 }
 $tuna$utils$extend$$($tuna$tmpl$units$Checkbox$$, $tuna$tmpl$units$Spot$$);
-$tuna$tmpl$units$Checkbox$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Checkbox$$$$$_applyValue$$($value$$55$$) {
-  if($value$$55$$ !== $JSCompiler_alias_NULL$$) {
+$tuna$tmpl$units$Checkbox$$.prototype.$_applyValue$ = function $$tuna$tmpl$units$Checkbox$$$$$_applyValue$$($value$$56$$) {
+  if($value$$56$$ !== $JSCompiler_alias_NULL$$) {
     var $i$$25$$ = this.$_nodes$.length - 1;
-    if($value$$55$$ === $JSCompiler_alias_TRUE$$ || $value$$55$$ === $JSCompiler_alias_FALSE$$) {
+    if($value$$56$$ === $JSCompiler_alias_TRUE$$ || $value$$56$$ === $JSCompiler_alias_FALSE$$) {
       for(;0 <= $i$$25$$;) {
-        this.$_nodes$[$i$$25$$].checked = $value$$55$$, $i$$25$$--
+        this.$_nodes$[$i$$25$$].checked = $value$$56$$, $i$$25$$--
       }
     }else {
-      if($value$$55$$ instanceof Array) {
+      if($value$$56$$ instanceof Array) {
         for(;0 <= $i$$25$$;) {
-          this.$_nodes$[$i$$25$$].checked = -1 !== $tuna$utils$indexOf$$(this.$_nodes$[$i$$25$$].value, $value$$55$$), $i$$25$$--
+          this.$_nodes$[$i$$25$$].checked = -1 !== $tuna$utils$indexOf$$(this.$_nodes$[$i$$25$$].value, $value$$56$$), $i$$25$$--
         }
       }else {
-        for($value$$55$$ += "";0 <= $i$$25$$;) {
-          this.$_nodes$[$i$$25$$].checked = this.$_nodes$[$i$$25$$].value === $value$$55$$, $i$$25$$--
+        for($value$$56$$ += "";0 <= $i$$25$$;) {
+          this.$_nodes$[$i$$25$$].checked = this.$_nodes$[$i$$25$$].value === $value$$56$$, $i$$25$$--
         }
       }
     }
@@ -802,10 +805,10 @@ $tuna$tmpl$units$List$$.prototype.$setPath$ = function $$tuna$tmpl$units$List$$$
 $tuna$tmpl$units$List$$.prototype.$applyData$ = function $$tuna$tmpl$units$List$$$$$applyData$$($dataNode$$6_sampleNode_templateTarget$$inline_92$$) {
   var $oldItemsTable$$ = this.$__itemsTable$;
   this.$__itemsTable$ = {};
-  var $dataNode$$6_sampleNode_templateTarget$$inline_92$$ = this.$__pathEvaluator$.evaluate($dataNode$$6_sampleNode_templateTarget$$inline_92$$), $sample$$ = $dataNode$$6_sampleNode_templateTarget$$inline_92$$.$getValue$(), $itemTemplate_templateTarget$$inline_86$$ = $JSCompiler_alias_NULL$$, $itemNode$$ = $JSCompiler_alias_NULL$$, $key$$19$$ = $JSCompiler_alias_NULL$$, $index$$53_template$$inline_91$$;
+  var $dataNode$$6_sampleNode_templateTarget$$inline_92$$ = this.$__pathEvaluator$.evaluate($dataNode$$6_sampleNode_templateTarget$$inline_92$$), $sample$$ = $dataNode$$6_sampleNode_templateTarget$$inline_92$$.$getValue$(), $itemTemplate_templateTarget$$inline_86$$ = $JSCompiler_alias_NULL$$, $itemNode$$ = $JSCompiler_alias_NULL$$, $key$$20$$ = $JSCompiler_alias_NULL$$, $index$$53_template$$inline_91$$;
   for($index$$53_template$$inline_91$$ in $sample$$) {
-    if($itemNode$$ = $JSCompiler_StaticMethods_growChild$$($dataNode$$6_sampleNode_templateTarget$$inline_92$$, $index$$53_template$$inline_91$$), $key$$19$$ = this.$__keyPathEvaluator$.evaluate($itemNode$$).getStringValue(), $key$$19$$ !== $JSCompiler_alias_NULL$$) {
-      if($oldItemsTable$$[$key$$19$$] === $JSCompiler_alias_VOID$$) {
+    if($itemNode$$ = $JSCompiler_StaticMethods_growChild$$($dataNode$$6_sampleNode_templateTarget$$inline_92$$, $index$$53_template$$inline_91$$), $key$$20$$ = this.$__keyPathEvaluator$.evaluate($itemNode$$).getStringValue(), $key$$20$$ !== $JSCompiler_alias_NULL$$) {
+      if($oldItemsTable$$[$key$$20$$] === $JSCompiler_alias_VOID$$) {
         if($itemTemplate_templateTarget$$inline_86$$ = this.$__itemRenderer$.cloneNode($JSCompiler_alias_TRUE$$), $itemTemplate_templateTarget$$inline_86$$ !== $JSCompiler_alias_NULL$$ && this.$__itemSettings$ !== $JSCompiler_alias_NULL$$) {
           var $template$$inline_87$$ = this.$__templateCompiler$.compile(this.$__itemSettings$, $itemTemplate_templateTarget$$inline_86$$, this.$_rootTemplate$);
           this.$__listNodeRouter$.append($itemTemplate_templateTarget$$inline_86$$);
@@ -814,9 +817,9 @@ $tuna$tmpl$units$List$$.prototype.$applyData$ = function $$tuna$tmpl$units$List$
           $itemTemplate_templateTarget$$inline_86$$ = $JSCompiler_alias_NULL$$
         }
       }else {
-        $itemTemplate_templateTarget$$inline_86$$ = $oldItemsTable$$[$key$$19$$], delete $oldItemsTable$$[$key$$19$$]
+        $itemTemplate_templateTarget$$inline_86$$ = $oldItemsTable$$[$key$$20$$], delete $oldItemsTable$$[$key$$20$$]
       }
-      $itemTemplate_templateTarget$$inline_86$$ !== $JSCompiler_alias_NULL$$ && ($itemTemplate_templateTarget$$inline_86$$.$applyData$($itemNode$$), this.$__itemsTable$[$key$$19$$] = $itemTemplate_templateTarget$$inline_86$$)
+      $itemTemplate_templateTarget$$inline_86$$ !== $JSCompiler_alias_NULL$$ && ($itemTemplate_templateTarget$$inline_86$$.$applyData$($itemNode$$), this.$__itemsTable$[$key$$20$$] = $itemTemplate_templateTarget$$inline_86$$)
     }
   }
   var $dataNode$$6_sampleNode_templateTarget$$inline_92$$ = $index$$53_template$$inline_91$$ = $JSCompiler_alias_NULL$$, $key$$inline_93$$;
@@ -825,8 +828,8 @@ $tuna$tmpl$units$List$$.prototype.$applyData$ = function $$tuna$tmpl$units$List$
   }
 };
 $tuna$tmpl$units$List$$.prototype.$destroy$ = function $$tuna$tmpl$units$List$$$$$destroy$$() {
-  for(var $key$$20$$ in this.$__itemsTable$) {
-    this.$__itemsTable$[$key$$20$$].$destroy$()
+  for(var $key$$21$$ in this.$__itemsTable$) {
+    this.$__itemsTable$[$key$$21$$].$destroy$()
   }
   this.$__itemsTable$ = {}
 };
@@ -1258,18 +1261,18 @@ $tuna$ui$forms$Form$$.prototype.$getValue$ = function $$tuna$ui$forms$Form$$$$$g
   }
   return $result$$13$$
 };
-function $JSCompiler_StaticMethods_setValue$$($JSCompiler_StaticMethods_setValue$self_element$$54$$, $i$$35_name$$76$$, $index$$54_value$$56$$) {
+function $JSCompiler_StaticMethods_setValue$$($JSCompiler_StaticMethods_setValue$self_element$$54$$, $i$$35_name$$76$$, $index$$54_value$$57$$) {
   $JSCompiler_StaticMethods_setValue$self_element$$54$$ = $JSCompiler_StaticMethods_setValue$self_element$$54$$.$_target$.elements[$i$$35_name$$76$$];
   if($JSCompiler_StaticMethods_setValue$self_element$$54$$ !== $JSCompiler_alias_VOID$$) {
     if($JSCompiler_StaticMethods_setValue$self_element$$54$$.value === $JSCompiler_alias_VOID$$) {
       var $i$$35_name$$76$$ = 0, $l$$24$$ = $JSCompiler_StaticMethods_setValue$self_element$$54$$.length, $stringValue$$1$$ = "", $arrayValue$$ = [];
-      $index$$54_value$$56$$ instanceof Array ? ($arrayValue$$ = $index$$54_value$$56$$.slice(0), $stringValue$$1$$ = $index$$54_value$$56$$.join(",")) : ($stringValue$$1$$ = $index$$54_value$$56$$ + "", $arrayValue$$ = [$stringValue$$1$$]);
-      for($index$$54_value$$56$$ = -1;$i$$35_name$$76$$ < $l$$24$$;) {
-        "radio" === $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].type ? $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].checked = $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].value === $stringValue$$1$$ : "checkbox" === $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].type ? ($index$$54_value$$56$$ = $tuna$utils$indexOf$$($JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].value, 
-        $arrayValue$$), $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].checked = -1 !== $index$$54_value$$56$$, -1 !== $index$$54_value$$56$$ && $arrayValue$$.splice($index$$54_value$$56$$, 1)) : $JSCompiler_StaticMethods_setValue$self_element$$54$$.value = $stringValue$$1$$, $i$$35_name$$76$$++
+      $index$$54_value$$57$$ instanceof Array ? ($arrayValue$$ = $index$$54_value$$57$$.slice(0), $stringValue$$1$$ = $index$$54_value$$57$$.join(",")) : ($stringValue$$1$$ = $index$$54_value$$57$$ + "", $arrayValue$$ = [$stringValue$$1$$]);
+      for($index$$54_value$$57$$ = -1;$i$$35_name$$76$$ < $l$$24$$;) {
+        "radio" === $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].type ? $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].checked = $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].value === $stringValue$$1$$ : "checkbox" === $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].type ? ($index$$54_value$$57$$ = $tuna$utils$indexOf$$($JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].value, 
+        $arrayValue$$), $JSCompiler_StaticMethods_setValue$self_element$$54$$[$i$$35_name$$76$$].checked = -1 !== $index$$54_value$$57$$, -1 !== $index$$54_value$$57$$ && $arrayValue$$.splice($index$$54_value$$57$$, 1)) : $JSCompiler_StaticMethods_setValue$self_element$$54$$.value = $stringValue$$1$$, $i$$35_name$$76$$++
       }
     }else {
-      "checkbox" === $JSCompiler_StaticMethods_setValue$self_element$$54$$.type || "radio" === $JSCompiler_StaticMethods_setValue$self_element$$54$$.type ? $JSCompiler_StaticMethods_setValue$self_element$$54$$.checked = $JSCompiler_StaticMethods_setValue$self_element$$54$$.value === $index$$54_value$$56$$ : $JSCompiler_StaticMethods_setValue$self_element$$54$$.value = $index$$54_value$$56$$
+      "checkbox" === $JSCompiler_StaticMethods_setValue$self_element$$54$$.type || "radio" === $JSCompiler_StaticMethods_setValue$self_element$$54$$.type ? $JSCompiler_StaticMethods_setValue$self_element$$54$$.checked = $JSCompiler_StaticMethods_setValue$self_element$$54$$.value === $index$$54_value$$57$$ : $JSCompiler_StaticMethods_setValue$self_element$$54$$.value = $index$$54_value$$57$$
     }
   }
 }
@@ -2325,7 +2328,7 @@ $model$record$Partner$$.prototype.$serialize$ = function $$model$record$Partner$
   return $result$$22$$
 };
 var $record$$inline_388$$ = new $model$record$Partner$$;
-$tuna$model$recordFactory$$.$__prototypes$.bakery = $record$$inline_388$$;
+$tuna$model$recordFactory$$.$__prototypes$.partner = $record$$inline_388$$;
 function $Recipe$$($data$$45$$) {
   this.$imageUrl$ = this.$desc$ = this.name = this.$bakeryId$ = this.id = "";
   this.$dimentionPrices$ = $JSCompiler_alias_NULL$$;
