@@ -95,7 +95,7 @@ MainController.prototype.__applyUser = function(user) {
         }
     });
 
-    if (user.role === model.record.User.ROLE_ADMIN) {
+    if (user.role !== model.record.User.ROLE_BAKERY) {
         var bakeryForm = this._container.getModuleInstanceByName
             ('form', 'bakery-selection');
 

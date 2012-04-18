@@ -25,6 +25,11 @@ var Order = function (data) {
     this.bakery = null;
 
     /**
+     * @type {model.record.Partner}
+     */
+    this.partner = null;
+
+    /**
      * @type {model.record.Recipe}
      */
     this.recipe = null;
@@ -81,6 +86,7 @@ Order.prototype.populate = function(data) {
     this.recipe = new model.record.Recipe(data['recipe']);
     this.payment = new model.record.Payment(data['payment']);
     this.delivery = new model.record.Delivery(data['delivery']);
+    this.partner = new model.record.Partner(data['partner']);
 
     this.status =  data['status'];
     this.paymentStatus = data['payment_status'];
@@ -106,6 +112,7 @@ Order.prototype.serialize = function() {
         'client': this.client.serialize(),
         'delivery': this.delivery.serialize(),
         'recipe': this.recipe.serialize(),
+        'partner': this.partner.serialize(),
         'status': this.status,
         'paymentStatus': this.paymentStatus,
         'deliveryStatus': this.deliveryStatus,

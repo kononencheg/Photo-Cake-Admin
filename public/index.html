@@ -103,27 +103,31 @@
                 <li class="j-navigation-link" data-href="orders/table">
                     <a>Заказы</a>
                 </li>
-                <li class="j-navigation-link" data-href="recipes/table">
+                <li class="j-navigation-link t-parther-hidden"
+                    data-href="recipes/table">
                     <a>Рецепты</a>
                 </li>
-                <li class="j-navigation-link" data-href="dimensions/table">
+                <li class="j-navigation-link t-parther-hidden"
+                    data-href="dimensions/table">
                     <a>Формы</a>
                 </li>
-                <li class="j-navigation-link t-bakery-hidden"
+                <li class="j-navigation-link t-admin-visible"
                     data-href="users/table">
-
                     <a>Кондитерские</a>
                 </li>
 
-                <li class="j-navigation-link" data-href="decorations">
+                <li class="j-navigation-link t-parther-hidden"
+                    data-href="decorations">
                     <a>Декорации</a>
                 </li>
 
-                <li class="j-navigation-link" data-href="application">
+                <li class="j-navigation-link t-parther-hidden"
+                    data-href="application">
                     <a>Приложение</a>
                 </li>
 
-                <li class="j-navigation-link" data-href="profile">
+                <li class="j-navigation-link t-parther-hidden"
+                    data-href="profile">
                     <a>Профиль</a>
                 </li>
             </ul>
@@ -451,7 +455,7 @@
     <div class="control-group">
         <label class="control-label">Сайт:</label>
         <div class="controls">
-            <span class="uneditable-input             t-client-network-name
+            <span class="uneditable-input             t-partner-url
     ">
                 
             </span>
@@ -685,9 +689,15 @@
                            tuna:target=".t-client-email" />
 
 
+
         
-    <tuna:spot tuna:path="client/networkName"
-                           tuna:target=".t-client-network-name" />
+    <tuna:spot tuna:path="partner/url"
+                           tuna:target=".t-partner-url" />
+
+
+        
+    <tuna:spot tuna:path="partner/name"
+                           tuna:target=".t-partner-name" />
 
 
 
@@ -774,52 +784,52 @@
 
 
 
-                        
-        <tuna:if tuna:path="status" tuna:eq="0"
-                                 tuna:class="label-important"
-                                 tuna:target=".t-status-label" />
+                    
+<tuna:if tuna:path="status" tuna:eq="0"
+                 tuna:class="label-important"
+                 tuna:target=".t-status-label" />
+
+
+            
+<tuna:if tuna:path="status" tuna:eq="1"
+                 tuna:class="label-success"
+                 tuna:target=".t-status-label" />
+
 
     
-                
-        <tuna:if tuna:path="status" tuna:eq="1"
-                                 tuna:class="label-success"
-                                 tuna:target=".t-status-label" />
+
+                    
+<tuna:if tuna:path="deliveryStatus" tuna:eq="0"
+                 tuna:class="label-important"
+                 tuna:target=".t-delivery-status-label" />
+
+
+            
+<tuna:if tuna:path="deliveryStatus" tuna:eq="1"
+                 tuna:class="label-info"
+                 tuna:target=".t-delivery-status-label" />
+
+
+            
+<tuna:if tuna:path="deliveryStatus" tuna:eq="2"
+                 tuna:class="label-success"
+                 tuna:target=".t-delivery-status-label" />
+
 
     
-    
 
-                        
-        <tuna:if tuna:path="deliveryStatus" tuna:eq="0"
-                                 tuna:class="label-important"
-                                 tuna:target=".t-delivery-status-label" />
+                    
+<tuna:if tuna:path="paymentStatus" tuna:eq="0"
+                 tuna:class="label-important"
+                 tuna:target=".t-payment-status-label" />
 
-    
-                
-        <tuna:if tuna:path="deliveryStatus" tuna:eq="1"
-                                 tuna:class="label-info"
-                                 tuna:target=".t-delivery-status-label" />
 
-    
-                
-        <tuna:if tuna:path="deliveryStatus" tuna:eq="2"
-                                 tuna:class="label-success"
-                                 tuna:target=".t-delivery-status-label" />
+            
+<tuna:if tuna:path="paymentStatus" tuna:eq="1"
+                 tuna:class="label-success"
+                 tuna:target=".t-payment-status-label" />
 
-    
-    
 
-                        
-        <tuna:if tuna:path="paymentStatus" tuna:eq="0"
-                                 tuna:class="label-important"
-                                 tuna:target=".t-payment-status-label" />
-
-    
-                
-        <tuna:if tuna:path="paymentStatus" tuna:eq="1"
-                                 tuna:class="label-success"
-                                 tuna:target=".t-payment-status-label" />
-
-    
     
 
     </tuna:template>
@@ -865,7 +875,7 @@
 
 <div id="recipes_page"
      class="j-navigation-page j-navigation j-control-container page
-            t-current-bakery-exist"
+            t-current-bakery-exist t-parther-hidden"
      data-name="recipes">
 
     <div class="j-navigation-page page active"
@@ -1112,7 +1122,7 @@
         
     <tuna:attr tuna:name="src"
                tuna:path="imageUrl"
-                              tuna:target="t-image" />
+                              tuna:target=".t-image" />
 
 
 
@@ -1200,7 +1210,7 @@
 
 <div id="dimensions_page"
      class="j-navigation-page j-navigation j-control-container page
-            t-current-bakery-exist"
+            t-current-bakery-exist t-parther-hidden"
      data-name="dimensions">
 
     <div class="j-navigation-page page active"
@@ -1381,7 +1391,7 @@
 
 <div id="decorations_page"
      class="j-navigation-page j-control-container page
-            t-current-bakery-exist"
+            t-current-bakery-exist t-parther-hidden"
      data-name="decorations">
 
     <div class="j-navigation-page page active"
@@ -1583,7 +1593,8 @@
 </div></div>
 
 <div id="users_page"
-     class="j-navigation-page j-navigation j-control-container page"
+     class="j-navigation-page j-navigation j-control-container page
+            t-admin-visible"
      data-name="users">
 
     <div class="j-navigation-page page active"
@@ -1924,7 +1935,8 @@
 
 </div></div>
 
-<div class="j-navigation-page page"
+<div class="j-navigation-page page
+            t-parther-hidden"
      data-name="application">
 
     <div class="page-header">
@@ -1943,7 +1955,8 @@
 </div>
 
 <div id="profile_page"
-     class="j-navigation-page j-control-container page"
+     class="j-navigation-page j-control-container page
+            t-parther-hidden"
      data-name="profile">
 
     <div class="page-header">
@@ -2326,6 +2339,49 @@
 
             <tuna:template id="global_template">
 
+                
+    <tuna:spot tuna:path="currentUser/email"
+                           tuna:target=".t-current-user-email" />
+
+
+
+                
+    <tuna:spot tuna:path="currentUser/role"
+                           tuna:target=".t-current-user-role" />
+
+
+
+                    
+        <tuna:if tuna:path="currentUser/role" tuna:ne="0"
+                                 tuna:class="hide"
+                                 tuna:target=".t-admin-visible" />
+
+    
+                
+<tuna:if tuna:path="currentUser/role" tuna:eq="2"
+                 tuna:class="hide"
+                 tuna:target=".t-parther-hidden" />
+
+
+                
+<tuna:if tuna:path="currentUser/role" tuna:eq="1"
+                 tuna:class="disabled"
+                 tuna:target=".t-bakery-disabled" />
+
+
+                
+<tuna:if tuna:path="currentUser/role" tuna:eq="1"
+                 tuna:class="hide"
+                 tuna:target=".t-bakery-hidden" />
+
+
+
+                
+    <tuna:spot tuna:path="currentUser/roleName"
+                           tuna:target=".t-current-user-role-name" />
+
+
+
                     
         <tuna:if tuna:path="currentBakery" tuna:notset
                                      tuna:class="hide"
@@ -2385,36 +2441,6 @@
     <tuna:attr tuna:name="value"
                tuna:path="currentBakery/contactPhone"
                               tuna:target=".t-current-bakery-cash-contact-phone" />
-
-
-
-                
-    <tuna:spot tuna:path="currentUser/email"
-                           tuna:target=".t-current-user-email" />
-
-
-
-                
-    <tuna:spot tuna:path="currentUser/role"
-                           tuna:target=".t-current-user-role" />
-
-
-                    
-        <tuna:if tuna:path="currentUser/role" tuna:eq="1"
-                                 tuna:class="disabled"
-                                 tuna:target=".t-bakery-disabled" />
-
-    
-                    
-        <tuna:if tuna:path="currentUser/role" tuna:eq="1"
-                                 tuna:class="hide"
-                                 tuna:target=".t-bakery-hidden" />
-
-    
-
-                
-    <tuna:spot tuna:path="currentUser/roleName"
-                           tuna:target=".t-current-user-role-name" />
 
 
 

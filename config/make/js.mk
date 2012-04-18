@@ -2,8 +2,8 @@ JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
 			  --compilation_level ADVANCED_OPTIMIZATIONS \
 			  --externs library/externs.js \
-			  #--formatting PRETTY_PRINT \
-			  #--debug \
+			  --formatting PRETTY_PRINT \
+			  --debug \
 
 TUNA_FILES = tuna.js \
              \
@@ -158,6 +158,7 @@ APPLICATION_FILES = main.js \
 					\
 					model/record/user.js \
 					model/record/bakery.js \
+					model/record/partner.js \
 					model/record/recipe.js \
 					model/record/delivery.js \
 					model/record/client.js \

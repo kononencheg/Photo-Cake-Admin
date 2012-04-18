@@ -37,9 +37,21 @@
 {% endmacro %}
 
 {% macro eq(path, to, target, actions) %}
+{% if (actions) %}
+
+<tuna:if tuna:path="{{ path }}" tuna:eq="{{ to }}"
+        {% for key, value in actions %}
+         tuna:{{ key }}="{{ value }}"
+        {% endfor %}
+         tuna:target="{{ target }}" />
+
+{% endif %}
+{% endmacro %}
+
+{% macro ne(path, to, target, actions) %}
     {% if (actions) %}
 
-        <tuna:if tuna:path="{{ path }}" tuna:eq="{{ to }}"
+        <tuna:if tuna:path="{{ path }}" tuna:ne="{{ to }}"
                 {% for key, value in actions %}
                  tuna:{{ key }}="{{ value }}"
                 {% endfor %}

@@ -8,7 +8,7 @@
 
 <div id="recipes_page"
      class="j-navigation-page j-navigation j-control-container page
-            t-current-bakery-exist"
+            t-current-bakery-exist t-parther-hidden"
      data-name="recipes">
 
     {% include 'page/recipes.twig' %}
@@ -16,7 +16,7 @@
 
 <div id="dimensions_page"
      class="j-navigation-page j-navigation j-control-container page
-            t-current-bakery-exist"
+            t-current-bakery-exist t-parther-hidden"
      data-name="dimensions">
 
     {% include 'page/dimensions.twig' %}
@@ -24,27 +24,30 @@
 
 <div id="decorations_page"
      class="j-navigation-page j-control-container page
-            t-current-bakery-exist"
+            t-current-bakery-exist t-parther-hidden"
      data-name="decorations">
 
     {% include 'page/decorations.twig' %}
 </div>
 
 <div id="users_page"
-     class="j-navigation-page j-navigation j-control-container page"
+     class="j-navigation-page j-navigation j-control-container page
+            t-admin-visible"
      data-name="users">
 
     {% include 'page/users.twig' %}
 </div>
 
-<div class="j-navigation-page page"
+<div class="j-navigation-page page
+            t-parther-hidden"
      data-name="application">
 
     {% include 'page/application.twig' %}
 </div>
 
 <div id="profile_page"
-     class="j-navigation-page j-control-container page"
+     class="j-navigation-page j-control-container page
+            t-parther-hidden"
      data-name="profile">
 
     {% include 'page/profile.twig' %}

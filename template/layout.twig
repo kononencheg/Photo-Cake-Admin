@@ -39,6 +39,17 @@
 
             <tuna:template id="global_template">
 
+                {{ tmpl.spot('currentUser/email', '.t-current-user-email') }}
+
+                {{ tmpl.spot('currentUser/role', '.t-current-user-role') }}
+
+                {{ tmpl.ne  ('currentUser/role', 0, '.t-admin-visible',   { 'class': 'hide' }) }}
+                {{ tmpl.eq  ('currentUser/role', 2, '.t-parther-hidden',   { 'class': 'hide' }) }}
+                {{ tmpl.eq  ('currentUser/role', 1, '.t-bakery-disabled', { 'class': 'disabled' }) }}
+                {{ tmpl.eq  ('currentUser/role', 1, '.t-bakery-hidden',   { 'class': 'hide' }) }}
+
+                {{ tmpl.spot('currentUser/roleName', '.t-current-user-role-name') }}
+
                 {{ tmpl.notset('currentBakery', '.t-current-bakery-exist', { 'class': 'hide' }) }}
                 {{ tmpl.attr  ('currentBakery/id', '.t-current-bakery-id', 'value') }}
                 {{ tmpl.attr  ('currentBakery/name', '.t-current-bakery-name', 'value') }}
@@ -50,14 +61,6 @@
                 {{ tmpl.attr  ('currentBakery/contactName', '.t-current-bakery-cash-contact-name', 'value') }}
                 {{ tmpl.attr  ('currentBakery/contactEmail', '.t-current-bakery-cash-contact-email', 'value') }}
                 {{ tmpl.attr  ('currentBakery/contactPhone', '.t-current-bakery-cash-contact-phone', 'value') }}
-
-                {{ tmpl.spot('currentUser/email', '.t-current-user-email') }}
-
-                {{ tmpl.spot('currentUser/role', '.t-current-user-role') }}
-                {{ tmpl.eq  ('currentUser/role', 1, '.t-bakery-disabled', { 'class': 'disabled' }) }}
-                {{ tmpl.eq  ('currentUser/role', 1, '.t-bakery-hidden',   { 'class': 'hide' }) }}
-
-                {{ tmpl.spot('currentUser/roleName', '.t-current-user-role-name') }}
 
             </tuna:template>
 

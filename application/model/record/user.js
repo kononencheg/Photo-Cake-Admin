@@ -64,5 +64,11 @@ model.record.User.ROLE_ADMIN = 0;
  */
 model.record.User.ROLE_BAKERY = 1;
 
+/**
+ * @const
+ * @type number
+ */
+model.record.User.ROLE_PARTNER = 2;
+
 
 tuna.model.recordFactory.registerRecord('user', new model.record.User());
