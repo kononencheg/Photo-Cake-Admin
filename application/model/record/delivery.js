@@ -57,4 +57,4 @@ Delivery.prototype.serialize = function() {
  */
 model.record.Delivery = Delivery;
 
-tuna.model.recordFactory.registerRecord('delivery', new model.record.Delivery());
+tuna.model.getRecordFactory().registerRecord('delivery', new model.record.Delivery());

@@ -66,4 +66,4 @@ Dimension.prototype.serialize = function() {
  */
 model.record.Dimension = Dimension;
 
-tuna.model.recordFactory.registerRecord('dimension', new model.record.Dimension());
+tuna.model.getRecordFactory().registerRecord('dimension', new model.record.Dimension());

@@ -50,4 +50,4 @@ City.prototype.serialize = function() {
  */
 model.record.City = City;
 
-tuna.model.recordFactory.registerRecord('city', new model.record.City());
+tuna.model.getRecordFactory().registerRecord('city', new model.record.City());

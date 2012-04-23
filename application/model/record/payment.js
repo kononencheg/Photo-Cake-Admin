@@ -59,4 +59,4 @@ Payment.prototype.serialize = function() {
  */
 model.record.Payment = Payment;
 
-tuna.model.recordFactory.registerRecord('payment', new model.record.Payment());
+tuna.model.getRecordFactory().registerRecord('payment', new model.record.Payment());

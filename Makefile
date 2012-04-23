@@ -9,6 +9,6 @@ all: js html
 html:
 	  $(HTML_COMPILER) > $(addprefix $(HTML_PUBLIC_DIR), index.html)
 
-js: $(JS_APP)
+js: $(JS_ALL)
 	$(JS_COMPILER) $(addprefix --js , $^) \
 				   $(addprefix --js_output_file $(JS_PUBLIC_DIR), app.js)

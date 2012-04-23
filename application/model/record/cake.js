@@ -50,4 +50,4 @@ Cake.prototype.serialize = function() {
  */
 model.record.Cake = Cake;
 
-tuna.model.recordFactory.registerRecord('cake', new model.record.Cake());
+tuna.model.getRecordFactory().registerRecord('cake', new model.record.Cake());

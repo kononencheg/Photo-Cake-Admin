@@ -70,4 +70,4 @@ rest.CommonMethod.prototype._handleResponse = function(data) {
     }
 };
 
-tuna.rest.methodFactory.setDefaultMethod(new rest.CommonMethod());
+tuna.rest.getMethodFactory().setDefaultMethod(new rest.CommonMethod());

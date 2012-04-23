@@ -71,4 +71,4 @@ model.record.User.ROLE_BAKERY = 1;
 model.record.User.ROLE_PARTNER = 2;
 
 
-tuna.model.recordFactory.registerRecord('user', new model.record.User());
+tuna.model.getRecordFactory().registerRecord('user', new model.record.User());

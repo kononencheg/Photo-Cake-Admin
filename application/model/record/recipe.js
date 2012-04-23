@@ -102,4 +102,4 @@ Recipe.prototype.serialize = function(weights) {
  */
 model.record.Recipe = Recipe;
 
-tuna.model.recordFactory.registerRecord('recipe', new model.record.Recipe());
+tuna.model.getRecordFactory().registerRecord('recipe', new model.record.Recipe());

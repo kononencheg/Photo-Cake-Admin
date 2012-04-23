@@ -84,4 +84,4 @@ model.record.Client.NETWORK_VK = 1;
 model.record.Client.NETWORK_OK = 2;
 
 
-tuna.model.recordFactory.registerRecord('client', new model.record.Client());
+tuna.model.getRecordFactory().registerRecord('client', new model.record.Client());

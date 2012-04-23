@@ -129,4 +129,4 @@ Order.prototype.serialize = function() {
  */
 model.record.Order = Order;
 
-tuna.model.recordFactory.registerRecord('order', new model.record.Order());
+tuna.model.getRecordFactory().registerRecord('order', new model.record.Order());

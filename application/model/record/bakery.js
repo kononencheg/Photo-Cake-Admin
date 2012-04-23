@@ -96,4 +96,4 @@ Bakery.prototype.serialize = function() {
  */
 model.record.Bakery = Bakery;
 
-tuna.model.recordFactory.registerRecord('bakery', new model.record.Bakery());
+tuna.model.getRecordFactory().registerRecord('bakery', new model.record.Bakery());

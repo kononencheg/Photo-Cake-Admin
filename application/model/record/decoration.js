@@ -54,4 +54,4 @@ model.record.Decoration.prototype.serialize = function(bakery) {
 };
 
 
-tuna.model.recordFactory.registerRecord('decoration', new model.record.Decoration());
+tuna.model.getRecordFactory().registerRecord('decoration', new model.record.Decoration());
