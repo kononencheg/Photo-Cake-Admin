@@ -18,6 +18,11 @@ var Bakery = function (data) {
     /**
      * @type {string}
      */
+    this.phone = '';
+
+    /**
+     * @type {string}
+     */
     this.contactName = '';
 
     /**
@@ -59,6 +64,7 @@ Bakery.prototype.populate = function(data) {
     this.city = data['city'] && data['city']['name'] || '';
 
     this.address = data['address'] || '';
+    this.phone = data['phone'] || '';
     this.contactName = data['contact_name'] || '';
     this.contactPhone = data['contact_phone'] || '';
     this.contactEmail = data['contact_email'] || '';
@@ -86,6 +92,7 @@ Bakery.prototype.serialize = function() {
     result['contactPhone'] = this.contactPhone;
     result['contactName'] = this.contactName;
     result['address'] = this.address;
+    result['phone'] = this.phone;
 
     return result;
 };

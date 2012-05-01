@@ -59,7 +59,7 @@
                    tuna:item-template-id="decoration_template"
                    tuna:key-path="id"
                    tuna:path="/"
-                   tuna:target=".t-decorations-list" />
+                   tuna:target="t-decorations-list" />
 
     </tuna:template>
 
@@ -68,26 +68,26 @@
                    tuna:item-template-id="decoration_template"
                    tuna:key-path="id"
                    tuna:path="/"
-                   tuna:target=".t-decorations-list" />
+                   tuna:target="t-decorations-list" />
 
     </tuna:template>
 
     <tuna:template id="decoration_template">
         <tuna:attr tuna:name="data-decoration-id" tuna:path="id"
-                   tuna:target=".t-id" />
+                   tuna:target="t-id" />
 
         <tuna:attr tuna:name="name" tuna:path="id"
                    tuna:pattern="decoration_prices[$$]"
-                   tuna:target=".t-id-input" />
+                   tuna:target="t-id-input" />
 
         <tuna:attr tuna:name="value" tuna:path="price"
-                   tuna:target=".t-id-input" />
+                   tuna:target="t-id-input" />
 
         <tuna:attr tuna:name="src" tuna:path="imageUrl"
-                   tuna:target=".t-image" />
+                   tuna:target="t-image" />
 
         <tuna:spot tuna:path="name"
-                   tuna:target=".t-name" />
+                   tuna:target="t-name" />
 
     </tuna:template>
 

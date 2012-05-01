@@ -55,34 +55,34 @@
 <div class="j-control-container hide">
 
     <tuna:template id="recipe_table_template">
-        {{ tmpl.list('/', '.t-recipe-list',
+        {{ tmpl.list('/', 't-recipe-list',
                  'recipe_row_renderer',
                  'recipe_template', 'id') }}
     </tuna:template>
 
     <tuna:template id="recipe_template">
 
-        {{ tmpl.attr('id', '.t-id', 'data-recipe-id') }}
-        {{ tmpl.attr('id', '.t-id-input', 'value') }}
+        {{ tmpl.attr('id', 't-id', 'data-recipe-id') }}
+        {{ tmpl.attr('id', 't-id-input', 'value') }}
 
-        {{ tmpl.attr('imageUrl', '.t-image', 'src') }}
+        {{ tmpl.attr('imageUrl', 't-image', 'src') }}
 
-        {{ tmpl.attr('name', '.t-image', 'alt', 'Рецепт: $$') }}
-        {{ tmpl.spot('name', '.t-name') }}
+        {{ tmpl.attr('name', 't-image', 'alt', 'Рецепт: $$') }}
+        {{ tmpl.spot('name', 't-name') }}
 
-        {{ tmpl.spot('desc', '.t-desc') }}
+        {{ tmpl.spot('desc', 't-desc') }}
 
-        {{ tmpl.list('dimensionPrices', '.t-price-list',
+        {{ tmpl.list('dimensionPrices', 't-price-list',
                      'dimension_price_renderer',
                      'dimension_price_template') }}
 
     </tuna:template>
 
     <tuna:template id="dimension_price_template">
-        {{ tmpl.spot('weight', '.t-weight') }}
+        {{ tmpl.spot('weight', 't-weight') }}
 
-        {{ tmpl.attr('price',  '.t-price', 'value') }}
-        {{ tmpl.attr('weight', '.t-price', 'name', 'dimension_prices[$$]') }}
+        {{ tmpl.attr('price',  't-price', 'value') }}
+        {{ tmpl.attr('weight', 't-price', 'name', 'dimension_prices[$$]') }}
     </tuna:template>
 
     <table>

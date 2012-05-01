@@ -47,7 +47,7 @@
 <div class="j-control-container hide">
 
     <tuna:template id="bakeries_list_template">
-        <tuna:list tuna:target=".t-list" tuna:path=""
+        <tuna:list tuna:target="t-list" tuna:path=""
                    tuna:item-renderer-id="bakeries_list_item_renderer"
                    tuna:item-template-id="bakery_template"
                    tuna:key-path="id" />
@@ -56,12 +56,12 @@
 
     <tuna:template id="bakery_template">
         <tuna:attr tuna:name="data-id" tuna:path="id"
-                   tuna:target=".t-id" />
+                   tuna:target="t-id" />
 
-        <tuna:spot tuna:target=".t-name" tuna:path="name" />
-        <tuna:spot tuna:target=".t-email" tuna:path="email" />
-        <tuna:spot tuna:target=".t-city" tuna:path="city" />
-        <tuna:spot tuna:target=".t-delivery-price" tuna:path="deliveryPrice" />
+        <tuna:spot tuna:target="t-name" tuna:path="name" />
+        <tuna:spot tuna:target="t-email" tuna:path="email" />
+        <tuna:spot tuna:target="t-city" tuna:path="city" />
+        <tuna:spot tuna:target="t-delivery-price" tuna:path="deliveryPrice" />
 
     </tuna:template>
 

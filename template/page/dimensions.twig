@@ -48,7 +48,7 @@
 <div class="j-control-container hide">
 
     <tuna:template id="dimensions_list_template">
-        <tuna:list tuna:target=".t-dimensions-list" tuna:path=""
+        <tuna:list tuna:target="t-dimensions-list" tuna:path=""
                    tuna:item-renderer-id="dimensions_list_item_renderer"
                    tuna:item-template-id="dimension_template"
                    tuna:key-path="id" />
@@ -56,15 +56,15 @@
 
     <tuna:template id="dimension_template">
         <tuna:attr tuna:name="data-dimension-id" tuna:path="id"
-                   tuna:target=".t-id" />
+                   tuna:target="t-id" />
 
-        <tuna:spot tuna:target=".t-shape-name" tuna:path="shapeName" />
-        <tuna:spot tuna:target=".t-weight" tuna:path="weight" />
-        <tuna:spot tuna:target=".t-size" tuna:path="size" />
-        <tuna:spot tuna:target=".t-persons-count" tuna:path="personsCount" />
+        <tuna:spot tuna:target="t-shape-name" tuna:path="shapeName" />
+        <tuna:spot tuna:target="t-weight" tuna:path="weight" />
+        <tuna:spot tuna:target="t-size" tuna:path="size" />
+        <tuna:spot tuna:target="t-persons-count" tuna:path="personsCount" />
 
         <tuna:attr tuna:name="value" tuna:path="id"
-                   tuna:target=".t-id-checkbox" />
+                   tuna:target="t-id-checkbox" />
 
     </tuna:template>
 

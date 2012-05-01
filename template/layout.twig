@@ -39,28 +39,29 @@
 
             <tuna:template id="global_template">
 
-                {{ tmpl.spot('currentUser/email', '.t-current-user-email') }}
+                {{ tmpl.spot('currentUser/email', 't-current-user-email') }}
 
-                {{ tmpl.spot('currentUser/role', '.t-current-user-role') }}
+                {{ tmpl.spot('currentUser/role', 't-current-user-role') }}
 
-                {{ tmpl.ne  ('currentUser/role', 0, '.t-admin-visible',   { 'class': 'hide' }) }}
-                {{ tmpl.eq  ('currentUser/role', 2, '.t-parther-hidden',   { 'class': 'hide' }) }}
-                {{ tmpl.eq  ('currentUser/role', 1, '.t-bakery-disabled', { 'class': 'disabled' }) }}
-                {{ tmpl.eq  ('currentUser/role', 1, '.t-bakery-hidden',   { 'class': 'hide' }) }}
+                {{ tmpl.ne  ('currentUser/role', 0, 't-admin-visible',   { 'class': 'hide' }) }}
+                {{ tmpl.eq  ('currentUser/role', 2, 't-parther-hidden',   { 'class': 'hide' }) }}
+                {{ tmpl.eq  ('currentUser/role', 1, 't-bakery-disabled', { 'class': 'disabled' }) }}
+                {{ tmpl.eq  ('currentUser/role', 1, 't-bakery-hidden',   { 'class': 'hide' }) }}
 
-                {{ tmpl.spot('currentUser/roleName', '.t-current-user-role-name') }}
+                {{ tmpl.spot('currentUser/roleName', 't-current-user-role-name') }}
 
-                {{ tmpl.notset('currentBakery', '.t-current-bakery-exist', { 'class': 'hide' }) }}
-                {{ tmpl.attr  ('currentBakery/id', '.t-current-bakery-id', 'value') }}
-                {{ tmpl.attr  ('currentBakery/name', '.t-current-bakery-name', 'value') }}
-                {{ tmpl.attr  ('currentBakery/email', '.t-current-bakery-email', 'value') }}
-                {{ tmpl.attr  ('currentBakery/address', '.t-current-bakery-address', 'value') }}
-                {{ tmpl.attr  ('currentBakery/deliveryPrice', '.t-current-bakery-delivery-price', 'value') }}
-                {{ tmpl.attr  ('currentBakery/cashExtraCharge', '.t-current-bakery-cash-extra-charge', 'value') }}
+                {{ tmpl.notset('currentBakery', 't-current-bakery-exist', { 'class': 'hide' }) }}
+                {{ tmpl.attr  ('currentBakery/id', 't-current-bakery-id', 'value') }}
+                {{ tmpl.attr  ('currentBakery/name', 't-current-bakery-name', 'value') }}
+                {{ tmpl.attr  ('currentBakery/email', 't-current-bakery-email', 'value') }}
+                {{ tmpl.attr  ('currentBakery/address', 't-current-bakery-address', 'value') }}
+                {{ tmpl.attr  ('currentBakery/phone', 't-current-bakery-phone', 'value') }}
+                {{ tmpl.attr  ('currentBakery/deliveryPrice', 't-current-bakery-delivery-price', 'value') }}
+                {{ tmpl.attr  ('currentBakery/cashExtraCharge', 't-current-bakery-cash-extra-charge', 'value') }}
 
-                {{ tmpl.attr  ('currentBakery/contactName', '.t-current-bakery-cash-contact-name', 'value') }}
-                {{ tmpl.attr  ('currentBakery/contactEmail', '.t-current-bakery-cash-contact-email', 'value') }}
-                {{ tmpl.attr  ('currentBakery/contactPhone', '.t-current-bakery-cash-contact-phone', 'value') }}
+                {{ tmpl.attr  ('currentBakery/contactName', 't-current-bakery-cash-contact-name', 'value') }}
+                {{ tmpl.attr  ('currentBakery/contactEmail', 't-current-bakery-cash-contact-email', 'value') }}
+                {{ tmpl.attr  ('currentBakery/contactPhone', 't-current-bakery-cash-contact-phone', 'value') }}
 
             </tuna:template>
 

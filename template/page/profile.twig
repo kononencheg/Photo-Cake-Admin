@@ -37,6 +37,7 @@
             <fieldset>
                 <legend>Доставка и оплата</legend>
 
+                {{ forms.input('phone', 'Телефон', 'Телефон для заказа', 'text', ['t-current-bakery-phone']) }}
                 {{ forms.textarea('address', 'Адрес самовывоза', null, null, ['t-current-bakery-address']) }}
                 {{ forms.input('delivery_price', 'Цена доставки', null, 'text', ['t-current-bakery-delivery-price']) }}
                 {{ forms.input('cash_extra_charge', 'Наценка за нал. (%)', null, 'text', ['t-current-bakery-cash-extra-charge']) }}
