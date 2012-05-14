@@ -1,28 +1,21 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var UsersController = function () {
-    tuna.control.PageViewController.call(this);
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'navigation', 'button-group',
-                      'form', 'button', 'popup' ];
-
+    tuna.control.PageController.call(this);
 };
 
-tuna.utils.extend(UsersController, tuna.control.PageViewController);
+tuna.utils.extend(UsersController, tuna.control.PageController);
 
 /**
  * @override
  */
-UsersController.prototype._initActions = function() {
-    this._navigation.addChild
-        (this._container.getModuleInstanceByName('navigation', 'users'));
+UsersController.prototype.initActions = function() {
+    //this._navigation.addChild
+    //   (this._container.getWidget('navigation', 'users'));
 
-    var controls = this._container.getModuleInstanceByName('button-group', 'list');
+    var controls = this._container.getWidget('button-group', 'list');
     controls.addEventListener('delete', function(event, button) {
         if (confirm('Удалить кондитерскую?')) {
             var id = button.getStringOption('id');
@@ -31,11 +24,11 @@ UsersController.prototype._initActions = function() {
                 model.bakeries.removeItemById(id);
             });
 
-            button.setEnabled(false);
+            button.disable();
         }
     });
 
-    var listTransformer = this._container.getModuleInstanceByName
+    var listTransformer = this._container.getWidget
         ('template-transformer', 'list');
 
     model.bakeries.addEventListener('update', function(event, bakeries) {
@@ -45,16 +38,16 @@ UsersController.prototype._initActions = function() {
     listTransformer.applyTransform
         (tuna.model.serialize(model.bakeries.get()));
 
-    var addForm = this._container.getModuleInstanceByName('form', 'add');
+    var addForm = this._container.getWidget('form', 'add');
 
     var self = this;
 
     addForm.addEventListener('result', function(event, bakery) {
         model.bakeries.addItem(bakery);
-        self._navigation.back();
+        //self._navigation.back();
     });
 
-    var citiesTransformer = this._container.getModuleInstanceByName
+    var citiesTransformer = this._container.getWidget
         ('template-transformer', 'cities-list');
 
     model.cities.addEventListener('update', function(event, cities) {
@@ -63,14 +56,14 @@ UsersController.prototype._initActions = function() {
 
     citiesTransformer.applyTransform(tuna.model.serialize(model.cities.get()));
 
-    var addCityPopup = this._container.getModuleInstanceByName('popup', 'add-city');
+    var addCityPopup = this._container.getWidget('popup', 'add-city');
 
-    var addCityButton = this._container.getModuleInstanceByName('button', 'add-city');
+    var addCityButton = this._container.getWidget('button', 'add-city');
     addCityButton.addEventListener('click', function() {
         addCityPopup.open();
     });
 
-    var addCityForm = this._container.getModuleInstanceByName('form', 'add-city');
+    var addCityForm = this._container.getWidget('form', 'add-city');
     addCityForm.addEventListener('result', function(event, city) {
         model.cities.addItem(city);
         addCityPopup.close();

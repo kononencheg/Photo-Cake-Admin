@@ -21,6 +21,8 @@
     </head>
 
     <body class="j-navigation j-template-transformer container"
+          data-widgets="template-transformer, navigation, navigation-menu, popup, form"
+          data-widget="navigation-page"
           data-name="body-container"
           data-template-id="global_template">
 
@@ -94,39 +96,39 @@
         <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <!--a class="j-navigation-link brand" href="#"
+            <!--a class="j-link brand" href="#"
                data-href="orders/table">
                 Фото на торте
             </a-->
 
-            <ul class="j-navigation-menu nav">
-                <li class="j-navigation-link" data-href="orders/table">
+            <ul class="j-navigation-menu nav" data-name="main-menu">
+                <li class="j-link" data-href="orders/table">
                     <a>Заказы</a>
                 </li>
-                <li class="j-navigation-link t-parther-hidden"
+                <li class="j-link t-parther-hidden"
                     data-href="recipes/table">
                     <a>Рецепты</a>
                 </li>
-                <li class="j-navigation-link t-parther-hidden"
+                <li class="j-link t-parther-hidden"
                     data-href="dimensions/table">
                     <a>Формы</a>
                 </li>
-                <li class="j-navigation-link t-admin-visible"
+                <li class="j-link t-admin-visible"
                     data-href="users/table">
                     <a>Кондитерские</a>
                 </li>
 
-                <li class="j-navigation-link t-parther-hidden"
+                <li class="j-link t-parther-hidden"
                     data-href="decorations">
                     <a>Декорации</a>
                 </li>
 
-                <li class="j-navigation-link t-parther-hidden"
+                <li class="j-link t-parther-hidden"
                     data-href="application">
                     <a>Приложение</a>
                 </li>
 
-                <li class="j-navigation-link t-parther-hidden"
+                <li class="j-link t-parther-hidden"
                     data-href="profile">
                     <a>Профиль</a>
                 </li>
@@ -153,9 +155,10 @@
             </ul>
         </div>
     </div>
-</div>        <div id="orders_page"
-     class="j-navigation-page j-navigation j-control-container
+</div>        <div class="j-navigation-page j-navigation j-control-container
             t-current-bakery-exist page active"
+     data-controller-id="orders_page"
+     data-widgets="template-transformer, navigation"
      data-name="orders">
 
     <div class="j-navigation-page page active"
@@ -192,8 +195,9 @@
 
 </div>
 
-<div id="edit_order_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page j-control-container page"
+     data-controller-id="edit_order_page"
+     data-widgets="template-transformer, form"
      data-name="edit">
 
     <form action="/api/" method="POST" target="api_frame"
@@ -214,10 +218,7 @@
             </div>
             <div class="span7">
                 <div class="btn-group pull-right">
-                    <a class="j-navigation-link btn btn-large"
-                       data-action="back">
-                        Назад
-                    </a>
+                    <a class="j-back-link btn btn-large">Назад</a>
                     <a class="t-print-order btn btn-large" target="_blank">
                         Версия для печати
                     </a>
@@ -858,7 +859,7 @@
             <td>
                 <ul class="nav nav-list">
                     <li>
-                        <a class="j-navigation-link t-id"
+                        <a class="j-link t-id"
                            data-href="edit">
                             <i class="icon-edit"></i> Редактировать
                         </a>
@@ -873,9 +874,10 @@
 
 </div>
 
-<div id="recipes_page"
-     class="j-navigation-page j-navigation j-control-container page
+<div class="j-navigation-page j-navigation j-control-container page
             t-current-bakery-exist t-parther-hidden"
+     data-controller-id="recipes_page"
+     data-widgets="template-transformer, navigation, button-group, form"
      data-name="recipes">
 
     <div class="j-navigation-page page active"
@@ -887,7 +889,7 @@
                 <h1>Рецепты</h1>
             </div>
             <div class="span6">
-                <a class="j-navigation-link
+                <a class="j-link
                           btn btn-large btn-primary pull-right"
                    data-href="add">
                     Добавить рецепт
@@ -918,8 +920,9 @@
 
 </div>
 
-<div id="add_recipe_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page j-control-container page"
+     data-controller-id="add_recipe_page"
+     data-widgets="form"
      data-name="add">
 
     <div class="page-header">
@@ -929,10 +932,7 @@
             <h1>Добавление нового рецепта</h1>
         </div>
         <div class="span6">
-            <a class="j-navigation-link btn btn-large pull-right"
-               data-action="back">
-               Назад
-            </a>
+            <a class="j-back-link btn btn-large pull-right">Назад</a>
         </div>
     </div>
 </div>
@@ -1027,8 +1027,9 @@
     </div>
 </div></div>
 
-<div id="edit_recipe_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page j-control-container page"
+     data-controller-id="edit_recipe_page"
+     data-widgets="template-transformer, form"
      data-name="edit">
 
     <form action="/api/" method="POST" target="api_frame"
@@ -1048,10 +1049,7 @@
                 <h1 class="t-name">Тирамису</h1>
             </div>
             <div class="span6">
-                <a class="j-navigation-link btn btn-large pull-right"
-                   data-action="back">
-                    Назад
-                </a>
+                <a class="j-back-link btn btn-large pull-right">Назад</a>
             </div>
         </div>
     </div>
@@ -1189,7 +1187,7 @@
             <td>
                 <ul class="nav nav-list">
                     <li>
-                        <a class="j-navigation-link t-id"
+                        <a class="j-link t-id"
                            data-href="edit">
                             <i class="icon-edit"></i> Редактировать
                         </a>
@@ -1208,9 +1206,10 @@
 
 </div></div>
 
-<div id="dimensions_page"
-     class="j-navigation-page j-navigation j-control-container page
+<div class="j-navigation-page j-navigation j-control-container page
             t-current-bakery-exist t-parther-hidden"
+     data-widgets="template-transformer, navigation, button-group, form"
+     data-controller-id="dimensions_page"
      data-name="dimensions">
 
     <div class="j-navigation-page page active"
@@ -1222,7 +1221,7 @@
                 <h1>Формы</h1>
             </div>
             <div class="span6">
-                <a class="j-navigation-link
+                <a class="j-link
                           btn btn-large btn-primary pull-right"
                    data-href="add">
                     Добавить размер
@@ -1264,10 +1263,7 @@
             <h1>Добавление новой формы</h1>
         </div>
         <div class="span6">
-            <a class="j-navigation-link btn btn-large pull-right"
-               data-action="back">
-               Назад
-            </a>
+            <a class="j-back-link btn btn-large pull-right">Назад</a>
         </div>
     </div>
 </div>
@@ -1389,9 +1385,10 @@
 
 </div></div>
 
-<div id="decorations_page"
-     class="j-navigation-page j-control-container page
+<div class="j-navigation-page j-control-container page
             t-current-bakery-exist t-parther-hidden"
+     data-widgets="template-transformer, navigation, button-group, form, popup-button"
+     data-controller-id="decorations_page"
      data-name="decorations">
 
     <div class="j-navigation-page page active"
@@ -1592,9 +1589,10 @@
 
 </div></div>
 
-<div id="users_page"
-     class="j-navigation-page j-navigation j-control-container page
+<div class="j-navigation-page j-navigation j-control-container page
             t-admin-visible"
+     data-widgets="template-transformer, navigation, button-group, form, button, popup"
+     data-controller-id="users_page"
      data-name="users">
 
     <div class="j-navigation-page page active"
@@ -1606,7 +1604,7 @@
                 <h1>Кондитерские</h1>
             </div>
             <div class="span6">
-                <a class="j-navigation-link
+                <a class="j-link
                           btn btn-large btn-primary pull-right"
                    data-href="add">
                     Добавить кондитерскую
@@ -1647,10 +1645,7 @@
             <h1>Добавление новой кондитерской</h1>
         </div>
         <div class="span4">
-            <a class="j-navigation-link btn btn-large pull-right"
-               data-action="back">
-               Назад
-            </a>
+            <a class="j-back-link btn btn-large pull-right">Назад</a>
         </div>
     </div>
 </div>
@@ -1954,9 +1949,10 @@
 
 </div>
 
-<div id="profile_page"
-     class="j-navigation-page j-control-container page
+<div class="j-navigation-page j-control-container page
             t-parther-hidden"
+     data-controller-id="profile_page"
+     data-widgets="template-transformer, form, button, popup"
      data-name="profile">
 
     <div class="page-header">

@@ -1,28 +1,21 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var RecipesController = function () {
-    tuna.control.PageViewController.call(this);
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'navigation', 'button-group',
-                      'form' ];
-
+    tuna.control.PageController.call(this);
 };
 
-tuna.utils.extend(RecipesController, tuna.control.PageViewController);
+tuna.utils.extend(RecipesController, tuna.control.PageController);
 
 /**
  * @override
  */
-RecipesController.prototype._initActions = function() {
-    this._navigation.addChild
-        (this._container.getModuleInstanceByName('navigation', 'recipes'));
+RecipesController.prototype.initActions = function() {
+    //this._navigation.addChild
+    //    (this._container.getWidget('navigation', 'recipes'));
 
-    var recipeControls = this._container.getModuleInstanceByName
+    var recipeControls = this._container.getWidget
                                 ('button-group', 'recipe-table');
 
     recipeControls.addEventListener('delete', function(event, button) {
@@ -35,11 +28,11 @@ RecipesController.prototype._initActions = function() {
                 model.recipes.removeItemById(recipeId);
             });
 
-            button.setEnabled(false);
+            button.disable();
         }
     });
 
-    var recipeListTransformer = this._container.getModuleInstanceByName
+    var recipeListTransformer = this._container.getWidget
         ('template-transformer', 'recipe-table');
 
     model.recipes.addEventListener('update', function(event, recipes) {

@@ -1,28 +1,21 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var DimensionsController = function () {
-    tuna.control.PageViewController.call(this);
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'navigation', 'button-group',
-                      'form' ];
-
+    tuna.control.PageController.call(this);
 };
 
-tuna.utils.extend(DimensionsController, tuna.control.PageViewController);
+tuna.utils.extend(DimensionsController, tuna.control.PageController);
 
 /**
  * @override
  */
-DimensionsController.prototype._initActions = function() {
-    this._navigation.addChild
-        (this._container.getModuleInstanceByName('navigation', 'dimensions'));
+DimensionsController.prototype.initActions = function() {
+    //this._navigation.addChild
+    //    (this._container.getWidget('navigation', 'dimensions'));
 
-    var dimensionsControls = this._container.getModuleInstanceByName
+    var dimensionsControls = this._container.getWidget
         ('button-group', 'dimensions-list');
 
     dimensionsControls.addEventListener('delete', function(event, button) {
@@ -33,11 +26,11 @@ DimensionsController.prototype._initActions = function() {
                 model.dimensions.removeItemById(id);
             });
 
-            button.setEnabled(false);
+            button.disable();
         }
     });
 
-    var dimensionsTransformer = this._container.getModuleInstanceByName
+    var dimensionsTransformer = this._container.getWidget
         ('template-transformer', 'dimensions-list');
 
     model.dimensions.addEventListener('update', function(event, dimensions) {
@@ -48,14 +41,14 @@ DimensionsController.prototype._initActions = function() {
         (tuna.model.serialize(model.dimensions.get()));
 
 
-    var addDimensionForm = this._container.getModuleInstanceByName
+    var addDimensionForm = this._container.getWidget
         ('form', 'add-dimension');
 
     var self = this;
 
     addDimensionForm.addEventListener('result', function(event, dimension) {
         model.dimensions.addItem(dimension);
-        self._navigation.back();
+        //self._navigation.back();
     });
 };
 

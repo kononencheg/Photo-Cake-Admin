@@ -32,8 +32,9 @@
 
 </div>
 
-<div id="edit_order_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page j-control-container page"
+     data-controller-id="edit_order_page"
+     data-widgets="template-transformer, form"
      data-name="edit">
 
     {% include 'page/orders/edit-order.twig' %}
@@ -127,7 +128,7 @@
             <td>
                 <ul class="nav nav-list">
                     <li>
-                        <a class="j-navigation-link t-id"
+                        <a class="j-link t-id"
                            data-href="edit">
                             <i class="icon-edit"></i> Редактировать
                         </a>

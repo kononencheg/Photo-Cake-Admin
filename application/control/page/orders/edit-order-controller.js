@@ -1,45 +1,40 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var EditOrdersController = function () {
-    tuna.control.PageViewController.call(this);
+    tuna.control.PageController.call(this);
 
 
     /**
      * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
+     * @type {tuna.ui.Widget|tuna.ui.transformers.TemplateTransformer}
      */
     this.__orderFormTransformer = null;
 
     /**
      * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
+     * @type {tuna.ui.Widget|tuna.ui.forms.Form}
      */
     this.__orderForm = null;
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'form' ];
 };
 
-tuna.utils.extend(EditOrdersController, tuna.control.PageViewController);
+tuna.utils.extend(EditOrdersController, tuna.control.PageController);
 
 /**
  * @override
  */
-EditOrdersController.prototype._initActions = function() {
+EditOrdersController.prototype.initActions = function() {
     var self = this;
 
-    this.__orderFormTransformer = this._container.getModuleInstanceByName
+    this.__orderFormTransformer = this._container.getWidget
         ('template-transformer', 'edit-order-form');
 
-    this.__orderForm = this._container.getModuleInstanceByName
+    this.__orderForm = this._container.getWidget
         ('form', 'edit-order-form');
 
     this.__orderForm.addEventListener('result', function(event, order) {
-        self._navigation.back();
+        //self._navigation.back();
 
         model.orders.addItem(order);
     });

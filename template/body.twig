@@ -1,38 +1,43 @@
-<div id="orders_page"
-     class="j-navigation-page j-navigation j-control-container
+<div class="j-navigation-page j-navigation j-control-container
             t-current-bakery-exist page active"
+     data-controller-id="orders_page"
+     data-widgets="template-transformer, navigation"
      data-name="orders">
 
     {% include 'page/orders.twig' %}
 </div>
 
-<div id="recipes_page"
-     class="j-navigation-page j-navigation j-control-container page
+<div class="j-navigation-page j-navigation j-control-container page
             t-current-bakery-exist t-parther-hidden"
+     data-controller-id="recipes_page"
+     data-widgets="template-transformer, navigation, button-group, form"
      data-name="recipes">
 
     {% include 'page/recipes.twig' %}
 </div>
 
-<div id="dimensions_page"
-     class="j-navigation-page j-navigation j-control-container page
+<div class="j-navigation-page j-navigation j-control-container page
             t-current-bakery-exist t-parther-hidden"
+     data-widgets="template-transformer, navigation, button-group, form"
+     data-controller-id="dimensions_page"
      data-name="dimensions">
 
     {% include 'page/dimensions.twig' %}
 </div>
 
-<div id="decorations_page"
-     class="j-navigation-page j-control-container page
+<div class="j-navigation-page j-control-container page
             t-current-bakery-exist t-parther-hidden"
+     data-widgets="template-transformer, navigation, button-group, form, popup-button"
+     data-controller-id="decorations_page"
      data-name="decorations">
 
     {% include 'page/decorations.twig' %}
 </div>
 
-<div id="users_page"
-     class="j-navigation-page j-navigation j-control-container page
+<div class="j-navigation-page j-navigation j-control-container page
             t-admin-visible"
+     data-widgets="template-transformer, navigation, button-group, form, button, popup"
+     data-controller-id="users_page"
      data-name="users">
 
     {% include 'page/users.twig' %}
@@ -45,9 +50,10 @@
     {% include 'page/application.twig' %}
 </div>
 
-<div id="profile_page"
-     class="j-navigation-page j-control-container page
+<div class="j-navigation-page j-control-container page
             t-parther-hidden"
+     data-controller-id="profile_page"
+     data-widgets="template-transformer, form, button, popup"
      data-name="profile">
 
     {% include 'page/profile.twig' %}

@@ -1,31 +1,31 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var ProfileController = function () {
-    tuna.control.PageViewController.call(this);
+    tuna.control.PageController.call(this);
 
     /**
      * @override
      */
-    this._modules = [ 'template-transformer', 'form', 'button', 'popup' ];
+    this._modules = [ '' ];
 
 };
 
-tuna.utils.extend(ProfileController, tuna.control.PageViewController);
+tuna.utils.extend(ProfileController, tuna.control.PageController);
 
 /**
  * @override
  */
-ProfileController.prototype._initActions = function() {
-    var changePasswordPopup = this._container.getModuleInstanceByName('popup', 'change-password');
+ProfileController.prototype.initActions = function() {
+    var changePasswordPopup = this._container.getWidget('popup', 'change-password');
 
-    var changePasswordButton = this._container.getModuleInstanceByName('button', 'change-password');
+    var changePasswordButton = this._container.getWidget('button', 'change-password');
     changePasswordButton.addEventListener('click', function() {
         changePasswordPopup.open();
     });
 
-    var changePasswordForm = this._container.getModuleInstanceByName('form', 'change-password');
+    var changePasswordForm = this._container.getWidget('form', 'change-password');
     changePasswordForm.addEventListener('result', function() {
         changePasswordPopup.close();
     });

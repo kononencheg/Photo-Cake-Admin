@@ -1,22 +1,17 @@
 /**
  * @constructor
- * @extends {tuna.control.ViewController}
+ * @extends {tuna.control.Controller}
  */
 var MainController = function() {
-    tuna.control.ViewController.call(this);
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'navigation', 'popup', 'form' ];
+    tuna.control.Controller.call(this);
 };
 
-tuna.utils.extend(MainController, tuna.control.ViewController);
+tuna.utils.extend(MainController, tuna.control.Controller);
 
 /**
  * @override
  */
-MainController.prototype._initActions = function() {
+MainController.prototype.initActions = function() {
     var self = this;
 
     tuna.rest.call('users.getCurrent', null, function(user) {
@@ -34,7 +29,7 @@ MainController.prototype._initActions = function() {
  * @private
  */
 MainController.prototype.__initSingOutForm = function() {
-    var form = this._container.getModuleInstanceByName('form', 'sign-out');
+    var form = this._container.getWidget('form', 'sign-out');
     form.addEventListener('result', function() {
         location.reload();
     });
@@ -46,8 +41,8 @@ MainController.prototype.__initSingOutForm = function() {
 MainController.prototype.__showSignUpPopup = function() {
     var self = this;
 
-    var popup = this._container.getModuleInstanceByName('popup', 'sign-in');
-    var form = this._container.getModuleInstanceByName('form', 'sign-in');
+    var popup = this._container.getWidget('popup', 'sign-in');
+    var form = this._container.getWidget('form', 'sign-in');
 
     form.addEventListener('result', function(event, user) {
         self.__applyUser(user);
@@ -63,10 +58,12 @@ MainController.prototype.__showSignUpPopup = function() {
  */
 MainController.prototype.__applyUser = function(user) {
     var applicationFrame = tuna.dom.selectOne('#application_frame');
-    var navigation = this._container.getModuleInstanceByName
-        ('navigation', 'body-container');
 
-    navigation.addEventListener('open', function(event, page) {
+    var mainMenu = this._container.getWidget('navigation-menu', 'main-menu');
+
+    var navigation = this._container.getWidget('navigation', 'body-container');
+    navigation.addHandler(mainMenu);
+    navigation.addEventListener('open-page', function(event, page) {
         if (page === 'application') {
             var bakery = model.currentBakery.get();
 
@@ -78,8 +75,9 @@ MainController.prototype.__applyUser = function(user) {
             }
         }
     });
-    var globalTransformer = this._container.getModuleInstanceByName
-        ('template-transformer', 'body-container');
+
+    var globalTransformer =
+        this._container.getWidget('template-transformer', 'body-container');
 
     model.currentBakery.addEventListener('update', function(event, bakery) {
         globalTransformer.reset();
@@ -93,11 +91,11 @@ MainController.prototype.__applyUser = function(user) {
             model.recipes.load({ 'bakery_id': bakery.id });
             model.orders.load({ 'bakery_id': bakery.id });
         }
+
     });
 
     if (user.role !== model.record.User.ROLE_BAKERY) {
-        var bakeryForm = this._container.getModuleInstanceByName
-            ('form', 'bakery-selection');
+        var bakeryForm = this._container.getWidget('form', 'bakery-selection');
 
         bakeryForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -108,7 +106,7 @@ MainController.prototype.__applyUser = function(user) {
             }
         });
 
-        var bakeryTransformer = this._container.getModuleInstanceByName
+        var bakeryTransformer = this._container.getWidget
             ('template-transformer', 'bakery-selection');
 
         model.bakeries.addEventListener('update', function(event, bakeries) {
@@ -126,4 +124,4 @@ MainController.prototype.__applyUser = function(user) {
     }
 };
 
-tuna.control.setMainController(new MainController());
+tuna.control.setApplicationController(new MainController());

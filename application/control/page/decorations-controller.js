@@ -1,9 +1,9 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var DecorationsController = function () {
-    tuna.control.PageViewController.call(this);
+    tuna.control.PageController.call(this);
 
     /**
      * @type {function()}
@@ -13,34 +13,28 @@ var DecorationsController = function () {
         = tuna.utils.bind(this.__updateDecorationLists, this);
 
     /**
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
+     * @type {tuna.ui.Widget|tuna.ui.transformers.TemplateTransformer}
      * @private
      */
     this.__unusedDecoTransformer = null;
 
     /**
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
+     * @type {tuna.ui.Widget|tuna.ui.transformers.TemplateTransformer}
      * @private
      */
     this.__availableDecoTransformer = null;
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'navigation', 'button-group',
-                      'form', 'popup-button' ];
 };
 
-tuna.utils.extend(DecorationsController, tuna.control.PageViewController);
+tuna.utils.extend(DecorationsController, tuna.control.PageController);
 
 /**
  * @override
  */
-DecorationsController.prototype._initActions = function() {
-    this.__unusedDecoTransformer = this._container.getModuleInstanceByName
+DecorationsController.prototype.initActions = function() {
+    this.__unusedDecoTransformer = this._container.getWidget
         ('template-transformer', 'decorations-list');
 
-    this.__availableDecoTransformer = this._container.getModuleInstanceByName
+    this.__availableDecoTransformer = this._container.getWidget
         ('template-transformer', 'available-decorations-list');
 
     model.decorations.addEventListener('update', this.__updateDecorationLists);
@@ -48,19 +42,20 @@ DecorationsController.prototype._initActions = function() {
 
     model.decorations.load();
 
-    var saveForm = this._container.getModuleInstanceByName
+    var saveForm = this._container.getWidget
         ('form', 'available-decorations-list');
 
     saveForm.addEventListener('result', function(event, bakery) {
+        model.bakeries.addItem(bakery);
         model.currentBakery.set(bakery);
     });
 
-    var addDecorationButton = this._container.getModuleInstanceByName
+    var addDecorationButton = this._container.getWidget
         ('popup-button', 'add-decoration');
 
     var addDecorationPopup = addDecorationButton.getPopup();
 
-    var addDecorationForm = this._container.getModuleInstanceByName
+    var addDecorationForm = this._container.getWidget
         ('form', 'add-decoration');
 
     addDecorationForm.addEventListener('result', function(event, decoration) {
@@ -70,7 +65,7 @@ DecorationsController.prototype._initActions = function() {
 
     var self = this;
 
-    var addControls =this._container.getModuleInstanceByName
+    var addControls =this._container.getWidget
         ('button-group', 'decorations-list');
 
     addControls.addEventListener('add', function(event, button) {
@@ -84,7 +79,7 @@ DecorationsController.prototype._initActions = function() {
         self.__updateDecorationLists();
     });
 
-    var removeControls = this._container.getModuleInstanceByName
+    var removeControls = this._container.getWidget
         ('button-group', 'available-decorations-list');
 
     removeControls.addEventListener('remove', function(event, button) {

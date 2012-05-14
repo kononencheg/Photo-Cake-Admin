@@ -6,9 +6,9 @@
 var Bakery = function (data) {
 
     /**
-     * @type {string}
+     * @type {model.record.City}
      */
-    this.city = '';
+    this.city = null;
 
     /**
      * @type {string}
@@ -61,7 +61,7 @@ tuna.utils.extend(Bakery, model.record.User);
 Bakery.prototype.populate = function(data) {
     model.record.User.prototype.populate.call(this, data);
 
-    this.city = data['city'] && data['city']['name'] || '';
+    this.city = new model.record.City(data['city']);
 
     this.address = data['address'] || '';
     this.phone = data['phone'] || '';
@@ -85,7 +85,7 @@ Bakery.prototype.populate = function(data) {
 Bakery.prototype.serialize = function() {
     var result = model.record.User.prototype.serialize.call(this);
     result['name'] = this.name;
-    result['city'] = this.city;
+    result['city'] = this.city.serialize();
     result['deliveryPrice'] = this.deliveryPrice;
     result['cashExtraCharge'] = this.cashExtraCharge;
     result['contactEmail'] = this.contactEmail;

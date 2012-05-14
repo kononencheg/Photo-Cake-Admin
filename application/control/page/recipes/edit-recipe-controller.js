@@ -1,19 +1,19 @@
 /**
  * @constructor
- * @extends {tuna.control.PageViewController}
+ * @extends {tuna.control.PageController}
  */
 var EditRecipeController = function() {
-    tuna.control.PageViewController.call(this);
+    tuna.control.PageController.call(this);
 
     /**
      * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.transformers.TemplateTransformer}
+     * @type {tuna.ui.Widget|tuna.ui.transformers.TemplateTransformer}
      */
     this.__recipeFormTransformer = null;
 
     /**
      * @private
-     * @type {tuna.ui.ModuleInstance|tuna.ui.forms.Form}
+     * @type {tuna.ui.Widget|tuna.ui.forms.Form}
      */
     this.__recipeForm = null;
 
@@ -22,29 +22,24 @@ var EditRecipeController = function() {
      * @private
      */
     this.__recipeId = '';
-
-    /**
-     * @override
-     */
-    this._modules = [ 'template-transformer', 'form' ];
 };
 
-tuna.utils.extend(EditRecipeController, tuna.control.PageViewController);
+tuna.utils.extend(EditRecipeController, tuna.control.PageController);
 
 /**
  * @override
  */
-EditRecipeController.prototype._initActions = function() {
+EditRecipeController.prototype.initActions = function() {
     var self = this;
 
-    this.__recipeFormTransformer = this._container.getModuleInstanceByName
+    this.__recipeFormTransformer = this._container.getWidget
         ("template-transformer", "edit-recipe-form");
 
-    this.__recipeForm = this._container.getModuleInstanceByName
+    this.__recipeForm = this._container.getWidget
         ("form", "edit-recipe-form");
 
     this.__recipeForm.addEventListener("result", function(event, recipe) {
-        self._navigation.back();
+        //self._navigation.back();
 
         model.recipes.addItem(recipe);
     });

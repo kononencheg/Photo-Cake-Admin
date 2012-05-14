@@ -92,10 +92,13 @@ Order.prototype.populate = function(data) {
     this.paymentStatus = data['payment_status'];
     this.deliveryStatus = data['delivery_status'];
 
-    this.index
-        = parseInt(this.id.substr(this.id.length - 8).split('0').join(''), 16);
+    this.index = data['index'];
 
     this.date = new Date(1000 * parseInt(this.id.substr(0, 8), 16));
+
+    this.date.setTime(this.date.getTime() + this.bakery.city.timezoneOffset);
+    this.delivery.date.setTime
+        (this.delivery.date.getTime() + this.bakery.city.timezoneOffset);
 };
 
 /**
@@ -105,7 +108,7 @@ Order.prototype.serialize = function() {
     return {
         'id': this.id,
         'index': this.index,
-        'date': this.date &&  this.date.toJSON().substring(0, 16).replace('T', ' '),
+        'date': this.date && this.date.toJSON().substring(0, 16).replace('T', ' '),
         'bakery': this.bakery.serialize(),
         'cake': this.cake.serialize(),
         'payment': this.payment.serialize(),

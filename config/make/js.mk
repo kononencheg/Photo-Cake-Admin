@@ -5,6 +5,8 @@ JS_COMPILER = java -jar utils/compiler.jar \
 			  --warning_level VERBOSE \
 			  --compilation_level ADVANCED_OPTIMIZATIONS \
 			  --externs library/externs.js \
+			  --charset UTF-8 \
+			  --language_in ECMASCRIPT5_STRICT \
 			  #--formatting PRETTY_PRINT \
 			  #--debug \
 
@@ -37,9 +39,10 @@ TUNA_MVC = model/model.js \
            rest/method-factory.js \
            \
            ui/ui.js \
-           ui/module.js \
-           ui/module-instance.js \
-           ui/module-container.js \
+           ui/i-widget-factory.js \
+           ui/widget-factory.js \
+           ui/widget.js \
+           ui/container.js \
            \
            ui/popups/popup.js \
            ui/popups/popups.js \
@@ -54,37 +57,36 @@ TUNA_MVC = model/model.js \
            \
            ui/forms/form.js \
            ui/forms/form-input.js \
-           ui/forms/input-filter.js \
-           ui/forms/autocomplete.js \
            ui/forms/forms.js \
            \
            ui/transformers/i-transform-handler.js \
            ui/transformers/i-transformer.js \
            ui/transformers/template-transformer.js \
            \
-           ui/selection/i-selection-group.js \
-           ui/selection/abstract-selection-group.js \
-           ui/selection/selection-group.js \
-           ui/selection/navigation.js \
-           ui/selection/carousel.js \
+           ui/selection/widget-group.js \
+           ui/selection/selection-state.js \
            \
-           ui/selection/items/i-items-collection.js \
-           ui/selection/items/elements-collection.js \
-           ui/selection/items/named-elements-collection.js \
+           ui/selection/collection/widget-collection.js \
+           ui/selection/collection/numbered-collection.js \
+           ui/selection/collection/named-collection.js \
            \
-           ui/selection/rule/i-selection-rule.js \
-           ui/selection/rule/abstract-selection-rule.js \
+           ui/selection/rule/selection-rule.js \
            ui/selection/rule/single-selection-rule.js \
            ui/selection/rule/multiple-selection-rule.js \
-           ui/selection/rule/navigation-selection-rule.js \
            \
            ui/selection/view/i-selection-view.js \
-           ui/selection/view/abstract-selection-view.js \
-           ui/selection/view/class-selection-view.js \
+           ui/selection/view/widget-selection-view.js \
+           \
+           ui/nav/navigation.js \
+           ui/nav/navigation-page.js \
+           ui/nav/navigation-state.js \
+           ui/nav/navigation-menu.js \
+           ui/nav/i-navigation-handler.js \
+           ui/nav/browser-history.js \
            \
            control/control.js \
-           control/view-controller.js \
-           control/page-view-controller.js \
+           control/controller.js \
+           control/page-controller.js \
 
 
 TUNA_TEMPLATES = tmpl/tmpl.js \
@@ -134,18 +136,19 @@ TUNA_TEMPLATES = tmpl/tmpl.js \
                  tmpl/compilers/checkbox-compiler.js \
                  tmpl/compilers/list-compiler.js \
 
-TUNA_UI_MODULES = navigation.js \
-                  popup.js \
-                  button.js \
-                  popup-button.js \
-                  selection-group.js \
-                  template-transformer.js \
-                  button-group.js \
-                  swf.js \
-                  input-filter.js \
-                  autocomplete.js \
-                  form.js \
-                  carousel.js \
+TUNA_UI_MODULES = factories.js \
+                  #navigation-page.js \
+                  #popup.js \
+                  #button.js \
+                  #popup-button.js \
+                  #selection-group.js \
+                  #template-transformer.js \
+                  #button-group.js \
+                  #swf.js \
+                  #input-filter.js \
+                  #autocomplete.js \
+                  #form.js \
+                  #carousel.js \
 
 
 APPLICATION_FILES = main.js \

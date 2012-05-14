@@ -7,7 +7,7 @@
                 <h1>Рецепты</h1>
             </div>
             <div class="span6">
-                <a class="j-navigation-link
+                <a class="j-link
                           btn btn-large btn-primary pull-right"
                    data-href="add">
                     Добавить рецепт
@@ -38,15 +38,17 @@
 
 </div>
 
-<div id="add_recipe_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page j-control-container page"
+     data-controller-id="add_recipe_page"
+     data-widgets="form"
      data-name="add">
 
     {% include 'page/recipes/add-recipe.twig' %}
 </div>
 
-<div id="edit_recipe_page"
-     class="j-navigation-page j-control-container page"
+<div class="j-navigation-page j-control-container page"
+     data-controller-id="edit_recipe_page"
+     data-widgets="template-transformer, form"
      data-name="edit">
 
     {% include 'page/recipes/edit-recipe.twig' %}
@@ -99,7 +101,7 @@
             <td>
                 <ul class="nav nav-list">
                     <li>
-                        <a class="j-navigation-link t-id"
+                        <a class="j-link t-id"
                            data-href="edit">
                             <i class="icon-edit"></i> Редактировать
                         </a>

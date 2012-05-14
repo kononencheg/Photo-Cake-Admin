@@ -31,7 +31,7 @@ tuna.utils.extend(City, tuna.model.Record);
 City.prototype.populate = function(data) {
     this.id = data['id'];
     this.name = data['name'];
-    this.timezoneOffset = data['timezone_offset'];
+    this.timezoneOffset = data['timezone_offset'] * 60 * 1000;
 };
 
 /**
